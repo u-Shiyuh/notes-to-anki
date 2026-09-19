@@ -26,11 +26,12 @@ SETUP (one-time)
    Anki -> Tools -> Add-ons -> Get Add-ons -> paste code: 2055492159
    Restart Anki. Keep Anki OPEN whenever you run this script.
 
-5. Install the one Python dependency:
-   pip install requests --break-system-packages
+5. Install the Python dependencies:
+   pip install requests python-dotenv --break-system-packages
 
-6. Set your credentials (edit the two lines below, or export as
-   environment variables NOTION_TOKEN / NOTION_DATABASE_ID instead).
+6. Create a .env file in the same folder as this script:
+   NOTION_TOKEN=your_secret_here
+   NOTION_DATABASE_ID=your_database_id_here
 
 USAGE
 -----
@@ -47,6 +48,16 @@ import json
 import argparse
 import urllib.request
 import urllib.error
+
+from dotenv import load_dotenv
+
+# Loads variables from a .env file (same folder as this script) into the
+# environment. Create a .env file next to this script with:
+#
+#   NOTION_TOKEN=your_secret_here
+#   NOTION_DATABASE_ID=your_database_id_here
+#
+load_dotenv()
 
 NOTION_TOKEN = os.environ.get("NOTION_TOKEN", "PASTE_YOUR_NOTION_TOKEN_HERE")
 NOTION_DATABASE_ID = os.environ.get("NOTION_DATABASE_ID", "PASTE_YOUR_DATABASE_ID_HERE")
