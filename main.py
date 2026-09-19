@@ -35,7 +35,7 @@ SETUP (one-time)
 
 USAGE
 -----
-   python3 notion_to_anki.py
+   python3 main.py
 
 Safe to re-run any time. Only rows not yet in Anki (matched by the
 Front field text) get added; existing notes are left alone unless
