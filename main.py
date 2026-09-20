@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-main.py
+notion_to_anki.py
 
 Syncs your Notion "Language Learning Ledger" database into Anki.
 Reads database rows directly via the Notion API (no toggle-block
@@ -41,14 +41,18 @@ USAGE
 -----
    python3 main.py                 # sync the Notion ledger into Anki
    python3 main.py --dry-run       # preview the Notion sync only
+   python3 main.py --no-update     # only add new notes, don't touch existing ones
 
-   python3 main.py --seed-kana             # one-time: add all hiragana + katakana
-   python3 main.py --seed-kana --dry-run   # preview the kana seed only
+   python3 main.py --seed-kana                # one-time: add all hiragana + katakana
+   python3 main.py --seed-kana --dry-run       # preview the kana seed only
+   python3 main.py --seed-kana --no-update     # only add new kana, don't fix existing ones
 
-Safe to re-run any time. Only rows/notes not yet in Anki (matched by
-the Front field text) get added; existing notes are left alone unless
-you pass --update. --seed-kana is likewise safe to re-run — Anki will
-just skip cards that are already there.
+Safe to re-run any time. Notes are matched by their Front field text.
+By default (updating is ON), anything not yet in Anki is added, and
+anything already there has its Back field (and tags) overwritten if
+the content in this script/the Notion ledger has changed since — e.g.
+after correcting a reading/meaning, or fixing a typo in the kana
+tables below. Pass --no-update to fall back to add-only behaviour.
 """
 
 import os
@@ -188,8 +192,11 @@ def build_kana_notes():
     return notes
 
 
-def seed_kana(dry_run=False):
-    """One-time (but safe to re-run) seed of the full kana charts into Anki."""
+def seed_kana(dry_run=False, update=True):
+    """One-time (but safe to re-run) seed of the full kana charts into Anki.
+    With update=True, also fixes the Back text of any kana card already in
+    Anki that doesn't match the current table (e.g. after a typo fix here).
+    """
     notes = build_kana_notes()
     decks = sorted(set(n["deckName"] for n in notes))
 
@@ -202,13 +209,7 @@ def seed_kana(dry_run=False):
         print(" ...")
         return
 
-    for d in decks:
-        ensure_deck(d)
-
-    results = anki_request("addNotes", notes=notes)
-    added = sum(1 for r in (results or []) if r is not None)
-    skipped = len(notes) - added
-    print(f"Kana seed done. Added {added} new notes. Skipped {skipped} (already in Anki).")
+    add_or_update_notes(notes, update=update)
 
 
 # ---------------------------------------------------------------------------
@@ -316,7 +317,73 @@ def ensure_deck(deck_name):
     anki_request("createDeck", deck=deck_name)
 
 
-def sync_ledger(dry_run=False):
+def _escape_query_value(text):
+    return text.replace("\\", "\\\\").replace('"', '\\"')
+
+
+def add_or_update_notes(notes, update=True):
+    """Push a list of note dicts (deckName, modelName, fields, tags, and
+    optionally internal keys prefixed with "_") into Anki.
+
+    update=True (default): existing notes are looked up by Front field, and
+    their Back field / tags are updated in place if they've changed;
+    anything not found is added as new.
+
+    update=False: plain add only — existing notes (matched by Front) are
+    left untouched, even if their content has changed.
+    """
+    decks = sorted(set(n["deckName"] for n in notes))
+    for d in decks:
+        ensure_deck(d)
+
+    clean = [{k: v for k, v in n.items() if not k.startswith("_")} for n in notes]
+
+    if not update:
+        results = anki_request("addNotes", notes=clean)
+        added = sum(1 for r in (results or []) if r is not None)
+        skipped = len(notes) - added
+        print(f"Added {added} new notes. Skipped {skipped} (already in Anki).")
+        return
+
+    # Build a Front-text -> existing note lookup, scoped to the note type
+    # in use, so we only touch notes this script itself manages.
+    query = f'note:"{NOTE_TYPE}"'
+    existing_ids = anki_request("findNotes", query=query) or []
+    existing_info = anki_request("notesInfo", notes=existing_ids) if existing_ids else []
+    by_front = {}
+    for info in existing_info:
+        front = info.get("fields", {}).get("Front", {}).get("value", "")
+        by_front[front] = info
+
+    to_add = []
+    updated = 0
+    unchanged = 0
+    for n in clean:
+        front = n["fields"]["Front"]
+        info = by_front.get(front)
+        if info is None:
+            to_add.append(n)
+            continue
+        note_id = info["noteId"]
+        current_back = info.get("fields", {}).get("Back", {}).get("value", "")
+        if current_back != n["fields"]["Back"]:
+            anki_request("updateNoteFields", note={"id": note_id, "fields": n["fields"]})
+            updated += 1
+        else:
+            unchanged += 1
+        if n.get("tags"):
+            anki_request("addTags", notes=[note_id], tags=" ".join(n["tags"]))
+
+    added = 0
+    if to_add:
+        results = anki_request("addNotes", notes=to_add)
+        added = sum(1 for r in (results or []) if r is not None)
+
+    print(f"Added {added} new notes. Updated {updated} existing notes. "
+          f"{unchanged} already up to date.")
+
+
+def sync_ledger(dry_run=False, update=True):
     if "PASTE_YOUR" in NOTION_TOKEN or "PASTE_YOUR" in NOTION_DATABASE_ID:
         print(
             "Set NOTION_TOKEN and NOTION_DATABASE_ID (env vars, or edit "
@@ -339,15 +406,7 @@ def sync_ledger(dry_run=False):
             print(" -", n["fields"]["Front"], "->", n["deckName"])
         return
 
-    for d in decks:
-        ensure_deck(d)
-
-    to_add = [{k: v for k, v in n.items() if not k.startswith("_")} for n in notes]
-    results = anki_request("addNotes", notes=to_add)
-
-    added = sum(1 for r in (results or []) if r is not None)
-    skipped = len(notes) - added
-    print(f"Done. Added {added} new notes. Skipped {skipped} (already in Anki).")
+    add_or_update_notes(notes, update=update)
 
 
 def main():
@@ -362,13 +421,19 @@ def main():
              "Nihongo::Kana::Hiragana / Nihongo::Kana::Katakana, instead of "
              "syncing the Notion ledger",
     )
+    parser.add_argument(
+        "--no-update", dest="update", action="store_false",
+        help="Only add new notes; leave existing notes' Back field untouched "
+             "even if their content has changed (updating is ON by default)",
+    )
+    parser.set_defaults(update=True)
     args = parser.parse_args()
 
     if args.seed_kana:
-        seed_kana(dry_run=args.dry_run)
+        seed_kana(dry_run=args.dry_run, update=args.update)
         return
 
-    sync_ledger(dry_run=args.dry_run)
+    sync_ledger(dry_run=args.dry_run, update=args.update)
 
 
 if __name__ == "__main__":
