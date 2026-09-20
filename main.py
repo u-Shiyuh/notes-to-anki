@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-notion_to_anki.py
+main.py
 
 Syncs your Notion "Language Learning Ledger" database into Anki.
 Reads database rows directly via the Notion API (no toggle-block
