@@ -286,9 +286,18 @@ _NOTE = '<div style="font-size:0.8em; opacity:0.65; margin-top:0.4em">{}</div>'
 
 
 def split_note(text):
-    """Split "core — side note" into (core, note); note is "" if absent."""
-    core, _, note = text.partition(NOTE_SEP)
-    return core.strip(), note.strip()
+    """Split "core — side note" into (core, note); note is "" if absent.
+    Only a separator outside parentheses counts, so asides like
+    "noon (the pivot — NOT afternoon)" stay in one piece."""
+    depth = 0
+    for i, ch in enumerate(text):
+        if ch in "(（":
+            depth += 1
+        elif ch in ")）":
+            depth = max(depth - 1, 0)
+        elif depth == 0 and text.startswith(NOTE_SEP, i):
+            return text[:i].strip(), text[i + len(NOTE_SEP):].strip()
+    return text.strip(), ""
 
 
 def sentences(text):
