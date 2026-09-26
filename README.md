@@ -65,6 +65,7 @@ The card back is formatted for review rather than copied as one block of text:
 - **Readings** on the next line.
 - **Side notes** go in small, faded text at the bottom. A side note is anything after ` — ` (space, em dash, space) in `Meaning` or `Readings`. For example, `き(く) kun / ぶん on — 新聞 is N5 vocab` shows the readings on one line and "新聞 is N5 vocab" as a note.
 - **Grammar** rows are prose, so each sentence gets its own line with the first one as the headline.
+- **Grammar Drill** rows are short practice cards (one prompt, one answer), such as `待つ → て-form` → `待って`. They go to their own `Nihongo::Grammar Drill` deck. Put the prompt in `Item`, the answer in `Meaning` and a short reason in `Readings`. The longer `Grammar` rows stay in `Nihongo::Grammar` as reference notes.
 
 ```
 FRONT   聞
@@ -96,7 +97,6 @@ The first sync after upgrading to the new card layout will report most notes as 
 
 - Cards are matched **only by Front text**, across *all* `Basic` notes in your collection. This causes a collision when a ledger item is identical to a kana character (particles such as は or を are common examples): the kana seed and the ledger sync will overwrite each other's Back field.
 - Moving a row to a different `Type` does not move the existing card to the new deck. Tags are only ever added, never removed. Rows deleted in Notion are not deleted from Anki.
-- A multi-word `Type` (for example `Kanji Compound`) becomes two separate Anki tags.
 
 ## Troubleshooting
 

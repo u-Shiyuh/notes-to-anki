@@ -361,7 +361,8 @@ def row_to_note(page):
 
     deck = f"{DECK_ROOT}::{item_type}"
     tags = [f"lesson{lesson}"] if lesson else []
-    tags.append(item_type.lower())
+    # Anki tags can't contain spaces: "Grammar Drill" -> "grammar_drill".
+    tags.append(item_type.lower().replace(" ", "_"))
 
     return {
         "deckName": deck,

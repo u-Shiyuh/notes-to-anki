@@ -50,7 +50,7 @@ Never read or print `.env`. It holds the real Notion integration secret and is g
 | `Item` | title | Front field |
 | `Readings` | rich_text | Back, under the meaning |
 | `Meaning` | rich_text | Back, headline |
-| `Type` | select | Deck `Nihongo::<Type>` plus a lowercase tag (defaults to `Vocab`); `Grammar` gets prose layout |
+| `Type` | select | `Kanji` / `Vocab` / `Grammar` / `Grammar Drill`. Deck `Nihongo::<Type>` plus a lowercase tag with spaces → `_` (defaults to `Vocab`); `Grammar` gets prose layout |
 | `Lesson` | number | Tag `lesson<N>` |
 | `Language` | select | Rows whose value isn't `LANGUAGE` ("Japanese") are skipped; empty is kept |
 
@@ -63,6 +63,7 @@ Rows are skipped (and reported) when `Item` is empty, starts with `IGNORE` (`SKI
 The Back field is HTML with inline styles only, so it works with the stock `Basic` note type and in Anki's night mode (notes are faded with `opacity`, not a colour). The Front is sent as the raw `Item` text and must stay that way, because it is the matching key for existing notes.
 
 - **Kanji / Vocab:** each of `Meaning` and `Readings` is split on the first `" — "` (`NOTE_SEP`) into core and side note. The first sentence of the meaning is a bold headline, any further meaning sentences follow on their own lines, then the core readings, then the side notes in small, faded text.
+- **Grammar Drill** (short practice rows: prompt in `Item`, answer in `Meaning`, reason in `Readings`) uses the Kanji/Vocab layout and lands in `Nihongo::Grammar Drill`. The long `Grammar` rows are reference notes.
 - **Grammar:** `Meaning` then `Readings` are split into sentences (`_SENTENCE_BREAK`, which ignores `e.g.`, `i.e.`, `vs.`, `etc.`). The first sentence is the headline and the rest go one per line.
 
 All text is HTML-escaped. Changing `format_back` changes every Back field, so the next default (updating) sync rewrites every existing note once.
@@ -86,7 +87,7 @@ These are ordered by impact. Confirm the user wants a fix before changing behavi
 1. **Front-text collisions across sources.** The current ledger has no bare-kana Items (particles are written like `を (particle)`), so this doesn't bite today. Matching uses only the Front text, over all `Basic` notes. If a ledger row's `Item` is a single kana (particles are the usual case: は, を, に, の, も, へ, と, か, ね, よ), then `--seed-kana` overwrites that ledger card's Back with romaji, and the next ledger sync overwrites the kana card. The same applies to any unrelated `Basic` note the user created by hand. Possible fix: scope the lookup query to the managed decks (`deck:"Nihongo::Kana::*"` vs `deck:"Nihongo" -deck:"Nihongo::Kana::*"`), or give the notes their own note type.
 2. **Moves and removals are never synced.** Changing a row's `Type` does not move the card to the new deck. Tags are only ever added, so changing `Lesson` leaves the old `lessonN` tag in place. Rows deleted in Notion stay in Anki. `_notion_page_id` is captured but never stored, so it cannot be used as a stable key.
 3. **Only Back is diffed.** A tag-only change still triggers `addTags` (which runs for every matched note on every run anyway). Some Anki versions normalise stored field HTML. If that happens, Back never compares equal and the note is re-"updated" on every run.
-4. **Multi-word `Type` values break tags.** (No current `Type` option has a space.) `"Kanji Compound".lower()` becomes the tag `kanji compound`, which Anki splits into two tags.
+4. ~~Multi-word `Type` values break tags.~~ Fixed: spaces become underscores (`Grammar Drill` → `grammar_drill`).
 5. **`--no-update` counts are unreliable.** Newer AnkiConnect versions make `addNotes` return an error when any note in the batch is a duplicate. `anki_request` then returns `None`, so the script prints "Added 0" even though the non-duplicate notes were added.
 6. **Duplicate Fronts inside one batch.** Two ledger rows with the same `Item` both land in `to_add`, and the second one is rejected. If a Front already exists, both rows update the same note and the last one wins.
 7. **No retry on Notion 429 or 5xx.** Any HTTP error exits the whole run.
