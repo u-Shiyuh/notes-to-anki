@@ -56,7 +56,9 @@ tables below. Pass --no-update to fall back to add-only behaviour.
 """
 
 import os
+import re
 import sys
+import html
 import json
 import argparse
 import urllib.request
@@ -81,6 +83,15 @@ ANKICONNECT_URL = "http://127.0.0.1:8765"
 
 DECK_ROOT = "Nihongo"
 NOTE_TYPE = "Basic"
+
+# Only ledger rows in this language are synced (rows with no Language set
+# are kept). Rows whose Item starts with SKIP_PREFIX are never synced.
+LANGUAGE = "Japanese"
+SKIP_PREFIX = "IGNORE"
+
+# In the ledger, " — " separates the core reading/meaning from side notes,
+# e.g. "き(く) kun / ぶん on — 新聞(しんぶん) is N5 vocab".
+NOTE_SEP = " — "
 
 
 # ---------------------------------------------------------------------------
@@ -265,6 +276,70 @@ def get_prop(props, name, kind):
     return ""
 
 
+# Sentence breaks for grammar explanations: a period followed by whitespace,
+# except after common abbreviations like "e.g." and "vs.".
+_SENTENCE_BREAK = re.compile(r"(?<!e\.g\.)(?<!i\.e\.)(?<!vs\.)(?<!etc\.)(?<=\.)\s+")
+
+_HEADLINE = '<div style="font-size:1.3em"><b>{}</b></div>'
+_LINE = "<div>{}</div>"
+_NOTE = '<div style="font-size:0.8em; opacity:0.65; margin-top:0.4em">{}</div>'
+
+
+def split_note(text):
+    """Split "core — side note" into (core, note); note is "" if absent."""
+    core, _, note = text.partition(NOTE_SEP)
+    return core.strip(), note.strip()
+
+
+def sentences(text):
+    return [s for s in _SENTENCE_BREAK.split(text.strip()) if s]
+
+
+def format_back(item_type, readings, meaning):
+    """Render the Back field as HTML: meaning first as a headline, then
+    readings, then any side notes in smaller, faded text."""
+    esc = html.escape
+    parts = []
+
+    if item_type == "Grammar":
+        # Grammar rows are prose: first sentence as the headline, the rest
+        # one sentence per line so the explanation is scannable on review.
+        lines = sentences(meaning) + sentences(readings)
+        if lines:
+            parts.append(_HEADLINE.format(esc(lines[0])))
+            parts.extend(_LINE.format(esc(s)) for s in lines[1:])
+        return "".join(parts)
+
+    meaning_core, meaning_note = split_note(meaning)
+    readings_core, readings_note = split_note(readings)
+    # Some Kanji rows (e.g. 万/千/百) hold a prose explanation in Meaning:
+    # headline its first sentence and put the rest on their own lines.
+    meaning_lines = sentences(meaning_core)
+    if meaning_lines:
+        parts.append(_HEADLINE.format(esc(meaning_lines[0])))
+        parts.extend(_LINE.format(esc(s)) for s in meaning_lines[1:])
+    if readings_core:
+        parts.append(_LINE.format(esc(readings_core)))
+    for note in (readings_note, meaning_note):
+        if note:
+            parts.append(_NOTE.format(esc(note)))
+    return "".join(parts)
+
+
+def skip_reason(page):
+    """Return why a ledger row shouldn't become a card, or None to sync it."""
+    props = page["properties"]
+    item = get_prop(props, "Item", "title").strip()
+    language = get_prop(props, "Language", "select")
+    if not item:
+        return "empty Item"
+    if item.upper().startswith(SKIP_PREFIX):
+        return f"marked {SKIP_PREFIX}"
+    if language and language != LANGUAGE:
+        return f"Language is {language}"
+    return None
+
+
 def row_to_note(page):
     props = page["properties"]
     item = get_prop(props, "Item", "title")
@@ -273,12 +348,7 @@ def row_to_note(page):
     item_type = get_prop(props, "Type", "select") or "Vocab"
     lesson = get_prop(props, "Lesson", "number")
 
-    back_parts = []
-    if readings:
-        back_parts.append(readings)
-    if meaning:
-        back_parts.append(meaning)
-    back = "<br>".join(back_parts)
+    back = format_back(item_type, readings, meaning)
 
     deck = f"{DECK_ROOT}::{item_type}"
     tags = [f"lesson{lesson}"] if lesson else []
@@ -396,20 +466,40 @@ def sync_ledger(dry_run=False, update=True):
     pages = fetch_all_rows()
     print(f"Found {len(pages)} rows in the ledger.")
 
-    notes = [row_to_note(p) for p in pages]
+    notes = []
+    for p in pages:
+        reason = skip_reason(p)
+        if reason:
+            item = get_prop(p["properties"], "Item", "title") or "(untitled)"
+            print(f"Skipping {item!r}: {reason}")
+            continue
+        notes.append(row_to_note(p))
     decks = sorted(set(n["deckName"] for n in notes))
 
     if dry_run:
         print(f"Would ensure {len(decks)} decks: {decks}")
         print(f"Would attempt to add {len(notes)} notes.")
         for n in notes[:5]:
-            print(" -", n["fields"]["Front"], "->", n["deckName"])
+            print(f"\n[{n['deckName']}] {n['fields']['Front']}")
+            print(preview_html(n["fields"]["Back"]))
         return
 
     add_or_update_notes(notes, update=update)
 
 
+def preview_html(back):
+    """Rough plain-text rendering of a Back field for --dry-run output."""
+    text = re.sub(r"</div>", "\n", back)
+    text = html.unescape(re.sub(r"<[^>]+>", "", text))
+    return "\n".join("    " + line for line in text.splitlines() if line)
+
+
 def main():
+    # Windows consoles default to cp1252, which can't print kana.
+    if hasattr(sys.stdout, "reconfigure"):
+        sys.stdout.reconfigure(encoding="utf-8")
+        sys.stderr.reconfigure(encoding="utf-8")
+
     parser = argparse.ArgumentParser()
     parser.add_argument(
         "--dry-run", action="store_true",

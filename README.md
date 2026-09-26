@@ -49,10 +49,32 @@ It is a single Python script. It reads your Notion database through the official
 | Property | Type | Becomes |
 |---|---|---|
 | `Item` | Title | Card front |
-| `Readings` | Text | Card back (first line) |
-| `Meaning` | Text | Card back (after readings) |
+| `Meaning` | Text | Card back (headline) |
+| `Readings` | Text | Card back (under the meaning) |
 | `Type` | Select | Deck `Nihongo::<Type>` and a tag (defaults to `Vocab`) |
 | `Lesson` | Number | Tag `lesson<N>` |
+| `Language` | Select | Only `Japanese` rows (or rows with no language) are synced |
+
+Rows are skipped, and listed in the output, when `Item` is empty, starts with `IGNORE`, or has a `Language` other than Japanese.
+
+## Card layout
+
+The card back is formatted for review rather than copied as one block of text:
+
+- **Meaning first**, in bold, so it's the first thing you check your answer against.
+- **Readings** on the next line.
+- **Side notes** go in small, faded text at the bottom. A side note is anything after ` — ` (space, em dash, space) in `Meaning` or `Readings`. For example, `き(く) kun / ぶん on — 新聞 is N5 vocab` shows the readings on one line and "新聞 is N5 vocab" as a note.
+- **Grammar** rows are prose, so each sentence gets its own line with the first one as the headline.
+
+```
+FRONT   聞
+
+BACK    hear, listen, ask                      (bold)
+        き(く) kun / ぶん, もん on
+        新聞(しんぶん, newspaper) is N5 vocab   (small, faded)
+```
+
+The formatting uses inline styles, so it works with Anki's stock `Basic` note type and in night mode. Use `--dry-run` to preview the first few cards.
 
 ## Usage
 
@@ -68,7 +90,7 @@ python main.py --seed-kana --no-update  # add missing kana only
 
 By default, cards already in Anki get their Back field overwritten when the source has changed, for example after you fix a meaning in Notion. Pass `--no-update` to only add new cards.
 
-> **Windows users:** the console's default encoding cannot print kana, so `--dry-run` crashes with a `UnicodeEncodeError`. Run the script with `PYTHONIOENCODING=utf-8` set, or use `python -X utf8 main.py ...`.
+The first sync after upgrading to the new card layout will report most notes as "Updated", because every card back changes format once.
 
 ## Limitations
 

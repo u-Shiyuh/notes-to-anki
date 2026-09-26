@@ -24,9 +24,9 @@ python main.py --seed-kana
 python main.py --no-update             # add new notes only; never modify existing ones
 ```
 
-**Windows:** set `PYTHONIOENCODING=utf-8` (or run `python -X utf8`). Otherwise both `--dry-run` paths crash with `UnicodeEncodeError: 'charmap' codec can't encode character` when they print kana to a cp1252 console. This was reproduced on Python 3.14.
+`main()` reconfigures stdout/stderr to UTF-8, because Windows consoles default to cp1252 and would crash printing kana. Code that imports `main` without calling `main()` (ad-hoc test snippets) still needs `PYTHONIOENCODING=utf-8` on Windows.
 
-A safe smoke test that needs no credentials, Anki or network: `PYTHONIOENCODING=utf-8 python main.py --seed-kana --dry-run`.
+A safe smoke test that needs no credentials, Anki or network: `python main.py --seed-kana --dry-run`. `python main.py --dry-run` is read-only against Notion and prints the first five rendered card backs.
 
 Never read or print `.env`. It holds the real Notion integration secret and is gitignored.
 
@@ -36,7 +36,8 @@ Never read or print `.env`. It holds the real Notion integration secret and is g
 |---|---|
 | Config | `NOTION_TOKEN`, `NOTION_DATABASE_ID` (from env via dotenv; the placeholder `PASTE_YOUR_...` defaults are how `sync_ledger` detects missing config), `DECK_ROOT="Nihongo"`, `NOTE_TYPE="Basic"`, `ANKICONNECT_URL` |
 | Kana data | `HIRAGANA_*`, `KATAKANA_*` lists of `(kana, romaji)`; `kana_note`, `build_kana_notes`, `seed_kana` |
-| Notion | `notion_request` (exits on any HTTP error), `fetch_all_rows` (paginates with `start_cursor`), `get_prop`, `row_to_note` |
+| Notion | `notion_request` (exits on any HTTP error), `fetch_all_rows` (paginates with `start_cursor`), `get_prop`, `skip_reason`, `row_to_note` |
+| Card layout | `format_back`, `split_note`, `sentences`, `preview_html` (dry-run only) |
 | Anki | `anki_request` (exits if AnkiConnect is unreachable; *logs but does not raise* on AnkiConnect errors), `ensure_deck`, `add_or_update_notes` |
 | CLI | `main` (argparse: `--dry-run`, `--seed-kana`, `--no-update`) |
 
@@ -47,12 +48,24 @@ Never read or print `.env`. It holds the real Notion integration secret and is g
 | Property | Notion type | Used as |
 |---|---|---|
 | `Item` | title | Front field |
-| `Readings` | rich_text | Back, first line |
-| `Meaning` | rich_text | Back, joined after readings with `<br>` |
-| `Type` | select | Deck `Nihongo::<Type>` plus a lowercase tag (defaults to `Vocab`) |
+| `Readings` | rich_text | Back, under the meaning |
+| `Meaning` | rich_text | Back, headline |
+| `Type` | select | Deck `Nihongo::<Type>` plus a lowercase tag (defaults to `Vocab`); `Grammar` gets prose layout |
 | `Lesson` | number | Tag `lesson<N>` |
+| `Language` | select | Rows whose value isn't `LANGUAGE` ("Japanese") are skipped; empty is kept |
 
-Missing properties quietly become `""`. Changing these names requires editing `row_to_note`.
+The database also has `Status`, `Attempts`, `Correct Streak` and `Last Reviewed`, which the script ignores. Missing properties quietly become `""`. Changing these names requires editing `row_to_note` / `skip_reason`.
+
+Rows are skipped (and reported) when `Item` is empty, starts with `IGNORE` (`SKIP_PREFIX`), or has a different `Language`.
+
+### Card back layout (`format_back`)
+
+The Back field is HTML with inline styles only, so it works with the stock `Basic` note type and in Anki's night mode (notes are faded with `opacity`, not a colour). The Front is sent as the raw `Item` text and must stay that way, because it is the matching key for existing notes.
+
+- **Kanji / Vocab:** each of `Meaning` and `Readings` is split on the first `" — "` (`NOTE_SEP`) into core and side note. The first sentence of the meaning is a bold headline, any further meaning sentences follow on their own lines, then the core readings, then the side notes in small, faded text.
+- **Grammar:** `Meaning` then `Readings` are split into sentences (`_SENTENCE_BREAK`, which ignores `e.g.`, `i.e.`, `vs.`, `etc.`). The first sentence is the headline and the rest go one per line.
+
+All text is HTML-escaped. Changing `format_back` changes every Back field, so the next default (updating) sync rewrites every existing note once.
 
 ### How updates work (`add_or_update_notes`)
 
@@ -70,17 +83,16 @@ Internal keys prefixed with `_` (for example `_notion_page_id`) are stripped bef
 
 These are ordered by impact. Confirm the user wants a fix before changing behaviour.
 
-1. **Front-text collisions across sources.** Matching uses only the Front text, over all `Basic` notes. If a ledger row's `Item` is a single kana (particles are the usual case: は, を, に, の, も, へ, と, か, ね, よ), then `--seed-kana` overwrites that ledger card's Back with romaji, and the next ledger sync overwrites the kana card. The same applies to any unrelated `Basic` note the user created by hand. Possible fix: scope the lookup query to the managed decks (`deck:"Nihongo::Kana::*"` vs `deck:"Nihongo" -deck:"Nihongo::Kana::*"`), or give the notes their own note type.
+1. **Front-text collisions across sources.** The current ledger has no bare-kana Items (particles are written like `を (particle)`), so this doesn't bite today. Matching uses only the Front text, over all `Basic` notes. If a ledger row's `Item` is a single kana (particles are the usual case: は, を, に, の, も, へ, と, か, ね, よ), then `--seed-kana` overwrites that ledger card's Back with romaji, and the next ledger sync overwrites the kana card. The same applies to any unrelated `Basic` note the user created by hand. Possible fix: scope the lookup query to the managed decks (`deck:"Nihongo::Kana::*"` vs `deck:"Nihongo" -deck:"Nihongo::Kana::*"`), or give the notes their own note type.
 2. **Moves and removals are never synced.** Changing a row's `Type` does not move the card to the new deck. Tags are only ever added, so changing `Lesson` leaves the old `lessonN` tag in place. Rows deleted in Notion stay in Anki. `_notion_page_id` is captured but never stored, so it cannot be used as a stable key.
 3. **Only Back is diffed.** A tag-only change still triggers `addTags` (which runs for every matched note on every run anyway). Some Anki versions normalise stored field HTML. If that happens, Back never compares equal and the note is re-"updated" on every run.
-4. **Multi-word `Type` values break tags.** `"Kanji Compound".lower()` becomes the tag `kanji compound`, which Anki splits into two tags.
+4. **Multi-word `Type` values break tags.** (No current `Type` option has a space.) `"Kanji Compound".lower()` becomes the tag `kanji compound`, which Anki splits into two tags.
 5. **`--no-update` counts are unreliable.** Newer AnkiConnect versions make `addNotes` return an error when any note in the batch is a duplicate. `anki_request` then returns `None`, so the script prints "Added 0" even though the non-duplicate notes were added.
 6. **Duplicate Fronts inside one batch.** Two ledger rows with the same `Item` both land in `to_add`, and the second one is rejected. If a Front already exists, both rows update the same note and the last one wins.
-7. **Empty `Item`** produces a note with an empty Front, which Anki rejects (and in newer AnkiConnect this also triggers #5).
-8. **No retry on Notion 429 or 5xx.** Any HTTP error exits the whole run.
-9. Pinned to Notion API `2022-06-28` with `/databases/{id}/query`. This still works, but newer API versions move querying to data sources.
-10. One HTTP round-trip per matched note (`updateNoteFields` and `addTags`). This is fine at ledger scale. AnkiConnect's `multi` action could batch the calls if speed ever matters.
-11. `.env.sample` contains what looks like the author's real database ID instead of a placeholder. It is not a secret without the token, but it is worth replacing.
+7. **No retry on Notion 429 or 5xx.** Any HTTP error exits the whole run.
+8. Pinned to Notion API `2022-06-28` with `/databases/{id}/query`. This still works, but newer API versions move querying to data sources.
+9. One HTTP round-trip per matched note (`updateNoteFields` and `addTags`). This is fine at ledger scale. AnkiConnect's `multi` action could batch the calls if speed ever matters.
+10. `.env.sample` contains what looks like the author's real database ID instead of a placeholder. It is not a secret without the token, but it is worth replacing.
 
 ## Conventions
 
