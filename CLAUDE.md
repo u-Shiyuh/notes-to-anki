@@ -9,7 +9,7 @@ A single-file Python CLI (`main.py`) that pushes Japanese study material into An
 - **Ledger sync** (default): reads every row of a Notion database (the "Language Learning Ledger") and creates or updates one Anki `Basic` note per row.
 - **Kana seed** (`--seed-kana`): writes the built-in hiragana and katakana tables (104 each: gojūon, dakuten/handakuten, yōon) to `Nihongo::Kana::Hiragana` and `Nihongo::Kana::Katakana`.
 
-There are no tests, no packaging and no `requirements.txt`. The only third-party dependency is `python-dotenv`. HTTP goes through `urllib`, not `requests`, even though the module docstring says to install `requests`.
+There are no tests, no packaging and no `requirements.txt`. The only third-party dependency is `python-dotenv`. HTTP goes through `urllib`.
 
 ## Running
 
@@ -22,11 +22,12 @@ python main.py                         # sync the ledger (Anki must be open)
 python main.py --seed-kana --dry-run   # preview the kana seed (no network)
 python main.py --seed-kana
 python main.py --no-update             # add new notes only; never modify existing ones
+python main.py --prune --dry-run       # list linked notes whose Notion row is gone (needs Anki)
 ```
 
 `main()` reconfigures stdout/stderr to UTF-8, because Windows consoles default to cp1252 and would crash printing kana. Code that imports `main` without calling `main()` (ad-hoc test snippets) still needs `PYTHONIOENCODING=utf-8` on Windows.
 
-A safe smoke test that needs no credentials, Anki or network: `python main.py --seed-kana --dry-run`. `python main.py --dry-run` is read-only against Notion and prints the first five rendered card backs.
+A safe smoke test that needs no credentials, Anki or network: `python main.py --seed-kana --dry-run`. `python main.py --dry-run` is read-only against Notion and prints the first five rendered card backs. With Anki open, both dry-runs also read (never write) Anki and list every planned change; that is the safe way to check sync logic against the real collection.
 
 Never read or print `.env`. It holds the real Notion integration secret and is gitignored.
 
@@ -34,14 +35,14 @@ Never read or print `.env`. It holds the real Notion integration secret and is g
 
 | Area | Functions / constants |
 |---|---|
-| Config | `NOTION_TOKEN`, `NOTION_DATABASE_ID` (from env via dotenv; the placeholder `PASTE_YOUR_...` defaults are how `sync_ledger` detects missing config), `DECK_ROOT="Nihongo"`, `NOTE_TYPE="Basic"`, `ANKICONNECT_URL` |
+| Config | `NOTION_TOKEN`, `NOTION_DATABASE_ID` (from env via dotenv; `sync_ledger` treats any value containing `paste_your` (any case) as missing), `DECK_ROOT="Nihongo"`, `NOTE_TYPE="Basic"`, `KANA_SCOPE` / `LEDGER_SCOPE` (Anki searches), `LINK_TAG_PREFIX`, `TYPE_TAGS`, `NOTE_OPTIONS` (`duplicateScope: "deck"`), `ANKICONNECT_URL` |
 | Kana data | `HIRAGANA_*`, `KATAKANA_*` lists of `(kana, romaji)`; `kana_note`, `build_kana_notes`, `seed_kana` |
-| Notion | `notion_request` (exits on any HTTP error), `fetch_all_rows` (paginates with `start_cursor`), `get_prop`, `skip_reason`, `row_to_note` |
+| Notion | `notion_request` (retries 429/5xx/network errors with backoff, honouring `Retry-After`; exits on other errors), `fetch_all_rows` (API `2025-09-03`: reads the database's `data_sources`, then pages through `/data_sources/{id}/query`), `get_prop`, `skip_reason`, `row_to_note`, `link_tag` |
 | Card layout | `format_back`, `split_note`, `sentences`, `preview_html` (dry-run only) |
-| Anki | `anki_request` (exits if AnkiConnect is unreachable; *logs but does not raise* on AnkiConnect errors), `ensure_deck`, `add_or_update_notes` |
-| CLI | `main` (argparse: `--dry-run`, `--seed-kana`, `--no-update`) |
+| Anki | `anki_request` (exits if AnkiConnect is unreachable; *logs but does not raise* on AnkiConnect errors), `anki_available`, `anki_multi` (batches writes through `multi`), `same_html`, `plan_changes` (read-only), `print_plan`, `summarize`, `preview_changes` (dry-run), `add_or_update_notes` |
+| CLI | `main` (argparse: `--dry-run`, `--seed-kana`, `--no-update`, `--prune`; `--prune` is rejected with `--seed-kana` or `--no-update`) |
 
-`_escape_query_value` is defined but never called. `_GOJUON` is defined and then `del`'d.
+`_GOJUON` is defined and then `del`'d.
 
 ### Notion schema the script expects
 
@@ -60,7 +61,7 @@ Rows are skipped (and reported) when `Item` is empty, starts with `IGNORE` (`SKI
 
 ### Card back layout (`format_back`)
 
-The Back field is HTML with inline styles only, so it works with the stock `Basic` note type and in Anki's night mode (notes are faded with `opacity`, not a colour). The Front is sent as the raw `Item` text and must stay that way, because it is the matching key for existing notes.
+The Back field is HTML with inline styles only, so it works with the stock `Basic` note type and in Anki's night mode (notes are faded with `opacity`, not a colour). The Front is sent as the raw `Item` text. It is the fallback matching key for notes that don't have a link tag yet (see below), so keep it raw.
 
 - **Kanji / Vocab:** each of `Meaning` and `Readings` is split on the first `" — "` (`NOTE_SEP`) into core and side note. The first sentence of the meaning is a bold headline, any further meaning sentences follow on their own lines, then the core readings, then the side notes in small, faded text.
 - **Grammar Drill** (short practice rows: prompt in `Item`, answer in `Meaning`, reason in `Readings`) uses the Kanji/Vocab layout and lands in `Nihongo::Grammar Drill`. The long `Grammar` rows are reference notes.
@@ -68,32 +69,30 @@ The Back field is HTML with inline styles only, so it works with the stock `Basi
 
 All text is HTML-escaped. Changing `format_back` changes every Back field, so the next default (updating) sync rewrites every existing note once.
 
-### How updates work (`add_or_update_notes`)
+### How updates work (`plan_changes` → `add_or_update_notes`)
 
-1. Creates every target deck.
-2. `--no-update`: one `addNotes` call; duplicates are rejected by Anki (`allowDuplicate: False`).
-3. Default: `findNotes 'note:"Basic"'` then `notesInfo`, which builds a Front-text → note map covering **every Basic note in the whole collection**. For each incoming note with a matching Front:
-   - if Back differs: `updateNoteFields` with both fields
-   - always: `addTags`
-   
-   Notes with no match are added in one batch.
+`plan_changes` is read-only and returns a plan. `add_or_update_notes` prints it and applies it; `--dry-run` prints it via `preview_changes` (only if Anki is reachable).
 
-Internal keys prefixed with `_` (for example `_notion_page_id`) are stripped before anything is sent to Anki.
+1. **Scope.** Each mode only reads notes matching `note:"Basic" <scope>`: `KANA_SCOPE` (`Nihongo::Kana` and below) for the seed, `LEDGER_SCOPE` (`Nihongo` minus `Nihongo::Kana`) for the ledger. Notes outside the scope are never matched or changed. `NOTE_OPTIONS` sets `duplicateScope: "deck"` so the same Front can exist in a kana deck and a ledger deck.
+2. **In-batch duplicates.** If two incoming notes share deck and Front, only the first is used; the rest are reported under "Not added".
+3. **Matching.** Ledger notes carry a `notion_<page id without dashes>` tag (`link_tag`). An incoming note matches the existing note with the same link tag; otherwise an existing note *without* a link tag and with the same Front (this is how pre-link notes and the kana cards match). Each existing note is matched at most once.
+4. **Changes for matched notes** (skipped entirely with `--no-update`):
+   - Front or Back differs (compared with `same_html`, which ignores entity, whitespace and `style` formatting differences): `updateNoteFields` with both fields. This also applies Item renames.
+   - Any card not in the target deck (`getDecks`): `changeDeck`.
+   - Tags: missing ones are added. A tag on the note is removed only if the note shouldn't have it *and* the script owns it: `lessonN`, `TYPE_TAGS`, `notion_*`, or any tag the current batch produces. All other tags are the user's and are kept.
+5. **Adds.** Unmatched notes are checked with `canAddNotesWithErrorDetail`; only addable ones go to `addNotes`, so counts are accurate and one bad note can't fail the batch. Rejections are listed with Anki's reason.
+6. **Prune** (`--prune`, ledger only): linked notes in scope that matched no incoming note are deleted with `deleteNotes`. Unlinked leftovers are listed but never deleted, because they may be hand-made.
+
+All writes except `addNotes` go through `anki_multi` in chunks of `ANKI_MULTI_CHUNK`, in this order: `createDeck`, `updateNoteFields`, `changeDeck`, `addTags`/`removeTags`, `deleteNotes`. Re-running with nothing changed sends no write requests.
 
 ## Known issues / review notes
 
-These are ordered by impact. Confirm the user wants a fix before changing behaviour.
+Confirm the user wants a fix before changing behaviour.
 
-1. **Front-text collisions across sources.** The current ledger has no bare-kana Items (particles are written like `を (particle)`), so this doesn't bite today. Matching uses only the Front text, over all `Basic` notes. If a ledger row's `Item` is a single kana (particles are the usual case: は, を, に, の, も, へ, と, か, ね, よ), then `--seed-kana` overwrites that ledger card's Back with romaji, and the next ledger sync overwrites the kana card. The same applies to any unrelated `Basic` note the user created by hand. Possible fix: scope the lookup query to the managed decks (`deck:"Nihongo::Kana::*"` vs `deck:"Nihongo" -deck:"Nihongo::Kana::*"`), or give the notes their own note type.
-2. **Moves and removals are never synced.** Changing a row's `Type` does not move the card to the new deck. Tags are only ever added, so changing `Lesson` leaves the old `lessonN` tag in place. Rows deleted in Notion stay in Anki. `_notion_page_id` is captured but never stored, so it cannot be used as a stable key.
-3. **Only Back is diffed.** A tag-only change still triggers `addTags` (which runs for every matched note on every run anyway). Some Anki versions normalise stored field HTML. If that happens, Back never compares equal and the note is re-"updated" on every run.
-4. ~~Multi-word `Type` values break tags.~~ Fixed: spaces become underscores (`Grammar Drill` → `grammar_drill`).
-5. **`--no-update` counts are unreliable.** Newer AnkiConnect versions make `addNotes` return an error when any note in the batch is a duplicate. `anki_request` then returns `None`, so the script prints "Added 0" even though the non-duplicate notes were added.
-6. **Duplicate Fronts inside one batch.** Two ledger rows with the same `Item` both land in `to_add`, and the second one is rejected. If a Front already exists, both rows update the same note and the last one wins.
-7. **No retry on Notion 429 or 5xx.** Any HTTP error exits the whole run.
-8. Pinned to Notion API `2022-06-28` with `/databases/{id}/query`. This still works, but newer API versions move querying to data sources.
-9. One HTTP round-trip per matched note (`updateNoteFields` and `addTags`). This is fine at ledger scale. AnkiConnect's `multi` action could batch the calls if speed ever matters.
-10. `.env.sample` contains what looks like the author's real database ID instead of a placeholder. It is not a secret without the token, but it is worth replacing.
+1. **Unlinked orphans.** A note whose row was deleted before the note got its `notion_` tag looks the same as a hand-made card, so `--prune` won't delete it (today: `聴く`, whose row became `IGNORE — 聴く`). It must be deleted by hand.
+2. **Front fallback can adopt a hand-made card.** A hand-made `Basic` card in a ledger deck whose Front equals a ledger `Item` gets matched once, overwritten and linked. Cards outside `Nihongo` are safe.
+3. **Notion result cap.** `/data_sources/{id}/query` stops at 10,000 results per query. The ledger is about 400 rows.
+4. **`addNotes` errors are counted, not itemised.** Adds are pre-checked, so this is rare; if `addNotes` itself errors, the run reports one failed request and "Added 0".
 
 ## Conventions
 
