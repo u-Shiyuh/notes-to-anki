@@ -25,7 +25,7 @@ python main.py --no-update             # add new notes only; never modify existi
 python main.py --prune --dry-run       # list linked notes whose Notion row is gone (needs Anki)
 ```
 
-`main()` reconfigures stdout/stderr to UTF-8, because Windows consoles default to cp1252 and would crash printing kana. Code that imports `main` without calling `main()` (ad-hoc test snippets) still needs `PYTHONIOENCODING=utf-8` on Windows.
+It runs on Windows (the user's current machine) and macOS; on macOS use `python3`/`pip3`. `main()` reconfigures stdout/stderr to UTF-8, because Windows consoles default to cp1252 and would crash printing kana. Code that imports `main` without calling `main()` (ad-hoc test snippets) still needs `PYTHONIOENCODING=utf-8` on Windows.
 
 A safe smoke test that needs no credentials, Anki or network: `python main.py --seed-kana --dry-run`. `python main.py --dry-run` is read-only against Notion and prints the first five rendered card backs. With Anki open, both dry-runs also read (never write) Anki and list every planned change; that is the safe way to check sync logic against the real collection.
 
@@ -43,7 +43,9 @@ As of 2026-10-19, every ledger note in the real collection carries its `notion_`
 
 The script can't run on GitHub-hosted Actions. AnkiConnect is an HTTP server inside the desktop Anki app at `127.0.0.1:8765`, so a cloud runner can't reach it, and AnkiWeb has no official API for adding cards. The options considered, best first:
 
-1. **Windows Task Scheduler** on the user's PC runs `python main.py` on a schedule. If Anki is closed the run fails harmlessly and the next one catches up. Anki's own AnkiWeb sync then carries the cards to other devices. This is the recommended option. It isn't set up yet.
+1. **A scheduled task on the user's computer** runs `python main.py` on a schedule. If Anki is closed the run fails harmlessly and the next one catches up. Anki's own AnkiWeb sync then carries the cards to other devices. This is the recommended option. It isn't set up yet.
+   - **Windows:** Task Scheduler.
+   - **macOS:** a `launchd` agent (a plist in `~/Library/LaunchAgents` with `StartCalendarInterval`), which, unlike `cron`, runs a missed job after the Mac wakes. Use `python3`. App Nap must be disabled for Anki (see README), or a background Anki stops answering AnkiConnect and every scheduled run fails.
 2. **A self-hosted GitHub runner** on the same PC. It only works while the PC is on and Anki is open, so it's option 1 with more setup.
 3. **A cloud Action that builds an `.apkg`** for the user to import by hand. It needs no PC, but every import is manual and it would add a second, non-AnkiConnect code path.
 4. **A cloud Action that syncs through AnkiWeb** with Anki's Python library. Avoid this: it's unofficial, needs the AnkiWeb password stored as a secret, and can force a full sync that overwrites same-day reviews made on other devices.

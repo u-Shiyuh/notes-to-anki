@@ -45,6 +45,19 @@ It is a single Python script. It reads your Notion database through the official
 
 6. **Install AnkiConnect.** In Anki, go to **Tools** → **Add-ons** → **Get Add-ons**, enter `2055492159`, then restart Anki.
 
+### macOS
+
+The script works the same on macOS, with two differences:
+
+- Use `python3` and `pip3` in place of `python` and `pip`.
+- macOS's App Nap can pause Anki while it's in the background, so AnkiConnect stops answering and the script reports it can't reach AnkiConnect. Turn App Nap off for Anki once, then restart Anki:
+
+  ```bash
+  defaults write net.ankiweb.dtop NSAppSleepDisabled -bool true
+  defaults write net.ichi2.anki NSAppSleepDisabled -bool true
+  defaults write org.qt-project.Qt.QtWebEngineCore NSAppSleepDisabled -bool true
+  ```
+
 ## Notion database schema
 
 | Property | Type | Becomes |
