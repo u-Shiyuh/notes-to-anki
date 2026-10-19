@@ -31,6 +31,23 @@ A safe smoke test that needs no credentials, Anki or network: `python main.py --
 
 Never read or print `.env`. It holds the real Notion integration secret and is gitignored.
 
+A non-dry run writes to the user's real Anki collection, so ask before running one. To test write paths, point `ANKICONNECT_URL` at a small in-memory fake AnkiConnect (a stdlib `HTTPServer` that implements the actions the script uses) instead of the real one.
+
+## How it's used
+
+The ledger sync runs over and over, not once. The user adds a row to Notion whenever they learn a new kanji, word or grammar point, then runs `python main.py`. That adds the new cards and keeps existing ones in line with Notion without touching review history. The kana seed is the only part meant to run once, because its tables don't change.
+
+As of 2026-10-19, every ledger note in the real collection carries its `notion_` link tag. So the Front-text fallback match only applies to notes created by hand or by older versions of the script.
+
+### Automation
+
+The script can't run on GitHub-hosted Actions. AnkiConnect is an HTTP server inside the desktop Anki app at `127.0.0.1:8765`, so a cloud runner can't reach it, and AnkiWeb has no official API for adding cards. The options considered, best first:
+
+1. **Windows Task Scheduler** on the user's PC runs `python main.py` on a schedule. If Anki is closed the run fails harmlessly and the next one catches up. Anki's own AnkiWeb sync then carries the cards to other devices. This is the recommended option. It isn't set up yet.
+2. **A self-hosted GitHub runner** on the same PC. It only works while the PC is on and Anki is open, so it's option 1 with more setup.
+3. **A cloud Action that builds an `.apkg`** for the user to import by hand. It needs no PC, but every import is manual and it would add a second, non-AnkiConnect code path.
+4. **A cloud Action that syncs through AnkiWeb** with Anki's Python library. Avoid this: it's unofficial, needs the AnkiWeb password stored as a secret, and can force a full sync that overwrites same-day reviews made on other devices.
+
 ## Code map (`main.py`)
 
 | Area | Functions / constants |
