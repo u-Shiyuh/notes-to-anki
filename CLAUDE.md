@@ -8,7 +8,7 @@ A single-file Python CLI (`main.py`) that pushes Japanese study material into An
 
 - **Ledger sync** (default): reads every row of a Notion database (the "Language Learning Ledger") and creates or updates one Anki `Basic` note per row.
 - **Kana seed** (`--seed-kana`): writes the built-in hiragana and katakana tables (104 each: gojūon, dakuten/handakuten, yōon) to `Nihongo::Kana::Hiragana` and `Nihongo::Kana::Katakana`.
-- **Kanji seed** (`--seed-kanji`): writes the 1,000 most frequent kanji from `kanji_top1000.tsv` to `Nihongo::Core Kanji`, in frequency order. It skips kanji that already have a card in `Nihongo::Kanji`.
+- **Kanji seed** (`--seed-kanji`): writes the 1,000 most frequent kanji from `kanji_top1000.tsv` to `Nihongo::Core Kanji`, in frequency order. It skips kanji that already have a ledger card. Ledger `Kanji` rows also live in `Nihongo::Core Kanji` (`TYPE_DECKS`; merged on 2026-10-27, so `Nihongo::Kanji` is now unused). Inside that deck, a `notion_` link tag marks a ledger note, and its absence marks a seed note.
 
 `kanji_top1000.tsv` is generated data. It was built once from KANJIDIC2 (CC BY-SA 4.0: frequency, readings, meanings, strokes) and kanji-data (MIT: JLPT N-levels and WaniKani's reading order). Its `#` header lists the sources and formatting rules. A leading `*` marks each kanji's most common on/kun reading, which comes first in its list. `kanji_readings` renders it bold and fades the rest; a lone reading is bold too. A line with no marked reading (about 57 kun lines, for kanji whose kun'yomi are all rare) is faded entirely. The generator isn't in the repo. To change the list, regenerate the file with the same columns rather than hand-editing 1,000 rows. Keep the attribution in the header and README.
 
@@ -59,7 +59,7 @@ The script can't run on GitHub-hosted Actions. AnkiConnect is an HTTP server ins
 
 | Area | Functions / constants |
 |---|---|
-| Config | `NOTION_TOKEN`, `NOTION_DATABASE_ID` (from env via dotenv; `sync_ledger` treats any value containing `paste_your` (any case) as missing), `DECK_ROOT="Nihongo"`, `NOTE_TYPE="Basic"`, `KANJI_DECK`, `LEDGER_KANJI_DECK`, `KANA_SCOPE` / `KANJI_SCOPE` / `LEDGER_SCOPE` / `LEDGER_KANJI_SCOPE` (Anki searches), `KANJI_FILE`, `LINK_TAG_PREFIX`, `TYPE_TAGS`, `NOTE_OPTIONS` (`duplicateScope: "deck"`), `ANKICONNECT_URL` |
+| Config | `NOTION_TOKEN`, `NOTION_DATABASE_ID` (from env via dotenv; `sync_ledger` treats any value containing `paste_your` (any case) as missing), `DECK_ROOT="Nihongo"`, `NOTE_TYPE="Basic"`, `KANJI_DECK`, `TYPE_DECKS` (Type → deck overrides), `KANA_SCOPE` / `KANJI_SCOPE` / `LEDGER_SCOPE` / `LEDGER_KANJI_SCOPE` (Anki searches; `_LINKED` is `tag:notion\_*`, escaped because `_` is a wildcard in Anki search), `KANJI_FILE`, `LINK_TAG_PREFIX`, `TYPE_TAGS`, `NOTE_OPTIONS` (`duplicateScope: "deck"`), `ANKICONNECT_URL` |
 | Kana data | `HIRAGANA_*`, `KATAKANA_*` lists of `(kana, romaji)`; `kana_note`, `build_kana_notes`, `seed_kana` |
 | Kanji seed | `load_kanji` (parses `KANJI_FILE`), `kanji_readings`, `kanji_note` (its own Back layout and `kanji`/`core_kanji`/`jlpt_nN` tags), `without_ledger_kanji`, `seed_kanji` |
 | Notion | `notion_request` (retries 429/5xx/network errors with backoff, honouring `Retry-After`; exits on other errors), `fetch_all_rows` (API `2025-09-03`: reads the database's `data_sources`, then pages through `/data_sources/{id}/query`), `get_prop`, `skip_reason`, `row_to_note`, `link_tag` |
@@ -76,7 +76,7 @@ The script can't run on GitHub-hosted Actions. AnkiConnect is an HTTP server ins
 | `Item` | title | Front field |
 | `Readings` | rich_text | Back, under the meaning |
 | `Meaning` | rich_text | Back, headline |
-| `Type` | select | `Kanji` / `Vocab` / `Grammar` / `Grammar Drill`. Deck `Nihongo::<Type>` plus a lowercase tag with spaces → `_` (defaults to `Vocab`); `Grammar` gets prose layout |
+| `Type` | select | `Kanji` / `Vocab` / `Grammar` / `Grammar Drill`. Deck `Nihongo::<Type>` (`TYPE_DECKS` sends `Kanji` to `Nihongo::Core Kanji`) plus a lowercase tag with spaces → `_` (defaults to `Vocab`); `Grammar` gets prose layout |
 | `Lesson` | number | Tag `lesson<N>` |
 | `Language` | select | Rows whose value isn't `LANGUAGE` ("Japanese") are skipped; empty is kept |
 
@@ -98,10 +98,10 @@ All text is HTML-escaped. Changing `format_back` changes every Back field, so th
 
 `plan_changes` is read-only and returns a plan. `add_or_update_notes` prints it and applies it; `--dry-run` prints it via `preview_changes` (only if Anki is reachable).
 
-1. **Scope.** Each mode only reads notes matching `note:"Basic" <scope>`: `KANA_SCOPE` (`Nihongo::Kana` and below) for the kana seed, `KANJI_SCOPE` (`Nihongo::Core Kanji`) for the kanji seed, `LEDGER_SCOPE` (`Nihongo` minus those two) for the ledger. Notes outside the scope are never matched or changed, with one exception: adoption (step 3). `NOTE_OPTIONS` sets `duplicateScope: "deck"` so the same Front can exist in a kana deck and a ledger deck.
+1. **Scope.** Each mode only reads notes matching `note:"Basic" <scope>`: `KANA_SCOPE` (`Nihongo::Kana` and below) for the kana seed, `KANJI_SCOPE` (unlinked notes in `Nihongo::Core Kanji`) for the kanji seed, `LEDGER_SCOPE` (`Nihongo` minus `Nihongo::Kana` and minus `KANJI_SCOPE`) for the ledger. Notes outside the scope are never matched or changed, with one exception: adoption (step 3). `NOTE_OPTIONS` sets `duplicateScope: "deck"` so the same Front can exist in a kana deck and a ledger deck.
 2. **In-batch duplicates.** If two incoming notes share deck and Front, only the first is used; the rest are reported under "Not added".
 3. **Matching.** Ledger notes carry a `notion_<page id without dashes>` tag (`link_tag`). An incoming note matches the existing note with the same link tag; otherwise an existing note *without* a link tag and with the same Front (this is how pre-link notes and the kana cards match). Each existing note is matched at most once.
-   - **Adoption** (`adopt=` on `plan_changes`; only the ledger sync passes it). A ledger note for `Nihongo::Kanji` that matched nothing takes over the `Nihongo::Core Kanji` note with the same Front. That note then goes through the normal update path, so it's rewritten, moved into `Nihongo::Kanji` and gets its link tag, and its review history is kept. Its `core_kanji`/`jlpt_nN` tags aren't owned by the ledger, so they stay. Only `Kanji`-type rows adopt; a `Vocab` row `会` doesn't take over the Core Kanji `会` card. The kanji seed then no longer sees that note, and `without_ledger_kanji` stops it from re-adding the kanji.
+   - **Adoption** (`adopt=` on `plan_changes`; only the ledger sync passes it). A ledger `Kanji` note that matched nothing takes over the seed's `Nihongo::Core Kanji` note with the same Front. That note then goes through the normal update path, so it's rewritten and gets its link tag (it's already in the right deck), and its review history is kept. Its `core_kanji`/`jlpt_nN` tags aren't owned by the ledger, so they stay. Only `Kanji`-type rows adopt; a `Vocab` row `会` doesn't take over the Core Kanji `会` card. Once the note is linked, it leaves `KANJI_SCOPE`. `without_ledger_kanji` checks `LEDGER_KANJI_SCOPE` (linked `kanji` notes anywhere under `Nihongo`, even before the sync has moved them) so the seed doesn't re-add the kanji.
 4. **Changes for matched notes** (skipped entirely with `--no-update`):
    - Front or Back differs (compared with `same_html`, which ignores entity, whitespace and `style` formatting differences): `updateNoteFields` with both fields. This also applies Item renames.
    - Any card not in the target deck (`getDecks`): `changeDeck`.
@@ -118,7 +118,7 @@ Confirm the user wants a fix before changing behaviour.
 1. **Unlinked orphans.** A note whose row was deleted before the note got its `notion_` tag looks the same as a hand-made card, so `--prune` won't delete it (today: `聴く`, whose row became `IGNORE — 聴く`). It must be deleted by hand.
 2. **Front fallback can adopt a hand-made card.** A hand-made `Basic` card in a ledger deck whose Front equals a ledger `Item` gets matched once, overwritten and linked. Cards outside `Nihongo` are safe.
 3. **Notion result cap.** `/data_sources/{id}/query` stops at 10,000 results per query. The ledger is about 400 rows.
-4. **Core Kanji is a snapshot.** Kanji that were already in `Nihongo::Kanji` when the seed ran are skipped (110 on 2026-10-27). If such a ledger row is later deleted and pruned, the next `--seed-kanji` adds that kanji back as a fresh Core Kanji card.
+4. **Core Kanji is a snapshot.** Kanji that already had a ledger card when the seed ran are skipped (110 on 2026-10-27). If such a ledger row is later deleted and pruned, the next `--seed-kanji` adds that kanji back as a fresh Core Kanji card.
 5. **`addNotes` errors are counted, not itemised.** Adds are pre-checked, so this is rare; if `addNotes` itself errors, the run reports one failed request and "Added 0".
 
 ## Conventions

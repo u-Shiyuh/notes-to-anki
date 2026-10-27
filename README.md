@@ -6,11 +6,11 @@ It is a single Python script. It reads your Notion database through the official
 
 ## Features
 
-- **Ledger sync:** each Notion row becomes a `Basic` Anki card in a deck named after its `Type` (for example `Nihongo::Vocab` or `Nihongo::Kanji`). Each card is tagged with its lesson number.
+- **Ledger sync:** each Notion row becomes a `Basic` Anki card in a deck named after its `Type` (for example `Nihongo::Vocab`), except `Kanji` rows, which go to `Nihongo::Core Kanji` so all your kanji are in one deck. Each card is tagged with its lesson number.
 - **Kana seed:** 208 recognition cards (hiragana and katakana, including dakuten/handakuten and yōon combinations). They go in `Nihongo::Kana::Hiragana` and `Nihongo::Kana::Katakana`.
-- **Core Kanji seed:** the 1,000 most frequent kanji (by newspaper frequency) go in `Nihongo::Core Kanji`, in frequency order, so Anki introduces the most common ones first. Your daily new-card limit sets the pace. Kanji you already have in `Nihongo::Kanji` are skipped.
+- **Core Kanji seed:** the 1,000 most frequent kanji (by newspaper frequency) go in `Nihongo::Core Kanji`, in frequency order, so Anki introduces the most common ones first. Your daily new-card limit sets the pace. Kanji that already have a card from your Notion ledger are skipped, so each kanji has exactly one card.
 - **Idempotent:** each ledger card carries a `notion_<page id>` tag that links it to its row, so running the script again never creates duplicates, and renaming an `Item` updates its card instead of making a new one.
-- **Stays in its lane:** the kana seed only touches `Nihongo::Kana::*`, the kanji seed only `Nihongo::Core Kanji`, and the ledger sync the other `Nihongo` decks. The one crossover: when you add a `Kanji` row to Notion for a kanji that's already in Core Kanji, the sync moves that card into `Nihongo::Kanji` and rewrites it from your row, keeping its review history, instead of making a second card. Tags you add yourself are never removed.
+- **Stays in its lane:** the kana seed only touches `Nihongo::Kana::*`, the kanji seed only its own cards in `Nihongo::Core Kanji`, and the ledger sync only cards from your ledger. Core Kanji holds both kinds; the ledger's cards are told apart by their `notion_` tag, so the seed never overwrites your notes. The one crossover: when you add a `Kanji` row to Notion for a kanji that's already in Core Kanji, the sync takes over that card and rewrites it from your row, keeping its review history, instead of making a second card. Tags you add yourself are never removed.
 - **Dry-run mode** lets you preview changes before touching Anki. With Anki open, it lists every card that would be added, changed, moved, retagged or deleted.
 
 ## Requirements
@@ -66,7 +66,7 @@ The script works the same on macOS, with two differences:
 | `Item` | Title | Card front |
 | `Meaning` | Text | Card back (headline) |
 | `Readings` | Text | Card back (under the meaning) |
-| `Type` | Select | Deck `Nihongo::<Type>` and a tag (defaults to `Vocab`) |
+| `Type` | Select | Deck `Nihongo::<Type>` (`Kanji` → `Nihongo::Core Kanji`) and a tag (defaults to `Vocab`) |
 | `Lesson` | Number | Tag `lesson<N>` |
 | `Language` | Select | Only `Japanese` rows (or rows with no language) are synced |
 
@@ -90,7 +90,7 @@ BACK    hear, listen, ask                      (bold)
         新聞(しんぶん, newspaper) is N5 vocab   (small, faded)
 ```
 
-Core Kanji cards show up to four meanings, the on'yomi in katakana and the kun'yomi in hiragana (okurigana in brackets), then the stroke count, JLPT level and frequency rank. In each reading line, the most common reading comes first in bold, with the rarer ones faded after it. "Most common" means the reading WaniKani teaches first. If none of a kanji's kun'yomi are common (such as 発), the whole kun line is faded. They're tagged `kanji`, `core_kanji` and `jlpt_n<level>`.
+Kanji cards from your ledger use the layout above. The seed's Core Kanji cards show up to four meanings, the on'yomi in katakana and the kun'yomi in hiragana (okurigana in brackets), then the stroke count, JLPT level and frequency rank. In each reading line, the most common reading comes first in bold, with the rarer ones faded after it. "Most common" means the reading WaniKani teaches first. If none of a kanji's kun'yomi are common (such as 発), the whole kun line is faded. They're tagged `kanji`, `core_kanji` and `jlpt_n<level>`.
 
 ```
 FRONT   連

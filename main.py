@@ -52,12 +52,13 @@ USAGE
    python3 main.py --seed-kanji               # add the 1000 most frequent kanji
    python3 main.py --seed-kanji --dry-run     # preview the kanji seed only
 
-Safe to re-run any time. Each mode only looks at its own decks: the kana
-seed at Nihongo::Kana::*, the kanji seed at Nihongo::Core Kanji, the
-ledger sync at the other Nihongo decks. The kanji seed skips kanji that
-already have a card in Nihongo::Kanji, and when a ledger Kanji row is
-added for a seeded kanji, the sync moves that card into Nihongo::Kanji
-(keeping its review history) rather than creating a second one.
+Safe to re-run any time. Each mode only looks at its own notes: the kana
+seed at Nihongo::Kana::*, the kanji seed at its own (unlinked) notes in
+Nihongo::Core Kanji, the ledger sync at the other Nihongo notes. Ledger
+Kanji rows also go to Nihongo::Core Kanji. The kanji seed skips kanji
+that already have a ledger card, and when a ledger Kanji row is added for
+a seeded kanji, the sync takes over that card (keeping its review
+history) rather than creating a second one.
 Ledger notes carry a notion_<page id> tag linking them to their row, so
 renaming an Item updates its card instead of creating a new one (older
 untagged notes are matched by Front text once, then tagged).
@@ -102,26 +103,31 @@ ANKICONNECT_URL = "http://127.0.0.1:8765"
 DECK_ROOT = "Nihongo"
 NOTE_TYPE = "Basic"
 
-# Each mode only matches (and may only change) notes inside its own decks,
-# so a ledger card "は" and the hiragana card "は" never overwrite each other.
-KANJI_DECK = f"{DECK_ROOT}::Core Kanji"
-KANA_SCOPE = f'"deck:{DECK_ROOT}::Kana"'
-KANJI_SCOPE = f'"deck:{KANJI_DECK}"'
-LEDGER_SCOPE = f'"deck:{DECK_ROOT}" -"deck:{DECK_ROOT}::Kana" -"deck:{KANJI_DECK}"'
+# Ledger notes are tagged notion_<page id without dashes>. That tag, not
+# the Front text, is what links a card to its Notion row.
+LINK_TAG_PREFIX = "notion_"
 
-# The ledger's Kanji deck. The kanji seed skips kanji that already have a
-# card here, and a ledger Kanji row takes over (adopts) the Core Kanji card
-# for the same kanji instead of duplicating it.
-LEDGER_KANJI_DECK = f"{DECK_ROOT}::Kanji"
-LEDGER_KANJI_SCOPE = f'"deck:{LEDGER_KANJI_DECK}"'
+# Each mode only matches (and may only change) notes inside its own scope,
+# so a ledger card "は" and the hiragana card "は" never overwrite each other.
+# Core Kanji is shared: ledger Kanji rows live there too (TYPE_DECKS), told
+# apart from the seed's notes by their link tag. ("\_" is a literal "_" in
+# Anki searches, where a bare "_" matches any character.)
+KANJI_DECK = f"{DECK_ROOT}::Core Kanji"
+_LINKED = "tag:" + LINK_TAG_PREFIX.replace("_", "\\_") + "*"
+KANA_SCOPE = f'"deck:{DECK_ROOT}::Kana"'
+KANJI_SCOPE = f'"deck:{KANJI_DECK}" -{_LINKED}'
+LEDGER_SCOPE = (f'"deck:{DECK_ROOT}" -"deck:{DECK_ROOT}::Kana" '
+                f'(-"deck:{KANJI_DECK}" OR {_LINKED})')
+
+# Ledger rows go to Nihongo::<Type>, except these. The kanji seed skips
+# kanji that already have a ledger card, and a new ledger Kanji row takes
+# over (adopts) the seed's card for its kanji instead of duplicating it.
+TYPE_DECKS = {"Kanji": KANJI_DECK}
+LEDGER_KANJI_SCOPE = f'"deck:{DECK_ROOT}" {_LINKED} tag:kanji'
 
 # The 1000 most frequent kanji, generated from KANJIDIC2 (see its header).
 KANJI_FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)),
                           "kanji_top1000.tsv")
-
-# Ledger notes are tagged notion_<page id without dashes>. That tag, not
-# the Front text, is what links a card to its Notion row.
-LINK_TAG_PREFIX = "notion_"
 
 # Tags the script owns. On update, a note's tags matching these (or any tag
 # the current batch produces) are removed when no longer wanted; every
@@ -341,13 +347,14 @@ def kanji_note(row):
 
 
 def without_ledger_kanji(notes):
-    """Drop kanji that already have a card in the ledger's Kanji deck."""
+    """Drop kanji that already have a ledger Kanji card (in Core Kanji, or
+    still in another deck before the ledger sync moves it there)."""
     have = {_field(info, "Front").strip() for info in find_notes(LEDGER_KANJI_SCOPE)}
     kept = [n for n in notes if n["fields"]["Front"] not in have]
     skipped = [n["fields"]["Front"] for n in notes if n["fields"]["Front"] in have]
     if skipped:
-        print(f"Skipping {len(skipped)} kanji already in {LEDGER_KANJI_DECK}: "
-              + " ".join(skipped))
+        print(f"Skipping {len(skipped)} kanji that have a card from the Notion "
+              "ledger: " + " ".join(skipped))
     return kept
 
 
@@ -540,7 +547,7 @@ def row_to_note(page):
 
     back = format_back(item_type, readings, meaning)
 
-    deck = f"{DECK_ROOT}::{item_type}"
+    deck = TYPE_DECKS.get(item_type, f"{DECK_ROOT}::{item_type}")
     tags = [f"lesson{lesson}"] if lesson else []
     # Anki tags can't contain spaces: "Grammar Drill" -> "grammar_drill".
     tags.append(item_type.lower().replace(" ", "_"))
@@ -884,11 +891,11 @@ def sync_ledger(dry_run=False, update=True, prune=False):
             print(f"\n[{n['deckName']}] {n['fields']['Front']}")
             print(preview_html(n["fields"]["Back"]))
         preview_changes(notes, LEDGER_SCOPE, update=update, prune=prune,
-                        adopt=(KANJI_SCOPE, LEDGER_KANJI_DECK))
+                        adopt=(KANJI_SCOPE, KANJI_DECK))
         return
 
     add_or_update_notes(notes, LEDGER_SCOPE, update=update, prune=prune,
-                        adopt=(KANJI_SCOPE, LEDGER_KANJI_DECK))
+                        adopt=(KANJI_SCOPE, KANJI_DECK))
 
 
 def preview_html(back):
@@ -919,7 +926,7 @@ def main():
     parser.add_argument(
         "--seed-kanji", action="store_true",
         help="Seed the 1000 most frequent kanji into Nihongo::Core Kanji "
-             "(skipping any already in Nihongo::Kanji), instead of syncing "
+             "(skipping any with a card from the ledger), instead of syncing "
              "the Notion ledger",
     )
     parser.add_argument(
