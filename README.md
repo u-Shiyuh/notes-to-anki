@@ -90,15 +90,15 @@ BACK    hear, listen, ask                      (bold)
         新聞(しんぶん, newspaper) is N5 vocab   (small, faded)
 ```
 
-Core Kanji cards show up to four meanings, the on'yomi in katakana and the kun'yomi in hiragana (okurigana in brackets), then the stroke count, JLPT level and frequency rank. They're tagged `kanji`, `core_kanji` and `jlpt_n<level>`.
+Core Kanji cards show up to four meanings, the on'yomi in katakana and the kun'yomi in hiragana (okurigana in brackets), then the stroke count, JLPT level and frequency rank. In each reading line, the most common reading comes first in bold, with the rarer ones faded after it. "Most common" means the reading WaniKani teaches first. They're tagged `kanji`, `core_kanji` and `jlpt_n<level>`.
 
 ```
-FRONT   会
+FRONT   連
 
-BACK    meeting, meet, party, association      (bold)
-        On: カイ、エ
-        Kun: あ(う)、あ(わせる)、あつ(まる)
-        6 strokes · JLPT N4 · #4 by frequency   (small, faded)
+BACK    take along, lead, join, connect           (bold)
+        On: レン                                   (bold)
+        Kun: つ(れる)、つら(なる)、つら(ねる)、-づ(れ)   (first bold, rest faded)
+        10 strokes · JLPT N3 · #30 by frequency    (small, faded)
 ```
 
 The formatting uses inline styles, so it works with Anki's stock `Basic` note type and in night mode. Use `--dry-run` to preview the first few cards.
@@ -133,7 +133,7 @@ The first sync after upgrading to linked cards reports every ledger card under "
 
 ## Kanji data
 
-`kanji_top1000.tsv` was generated once and is read locally, so seeding needs no network. Frequency ranks, readings, meanings and stroke counts come from [KANJIDIC2](https://www.edrdg.org/wiki/index.php/KANJIDIC_Project), © the Electronic Dictionary Research and Development Group, used under [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/). JLPT N-levels come from [kanji-data](https://github.com/davidluzgouveia/kanji-data) (MIT). The frequency ranking is based on newspaper text, so news-heavy kanji such as 党 (political party) rank higher than they would in everyday conversation. Ten of the 1,000 have no JLPT level.
+`kanji_top1000.tsv` was generated once and is read locally, so seeding needs no network. Frequency ranks, readings, meanings and stroke counts come from [KANJIDIC2](https://www.edrdg.org/wiki/index.php/KANJIDIC_Project), © the Electronic Dictionary Research and Development Group, used under [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/). JLPT N-levels and the most-common-reading order (WaniKani's) come from [kanji-data](https://github.com/davidluzgouveia/kanji-data) (MIT). The frequency ranking is based on newspaper text, so news-heavy kanji such as 党 (political party) rank higher than they would in everyday conversation. Ten of the 1,000 have no JLPT level.
 
 ## Troubleshooting
 

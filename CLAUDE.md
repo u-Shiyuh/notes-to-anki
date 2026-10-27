@@ -10,7 +10,7 @@ A single-file Python CLI (`main.py`) that pushes Japanese study material into An
 - **Kana seed** (`--seed-kana`): writes the built-in hiragana and katakana tables (104 each: gojūon, dakuten/handakuten, yōon) to `Nihongo::Kana::Hiragana` and `Nihongo::Kana::Katakana`.
 - **Kanji seed** (`--seed-kanji`): writes the 1,000 most frequent kanji from `kanji_top1000.tsv` to `Nihongo::Core Kanji`, in frequency order. It skips kanji that already have a card in `Nihongo::Kanji`.
 
-`kanji_top1000.tsv` is generated data. It was built once from KANJIDIC2 (CC BY-SA 4.0: frequency, readings, meanings, strokes) and kanji-data (MIT: JLPT N-levels). Its `#` header lists the sources and formatting rules. The generator isn't in the repo. To change the list, regenerate the file with the same columns rather than hand-editing 1,000 rows. Keep the attribution in the header and README.
+`kanji_top1000.tsv` is generated data. It was built once from KANJIDIC2 (CC BY-SA 4.0: frequency, readings, meanings, strokes) and kanji-data (MIT: JLPT N-levels and WaniKani's reading order). Its `#` header lists the sources and formatting rules. A leading `*` marks each kanji's most common on/kun reading, which comes first in its list. `kanji_readings` renders it bold and fades the rest; a lone reading is bold too. The generator isn't in the repo. To change the list, regenerate the file with the same columns rather than hand-editing 1,000 rows. Keep the attribution in the header and README.
 
 There are no tests, no packaging and no `requirements.txt`. The only third-party dependency is `python-dotenv`. HTTP goes through `urllib`.
 
@@ -61,7 +61,7 @@ The script can't run on GitHub-hosted Actions. AnkiConnect is an HTTP server ins
 |---|---|
 | Config | `NOTION_TOKEN`, `NOTION_DATABASE_ID` (from env via dotenv; `sync_ledger` treats any value containing `paste_your` (any case) as missing), `DECK_ROOT="Nihongo"`, `NOTE_TYPE="Basic"`, `KANJI_DECK`, `LEDGER_KANJI_DECK`, `KANA_SCOPE` / `KANJI_SCOPE` / `LEDGER_SCOPE` / `LEDGER_KANJI_SCOPE` (Anki searches), `KANJI_FILE`, `LINK_TAG_PREFIX`, `TYPE_TAGS`, `NOTE_OPTIONS` (`duplicateScope: "deck"`), `ANKICONNECT_URL` |
 | Kana data | `HIRAGANA_*`, `KATAKANA_*` lists of `(kana, romaji)`; `kana_note`, `build_kana_notes`, `seed_kana` |
-| Kanji seed | `load_kanji` (parses `KANJI_FILE`), `kanji_note` (its own Back layout and `kanji`/`core_kanji`/`jlpt_nN` tags), `without_ledger_kanji`, `seed_kanji` |
+| Kanji seed | `load_kanji` (parses `KANJI_FILE`), `kanji_readings`, `kanji_note` (its own Back layout and `kanji`/`core_kanji`/`jlpt_nN` tags), `without_ledger_kanji`, `seed_kanji` |
 | Notion | `notion_request` (retries 429/5xx/network errors with backoff, honouring `Retry-After`; exits on other errors), `fetch_all_rows` (API `2025-09-03`: reads the database's `data_sources`, then pages through `/data_sources/{id}/query`), `get_prop`, `skip_reason`, `row_to_note`, `link_tag` |
 | Card layout | `format_back`, `split_note`, `sentences`, `preview_html` (dry-run only) |
 | Anki | `anki_request` (exits if AnkiConnect is unreachable; *logs but does not raise* on AnkiConnect errors), `anki_available`, `anki_multi` (batches writes through `multi`), `find_notes`, `same_html`, `plan_changes` (read-only), `print_plan`, `summarize`, `preview_changes` (dry-run), `add_or_update_notes` |

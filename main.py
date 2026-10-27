@@ -299,14 +299,29 @@ def load_kanji():
     return rows
 
 
+def kanji_readings(label, readings):
+    """One "On:"/"Kun:" line. The most common reading (marked * in
+    KANJI_FILE, always first, or the only one) is bold; the rest are faded."""
+    esc = html.escape
+    items = readings.split("、")
+    line = f"{label}: "
+    if items[0].startswith("*") or len(items) == 1:
+        line += f"<b>{esc(items.pop(0).lstrip('*'))}</b>"
+        if items:
+            line += f'<span style="opacity:0.65">、{esc("、".join(items))}</span>'
+    else:
+        line += esc("、".join(items))
+    return _LINE.format(line)
+
+
 def kanji_note(row):
     """Build an AnkiConnect note dict for one Core Kanji row."""
     esc = html.escape
     parts = [_HEADLINE.format(esc(", ".join(row["meanings"])))]
     if row["on"]:
-        parts.append(_LINE.format(esc(f"On: {row['on']}")))
+        parts.append(kanji_readings("On", row["on"]))
     if row["kun"]:
-        parts.append(_LINE.format(esc(f"Kun: {row['kun']}")))
+        parts.append(kanji_readings("Kun", row["kun"]))
     facts = [f"{row['strokes']} stroke" + ("" if row["strokes"] == "1" else "s")]
     if row["jlpt"]:
         facts.append(f"JLPT N{row['jlpt']}")
