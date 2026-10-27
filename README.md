@@ -90,7 +90,7 @@ BACK    hear, listen, ask                      (bold)
         新聞(しんぶん, newspaper) is N5 vocab   (small, faded)
 ```
 
-Core Kanji cards show up to four meanings, the on'yomi in katakana and the kun'yomi in hiragana (okurigana in brackets), then the stroke count, JLPT level and frequency rank. In each reading line, the most common reading comes first in bold, with the rarer ones faded after it. "Most common" means the reading WaniKani teaches first. They're tagged `kanji`, `core_kanji` and `jlpt_n<level>`.
+Core Kanji cards show up to four meanings, the on'yomi in katakana and the kun'yomi in hiragana (okurigana in brackets), then the stroke count, JLPT level and frequency rank. In each reading line, the most common reading comes first in bold, with the rarer ones faded after it. "Most common" means the reading WaniKani teaches first. If none of a kanji's kun'yomi are common (such as 発), the whole kun line is faded. They're tagged `kanji`, `core_kanji` and `jlpt_n<level>`.
 
 ```
 FRONT   連

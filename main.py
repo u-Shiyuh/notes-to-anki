@@ -301,16 +301,16 @@ def load_kanji():
 
 def kanji_readings(label, readings):
     """One "On:"/"Kun:" line. The most common reading (marked * in
-    KANJI_FILE, always first, or the only one) is bold; the rest are faded."""
+    KANJI_FILE, always first, or the only one) is bold; the rest are faded.
+    With no common reading, the readings are all rare, so all are faded."""
     esc = html.escape
     items = readings.split("、")
-    line = f"{label}: "
+    line, sep = f"{label}: ", ""
     if items[0].startswith("*") or len(items) == 1:
         line += f"<b>{esc(items.pop(0).lstrip('*'))}</b>"
-        if items:
-            line += f'<span style="opacity:0.65">、{esc("、".join(items))}</span>'
-    else:
-        line += esc("、".join(items))
+        sep = "、"
+    if items:
+        line += f'<span style="opacity:0.65">{sep}{esc("、".join(items))}</span>'
     return _LINE.format(line)
 
 
