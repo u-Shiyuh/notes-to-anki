@@ -1,6 +1,6 @@
 # notion-to-anki
 
-This tool syncs a Notion "Language Learning Ledger" database into Anki flashcards. It can also seed full hiragana and katakana decks.
+This tool syncs a Notion "Language Learning Ledger" database into Anki flashcards. It can also seed full hiragana and katakana decks, and a deck of the 1,000 most frequent kanji.
 
 It is a single Python script. It reads your Notion database through the official API and writes cards into Anki through [AnkiConnect](https://ankiweb.net/shared/info/2055492159). It is safe to re-run: new rows are added, and existing cards are updated (text, deck and tags) when their row changes.
 
@@ -8,8 +8,9 @@ It is a single Python script. It reads your Notion database through the official
 
 - **Ledger sync:** each Notion row becomes a `Basic` Anki card in a deck named after its `Type` (for example `Nihongo::Vocab` or `Nihongo::Kanji`). Each card is tagged with its lesson number.
 - **Kana seed:** 208 recognition cards (hiragana and katakana, including dakuten/handakuten and yōon combinations). They go in `Nihongo::Kana::Hiragana` and `Nihongo::Kana::Katakana`.
+- **Core Kanji seed:** the 1,000 most frequent kanji (by newspaper frequency) go in `Nihongo::Core Kanji`, in frequency order, so Anki introduces the most common ones first. Your daily new-card limit sets the pace. Kanji you already have in `Nihongo::Kanji` are skipped.
 - **Idempotent:** each ledger card carries a `notion_<page id>` tag that links it to its row, so running the script again never creates duplicates, and renaming an `Item` updates its card instead of making a new one.
-- **Stays in its lane:** the kana seed only touches `Nihongo::Kana::*`, and the ledger sync only touches the other `Nihongo` decks. Tags you add yourself are never removed.
+- **Stays in its lane:** the kana seed only touches `Nihongo::Kana::*`, the kanji seed only `Nihongo::Core Kanji`, and the ledger sync the other `Nihongo` decks. The one crossover: when you add a `Kanji` row to Notion for a kanji that's already in Core Kanji, the sync moves that card into `Nihongo::Kanji` and rewrites it from your row, keeping its review history, instead of making a second card. Tags you add yourself are never removed.
 - **Dry-run mode** lets you preview changes before touching Anki. With Anki open, it lists every card that would be added, changed, moved, retagged or deleted.
 
 ## Requirements
@@ -89,6 +90,17 @@ BACK    hear, listen, ask                      (bold)
         新聞(しんぶん, newspaper) is N5 vocab   (small, faded)
 ```
 
+Core Kanji cards show up to four meanings, the on'yomi in katakana and the kun'yomi in hiragana (okurigana in brackets), then the stroke count, JLPT level and frequency rank. They're tagged `kanji`, `core_kanji` and `jlpt_n<level>`.
+
+```
+FRONT   会
+
+BACK    meeting, meet, party, association      (bold)
+        On: カイ、エ
+        Kun: あ(う)、あ(わせる)、あつ(まる)
+        6 strokes · JLPT N4 · #4 by frequency   (small, faded)
+```
+
 The formatting uses inline styles, so it works with Anki's stock `Basic` note type and in night mode. Use `--dry-run` to preview the first few cards.
 
 ## Usage
@@ -103,6 +115,9 @@ python main.py --prune                  # ...and delete them
 python main.py --seed-kana              # add all hiragana + katakana cards
 python main.py --seed-kana --dry-run    # preview the kana seed
 python main.py --seed-kana --no-update  # add missing kana only
+
+python main.py --seed-kanji             # add the 1,000 most frequent kanji
+python main.py --seed-kanji --dry-run   # preview the kanji seed
 ```
 
 By default, cards already in Anki are brought in line with their source: the text is rewritten when it changed (for example after you fix a meaning in Notion), the card moves deck when you change its `Type`, and old `lesson<N>` / type tags are swapped for the current ones. Pass `--no-update` to only add new cards.
@@ -115,6 +130,10 @@ The first sync after upgrading to linked cards reports every ledger card under "
 
 - Two rows with the same `Item` and `Type` would be the same card, so only the first one is synced. The other is listed under "Not added".
 - A card whose row was deleted *before* it got a `notion_` tag can't be told apart from a hand-made card, so `--prune` won't delete it. Delete it in Anki yourself (the prune output lists it).
+
+## Kanji data
+
+`kanji_top1000.tsv` was generated once and is read locally, so seeding needs no network. Frequency ranks, readings, meanings and stroke counts come from [KANJIDIC2](https://www.edrdg.org/wiki/index.php/KANJIDIC_Project), © the Electronic Dictionary Research and Development Group, used under [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/). JLPT N-levels come from [kanji-data](https://github.com/davidluzgouveia/kanji-data) (MIT). The frequency ranking is based on newspaper text, so news-heavy kanji such as 党 (political party) rank higher than they would in everyday conversation. Ten of the 1,000 have no JLPT level.
 
 ## Troubleshooting
 

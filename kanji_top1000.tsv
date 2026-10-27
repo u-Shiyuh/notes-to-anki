@@ -1,0 +1,1008 @@
+# The 1000 most frequent kanji (newspaper frequency rank).
+# Readings, meanings, strokes and rank: KANJIDIC2, (c) EDRDG, CC BY-SA 4.0,
+#   https://www.edrdg.org/wiki/index.php/KANJIDIC_Project
+# JLPT levels: kanji-data by David Gouveia (MIT),
+#   https://github.com/davidluzgouveia/kanji-data (commit 00fd707)
+# Meanings are capped at 4; kun'yomi okurigana is shown as き(く).
+# Columns: rank, kanji, strokes, jlpt (N level, blank if none),
+#   meanings (; separated), on'yomi (、 separated), kun'yomi (、 separated)
+1	日	4	5	day; sun; Japan; counter for days	ニチ、ジツ	ひ、-び、-か
+2	一	1	5	one	イチ、イツ	ひと-、ひと(つ)
+3	国	8	5	country	コク	くに
+4	会	6	4	meeting; meet; party; association	カイ、エ	あ(う)、あ(わせる)、あつ(まる)
+5	人	2	5	person	ジン、ニン	ひと、-り、-と
+6	年	6	5	year; counter for years	ネン	とし
+7	大	3	5	large; big	ダイ、タイ	おお-、おお(きい)、-おお(いに)
+8	十	2	5	ten	ジュウ、ジッ、ジュッ	とお、と、そ
+9	二	2	5	two	ニ、ジ	ふた、ふた(つ)、ふたたび
+10	本	5	5	book; present; main; origin	ホン	もと
+11	中	4	5	in; inside; middle; mean	チュウ	なか、うち、あた(る)
+12	長	8	5	long; leader; superior; senior	チョウ	なが(い)、おさ
+13	出	5	5	exit; leave; go out; come out	シュツ、スイ	で(る)、-で、だ(す)、い(でる)、い(だす)
+14	三	3	5	three	サン、ゾウ	み、み(つ)、みっ(つ)
+15	同	6	4	same; agree; equal	ドウ	おな(じ)
+16	時	10	5	time; hour	ジ	とき、-どき
+17	政	9	3	politics; government	セイ、ショウ	まつりごと、まん
+18	事	8	4	matter; thing; fact; business	ジ、ズ	こと、つか(う)、つか(える)
+19	自	6	4	oneself	ジ、シ	みずか(ら)、おの(ずから)、おの(ずと)
+20	行	6	5	going; journey; carry out; conduct	コウ、ギョウ、アン	い(く)、ゆ(く)、-ゆ(き)、-ゆき、-い(き)、-いき、おこな(う)、おこ(なう)
+21	社	7	4	company; firm; office; association	シャ	やしろ
+22	見	7	5	see; hopes; chances; idea	ケン	み(る)、み(える)、み(せる)
+23	月	4	5	month; moon	ゲツ、ガツ	つき
+24	分	4		part; minute of time; segment; share	ブン、フン、ブ	わ(ける)、わ(け)、わ(かれる)、わ(かる)、わ(かつ)
+25	議	20	3	deliberation; consultation; debate; consideration	ギ	
+26	後	9	5	behind; back; later	ゴ、コウ	のち、うし(ろ)、うしろ、あと、おく(れる)
+27	前	9	5	in front; before	ゼン	まえ
+28	民	5	3	people; nation; subjects	ミン	たみ
+29	生	5	5	life; genuine; birth	セイ、ショウ	い(きる)、い(かす)、い(ける)、う(まれる)、うま(れる)、う(まれ)、うまれ、う(む)、お(う)、は(える)、は(やす)、き、なま、な(る)、な(す)、む(す)、-う
+30	連	10	3	take along; lead; join; connect	レン	つら(なる)、つら(ねる)、つ(れる)、-づ(れ)
+31	五	4	5	five	ゴ	いつ、いつ(つ)
+32	発	9	4	departure; discharge; publish; emit	ハツ、ホツ	た(つ)、あば(く)、おこ(る)、つか(わす)、はな(つ)
+33	間	12	5	interval; space	カン、ケン	あいだ、ま、あい
+34	対	7	3	vis-a-vis; opposite; even; equal	タイ、ツイ	あいて、こた(える)、そろ(い)、つれあ(い)、なら(ぶ)、むか(う)
+35	上	3	5	above; up	ジョウ、ショウ、シャン	うえ、うわ-、かみ、あ(げる)、あ(がる)、あ(がり)、のぼ(る)、のぼ(り)、のぼ(せる)、のぼ(す)、たてまつ(る)
+36	部	11	3	section; bureau; dept; class	ブ	-べ
+37	東	8	5	east	トウ	ひがし
+38	者	8	4	someone; person	シャ	もの
+39	党	10	2	party; faction; clique	トウ	なかま、むら
+40	地	6	4	ground; earth	チ、ジ	
+41	合	6	3	fit; suit; join; 0.1	ゴウ、ガッ、カッ	あ(う)、あ(い)、あい-、-あい、あ(わす)、あ(わせる)
+42	市	5	3	market; city; town	シ	いち
+43	業	13	4	business; vocation; arts; performance	ギョウ、ゴウ	わざ
+44	内	4	3	inside; within; between; among	ナイ、ダイ	うち
+45	相	9	3	inter-; mutual; together; each other	ソウ、ショウ	あい-
+46	方	4	4	direction; person; alternative	ホウ	かた、-がた
+47	四	5	5	four	シ	よ、よ(つ)、よっ(つ)、よん
+48	定	8	3	determine; fix; establish; decide	テイ、ジョウ	さだ(める)、さだ(まる)、さだ(か)
+49	今	4	5	now	コン、キン	いま
+50	回	6	3	-times; round; game; revolve	カイ、エ	まわ(る)、-まわ(り)、まわ(す)、まわ(し-)、-まわ(し)、もとお(る)、か(える)
+51	新	13	4	new	シン	あたら(しい)、あら(た)、あら-、にい-
+52	場	12	4	location; place	ジョウ、チョウ	ば
+53	金	8	5	gold	キン、コン、ゴン	かね、かな-、-がね
+54	員	10	4	employee; member; number; the one in charge	イン	
+55	九	2	5	nine	キュウ、ク	ここの、ここの(つ)
+56	入	2	5	enter; insert	ニュウ、ジュ	い(る)、-い(り)、い(れる)、-い(れ)、はい(る)
+57	選	15	3	elect; select; choose; prefer	セン	えら(ぶ)、え(る)、よ(る)
+58	立	5	4	stand up; rise; set up; erect	リツ、リュウ、リットル	た(つ)、た(ち-)、た(てる)、た(て-)、たて-、-た(て)、-だ(て)、-だ(てる)
+59	開	12	4	open; unfold; unseal	カイ	ひら(く)、ひら(き)、-びら(き)、ひら(ける)、あ(く)、あ(ける)
+60	手	4	4	hand	シュ、ズ	て、た-
+61	米	6	3	rice; USA; metre	ベイ、マイ、メエトル	こめ、よね
+62	力	2	4	power; strength; strong; strain	リョク、リキ、リイ	ちから
+63	学	8	5	study; learning; science	ガク	まな(ぶ)
+64	問	11	4	question; ask; problem	モン	と(う)、と(い)、とん
+65	高	10	5	tall; high; expensive	コウ	たか(い)、たか、-だか、たか(まる)、たか(める)
+66	代	5	4	substitute; change; convert; replace	ダイ、タイ	か(わる)、かわ(る)、かわ(り)、か(わり)、-がわ(り)、-が(わり)、か(える)、よ、しろ
+67	明	8	4	bright; light	メイ、ミョウ、ミン	あ(かり)、あか(るい)、あか(るむ)、あか(らむ)、あき(らか)、あ(ける)、-あ(け)、あ(く)、あ(くる)、あ(かす)
+68	実	8	3	reality; truth; seed; fruit	ジツ、シツ	み、みの(る)、まこと、みの、みち(る)
+69	円	4	5	circle; yen; round	エン	まる(い)、まる、まど、まど(か)、まろ(やか)
+70	関	14	3	connection; barrier; gateway; involve	カン	せき、-ぜき、かか(わる)、からくり、かんぬき
+71	決	7	3	decide; fix; agree upon; appoint	ケツ	き(める)、-ぎ(め)、き(まる)、さ(く)
+72	子	3	5	child; sign of the rat; 11PM-1AM; first sign of Chinese zodiac	シ、ス、ツ	こ、ね
+73	動	11	4	move; motion; change; confusion	ドウ	うご(く)、うご(かす)
+74	京	8	4	capital; 10**16	キョウ、ケイ、キン	みやこ
+75	全	6	3	whole; entire; all; complete	ゼン	まった(く)、すべ(て)
+76	目	5	4	eye; class; look; insight	モク、ボク	め、ま-
+77	表	8	3	surface; table; chart; diagram	ヒョウ	おもて、あらわ(す)、あらわ(れる)、あら(わす)
+78	戦	13	3	war; battle; match	セン	いくさ、たたか(う)、おのの(く)、そよ(ぐ)、わなな(く)
+79	経	11	3	sutra; longitude; pass thru; expire	ケイ、キョウ、キン	へ(る)、た(つ)、たていと、はか(る)、のり
+80	通	10	4	traffic; pass through; avenue; commute	ツウ、ツ	とお(る)、とお(り)、-どお(り)、とお(す)、とお(し)、-どお(し)、かよ(う)
+81	外	5	5	outside	ガイ、ゲ	そと、ほか、はず(す)、はず(れる)、と-
+82	最	12	3	utmost; most; extreme	サイ、シュ	もっと(も)、つま
+83	言	7	4	say; word	ゲン、ゴン	い(う)、こと
+84	氏	4	1	family name; surname; clan	シ	うじ
+85	現	11	3	present; existing; actual	ゲン	あらわ(れる)、あらわ(す)、うつつ、うつ(つ)
+86	理	11	4	logic; arrangement; reason; justice	リ	ことわり
+87	調	15	3	tune; tone; meter; key (music)	チョウ	しら(べる)、しら(べ)、ととの(う)、ととの(える)
+88	体	7	4	body; substance; object; reality	タイ、テイ	からだ、かたち
+89	化	4	3	change; take the form of; influence; enchant	カ、ケ	ば(ける)、ば(かす)、ふ(ける)、け(する)
+90	田	5	4	rice field; rice paddy	デン	た
+91	当	6	3	hit; right; appropriate; himself	トウ	あ(たる)、あ(たり)、あ(てる)、あ(て)、まさ(に)、まさ(にべし)
+92	八	2	5	eight	ハチ、ハツ	や、や(つ)、やっ(つ)、よう
+93	六	4	5	six	ロク、リク	む、む(つ)、むっ(つ)、むい
+94	約	9	3	promise; approximately; shrink	ヤク	つづ(まる)、つづ(める)、つづま(やか)
+95	主	5	4	lord; chief; master; main thing	シュ、ス、シュウ	ぬし、おも、あるじ
+96	題	18	4	topic; subject	ダイ	
+97	下	3	5	below; down; descend; give	カ、ゲ	した、しも、もと、さ(げる)、さ(がる)、くだ(る)、くだ(り)、くだ(す)、くだ(さる)、お(ろす)、お(りる)
+98	首	9	3	neck; counter for songs and poems	シュ	くび
+99	意	13	4	idea; mind; heart; taste	イ	
+100	法	8	3	method; law; rule; principle	ホウ、ハッ、ホッ、フラン	のり
+101	不	4	4	negative; non-; bad; ugly	フ、ブ	
+102	来	7	5	come; due; next; cause	ライ、タイ	く(る)、きた(る)、きた(す)、き(たす)、き(たる)、き、こ
+103	作	7	4	make; production; prepare; build	サク、サ	つく(る)、つく(り)、-づく(り)
+104	性	8	3	sex; gender; nature	セイ、ショウ	さが
+105	的	8		bull's eye; mark; target; object	テキ	まと
+106	要	9	3	need; main point; essence; pivot	ヨウ	い(る)、かなめ
+107	用	5	4	utilize; business; service; use	ヨウ	もち(いる)
+108	制	8	3	system; law; rule	セイ	
+109	治	8	3	reign; be at peace; calm down; subdue	ジ、チ	おさ(める)、おさ(まる)、なお(る)、なお(す)
+110	度	9	4	degrees; occurrence; time; counter for occurrences	ド、ト、タク	たび、-た(い)
+111	務	11	3	task; duties	ム	つと(める)
+112	強	11	4	strong	キョウ、ゴウ	つよ(い)、つよ(まる)、つよ(める)、し(いる)、こわ(い)
+113	気	6	5	spirit; mind; air; atmosphere	キ、ケ	いき、き
+114	小	3	5	little; small	ショウ	ちい(さい)、こ-、お-、さ-
+115	七	2	5	seven	シチ	なな、なな(つ)、なの
+116	成	6	3	turn into; become; get; grow	セイ、ジョウ	な(る)、な(す)
+117	期	12	3	period; time; date; term	キ、ゴ	
+118	公	4	4	public; prince; official; governmental	コウ、ク	おおやけ
+119	持	9	4	hold; have	ジ	も(つ)、-も(ち)、も(てる)
+120	野	11	4	plains; field; rustic; civilian life	ヤ、ショ	の
+121	協	8	2	co-; cooperation	キョウ	
+122	取	8	3	take; fetch; take up	シュ	と(る)、と(り)、と(り-)、とり、-ど(り)
+123	都	11	3	metropolis; capital; all; everything	ト、ツ	みやこ
+124	和	8	3	harmony; Japanese style; peace; soften	ワ、オ、カ	やわ(らぐ)、やわ(らげる)、なご(む)、なご(やか)、あ(える)
+125	統	12	1	overall; relationship; ruling; governing	トウ	す(べる)
+126	以	5	4	by means of; because; in view of; compared with	イ	もっ(て)
+127	機	16	3	loom; mechanism; machine; airplane	キ	はた
+128	平	5	3	even; flat; peace	ヘイ、ビョウ、ヒョウ	たい(ら)、たい(らげる)、ひら
+129	総	14	2	general; whole; all; full	ソウ	す(べて)、すべ(て)、ふさ
+130	加	5	3	add; addition; increase; join	カ	くわ(える)、くわ(わる)
+131	山	3	5	mountain	サン、セン	やま
+132	思	9	4	think	シ	おも(う)、おもえら(く)、おぼ(す)
+133	家	10	4	house; home; family; professional	カ、ケ	いえ、や、うち
+134	話	13	5	tale; talk	ワ	はな(す)、はなし
+135	世	5	4	generation; world; society; public	セイ、セ、ソウ	よ
+136	受	8	3	accept; undergo; answer (phone); take	ジュ	う(ける)、-う(け)、う(かる)
+137	区	4	2	ward; district	ク、オウ、コウ	
+138	領	14	2	jurisdiction; dominion; territory; fief	リョウ	えり
+139	多	6	4	many; frequent; much	タ	おお(い)、まさ(に)、まさ(る)
+140	県	9	2	prefecture	ケン	か(ける)
+141	続	13	3	continue; series; sequel	ゾク、ショク、コウ、キョウ	つづ(く)、つづ(ける)、つぐ(ない)
+142	進	11	3	advance; proceed; progress; promote	シン	すす(む)、すす(める)
+143	正	5	4	correct; justice; righteous; 10**40	セイ、ショウ	ただ(しい)、ただ(す)、まさ、まさ(に)
+144	安	6	4	relax; cheap; low; quiet	アン	やす(い)、やす(まる)、やす、やす(らか)
+145	設	11	2	establishment; provision; prepare	セツ	もう(ける)
+146	保	9	1	protect; guarantee; keep; preserve	ホ、ホウ	たも(つ)
+147	改	7	2	reformation; change; modify; mend	カイ	あらた(める)、あらた(まる)
+148	数	13	3	number; strength; fate; law	スウ、ス、サク、ソク、シュ	かず、かぞ(える)、しばしば、せ(める)、わずらわ(しい)
+149	記	10	3	scribe; account; narrative	キ	しる(す)
+150	院	10	4	Inst.; institution; temple; mansion	イン	
+151	女	3	5	woman; female	ジョ、ニョ、ニョウ	おんな、め
+152	初	7	3	first time; beginning	ショ	はじ(め)、はじ(めて)、はつ、うい-、-そ(める)、-ぞ(め)
+153	北	5	5	north	ホク	きた
+154	午	4	5	noon; sign of the horse; 11AM-1PM; seventh sign of Chinese zodiac	ゴ	うま
+155	指	9	3	finger; point to; indicate; put into	シ	ゆび、さ(す)、-さ(し)
+156	権	15	3	authority; power; rights	ケン、ゴン	おもり、かり、はか(る)
+157	心	4	4	heart; mind; spirit	シン	こころ、-ごころ
+158	界	9	4	world; boundary	カイ	
+159	支	4	3	branch; support; sustain	シ	ささ(える)、つか(える)、か(う)
+160	第	11	1	No.; residence	ダイ、テイ	
+161	産	11	3	products; bear; give birth; yield	サン	う(む)、う(まれる)、うぶ-、む(す)
+162	結	12	1	tie; bind; contract; join	ケツ、ケチ	むす(ぶ)、ゆ(う)、ゆ(わえる)
+163	百	6	5	hundred	ヒャク、ビャク	もも
+164	派	9	1	faction; group; party; clique	ハ	
+165	点	9	3	spot; point; mark; speck	テン	つ(ける)、つ(く)、た(てる)、さ(す)、とぼ(す)、とも(す)、ぼち
+166	教	11	4	teach; faith; doctrine	キョウ	おし(える)、おそ(わる)
+167	報	12	3	report; news; reward; retribution	ホウ	むく(いる)
+168	済	11	3	settle (debt, etc.); relieve (burden); finish; come to an end	サイ、セイ	す(む)、-ず(み)、-ずみ、す(まない)、す(ます)、すく(う)、な(す)、わたし、わた(る)
+169	書	10	5	write	ショ	か(く)、-が(き)、-がき
+170	府	8	2	borough; urban prefecture; govt office; representative body	フ	
+171	活	9	3	lively; resuscitation; being helped; living	カツ	い(きる)、い(かす)、い(ける)
+172	原	10	3	meadow; original; primitive; field	ゲン	はら
+173	先	6	5	before; ahead; previous; future	セン	さき、ま(ず)
+174	共	6	3	together; both; neither; all	キョウ	とも、とも(に)、-ども
+175	得	11	3	gain; get; find; earn	トク	え(る)、う(る)
+176	解	13	3	unravel; notes; key; explanation	カイ、ゲ	と(く)、と(かす)、と(ける)、ほど(く)、ほぐ(す)、わか(る)、さと(る)
+177	名	6	5	name; noted; distinguished; reputation	メイ、ミョウ	な
+178	交	6	3	mingle; mixing; association; coming & going	コウ	まじ(わる)、まじ(える)、ま(じる)、まじ(る)、ま(ざる)、ま(ぜる)、-か(う)、か(わす)、かわ(す)、こもごも
+179	資	13	3	assets; resources; capital; funds	シ	
+180	予	4	3	beforehand; previous; myself; I	ヨ、シャ	あらかじ(め)
+181	川	3	5	stream; river	セン	かわ
+182	向	6	3	yonder; facing; beyond; confront	コウ	む(く)、む(い)、-む(き)、む(ける)、-む(け)、む(かう)、む(かい)、む(こう)、む(こう-)、むこ、むか(い)
+183	際	14	3	occasion; side; edge; verge	サイ	きわ、-ぎわ
+184	査	9	2	investigate	サ	
+185	勝	12	3	victory; win; prevail; excel	ショウ	か(つ)、-が(ち)、まさ(る)、すぐ(れる)、かつ
+186	面	9	3	mask; face; features; surface	メン、ベン	おも、おもて、つら
+187	委	8	2	committee; entrust to; leave to; devote	イ	ゆだ(ねる)
+188	告	7	3	revelation; tell; inform; announce	コク	つ(げる)
+189	軍	9	2	army; force; troops; war	グン	いくさ
+190	文	4	4	sentence; literature; style; art	ブン、モン	ふみ、あや
+191	反	4	3	anti-	ハン、ホン、タン、ホ	そ(る)、そ(らす)、かえ(す)、かえ(る)
+192	元	4	4	beginning; former time; origin	ゲン、ガン	もと
+193	重	9	4	heavy; important; esteem; respect	ジュウ、チョウ	え、おも(い)、おも(り)、おも(なう)、かさ(ねる)、かさ(なる)、おも
+194	近	7	4	near; early; akin; tantamount	キン、コン	ちか(い)
+195	千	3	5	thousand	セン	ち
+196	考	6	4	consider; think over	コウ	かんが(える)、かんが(え)
+197	判	7	3	judgement; judgment; signature; stamp	ハン、バン	わか(る)
+198	認	14	3	acknowledge; witness; discern; recognize	ニン	みと(める)、したた(める)
+199	画	8	4	brush-stroke; picture	ガ、カク、エ、カイ	えが(く)、かく(する)、かぎ(る)、はかりごと、はか(る)
+200	海	9	4	sea; ocean	カイ	うみ
+201	参	8	3	nonplussed; three (in documents); going; coming	サン、シン	まい(る)、まい-、まじわる、みつ
+202	売	7	4	sell	バイ	う(る)、う(れる)
+203	利	7	3	profit; advantage; benefit	リ	き(く)
+204	組	11	3	association; braid; plait; construct	ソ	く(む)、くみ、-ぐみ
+205	知	8	4	know; wisdom	チ	し(る)、し(らせる)
+206	案	10	1	plan; suggestion; draft; ponder	アン	つくえ
+207	道	12	4	road-way; street; district; journey	ドウ、トウ	みち、いう
+208	信	9	3	faith; truth; fidelity; trust	シン	
+209	策	12	1	scheme; plan; policy; step	サク	
+210	集	12	4	gather; meet; congregate; swarm	シュウ	あつ(まる)、あつ(める)、つど(う)
+211	在	6	3	exist; outskirts; suburbs; located in	ザイ	あ(る)
+212	件	6	3	affair; case; matter; item	ケン	くだん
+213	団	6	2	group; association	ダン、トン	かたまり、まる(い)
+214	別	7	4	separate; branch off; diverge; fork	ベツ	わか(れる)、わ(ける)
+215	物	8	4	thing; object; matter	ブツ、モツ	もの
+216	側	11	3	side; lean; oppose; regret	ソク	かわ、がわ、そば
+217	任	6	3	responsibility; duty; term; entrust to	ニン	まか(せる)、まか(す)
+218	引	4	3	pull; tug; jerk; admit	イン	ひ(く)、ひ(ける)
+219	使	8	4	use; send on a mission; order; messenger	シ	つか(う)、つか(い)、-づか(い)
+220	求	7	3	request; want; wish for; require	キュウ、グ	もと(める)
+221	所	8	3	place; extent	ショ	ところ、どころ、とこ
+222	次	6	3	next; order; sequence	ジ、シ	つ(ぐ)、つぎ
+223	水	4	5	water	スイ	みず
+224	半	5	5	half; middle; odd number; semi-	ハン	なか(ば)
+225	品	9	4	goods; refinement; dignity; article	ヒン、ホン	しな
+226	昨	9	3	yesterday; previous	サク	
+227	論	15	3	argument; discourse	ロン	あげつら(う)
+228	計	9	4	plot; plan; scheme; measure	ケイ	はか(る)、はか(らう)
+229	死	6	4	death; die	シ	し(ぬ)、し(に-)
+230	官	8	3	bureaucrat; the government; organ	カン	
+231	増	14	3	increase; add; augment; gain	ゾウ	ま(す)、ま(し)、ふ(える)、ふ(やす)
+232	係	9	3	person in charge; connection; duty; concern oneself	ケイ	かか(る)、かかり、-がかり、かか(わる)
+233	感	13	3	emotion; feeling; sensation	カン	
+234	特	10	4	special	トク	
+235	情	11	3	feelings; emotion; passion; sympathy	ジョウ、セイ	なさ(け)
+236	投	7	3	throw; discard; abandon; launch into	トウ	な(げる)、-な(げ)
+237	示	5	3	show; indicate; point out; express	ジ、シ	しめ(す)
+238	変	9	3	unusual; change; strange	ヘン	か(わる)、か(わり)、か(える)
+239	打	5	3	strike; hit; knock; pound	ダ、ダース	う(つ)、う(ち-)、ぶ(つ)
+240	男	7	5	male	ダン、ナン	おとこ、お
+241	基	11	1	fundamentals; radical (chem); counter for machines; foundation	キ	もと、もとい
+242	私	7	4	private; I; me	シ	わたくし、わたし
+243	各	6	2	each; every; either	カク	おのおの
+244	始	8	4	commence; begin	シ	はじ(める)、はじ(まる)
+245	島	10	2	island	トウ	しま
+246	直	8	3	straightaway; honesty; frankness; fix	チョク、ジキ、ジカ	ただ(ちに)、なお(す)、なお(る)、なお(き)、す(ぐ)
+247	両	6	3	both; old Japanese coin; counter for carriages (e.g., in a train); two	リョウ	てる、ふたつ
+248	朝	12	4	morning; dynasty; regime; epoch	チョウ	あさ
+249	革	9	2	leather; skin; reform; become serious	カク	かわ
+250	価	8	1	value; price	カ、ケ	あたい
+251	式	6	3	style; ceremony; rite; function	シキ	
+252	確	15	3	assurance; firm; tight; hard	カク、コウ	たし(か)、たし(かめる)
+253	村	7	2	village; town	ソン	むら
+254	提	12	1	propose; take along; carry in hand	テイ、チョウ、ダイ	さ(げる)
+255	運	12	4	carry; luck; destiny; fate	ウン	はこ(ぶ)
+256	終	11	4	end; finish	シュウ	お(わる)、おわ(る)、お(える)、つい、つい(に)
+257	挙	10	1	raise; plan; project; behavior	キョ	あ(げる)、あ(がる)、こぞ(る)
+258	果	8	3	fruit; reward; carry out; achieve	カ	は(たす)、はた(す)、は(てる)、は(て)
+259	西	6	5	west; Spain	セイ、サイ、ス	にし
+260	勢	13	2	forces; energy; military strength	セイ、ゼイ	いきお(い)、はずみ
+261	減	12	2	dwindle; decrease; reduce; decline	ゲン	へ(る)、へ(らす)
+262	台	5	4	pedestal; a stand; counter for machines and vehicles	ダイ、タイ	うてな、われ、つかさ
+263	広	5	4	wide; broad; spacious	コウ	ひろ(い)、ひろ(まる)、ひろ(める)、ひろ(がる)、ひろ(げる)
+264	容	10	3	contain; form; looks	ヨウ	い(れる)
+265	必	5	3	invariably; certain; inevitable	ヒツ	かなら(ず)
+266	応	7	1	apply; answer; yes; OK	オウ、ヨウ、-ノウ	あた(る)、まさに、こた(える)
+267	演	14	3	performance; act; play; render	エン	
+268	電	13	5	electricity	デン	
+269	歳	13	3	year-end; age; occasion; opportunity	サイ、セイ	とし、とせ、よわい
+270	住	7	4	dwell; reside; live; inhabit	ジュウ、ヂュウ、チュウ	す(む)、す(まう)、-ず(まい)
+271	争	6	3	contend; dispute; argue	ソウ	あらそ(う)、いか(でか)
+272	談	15	3	discuss; talk	ダン	
+273	能	10	3	ability; talent; skill; capacity	ノウ	よ(く)、あた(う)
+274	無	12		nothingness; none; ain't; nothing	ム、ブ	な(い)
+275	再	6	2	again; twice; second time	サイ、サ	ふたた(び)
+276	位	7	3	rank; grade; throne; crown	イ	くらい、ぐらい
+277	置	13	3	placement; put; set; deposit	チ	お(く)、-お(き)
+278	企	6	1	undertake; scheme; design; attempt	キ	くわだ(てる)、たくら(む)
+279	真	10	4	true; reality; Buddhist sect	シン	ま、まこと
+280	流	10	3	current; a sink; flow; forfeit	リュウ、ル	なが(れる)、なが(れ)、なが(す)
+281	格	10	3	status; rank; capacity; character	カク、コウ、キャク、ゴウ	
+282	有	6	4	possess; have; exist; happen	ユウ、ウ	あ(る)
+283	疑	14	3	doubt; distrust; be suspicious; question	ギ	うたが(う)
+284	口	3	4	mouth	コウ、ク	くち
+285	過	12	3	overdo; exceed; go beyond; error	カ	す(ぎる)、す(ごす)、あやま(ち)、あやま(つ)、よぎ(る)、よ(ぎる)
+286	局	7	3	bureau; board; office; affair	キョク	つぼね
+287	少	4	4	few; little	ショウ	すく(ない)、すこ(し)
+288	放	8	3	set free; release; fire; shoot	ホウ	はな(す)、-っぱな(し)、はな(つ)、はな(れる)、こ(く)、ほう(る)
+289	税	12	2	tax; duty	ゼイ	
+290	検	12	1	examination; investigate	ケン	しら(べる)
+291	藤	18	1	wisteria	トウ、ドウ	ふじ
+292	町	7	4	town; village; block; street	チョウ	まち
+293	常	11	3	usual; ordinary; normal; common	ジョウ	つね、とこ-
+294	校	10	5	exam; school; printing; proof	コウ、キョウ	
+295	料	10	4	fee; materials	リョウ	
+296	沢	7	1	swamp; marsh; brilliance; grace	タク	さわ、うるお(い)、うるお(す)、つや
+297	裁	12	1	tailor; judge; decision; cut out (pattern)	サイ	た(つ)、さば(く)
+298	状	7	3	status quo; conditions; circumstances; form	ジョウ	
+299	工	3	4	craft; construction	コウ、ク、グ	
+300	建	9	4	build	ケン、コン	た(てる)、た(て)、-だ(て)、た(つ)
+301	語	14	5	word; speech; language	ゴ	かた(る)、かた(らう)
+302	球	11	3	ball; sphere	キュウ	たま
+303	営	12	2	camp; perform; build; conduct (business)	エイ	いとな(む)、いとな(み)
+304	空	8	4	empty; sky; void; vacant	クウ	そら、あ(く)、あ(き)、あ(ける)、から、す(く)、す(かす)、むな(しい)
+305	職	18	3	post; employment; work	ショク、ソク	
+306	証	12	1	evidence; proof; certificate	ショウ	あかし
+307	土	3	5	soil; earth; ground; Turkey	ド、ト	つち
+308	与	3	3	bestow; participate in; give; award	ヨ	あた(える)、あずか(る)、くみ(する)、ともに
+309	急	9	4	hurry; emergency; sudden; steep	キュウ	いそ(ぐ)、いそ(ぎ)、せ(く)
+310	止	4	4	stop; halt	シ	と(まる)、-ど(まり)、と(める)、-ど(め)、とど(める)、とど(め)、とど(まる)、や(める)、や(む)、よ(す)、-さ(す)、-さ(し)
+311	送	9	4	escort; send	ソウ	おく(る)
+312	援	12	1	abet; help; save	エン	
+313	供	8	3	submit; offer; present; serve (meal)	キョウ、ク、クウ、グ	そな(える)、とも、-ども
+314	可	5		can; passable; approval	カ、コク	-べ(き)、-べ(し)
+315	役	7	3	duty; war; campaign; drafted labor	ヤク、エキ	
+316	構	14	3	posture; stance; appearance; build	コウ	かま(える)、かま(う)
+317	木	4	5	tree; wood	ボク、モク	き、こ-
+318	割	12	3	proportion; comparatively; divide; cut	カツ	わ(る)、わり、わ(り)、わ(れる)、さ(く)
+319	聞	14	5	hear; ask; listen	ブン、モン	き(く)、き(こえる)
+320	身	7		somebody; person; one's station in life	シン	み
+321	費	12	3	expense; cost; spend; consume	ヒ	つい(やす)、つい(える)
+322	付	5	3	adhere; attach; refer to; append	フ	つ(ける)、-づ(ける)、つ(け)、つ(け-)、-づ(け)、-づけ、つ(く)、-づ(く)、つ(き)、-つき、-づ(き)、-づき
+323	施	9	1	give; bestow; perform; alms	シ、セ	ほどこ(す)
+324	切	4	4	cut; cutoff; be sharp	セツ、サイ	き(る)、き(り)、-ぎ(り)、き(れる)、き(れ)、-ぎ(れ)
+325	由	5	3	wherefore; a reason	ユ、ユウ、ユイ	よし、よ(る)
+326	説	14	3	opinion; theory; explanation; rumor	セツ、ゼイ	と(く)
+327	転	11	4	revolve; turn around; change	テン	ころ(がる)、ころ(げる)、ころ(がす)、ころ(ぶ)、まろ(ぶ)、うたた、うつ(る)、くる(めく)
+328	食	9	5	eat; food	ショク、ジキ	く(う)、く(らう)、た(べる)、は(む)
+329	比	4	2	compare; race; ratio; Philippines	ヒ	くら(べる)
+330	難	18	3	difficult; impossible; trouble; accident	ナン	かた(い)、-がた(い)、むずか(しい)、むづか(しい)、むつか(しい)、-にく(い)
+331	防	7	2	ward off; defend; protect; resist	ボウ	ふせ(ぐ)
+332	補	12	2	supplement; supply; make good; offset	ホ	おぎな(う)
+333	車	7	5	car	シャ	くるま
+334	優	17	3	tenderness; excel; surpass; actor	ユウ、ウ	やさ(しい)、すぐ(れる)、まさ(る)
+335	夫	4	3	husband; man	フ、フウ、ブ	おっと、それ
+336	研	9	4	polish; study of; sharpen	ケン	と(ぐ)
+337	収	4	3	income; obtain; reap; pay	シュウ	おさ(める)、おさ(まる)
+338	断	11	3	severance; decline; refuse; apologize	ダン	た(つ)、ことわ(る)、さだ(める)
+339	井	4	1	well; well crib; town; community	セイ、ショウ	い
+340	何	7	5	what	カ	なに、なん
+341	南	9	5	south	ナン、ナ	みなみ
+342	石	5	3	stone	セキ、シャク、コク	いし
+343	足	7	4	leg; foot; be sufficient; counter for pairs of footwear	ソク	あし、た(りる)、た(る)、た(す)
+344	違	13	3	difference; differ	イ	ちが(う)、ちが(い)、ちが(える)、たが(う)、たが(える)
+345	消	10	3	extinguish; blow out; turn off; neutralize	ショウ	き(える)、け(す)
+346	境	14	2	boundary; border; region	キョウ、ケイ	さかい
+347	神	9	3	gods; mind; soul	シン、ジン	かみ、かん-、こう-
+348	番	12	3	turn; number in a series	バン	つが(い)
+349	規	11	3	standard; measure	キ	
+350	術	11	3	art; technique; skill; means	ジュツ	すべ
+351	護	20	1	safeguard; protect	ゴ	まも(る)
+352	展	10	1	unfold; expand	テン	
+353	態	14	1	attitude; condition; figure; appearance	タイ	わざ(と)
+354	導	15	2	guidance; leading; conduct; usher	ドウ	みちび(く)
+355	鮮	17	1	fresh; vivid; clear; brilliant	セン	あざ(やか)
+356	備	12	3	equip; provision; preparation	ビ	そな(える)、そな(わる)、つぶさ(に)
+357	宅	6	3	home; house; residence; our house	タク	
+358	害	10	3	harm; injury	ガイ	
+359	配	10	3	distribute; spouse; exile; rationing	ハイ	くば(る)
+360	副	11	2	vice-; assistant; aide; duplicate	フク	
+361	算	14	2	calculate; divining; number; abacus	サン	そろ
+362	視	11	1	inspection; regard as; see; look at	シ	み(る)
+363	条	7	1	article; clause; counter for articles, clauses, paragraphs, etc.; twig	ジョウ、チョウ、デキ	えだ、すじ
+364	幹	13	1	tree trunk; main part; talent; capability	カン	みき
+365	独	9	1	single; alone; spontaneously; Germany	ドク、トク	ひと(り)
+366	警	19	3	admonish; commandment	ケイ	いまし(める)
+367	宮	10	1	Shinto shrine; constellations; palace; princess	キュウ、グウ、ク、クウ	みや
+368	究	7	4	research; study	キュウ、ク	きわ(める)
+369	育	8	3	bring up; grow up; raise; rear	イク	そだ(つ)、そだ(ち)、そだ(てる)、はぐく(む)
+370	席	10	3	seat; mat; occasion; place	セキ	むしろ
+371	輸	16	2	transport; send; be inferior	ユ、シュ	
+372	訪	11	3	call on; visit; look up; offer sympathy	ホウ	おとず(れる)、たず(ねる)、と(う)
+373	楽	13	4	music; comfort; ease	ガク、ラク、ゴウ	たの(しい)、たの(しむ)、この(む)
+374	起	10	4	rouse; wake up; get up	キ	お(きる)、お(こる)、お(こす)、おこ(す)、た(つ)
+375	万	3	5	ten thousand; 10,000	マン、バン	よろず
+376	着	12	4	don; arrive; wear; counter for suits of clothing	チャク、ジャク	き(る)、き(せる)、つ(く)、つ(ける)
+377	乗	9	3	ride; power; multiplication; record	ジョウ、ショウ	の(る)、-の(り)、の(せる)
+378	店	8	4	store; shop	テン	みせ、たな
+379	述	8	2	mention; state; speak; relate	ジュツ	の(べる)
+380	残	10	3	remainder; leftover; balance	ザン、サン	のこ(る)、のこ(す)、そこな(う)、のこ(り)
+381	想	13	3	idea; thought; conception; think	ソウ、ソ	おも(う)
+382	線	15	2	line; track	セン	すじ
+383	率	11	1	ratio; rate; proportion; %	ソツ、リツ、シュツ	ひき(いる)
+384	病	10	4	ill; sick	ビョウ、ヘイ	や(む)、-や(み)、やまい
+385	農	13	2	agriculture; farmers	ノウ	
+386	州	6	2	state; province	シュウ、ス	す
+387	武	8	2	warrior; military; chivalry; arms	ブ、ム	たけ、たけ(し)
+388	声	7	3	voice	セイ、ショウ	こえ、こわ-
+389	質	15	4	substance; quality; matter; temperament	シツ、シチ、チ	たち、ただ(す)、もと、わりふ
+390	念	8	3	wish; sense; idea; thought	ネン	
+391	待	9	4	wait; depend on	タイ	ま(つ)、-ま(ち)
+392	試	13	4	test; try; attempt; experiment	シ	こころ(みる)、ため(す)
+393	族	11	4	tribe; family	ゾク	
+394	象	12	2	elephant; pattern after; imitate; image	ショウ、ゾウ	かたど(る)
+395	銀	14	4	silver	ギン	しろがね
+396	域	11	2	range; region; limits; stage	イキ	
+397	助	7	3	help; rescue; assist	ジョ	たす(ける)、たす(かる)、す(ける)、すけ
+398	労	7	3	labor; thank for; reward for; toil	ロウ	ろう(する)、いたわ(る)、いた(ずき)、ねぎら、つか(れる)、ねぎら(う)
+399	例	8	3	example; custom; usage; precedent	レイ	たと(える)
+400	衛	16	1	defense; protection	エイ、エ	
+401	然	12	3	sort of thing; so; if so; in that case	ゼン、ネン	しか、しか(り)、しか(し)、さ
+402	早	6	4	early; fast	ソウ、サッ	はや(い)、はや、はや(まる)、はや(める)、さ-
+403	張	11	1	counter for bows & stringed instruments; stretch; spread; put up (tent)	チョウ	は(る)、-は(り)、-ば(り)
+404	映	9	4	reflect; reflection; projection	エイ	うつ(る)、うつ(す)、は(える)、-ば(え)
+405	限	9	3	limit; restrict; to best of ability	ゲン	かぎ(る)、かぎ(り)
+406	親	16	4	parent; intimacy; relative; familiarity	シン	おや、した(しい)、した(しむ)
+407	額	18	2	forehead; tablet; plaque; framed picture	ガク	ひたい
+408	監	15	1	oversee; official; govt office; rule	カン	
+409	環	17	1	ring; circle; loop	カン	わ
+410	験	18	4	verification; effect; testing	ケン、ゲン	あかし、しるし、ため(す)、ためし
+411	追	9	3	chase; drive away; follow; pursue	ツイ	お(う)
+412	審	15	1	hearing; judge; trial	シン	つまび(らか)、つぶさ(に)
+413	商	11	3	make a deal; selling; dealing in; merchant	ショウ	あきな(う)
+414	葉	12	3	leaf; plane; lobe; needle	ヨウ	は
+415	義	13	1	righteousness; justice; morality; honor	ギ	
+416	伝	6	3	transmit; go along; walk along; follow	デン、テン	つた(わる)、つた(える)、つた(う)、つだ(う)、-づた(い)、つて
+417	働	13	3	work; (kokuji)	ドウ	はたら(く)
+418	形	7	3	shape; form; style	ケイ、ギョウ	かた、-がた、かたち、なり
+419	景	12	3	scenery; view	ケイ	
+420	落	12	3	fall; drop; come down; village	ラク	お(ちる)、お(ち)、お(とす)
+421	欧	8	2	Europe	オウ	うた(う)、は(く)
+422	担	8	2	shouldering; carry; raise; bear	タン	かつ(ぐ)、にな(う)
+423	好	6	3	fond; pleasing; like something	コウ	この(む)、す(く)、よ(い)、い(い)
+424	退	9	3	retreat; withdraw; retire; resign	タイ	しりぞ(く)、しりぞ(ける)、ひ(く)、の(く)、の(ける)、ど(く)
+425	準	13	2	semi-; correspond to; proportionate to; conform	ジュン	じゅん(じる)、じゅん(ずる)、なぞら(える)、のり、ひと(しい)、みずもり
+426	賞	15	2	prize; reward; praise	ショウ	ほ(める)
+427	訴	12	1	accusation; sue; complain of pain; appeal to	ソ	うった(える)
+428	辺	5	2	environs; boundary; border; vicinity	ヘン	あた(り)、ほと(り)、-べ
+429	造	10	2	create; make; structure; physique	ゾウ	つく(る)、つく(り)、-づく(り)
+430	英	8	4	England; English; hero; outstanding	エイ	はなぶさ
+431	被	10	2	incur; cover; veil; brood over	ヒ	こうむ(る)、おお(う)、かぶ(る)、かぶ(せる)
+432	株	10	1	stocks; stump; shares; stock	シュ	かぶ
+433	頭	16	3	head; counter for large animals	トウ、ズ、ト	あたま、かしら、-がしら、かぶり
+434	技	7	2	skill; art; craft; ability	ギ	わざ
+435	低	7	2	lower; short; humble	テイ	ひく(い)、ひく(める)、ひく(まる)
+436	毎	6	5	every	マイ	ごと、-ごと(に)
+437	医	7	4	doctor; medicine	イ	い(やす)、い(する)、くすし
+438	復	12	2	restore; return to; revert; resume	フク	また
+439	仕	5	4	attend; doing; official; serve	シ、ジ	つか(える)
+440	去	5	4	gone; past; quit; leave	キョ、コ	さ(る)
+441	姿	9	1	figure; form; shape	シ	すがた
+442	味	8	4	flavor; taste	ミ	あじ、あじ(わう)
+443	負	9	3	defeat; negative; -; minus	フ	ま(ける)、ま(かす)、お(う)
+444	閣	14	1	tower; tall building; palace	カク	
+445	韓	18		Korea	カン	から、いげた
+446	渡	12	3	transit; ford; ferry; cross	ト	わた(る)、わた(す)
+447	失	5	3	lose; error; fault; disadvantage	シツ	うしな(う)、う(せる)
+448	移	11	2	shift; move; change; drift	イ	うつ(る)、うつ(す)
+449	差	10	3	distinction; difference; variation; discrepancy	サ	さ(す)、さ(し)
+450	衆	12	1	masses; great numbers; multitude; populace	シュウ、シュ	おお(い)
+451	個	10	2	individual; counter for articles	コ、カ	
+452	門	8	2	gate; counter for cannons	モン	かど、と
+453	写	5	4	copy; be photographed; describe	シャ、ジャ	うつ(す)、うつ(る)、うつ-、うつ(し)
+454	評	12	1	evaluate; criticism; comment	ヒョウ	
+455	課	15	2	chapter; lesson; section; department	カ	
+456	末	5	3	end; close; tip; powder	マツ、バツ	すえ、うら、うれ
+457	守	6	3	guard; protect; defend; obey	シュ、ス	まも(る)、まも(り)、もり、かみ
+458	若	8	3	young; if; perhaps; possibly	ジャク、ニャク、ニャ	わか(い)、わか-、も(しくわ)、も(し)、も(しくは)、ごと(し)
+459	脳	11	2	brain; memory	ノウ、ドウ	のうずる
+460	極	12	2	extreme; pole; extremely; very	キョク、ゴク	きわ(める)、きわ(まる)、きわ(まり)、きわ(み)、き(める)、-ぎ(め)、き(まる)
+461	種	14	3	species; kind; class; variety	シュ	たね、-ぐさ
+462	美	9	3	beauty; beautiful	ビ、ミ	うつく(しい)
+463	岡	8		mount; hill; knoll	コウ	おか
+464	影	15	1	shadow; silhouette; phantom	エイ	かげ
+465	命	8	3	fate; command; decree; destiny	メイ、ミョウ	いのち
+466	含	7	2	contain; include; hold in the mouth; bear in mind	ガン	ふく(む)、ふく(める)
+467	福	13	3	blessing; fortune; luck; wealth	フク	
+468	蔵	15	2	storehouse; hide; own; have	ゾウ、ソウ	くら、おさ(める)、かく(れる)
+469	量	12	2	quantity; measure; weight; amount	リョウ	はか(る)
+470	望	11	3	ambition; full moon; hope; desire	ボウ、モウ	のぞ(む)、もち
+471	松	8	1	pine tree	ショウ	まつ
+472	非	8	3	un-; mistake; negative; injustice	ヒ	あら(ず)
+473	撃	15	1	beat; attack; defeat; conquer	ゲキ	う(つ)
+474	佐	7	1	assistant; help	サ	
+475	核	10	1	nucleus; core; kernel	カク	
+476	観	18	3	outlook; look; appearance; condition	カン	み(る)、しめ(す)
+477	察	14	3	guess; presume; surmise; judge	サツ	
+478	整	16	1	organize; arranging; tune; tone	セイ	ととの(える)、ととの(う)
+479	段	9	3	grade; steps; stairs	ダン、タン	
+480	横	15	3	sideways; side; horizontal; width	オウ	よこ
+481	融	16	1	dissolve; melt	ユウ	と(ける)、と(かす)
+482	型	9	2	mould; type; model	ケイ	かた、-がた
+483	白	5	5	white	ハク、ビャク	しろ、しら-、しろ(い)
+484	深	11	3	deep; heighten; intensify; strengthen	シン	ふか(い)、-ぶか(い)、ふか(まる)、ふか(める)、み-
+485	字	6	4	character; letter; word; section of village	ジ	あざ、あざな、-な
+486	答	12	4	solution; answer	トウ	こた(える)、こた(え)
+487	夜	8	4	night; evening	ヤ	よ、よる
+488	製	14	1	made in...; manufacture	セイ	
+489	票	11	1	ballot; label; ticket; sign	ヒョウ	
+490	況	8	2	condition; situation	キョウ	まし(て)、いわ(んや)、おもむき
+491	音	9	4	sound; noise	オン、イン、-ノン	おと、ね
+492	申	5	3	have the honor to; sign of the monkey; 3-5PM; ninth sign of Chinese zodiac	シン	もう(す)、もう(し-)、さる
+493	様	14	3	Esq.; way; manner; situation	ヨウ、ショウ	さま、さん
+494	財	10	3	property; money; wealth; assets	ザイ、サイ、ゾク	たから
+495	港	12	3	harbor	コウ	みなと
+496	識	19	3	discriminating; know; write	シキ	し(る)、しる(す)
+497	注	8	4	pour; irrigate; shed (tears); flow into	チュウ	そそ(ぐ)、さ(す)、つ(ぐ)
+498	呼	8	3	call; call out to; invite	コ	よ(ぶ)
+499	渉	11	1	ford; go cross; transit; ferry	ショウ	わた(る)
+500	達	12	3	accomplished; reach; arrive; attain	タツ、ダ	-たち
+501	良	7	3	good; pleasing; skilled	リョウ	よ(い)、い(い)
+502	響	20	1	echo; sound; resound; ring	キョウ	ひび(く)
+503	阪	7		heights; slope	ハン	さか
+504	帰	10	4	homecoming; arrive at; lead to; result in	キ	かえ(る)、かえ(す)、おく(る)、とつ(ぐ)
+505	針	10	2	needle; pin; staple; stinger	シン	はり
+506	専	9	2	specialty; exclusive; mainly; solely	セン	もっぱ(ら)
+507	推	11	1	conjecture; infer; guess; suppose	スイ	お(す)
+508	谷	7	2	valley	コク	たに、きわ(まる)
+509	古	5	4	old	コ	ふる(い)、ふる-、-ふる(す)
+510	候	10	3	climate; season; weather; wait for	コウ	そうろう
+511	史	5	2	history; chronicle	シ	
+512	天	4	5	heavens; sky; imperial	テン	あまつ、あめ、あま-
+513	階	12	2	storey; stair; counter for storeys of a building	カイ	きざはし
+514	程	12	3	extent; degree; law; formula	テイ	ほど
+515	満	12	3	full; fullness; enough; satisfy	マン、バン	み(ちる)、み(つ)、み(たす)
+516	敗	11	3	failure; defeat; reversal	ハイ	やぶ(れる)
+517	管	14	2	pipe; tube; wind instrument; drunken talk	カン	くだ
+518	値	10	3	price; cost; value	チ	ね、あたい
+519	歌	14	4	song; sing	カ	うた、うた(う)
+520	買	12	4	buy	バイ	か(う)
+521	突	8	3	stab; protruding; thrust; pierce	トツ、カ	つ(く)
+522	兵	7	2	soldier; private; troops; army	ヘイ、ヒョウ	つわもの
+523	接	11	2	touch; contact; adjoin; piece together	セツ、ショウ	つ(ぐ)
+524	請	15	1	solicit; invite; ask	セイ、シン、ショウ	こ(う)、う(ける)
+525	器	15	1	utensil; vessel; receptacle; implement	キ	うつわ
+526	士	3	1	gentleman; scholar; samurai	シ	さむらい
+527	光	6	3	ray; light	コウ	ひか(る)、ひかり
+528	討	10	1	chastise; attack; defeat; destroy	トウ	う(つ)
+529	路	13	3	path; route; road; distance	ロ、ル	-じ、みち
+530	悪	11	4	bad; vice; rascal; false	アク、オ	わる(い)、わる-、あ(し)、にく(い)、ああ、いずくに、いずくんぞ、にく(む)
+531	科	9	3	department; course; section	カ	
+532	攻	7	1	aggression; attack; criticize; polish	コウ	せ(める)
+533	崎	11	1	promontory; cape; spit	キ	さき、さい、みさき
+534	督	13	1	coach; command; urge; lead	トク	
+535	授	11	1	impart; instruct; grant; confer	ジュ	さず(ける)、さず(かる)
+536	催	13	1	sponsor; hold (a meeting); give (a dinner)	サイ	もよう(す)、もよお(す)
+537	細	11	2	dainty; get thin; taper; slender	サイ	ほそ(い)、ほそ(る)、こま(か)、こま(かい)
+538	効	8	2	merit; efficacy; efficiency; benefit	コウ	き(く)、ききめ、なら(う)
+539	図	7	4	map; drawing; plan; extraordinary	ズ、ト	え、はか(る)
+540	週	11	4	week	シュウ	
+541	積	16	3	volume; product (x*y); acreage; contents	セキ	つ(む)、-づ(み)、つ(もる)、つ(もり)
+542	丸	3	2	round; full (month); perfection; -ship	ガン	まる、まる(める)、まる(い)
+543	他	5	3	other; another; the others	タ	ほか
+544	及	3	1	reach out; exert; exercise; cause	キュウ	およ(ぶ)、およ(び)、および、およ(ぼす)
+545	湾	12	2	gulf; bay; inlet	ワン	いりえ
+546	録	16	2	record	ロク	しる(す)、と(る)
+547	処	5	3	dispose; manage; deal with; sentence	ショ	ところ、-こ、お(る)
+548	省	9	2	government ministry; conserve; omit	セイ、ショウ	かえり(みる)、はぶ(く)
+549	旧	5	2	old times; old things; old friend; former	キュウ	ふる(い)、もと
+550	室	9	4	room; apartment; chamber; greenhouse	シツ	むろ
+551	憲	16	1	constitution; law	ケン	
+552	太	4	3	plump; thick; big around	タイ、タ	ふと(い)、ふと(る)
+553	橋	16	2	bridge	キョウ	はし
+554	歩	8	4	walk; counter for steps	ホ、ブ、フ	ある(く)、あゆ(む)
+555	離	19	1	detach; separation; disjoin; digress	リ	はな(れる)、はな(す)
+556	岸	8	2	beach	ガン	きし
+557	客	9	3	guest; visitor; customer; client	キャク、カク	
+558	風	9	4	wind; air; style; manner	フウ、フ	かぜ、かざ-
+559	紙	10	4	paper	シ	かみ
+560	激	16	1	violent; get excited; enraged; chafe	ゲキ	はげ(しい)
+561	否	7	3	negate; no; noes; refuse	ヒ	いな、いや
+562	周	8	2	circumference; circuit; lap	シュウ	まわ(り)
+563	師	10	3	expert; teacher; master; model	シ	いくさ
+564	摘	14	1	pinch; pick; pluck; trim	テキ	つ(む)
+565	材	7	2	lumber; log; timber; wood	ザイ	
+566	登	12	3	ascend; climb up	トウ、ト、ドウ、ショウ、チョウ	のぼ(る)、あ(がる)
+567	系	7	1	lineage; system	ケイ	
+568	批	7	1	criticism; strike	ヒ	
+569	郎	9	1	son; counter for sons	ロウ、リョウ	おとこ
+570	母	5	5	mother	ボ	はは、も
+571	易	8	3	easy; ready to; simple; fortune-telling	エキ、イ	やさ(しい)、やす(い)
+572	健	11	1	healthy; health; strength; persistence	ケン	すこ(やか)
+573	黒	11	4	black	コク	くろ、くろ(ずむ)、くろ(い)
+574	火	4	5	fire	カ	ひ、-び、ほ-
+575	戸	4	2	door; counter for houses	コ	と
+576	速	10	3	quick; fast	ソク	はや(い)、はや-、はや(める)、すみ(やか)
+577	存	6	3	exist; suppose; be aware of; believe	ソン、ゾン	ながら(える)、あ(る)、たも(つ)、と(う)
+578	花	7	4	flower	カ、ケ	はな
+579	春	9	4	springtime; spring (season)	シュン	はる
+580	飛	9	3	fly; skip (pages); scatter	ヒ	と(ぶ)、と(ばす)
+581	殺	10	3	kill; murder; butcher; slice off	サツ、サイ、セツ	ころ(す)、-ごろ(し)、そ(ぐ)、あや(める)
+582	央	5	2	center; middle	オウ	
+583	券	8	2	ticket	ケン	
+584	赤	7	4	red	セキ、シャク	あか、あか(い)、あか(らむ)、あか(らめる)
+585	号	5	3	nickname; number; item; title	ゴウ	さけ(ぶ)、よびな
+586	単	9	3	simple; one; single; merely	タン	ひとえ
+587	盟	13	1	alliance; oath	メイ	
+588	座	10	3	squat; seat; cushion; gathering	ザ	すわ(る)
+589	青	8	4	blue; green	セイ、ショウ	あお、あお(い)
+590	破	10	3	rend; rip; tear; break	ハ	やぶ(る)、やぶ(れる)、わ(れる)
+591	編	15	2	compilation; knit; plait; braid	ヘン	あ(む)、-あ(み)
+592	捜	10	2	search; look for; locate	ソウ、シュ、シュウ	さが(す)
+593	竹	6	2	bamboo	チク	たけ
+594	除	10	3	exclude; division (x/3); remove; abolish	ジョ、ジ	のぞ(く)、-よ(け)
+595	完	7	3	perfect; completion; end	カン	
+596	降	10	3	descend; precipitate; fall; surrender	コウ、ゴ	お(りる)、お(ろす)、ふ(る)、ふ(り)、くだ(る)、くだ(す)
+597	超	12	2	transcend; super-; ultra-	チョウ	こ(える)、こ(す)
+598	責	11	3	blame; condemn; censure	セキ	せ(める)
+599	並	8	2	row; and; besides; as well as	ヘイ、ホウ	な(み)、なみ、なら(べる)、なら(ぶ)、なら(びに)
+600	療	17	2	heal; cure	リョウ	
+601	従	10	1	accompany; obey; submit to; comply	ジュウ、ショウ、ジュ	したが(う)、したが(える)、より
+602	右	5	5	right	ウ、ユウ	みぎ
+603	修	10	1	discipline; conduct oneself well; study; master	シュウ、シュ	おさ(める)、おさ(まる)
+604	捕	10	3	catch; capture	ホ	と(らえる)、と(らわれる)、と(る)、とら(える)、とら(われる)、つか(まえる)、つか(まる)
+605	隊	12	1	regiment; party; company; squad	タイ	
+606	危	6	3	dangerous; fear; uneasy	キ	あぶ(ない)、あや(うい)、あや(ぶむ)
+607	採	11	2	pick; take; fetch; take up	サイ	と(る)
+608	織	18	1	weave; fabric	ショク、シキ	お(る)、お(り)、おり
+609	森	12	2	forest; woods	シン	もり
+610	競	20	2	emulate; compete with; bid; sell at auction	キョウ、ケイ	きそ(う)、せ(る)、くら(べる)
+611	拡	8	1	broaden; extend; expand; enlarge	カク、コウ	ひろ(がる)、ひろ(げる)、ひろ(める)
+612	故	9	1	happenstance; especially; intentionally; reason	コ	ゆえ、ふる(い)、もと
+613	館	16	4	building; mansion; large building; palace	カン	やかた、たて
+614	振	10	1	shake; wave; wag; swing	シン	ふ(る)、ふ(れる)、ふ(るう)
+615	給	12	3	salary; wage; gift; allow	キュウ	たま(う)、たも(う)、-たま(え)
+616	屋	9	4	roof; house; shop; dealer	オク	や
+617	介	4	2	jammed in; shellfish; mediate; concern oneself with	カイ	
+618	読	14	5	read	ドク、トク、トウ	よ(む)、-よ(み)
+619	弁	5	1	valve; petal; braid; speech	ベン、ヘン	かんむり、わきま(える)、わ(ける)、はなびら、あらそ(う)
+620	根	10	2	root; radical; head (pimple)	コン	ね
+621	色	6	4	color	ショク、シキ	いろ
+622	友	4	5	friend	ユウ	とも
+623	苦	8	3	suffering; trial; worry; hardship	ク	くる(しい)、-ぐる(しい)、くる(しむ)、くる(しめる)、にが(い)、にが(る)
+624	就	12	1	concerning; settle; take position; depart	シュウ、ジュ	つ(く)、つ(ける)
+625	迎	7	3	welcome; meet; greet	ゲイ	むか(える)
+626	走	7	4	run	ソウ	はし(る)
+627	販	11	2	marketing; sell; trade	ハン	
+628	園	13	3	park; garden; yard; farm	エン	その
+629	具	8	3	tool; utensil; means; possess	グ	そな(える)、つぶさ(に)
+630	左	5	5	left	サ、シャ	ひだり
+631	異	11	1	uncommon; different; queerness; strangeness	イ	こと、こと(なる)、け
+632	歴	14	2	curriculum; continuation; passage of time	レキ、レッキ	
+633	辞	13	3	resign; word; term; expression	ジ	や(める)、いな(む)
+634	将	10	2	leader; commander; general; admiral	ショウ、ソウ	まさ(に)、はた、まさ、ひきい(る)、もって
+635	秋	9	4	autumn	シュウ	あき、とき
+636	因	6	3	cause; factor; be associated with; depend on	イン	よ(る)、ちな(む)
+637	献	13	1	offering; counter for drinks; present; offer	ケン、コン	たてまつ(る)
+638	厳	17	1	stern; strictness; severity; rigidity	ゲン、ゴン	おごそ(か)、きび(しい)、いか(めしい)、いつくし
+639	馬	10	3	horse	バ、メ、マ、ボ、モ	うま、ま
+640	愛	13	3	love; affection; favourite	アイ	いと(しい)、かな(しい)、め(でる)、お(しむ)、まな
+641	幅	12	2	hanging scroll; width	フク	はば
+642	休	6	5	rest; day off; retire; sleep	キュウ	やす(む)、やす(まる)、やす(める)
+643	維	14	1	fiber; tie; rope	イ	
+644	富	12	3	wealth; enrich; abundant	フ、フウ	と(む)、とみ
+645	浜	10	1	seacoast; beach; seashore	ヒン	はま
+646	父	4	5	father	フ	ちち
+647	遺	15	1	bequeath; leave behind; reserve	イ、ユイ	のこ(す)
+648	彼	8	3	he; that; the	ヒ	かれ、かの、か(の)
+649	般	10	2	carrier; carry; all; general	ハン	
+650	未	5	3	un-; not yet; hitherto; still	ミ、ビ	いま(だ)、ま(だ)、ひつじ
+651	塁	12	1	bases; fort; rampart; walls	ルイ、ライ、スイ	とりで
+652	貿	12	2	trade; exchange	ボウ	
+653	講	17	2	lecture; club; association	コウ	
+654	邦	7	1	home country; country; Japan	ホウ	くに
+655	舞	15	3	dance; flit; circle; wheel	ブ	ま(う)、まい
+656	林	8	2	grove; forest	リン	はやし
+657	装	12	2	attire; dress; pretend; disguise	ソウ、ショウ	よそお(う)、よそお(い)
+658	諸	15	2	various; many; several; together	ショ	もろ
+659	夏	10	4	summer	カ、ガ、ゲ	なつ
+660	素	10	1	elementary; principle; naked; uncovered	ソ、ス	もと
+661	亡	3	3	deceased; the late; dying; perish	ボウ、モウ	な(い)、な(き-)、ほろ(びる)、ほろ(ぶ)、ほろ(ぼす)
+662	劇	15	2	drama; play	ゲキ	
+663	河	8	2	river	カ	かわ
+664	遣	13	1	dispatch; despatch; send; give	ケン	つか(う)、-つか(い)、-づか(い)、つか(わす)、や(る)
+665	航	10	2	navigate; sail; cruise; fly	コウ	
+666	抗	7	1	confront; resist; defy; oppose	コウ	あらが(う)
+667	冷	7	3	cool; cold (beer, person); chill	レイ	つめ(たい)、ひ(える)、ひ(や)、ひ(ややか)、ひ(やす)、ひ(やかす)、さ(める)、さ(ます)
+668	模	14	1	imitation; copy; mock	モ、ボ	
+669	雄	12	1	masculine; male; hero; leader	ユウ	お-、おす、おん
+670	適	14	3	suitable; occasional; rare; qualified	テキ	かな(う)
+671	婦	11	3	lady; woman; wife; bride	フ	よめ
+672	鉄	13	2	iron	テツ	くろがね
+673	寄	11	3	draw near; stop in; bring near; gather	キ	よ(る)、-よ(り)、よ(せる)
+674	益	10	1	benefit; gain; profit; advantage	エキ、ヤク	ま(す)
+675	込	5	3	crowded; mixture; in bulk; included		こ(む)、こ(み)、こ(める)
+676	顔	18	3	face; expression	ガン	かお
+677	緊	15	1	tense; solid; hard; reliable	キン	し(める)、し(まる)
+678	類	18	3	sort; kind; variety; class	ルイ	たぐ(い)
+679	児	7	2	newborn babe; child; young of animals	ジ、ニ、ゲイ	こ、-っこ
+680	余	7	3	too much; myself; surplus; other	ヨ	あま(る)、あま(り)、あま(す)、あんま(り)
+681	禁	13	2	prohibition; ban; forbid	キン	
+682	印	6	2	stamp; seal; mark; imprint	イン	しるし、-じるし、しる(す)
+683	逆	9	2	inverted; reverse; opposite; wicked	ギャク、ゲキ	さか、さか(さ)、さか(らう)
+684	王	4	3	king; rule; magnate	オウ、-ノウ	
+685	返	7	3	return; answer; fade; repay	ヘン	かえ(す)、かえ(る)
+686	標	15	1	signpost; seal; mark; stamp	ヒョウ	しるべ、しるし
+687	換	12	2	interchange; period; change; convert	カン	か(える)、か(わる)
+688	久	3	2	long time; old story	キュウ、ク	ひさ(しい)
+689	短	12	2	short; brevity; fault; defect	タン	みじか(い)
+690	油	8	2	oil; fat	ユ、ユウ	あぶら
+691	妻	8	3	wife; spouse	サイ	つま
+692	暴	15	2	outburst; rave; fret; force	ボウ、バク	あば(く)、あば(れる)
+693	輪	15	2	wheel; ring; circle; link	リン	わ
+694	占	5	2	fortune-telling; divining; forecasting; occupy	セン	し(める)、うらな(う)
+695	宣	9	1	proclaim; say; announce	セン	のたま(う)
+696	背	9	3	stature; height; back; behind	ハイ	せ、せい、そむ(く)、そむ(ける)
+697	昭	9	1	shining; bright	ショウ	
+698	廃	12	1	abolish; obsolete; cessation; discarding	ハイ	すた(れる)、すた(る)
+699	植	12	2	plant	ショク	う(える)、う(わる)
+700	熱	15	3	heat; temperature; fever; mania	ネツ	あつ(い)
+701	宿	11	3	inn; lodging; relay station; dwell	シュク	やど、やど(る)、やど(す)
+702	薬	16	3	medicine; chemical; enamel; gunpowder	ヤク	くすり
+703	伊	6	1	Italy; that one	イ	かれ
+704	江	6	1	creek; inlet; bay	コウ	え
+705	清	11	2	pure; purify; cleanse; exorcise	セイ、ショウ、シン	きよ(い)、きよ(まる)、きよ(める)
+706	習	11	4	learn	シュウ、ジュ	なら(う)、なら(い)
+707	険	11	3	precipitous; inaccessible place; impregnable position; steep place	ケン	けわ(しい)
+708	頼	16	3	trust; request	ライ	たの(む)、たの(もしい)、たよ(る)
+709	僚	14	1	colleague; official; companion	リョウ	
+710	覚	12	3	memorize; learn; remember; awake	カク	おぼ(える)、さ(ます)、さ(める)、さと(る)
+711	吉	6	1	good luck; joy; congratulations	キチ、キツ	よし
+712	盛	11	1	boom; prosper; copulate	セイ、ジョウ	も(る)、さか(る)、さか(ん)
+713	船	11	3	ship; boat	セン	ふね、ふな-
+714	倍	10	2	double; twice; times; fold	バイ	
+715	均	7	2	level; average	キン	なら(す)
+716	億	15	2	hundred million; 10**8	オク	
+717	途	10	3	route; way; road	ト	みち
+718	圧	5	2	pressure; push; overwhelm; oppress	アツ、エン、オウ	お(す)、へ(す)、おさ(える)、お(さえる)
+719	芸	7	2	technique; art; craft; performance	ゲイ、ウン	う(える)、のり、わざ
+720	許	11	3	permit; approve	キョ	ゆる(す)、もと
+721	皇	9	1	emperor	コウ、オウ	
+722	臨	18	1	look to; face; meet; confront	リン	のぞ(む)
+723	踏	15	1	step; trample; carry through; appraise	トウ	ふ(む)、ふ(まえる)
+724	駅	14	4	station	エキ	
+725	署	13	2	signature; govt office; police station	ショ	
+726	抜	7	3	slip out; extract; pull out; pilfer	バツ、ハツ、ハイ	ぬ(く)、ぬ(き)、ぬ(ける)、ぬ(かす)、ぬ(かる)
+727	壊	16	1	demolition; break; destroy	カイ、エ	こわ(す)、こわ(れる)、やぶ(る)
+728	債	13	1	bond; loan; debt	サイ	
+729	便	9	3	convenience; facility; excrement; feces	ベン、ビン	たよ(り)
+730	伸	7	2	expand; stretch; extend; lengthen	シン	の(びる)、の(ばす)、の(べる)、の(す)
+731	留	10	3	detain; fasten; halt; stop	リュウ、ル	と(める)、と(まる)、とど(める)、とど(まる)、るうぶる
+732	罪	13	3	guilt; sin; crime; fault	ザイ	つみ
+733	停	11	2	halt; stopping	テイ	と(める)、と(まる)
+734	興	16	1	entertain; revive; retrieve; interest	コウ、キョウ	おこ(る)、おこ(す)
+735	爆	19	2	bomb; burst open; pop; split	バク	は(ぜる)
+736	陸	11	2	land; six	リク、ロク	おか
+737	玉	5	2	jewel; ball	ギョク	たま、-だま
+738	源	13	1	source; origin	ゲン	みなもと
+739	儀	15	1	ceremony; rule; affair; case	ギ	
+740	波	8	2	waves; billows; Poland	ハ	なみ
+741	創	12	1	genesis; wound; injury; hurt	ソウ、ショウ	つく(る)、はじ(める)、きず、けず(しける)
+742	障	14	1	hinder; hurt; harm	ショウ	さわ(る)
+743	継	13	1	inherit; succeed; continue; patch	ケイ	つ(ぐ)、まま-
+744	筋	12	1	muscle; sinew; tendon; fiber	キン	すじ
+745	狙	8		aim at; sight; shadow; stalk	ソ、ショ	ねら(う)、ねら(い)
+746	帯	10	2	sash; belt; obi; zone	タイ	お(びる)、おび
+747	延	8	2	prolong; stretching	エン	の(びる)、の(べる)、の(べ)、の(ばす)
+748	羽	6	2	feathers; counter for birds, rabbits	ウ	は、わ、はね
+749	努	7	3	toil; diligent; as much as possible	ド	つと(める)
+750	固	8	2	harden; set; clot; curdle	コ	かた(める)、かた(まる)、かた(まり)、かた(い)
+751	闘	18	1	fight; war	トウ	たたか(う)、あらそ(う)
+752	精	14	3	refined; ghost; fairy; energy	セイ、ショウ	しら(げる)、くわ(しい)
+753	則	9	2	rule; law; follow; based on	ソク	のっと(る)、のり、すなわち
+754	葬	12	1	interment; bury; shelve	ソウ	ほうむ(る)
+755	乱	7	2	riot; war; disorder; disturb	ラン、ロン	みだ(れる)、みだ(る)、みだ(す)、みだ、おさ(める)、わた(る)
+756	避	16	1	evade; avoid; avert; ward off	ヒ	さ(ける)、よ(ける)
+757	普	12	2	universal; wide(ly); generally; Prussia	フ	あまね(く)、あまねし
+758	散	12	3	scatter; disperse; spend; squander	サン	ち(る)、ち(らす)、ち(らかす)、ち(らかる)、ち(らばる)、ばら、ばら(ける)
+759	司	5	1	director; official; govt office; rule	シ	つかさど(る)
+760	康	11	1	ease; peace	コウ	
+761	測	12	2	fathom; plan; scheme; measure	ソク	はか(る)
+762	豊	13	2	bountiful; excellent; rich	ホウ、ブ	ゆた(か)、とよ
+763	洋	9	4	ocean; sea; foreign; Western style	ヨウ	
+764	静	14	3	quiet	セイ、ジョウ	しず-、しず(か)、しず(まる)、しず(める)
+765	善	12	1	virtuous; good; goodness	ゼン	よ(い)、い(い)、よ(く)、よし(とする)
+766	逮	11	1	apprehend; chase	タイ	
+767	婚	11	3	marriage	コン	
+768	厚	9	2	thick; heavy; rich; kind	コウ	あつ(い)、あか
+769	喜	12	3	rejoice; take pleasure in	キ	よろこ(ぶ)、よろこ(ばす)
+770	齢	17	2	age	レイ	よわい、とし
+771	囲	7	2	surround; besiege; store; paling	イ	かこ(む)、かこ(う)、かこ(い)
+772	卒	8	2	graduate; soldier; private; die	ソツ、シュツ	そっ(する)、お(える)、お(わる)、ついに、にわか
+773	迫	8	1	urge; force; imminent; spur on	ハク	せま(る)
+774	略	11	2	abbreviation; omission; outline; shorten	リャク	ほぼ、はぶ(く)、おか(す)、おさ(める)、はかりごと、はか(る)
+775	承	8	2	acquiesce; hear; listen to; be informed	ショウ、ジョウ	うけたまわ(る)、う(ける)
+776	浮	10	3	floating; float; rise to surface	フ	う(く)、う(かれる)、う(かぶ)、う(かべる)
+777	惑	12	1	beguile; delusion; perplexity	ワク	まど(う)
+778	崩	11	1	crumble; die; demolish; level	ホウ	くず(れる)、-くず(れ)、くず(す)
+779	順	12	2	obey; order; turn; right	ジュン	
+780	紀	9	1	chronicle; account; narrative; history	キ	
+781	聴	17	1	listen; headstrong; naughty; careful inquiry	チョウ、テイ	き(く)、ゆる(す)
+782	脱	11	1	undress; removing; escape from; get rid of	ダツ	ぬ(ぐ)、ぬ(げる)
+783	旅	10	4	trip; travel	リョ	たび
+784	絶	12	3	discontinue; sever; cut off; abstain	ゼツ	た(える)、た(やす)、た(つ)
+785	級	9	1	class; rank; grade	キュウ	
+786	幸	8	3	happiness; blessing; fortune	コウ	さいわ(い)、さち、しあわ(せ)
+787	岩	8	2	boulder; rock; cliff	ガン	いわ
+788	練	14	2	practice; gloss; train; drill	レン	ね(る)、ね(り)
+789	押	8	3	push; stop; check; subdue	オウ	お(す)、お(し-)、お(っ-)、お(さえる)、おさ(える)
+790	軽	12	2	lightly; trifling; unimportant	ケイ、キョウ、キン	かる(い)、かろ(やか)、かろ(んじる)
+791	倒	10	3	overthrow; fall; collapse; drop	トウ	たお(れる)、-だお(れ)、たお(す)、さかさま、さかさ、さかしま
+792	了	2	2	complete; finish	リョウ	
+793	庁	5	2	government office	チョウ、テイ	やくしょ
+794	博	12	1	Dr.; command; esteem; win acclaim	ハク、バク	
+795	城	9	2	castle	ジョウ、セイ	しろ
+796	患	11	2	afflicted; disease; suffer from; be ill	カン	わずら(う)
+797	締	15	1	tighten; tie; shut; lock	テイ	し(まる)、し(まり)、し(める)、-し(め)、-じ(め)
+798	等	12	3	etc.; and so forth; class (first); quality	トウ	ひと(しい)、など、-ら
+799	救	11	1	salvation; save; help; rescue	キュウ	すく(う)
+800	執	11	1	tenacious; take hold; grasp; take to heart	シツ、シュウ	と(る)
+801	層	14	2	stratum; social class; layer; story	ソウ	
+802	版	8	2	printing block; printing plate; edition; impression	ハン	
+803	老	6	3	old man; old age; grow old	ロウ	お(いる)、ふ(ける)
+804	令	5	2	orders; laws; command; decree	レイ	
+805	角	7	2	angle; corner; square; horn	カク	かど、つの
+806	絡	12	2	entwine; coil around; get caught in	ラク	から(む)、から(まる)
+807	損	13	2	damage; loss; disadvantage; hurt	ソン	そこ(なう)、そこな(う)、そこ(ねる)
+808	房	8	1	tassel; tuft; fringe; bunch	ボウ	ふさ
+809	募	12	2	recruit; campaign; gather (contributions); enlist	ボ	つの(る)
+810	曲	6	3	bend; music; melody; composition	キョク	ま(がる)、ま(げる)、くま
+811	撤	15	1	remove; withdraw; disarm; dismantle	テツ	
+812	裏	13	2	back; amidst; in; reverse	リ	うら
+813	払	5	3	pay; clear out; prune; banish	フツ、ヒツ、ホツ	はら(う)、-はら(い)、-ばら(い)
+814	削	9	1	plane; sharpen; whittle; pare	サク	けず(る)、はつ(る)、そ(ぐ)
+815	密	11	1	secrecy; density (pop); minuteness; carefulness	ミツ	ひそ(か)
+816	庭	10	3	courtyard; garden; yard	テイ	にわ
+817	徒	10	3	on foot; junior; emptiness; vanity	ト	いたずら、あだ
+818	措	11	1	set aside; give up; suspend; discontinue	ソ	お(く)
+819	仏	4	2	Buddha; the dead; France	ブツ、フツ	ほとけ
+820	績	17	2	exploits; achievements; unreeling cocoons	セキ	
+821	築	16	2	fabricate; build; construct	チク	きず(く)
+822	貨	11	2	freight; goods; property	カ	たから
+823	志	7	1	intention; plan; resolve; aspire	シ	シリング、こころざ(す)、こころざし
+824	混	11	2	mix; blend; confuse	コン	ま(じる)、-ま(じり)、ま(ざる)、ま(ぜる)、こ(む)
+825	載	13	1	ride; board; get on; place	サイ	の(せる)、の(る)
+826	昇	8	2	rise up	ショウ	のぼ(る)
+827	池	6	2	pond; cistern; pool; reservoir	チ	いけ
+828	陣	10	1	camp; battle array; ranks; position	ジン	
+829	我	7	1	ego; I; selfish; our	ガ	われ、わ、わ(が-)、わが-
+830	勤	12	3	diligence; become employed; serve	キン、ゴン	つと(める)、-づと(め)、つと(まる)、いそ(しむ)
+831	為	9	1	do; change; make; benefit	イ	ため、な(る)、な(す)、す(る)、たり、つく(る)、なり
+832	血	6	2	blood	ケツ	ち
+833	遅	12	3	slow; late; back; later	チ	おく(れる)、おく(らす)、おそ(い)
+834	抑	7	1	repress; well; now; in the first place	ヨク	おさ(える)
+835	幕	13	1	curtain; bunting; act of play	マク、バク	とばり
+836	居	8	3	reside; to be; exist; live with	キョ、コ	い(る)、-い、お(る)
+837	染	9	1	dye; color; paint; stain	セン	そ(める)、そ(まる)、し(みる)、し(み)
+838	温	12	2	warm	オン	あたた(か)、あたた(かい)、あたた(まる)、あたた(める)、ぬく
+839	雑	14	3	miscellaneous	ザツ、ゾウ	まじ(える)、まじ(る)
+840	招	8	3	beckon; invite; summon; engage	ショウ	まね(く)
+841	奈	8	1	Nara; what?	ナ、ナイ、ダイ	いかん、からなし
+842	季	8	2	seasons	キ	
+843	困	7	3	quandary; become distressed; annoyed	コン	こま(る)
+844	星	9	2	star; spot; dot; mark	セイ、ショウ	ほし、-ぼし
+845	傷	13	1	wound; hurt; injure; impair	ショウ	きず、いた(む)、いた(める)
+846	永	5	2	eternity; long; lengthy	エイ	なが(い)
+847	択	7	1	choose; select; elect; prefer	タク	えら(ぶ)
+848	秀	7	1	excel; excellence; beauty; surpass	シュウ	ひい(でる)
+849	著	11	2	renowned; publish; write; remarkable	チョ、チャク	あらわ(す)、いちじる(しい)
+850	徴	14	1	indications; sign; omen; symptom	チョウ、チ	しるし
+851	誌	14	2	document; records	シ	
+852	庫	10	2	warehouse; storehouse	コ、ク	くら
+853	弾	12	1	bullet; twang; flip; snap	ダン、タン	ひ(く)、-ひ(き)、はず(む)、たま、はじ(く)、はじ(ける)、ただ(す)、はじ(きゆみ)
+854	償	17	1	reparation; make up for; recompense; redeem	ショウ	つぐな(う)
+855	刊	5	2	publish; carve; engrave	カン	
+856	像	14	2	statue; picture; image; figure	ゾウ	
+857	功	5	1	achievement; merits; success; honor	コウ、ク	いさお
+858	拠	8	1	foothold; based on; follow; therefore	キョ、コ	よ(る)
+859	香	9	2	incense; smell; perfume	コウ、キョウ	か、かお(り)、かお(る)
+860	欠	4	3	lack; gap; fail	ケツ、ケン	か(ける)、か(く)
+861	更	7	3	grow late; night watch; sit up late; of course	コウ	さら、さら(に)、ふ(ける)、ふ(かす)
+862	秘	10	1	secret; conceal	ヒ	ひ(める)、ひそ(か)、かく(す)
+863	拒	8	1	repel; refuse; reject; decline	キョ、ゴ	こば(む)
+864	刑	6	1	punish; penalty; sentence; punishment	ケイ	
+865	坂	7	2	slope; incline; hill	ハン	さか
+866	刻	8	3	engrave; cut fine; chop; hash	コク	きざ(む)、きざ(み)
+867	底	8	2	bottom; sole; depth; bottom price	テイ	そこ
+868	賛	15	3	approve; praise; title or inscription on picture; assist	サン	たす(ける)、たた(える)
+869	塚	12	1	hillock; mound	チョウ	つか、-づか
+870	致	10	1	doth; do; send; forward	チ	いた(す)
+871	抱	8	3	embrace; hug; hold in arms	ホウ	だ(く)、いだ(く)、かか(える)
+872	繰	19	1	winding; reel; spin; turn (pages)	ソウ	く(る)
+873	服	8	4	clothing; admit; obey; discharge	フク	
+874	犯	5	3	crime; sin; offense	ハン、ボン	おか(す)
+875	尾	7	1	tail; end; counter for fish; lower slope of mountain	ビ	お
+876	描	11	1	sketch; compose; write; draw	ビョウ	えが(く)、か(く)
+877	布	5	2	linen; cloth; spread; distribute	フ、ホ	ぬの、し(く)、きれ
+878	恐	10	3	fear; dread; awe	キョウ	おそ(れる)、おそ(る)、おそ(ろしい)、こわ(い)、こわ(がる)
+879	寺	6	2	Buddhist temple	ジ	てら
+880	鈴	13	1	small bell; buzzer	レイ、リン	すず
+881	盤	15	1	tray; shallow bowl; platter; tub	バン	
+882	息	10	3	breath; respiration; son; interest (on money)	ソク	いき
+883	宇	6	2	eaves; roof; house; heaven	ウ	
+884	項	12	1	paragraph; nape of neck; clause; item	コウ	うなじ
+885	喪	12	1	miss; mourning	ソウ	も
+886	伴	7	1	consort; accompany; bring with; companion	ハン、バン	ともな(う)
+887	遠	13	3	distant; far	エン、オン	とお(い)
+888	養	15	1	foster; bring up; rear; develop	ヨウ、リョウ	やしな(う)
+889	懸	20	1	state of suspension; hang; depend; consult	ケン、ケ	か(ける)、か(かる)
+890	戻	7	3	re-; return; revert; resume	レイ	もど(す)、もど(る)
+891	街	12	1	boulevard; street; town	ガイ、カイ	まち
+892	巨	5	2	gigantic; big; large; great	キョ	
+893	震	15	2	quake; shake; tremble; quiver	シン	ふる(う)、ふる(える)、ふる(わせる)、ふる(わす)
+894	願	19	3	petition; request; vow; wish	ガン	ねが(う)、-ねがい
+895	絵	12	3	picture; drawing; painting; sketch	カイ、エ	
+896	希	7	2	hope; beg; request; pray	キ、ケ	まれ、こいねが(う)
+897	越	12	3	surpass; cross over; move to; exceed	エツ、オツ	こ(す)、-ご(し)、こ(える)、-ご(え)
+898	契	9	1	pledge; promise; vow	ケイ	ちぎ(る)
+899	掲	11	1	put up (a notice); put up; hoist; display	ケイ	かか(げる)
+900	躍	21	1	leap; dance; skip	ヤク	おど(る)
+901	棄	13	1	abandon; throw away; discard; resign	キ	す(てる)
+902	欲	11	3	longing; covetousness; greed; passion	ヨク	ほっ(する)、ほ(しい)
+903	痛	12	3	pain; hurt; damage; bruise	ツウ	いた(い)、いた(む)、いた(ましい)、いた(める)
+904	触	13	2	contact; touch; feel; hit	ショク	ふ(れる)、さわ(る)、さわ
+905	邸	8	1	residence; mansion	テイ	やしき
+906	依	8	2	reliant; depend on; consequently; therefore	イ、エ	よ(る)
+907	籍	20	2	enroll; domiciliary register; membership	セキ	
+908	汚	6	2	dirty; pollute; disgrace; rape	オ	けが(す)、けが(れる)、けが(らわしい)、よご(す)、よご(れる)、きたな(い)
+909	縮	17	1	shrink; contract; shrivel; wrinkle	シュク	ちぢ(む)、ちぢ(まる)、ちぢ(める)、ちぢ(れる)、ちぢ(らす)
+910	還	16	1	send back; return	カン	かえ(る)
+911	枚	8	2	sheet of...; counter for flat thin objects or sheets	マイ、バイ	
+912	属	12	1	belong; genus; subordinate official; affiliated	ゾク、ショク	さかん、つく、やから
+913	笑	10	3	laugh	ショウ	わら(う)、え(む)
+914	互	4	3	mutually; reciprocally; together	ゴ	たが(い)、かたみ(に)
+915	複	14	2	duplicate; double; compound; multiple	フク	
+916	慮	15	1	prudence; thought; concern; consider	リョ	おもんぱく(る)、おもんぱか(る)
+917	郵	11	2	mail; stagecoach stop	ユウ	
+918	束	7	3	bundle; sheaf; ream; tie in bundles	ソク	たば、たば(ねる)、つか、つか(ねる)
+919	仲	6	2	go-between; relationship	チュウ	なか
+920	栄	9	2	flourish; prosperity; honor; glory	エイ、ヨウ	さか(える)、は(え)、-ば(え)、は(える)、え
+921	札	5	2	tag; paper money; counter for bonds; placard	サツ	ふだ
+922	枠	8	1	frame; framework; spindle; spool		わく
+923	似	7	3	becoming; resemble; counterfeit; imitate	ジ	に(る)、ひ(る)
+924	夕	3	4	evening	セキ	ゆう
+925	恵	10	1	favor; blessing; grace; kindness	ケイ、エ	めぐ(む)、めぐ(み)
+926	板	8	2	plank; board; plate; stage	ハン、バン	いた
+927	列	6	3	file; row; rank; tier	レツ、レ	
+928	露	21	1	dew; tears; expose; Russia	ロ、ロウ	つゆ
+929	沖	7	1	open sea; offing; rise high into sky	チュウ	おき、おきつ、ちゅう(する)、わく
+930	探	11	3	grope; search; look for	タン	さぐ(る)、さが(す)
+931	逃	9	3	escape; flee; shirk; evade	トウ	に(げる)、に(がす)、のが(す)、のが(れる)
+932	借	10	4	borrow; rent	シャク	か(りる)
+933	緩	15	1	slacken; loosen; relax; lessen	カン	ゆる(い)、ゆる(やか)、ゆる(む)、ゆる(める)
+934	節	13	1	node; season; period; occasion	セツ、セチ	ふし、-ぶし、のっと
+935	需	14	1	demand; request; need	ジュ	
+936	骨	10	2	skeleton; bone; remains; frame	コツ	ほね
+937	射	10	1	shoot; shine into; onto; archery	シャ	い(る)、さ(す)、う(つ)
+938	傾	13	2	lean; incline; tilt; trend	ケイ	かたむ(く)、かたむ(ける)、かたぶ(く)、かた(げる)、かし(げる)
+939	届	8	2	deliver; reach; arrive; report	カイ	とど(ける)、-とど(け)、とど(く)
+940	曜	18	4	weekday	ヨウ	
+941	遊	12	3	play	ユウ、ユ	あそ(ぶ)、あそ(ばす)
+942	迷	9	3	astray; be perplexed; in doubt; lost	メイ	まよ(う)
+943	夢	13	3	dream; vision; illusion	ム、ボウ	ゆめ、ゆめ(みる)、くら(い)
+944	巻	9	2	scroll; volume; book; part	カン、ケン	ま(く)、まき、ま(き)
+945	購	17	1	subscription; buy	コウ	
+946	揮	12	1	brandish; wave; wag; swing	キ	ふる(う)
+947	君	7	3	mister; you; ruler; male name suffix	クン	きみ、-ぎみ
+948	燃	16	2	burn; blaze; glow	ネン	も(える)、も(やす)、も(す)
+949	充	6	1	allot; fill	ジュウ	あ(てる)、み(たす)
+950	雨	8	5	rain	ウ	あめ、あま-、-さめ
+951	閉	11	3	closed; shut	ヘイ	と(じる)、と(ざす)、し(める)、し(まる)、た(てる)
+952	緒	14	3	thong; beginning; inception; end	ショ、チョ	お、いとぐち
+953	跡	13	2	tracks; mark; print; impression	セキ	あと
+954	包	5	2	wrap; pack up; cover; conceal	ホウ	つつ(む)、くる(む)
+955	駐	15	2	stop-over; reside in; resident	チュウ	
+956	貢	10	1	tribute; support; finance	コウ、ク	みつ(ぐ)
+957	鹿	11	1	deer	ロク	しか、か
+958	弱	10	2	weak; frail	ジャク	よわ(い)、よわ(る)、よわ(まる)、よわ(める)
+959	却	7	1	instead; on the contrary; rather; step back	キャク	かえ(って)、しりぞ(く)、しりぞ(ける)
+960	端	14	1	edge; origin; end; point	タン	はし、は、はた、-ばた、はな
+961	賃	13	1	fare; fee; hire; rent	チン	
+962	折	7	3	fold; break; fracture; bend	セツ、シャク	お(る)、おり、お(り)、お(れる)
+963	紹	11	2	introduce; inherit; help	ショウ	
+964	獲	16	1	seize; get; find; earn	カク	え(る)
+965	郡	10	1	county; district	グン	こおり
+966	併	8	1	join; get together; unite; collective	ヘイ	あわ(せる)
+967	草	9	3	grass; weeds; herbs; pasture	ソウ	くさ、-ぐさ
+968	徹	15	1	penetrate; clear; pierce; strike home	テツ	
+969	飲	12	4	drink; smoke; take	イン、オン	の(む)、-の(み)
+970	貴	12	1	precious; value; prize; esteem	キ	たっと(い)、とうと(い)、たっと(ぶ)、とうと(ぶ)
+971	埼	11		cape; spit; promontory	キ	さき、さい、みさき
+972	衝	15	1	collide; brunt; highway; opposition (astronomy)	ショウ	つ(く)
+973	焦	12	1	char; hurry; impatient; irritate	ショウ	こ(げる)、こ(がす)、こ(がれる)、あせ(る)、じ(れる)、じ(らす)
+974	奪	14	1	rob; take by force; snatch away; dispossess	ダツ	うば(う)
+975	雇	12	2	employ; hire	コ	やと(う)
+976	災	7	1	disaster; calamity; woe; curse	サイ	わざわ(い)
+977	浦	10	1	bay; creek; inlet; gulf	ホ	うら
+978	暮	14	3	evening; twilight; season's end; livelihood	ボ	く(れる)、く(らす)
+979	替	12	2	exchange; spare; substitute; per-	タイ	か(える)、か(え-)、か(わる)
+980	析	8	1	chop; divide; tear; analyze	セキ	
+981	預	13	2	deposit; custody; leave with; entrust to	ヨ	あず(ける)、あず(かる)
+982	焼	12	2	bake; burning	ショウ	や(く)、や(き)、や(き-)、や(ける)
+983	簡	18	2	simplicity; brevity	カン、ケン	えら(ぶ)、ふだ
+984	譲	20	1	defer; turnover; transfer; convey	ジョウ	ゆず(る)
+985	称	10	1	appellation; praise; admire; name	ショウ	たた(える)、とな(える)、あ(げる)、かな(う)、はか(り)、はか(る)、ほめ(る)
+986	肉	6	4	meat	ニク	しし
+987	納	10	1	settlement; obtain; reap; pay	ノウ、ナッ、ナ、ナン、トウ	おさ(める)、おさ(まる)
+988	樹	16	1	timber; trees; wood; establish	ジュ	き
+989	挑	9	1	challenge; contend for; make love to	チョウ	いど(む)
+990	章	11	2	badge; chapter; composition; poem	ショウ	
+991	臓	19	2	entrails; viscera; bowels	ゾウ	はらわた
+992	律	9	2	rhythm; law; regulation; gauge	リツ、リチ、レツ	
+993	誘	14	1	entice; lead; tempt; invite	ユウ	さそ(う)、いざな(う)
+994	紛	10	1	distract; be mistaken for; go astray; divert	フン	まぎ(れる)、-まぎ(れ)、まぎ(らす)、まぎ(らわす)、まぎ(らわしい)
+995	貸	12	4	lend	タイ	か(す)、か(し-)、かし-
+996	至	6	1	climax; arrive; proceed; reach	シ	いた(る)
+997	宗	8	1	religion; sect; denomination; main point	シュウ、ソウ	むね
+998	促	9	1	stimulate; urge; press; demand	ソク	うなが(す)
+999	慎	13	1	humility; be careful; discreet; prudent	シン	つつし(む)、つつ(ましい)、つつし、つつし(み)
+1000	控	11	1	withdraw; draw in; hold back; refrain from	コウ	ひか(える)、ひか(え)

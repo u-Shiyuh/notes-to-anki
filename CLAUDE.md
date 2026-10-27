@@ -8,6 +8,9 @@ A single-file Python CLI (`main.py`) that pushes Japanese study material into An
 
 - **Ledger sync** (default): reads every row of a Notion database (the "Language Learning Ledger") and creates or updates one Anki `Basic` note per row.
 - **Kana seed** (`--seed-kana`): writes the built-in hiragana and katakana tables (104 each: gojūon, dakuten/handakuten, yōon) to `Nihongo::Kana::Hiragana` and `Nihongo::Kana::Katakana`.
+- **Kanji seed** (`--seed-kanji`): writes the 1,000 most frequent kanji from `kanji_top1000.tsv` to `Nihongo::Core Kanji`, in frequency order. It skips kanji that already have a card in `Nihongo::Kanji`.
+
+`kanji_top1000.tsv` is generated data. It was built once from KANJIDIC2 (CC BY-SA 4.0: frequency, readings, meanings, strokes) and kanji-data (MIT: JLPT N-levels). Its `#` header lists the sources and formatting rules. The generator isn't in the repo. To change the list, regenerate the file with the same columns rather than hand-editing 1,000 rows. Keep the attribution in the header and README.
 
 There are no tests, no packaging and no `requirements.txt`. The only third-party dependency is `python-dotenv`. HTTP goes through `urllib`.
 
@@ -21,6 +24,8 @@ python main.py --dry-run               # preview the ledger sync (still calls No
 python main.py                         # sync the ledger (Anki must be open)
 python main.py --seed-kana --dry-run   # preview the kana seed (no network)
 python main.py --seed-kana
+python main.py --seed-kanji --dry-run  # preview the kanji seed (reads Anki if open)
+python main.py --seed-kanji
 python main.py --no-update             # add new notes only; never modify existing ones
 python main.py --prune --dry-run       # list linked notes whose Notion row is gone (needs Anki)
 ```
@@ -35,7 +40,7 @@ A non-dry run writes to the user's real Anki collection, so ask before running o
 
 ## How it's used
 
-The ledger sync runs over and over, not once. The user adds a row to Notion whenever they learn a new kanji, word or grammar point, then runs `python main.py`. That adds the new cards and keeps existing ones in line with Notion without touching review history. The kana seed is the only part meant to run once, because its tables don't change.
+The ledger sync runs over and over, not once. The user adds a row to Notion whenever they learn a new kanji, word or grammar point, then runs `python main.py`. That adds the new cards and keeps existing ones in line with Notion without touching review history. The kana and kanji seeds are meant to run once, because their tables don't change. They are safe to re-run.
 
 As of 2026-10-19, every ledger note in the real collection carries its `notion_` link tag. So the Front-text fallback match only applies to notes created by hand or by older versions of the script.
 
@@ -54,12 +59,13 @@ The script can't run on GitHub-hosted Actions. AnkiConnect is an HTTP server ins
 
 | Area | Functions / constants |
 |---|---|
-| Config | `NOTION_TOKEN`, `NOTION_DATABASE_ID` (from env via dotenv; `sync_ledger` treats any value containing `paste_your` (any case) as missing), `DECK_ROOT="Nihongo"`, `NOTE_TYPE="Basic"`, `KANA_SCOPE` / `LEDGER_SCOPE` (Anki searches), `LINK_TAG_PREFIX`, `TYPE_TAGS`, `NOTE_OPTIONS` (`duplicateScope: "deck"`), `ANKICONNECT_URL` |
+| Config | `NOTION_TOKEN`, `NOTION_DATABASE_ID` (from env via dotenv; `sync_ledger` treats any value containing `paste_your` (any case) as missing), `DECK_ROOT="Nihongo"`, `NOTE_TYPE="Basic"`, `KANJI_DECK`, `LEDGER_KANJI_DECK`, `KANA_SCOPE` / `KANJI_SCOPE` / `LEDGER_SCOPE` / `LEDGER_KANJI_SCOPE` (Anki searches), `KANJI_FILE`, `LINK_TAG_PREFIX`, `TYPE_TAGS`, `NOTE_OPTIONS` (`duplicateScope: "deck"`), `ANKICONNECT_URL` |
 | Kana data | `HIRAGANA_*`, `KATAKANA_*` lists of `(kana, romaji)`; `kana_note`, `build_kana_notes`, `seed_kana` |
+| Kanji seed | `load_kanji` (parses `KANJI_FILE`), `kanji_note` (its own Back layout and `kanji`/`core_kanji`/`jlpt_nN` tags), `without_ledger_kanji`, `seed_kanji` |
 | Notion | `notion_request` (retries 429/5xx/network errors with backoff, honouring `Retry-After`; exits on other errors), `fetch_all_rows` (API `2025-09-03`: reads the database's `data_sources`, then pages through `/data_sources/{id}/query`), `get_prop`, `skip_reason`, `row_to_note`, `link_tag` |
 | Card layout | `format_back`, `split_note`, `sentences`, `preview_html` (dry-run only) |
-| Anki | `anki_request` (exits if AnkiConnect is unreachable; *logs but does not raise* on AnkiConnect errors), `anki_available`, `anki_multi` (batches writes through `multi`), `same_html`, `plan_changes` (read-only), `print_plan`, `summarize`, `preview_changes` (dry-run), `add_or_update_notes` |
-| CLI | `main` (argparse: `--dry-run`, `--seed-kana`, `--no-update`, `--prune`; `--prune` is rejected with `--seed-kana` or `--no-update`) |
+| Anki | `anki_request` (exits if AnkiConnect is unreachable; *logs but does not raise* on AnkiConnect errors), `anki_available`, `anki_multi` (batches writes through `multi`), `find_notes`, `same_html`, `plan_changes` (read-only), `print_plan`, `summarize`, `preview_changes` (dry-run), `add_or_update_notes` |
+| CLI | `main` (argparse: `--dry-run`, `--seed-kana`, `--seed-kanji`, `--no-update`, `--prune`; the two seeds are mutually exclusive, and `--prune` is rejected with either seed or with `--no-update`) |
 
 `_GOJUON` is defined and then `del`'d.
 
@@ -92,14 +98,15 @@ All text is HTML-escaped. Changing `format_back` changes every Back field, so th
 
 `plan_changes` is read-only and returns a plan. `add_or_update_notes` prints it and applies it; `--dry-run` prints it via `preview_changes` (only if Anki is reachable).
 
-1. **Scope.** Each mode only reads notes matching `note:"Basic" <scope>`: `KANA_SCOPE` (`Nihongo::Kana` and below) for the seed, `LEDGER_SCOPE` (`Nihongo` minus `Nihongo::Kana`) for the ledger. Notes outside the scope are never matched or changed. `NOTE_OPTIONS` sets `duplicateScope: "deck"` so the same Front can exist in a kana deck and a ledger deck.
+1. **Scope.** Each mode only reads notes matching `note:"Basic" <scope>`: `KANA_SCOPE` (`Nihongo::Kana` and below) for the kana seed, `KANJI_SCOPE` (`Nihongo::Core Kanji`) for the kanji seed, `LEDGER_SCOPE` (`Nihongo` minus those two) for the ledger. Notes outside the scope are never matched or changed, with one exception: adoption (step 3). `NOTE_OPTIONS` sets `duplicateScope: "deck"` so the same Front can exist in a kana deck and a ledger deck.
 2. **In-batch duplicates.** If two incoming notes share deck and Front, only the first is used; the rest are reported under "Not added".
 3. **Matching.** Ledger notes carry a `notion_<page id without dashes>` tag (`link_tag`). An incoming note matches the existing note with the same link tag; otherwise an existing note *without* a link tag and with the same Front (this is how pre-link notes and the kana cards match). Each existing note is matched at most once.
+   - **Adoption** (`adopt=` on `plan_changes`; only the ledger sync passes it). A ledger note for `Nihongo::Kanji` that matched nothing takes over the `Nihongo::Core Kanji` note with the same Front. That note then goes through the normal update path, so it's rewritten, moved into `Nihongo::Kanji` and gets its link tag, and its review history is kept. Its `core_kanji`/`jlpt_nN` tags aren't owned by the ledger, so they stay. Only `Kanji`-type rows adopt; a `Vocab` row `会` doesn't take over the Core Kanji `会` card. The kanji seed then no longer sees that note, and `without_ledger_kanji` stops it from re-adding the kanji.
 4. **Changes for matched notes** (skipped entirely with `--no-update`):
    - Front or Back differs (compared with `same_html`, which ignores entity, whitespace and `style` formatting differences): `updateNoteFields` with both fields. This also applies Item renames.
    - Any card not in the target deck (`getDecks`): `changeDeck`.
    - Tags: missing ones are added. A tag on the note is removed only if the note shouldn't have it *and* the script owns it: `lessonN`, `TYPE_TAGS`, `notion_*`, or any tag the current batch produces. All other tags are the user's and are kept.
-5. **Adds.** Unmatched notes are checked with `canAddNotesWithErrorDetail`; only addable ones go to `addNotes`, so counts are accurate and one bad note can't fail the batch. Rejections are listed with Anki's reason.
+5. **Adds.** Unmatched notes are checked with `canAddNotesWithErrorDetail`; only addable ones go to `addNotes`, so counts are accurate and one bad note can't fail the batch. Rejections are listed with Anki's reason. A "deck was not found" error doesn't count as a rejection, because the run creates missing decks before adding.
 6. **Prune** (`--prune`, ledger only): linked notes in scope that matched no incoming note are deleted with `deleteNotes`. Unlinked leftovers are listed but never deleted, because they may be hand-made.
 
 All writes except `addNotes` go through `anki_multi` in chunks of `ANKI_MULTI_CHUNK`, in this order: `createDeck`, `updateNoteFields`, `changeDeck`, `addTags`/`removeTags`, `deleteNotes`. Re-running with nothing changed sends no write requests.
@@ -111,7 +118,8 @@ Confirm the user wants a fix before changing behaviour.
 1. **Unlinked orphans.** A note whose row was deleted before the note got its `notion_` tag looks the same as a hand-made card, so `--prune` won't delete it (today: `聴く`, whose row became `IGNORE — 聴く`). It must be deleted by hand.
 2. **Front fallback can adopt a hand-made card.** A hand-made `Basic` card in a ledger deck whose Front equals a ledger `Item` gets matched once, overwritten and linked. Cards outside `Nihongo` are safe.
 3. **Notion result cap.** `/data_sources/{id}/query` stops at 10,000 results per query. The ledger is about 400 rows.
-4. **`addNotes` errors are counted, not itemised.** Adds are pre-checked, so this is rare; if `addNotes` itself errors, the run reports one failed request and "Added 0".
+4. **Core Kanji is a snapshot.** Kanji that were already in `Nihongo::Kanji` when the seed ran are skipped (110 on 2026-10-27). If such a ledger row is later deleted and pruned, the next `--seed-kanji` adds that kanji back as a fresh Core Kanji card.
+5. **`addNotes` errors are counted, not itemised.** Adds are pre-checked, so this is rare; if `addNotes` itself errors, the run reports one failed request and "Added 0".
 
 ## Conventions
 

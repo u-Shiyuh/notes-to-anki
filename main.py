@@ -8,7 +8,8 @@ workaround needed) and pushes them into Anki via AnkiConnect.
 
 Also supports a one-time seed of the FULL hiragana + katakana charts
 (gojuon, dakuten/handakuten, and yoon combos) into their own Anki
-decks, for kana recognition practice separate from the Notion ledger.
+decks, for kana recognition practice separate from the Notion ledger,
+and a seed of the 1000 most frequent kanji (kanji_top1000.tsv).
 
 SETUP (one-time)
 -----------------
@@ -48,8 +49,15 @@ USAGE
    python3 main.py --seed-kana --dry-run       # preview the kana seed only
    python3 main.py --seed-kana --no-update     # only add new kana, don't fix existing ones
 
+   python3 main.py --seed-kanji               # add the 1000 most frequent kanji
+   python3 main.py --seed-kanji --dry-run     # preview the kanji seed only
+
 Safe to re-run any time. Each mode only looks at its own decks: the kana
-seed at Nihongo::Kana::*, the ledger sync at the other Nihongo decks.
+seed at Nihongo::Kana::*, the kanji seed at Nihongo::Core Kanji, the
+ledger sync at the other Nihongo decks. The kanji seed skips kanji that
+already have a card in Nihongo::Kanji, and when a ledger Kanji row is
+added for a seeded kanji, the sync moves that card into Nihongo::Kanji
+(keeping its review history) rather than creating a second one.
 Ledger notes carry a notion_<page id> tag linking them to their row, so
 renaming an Item updates its card instead of creating a new one (older
 untagged notes are matched by Front text once, then tagged).
@@ -96,8 +104,20 @@ NOTE_TYPE = "Basic"
 
 # Each mode only matches (and may only change) notes inside its own decks,
 # so a ledger card "は" and the hiragana card "は" never overwrite each other.
+KANJI_DECK = f"{DECK_ROOT}::Core Kanji"
 KANA_SCOPE = f'"deck:{DECK_ROOT}::Kana"'
-LEDGER_SCOPE = f'"deck:{DECK_ROOT}" -"deck:{DECK_ROOT}::Kana"'
+KANJI_SCOPE = f'"deck:{KANJI_DECK}"'
+LEDGER_SCOPE = f'"deck:{DECK_ROOT}" -"deck:{DECK_ROOT}::Kana" -"deck:{KANJI_DECK}"'
+
+# The ledger's Kanji deck. The kanji seed skips kanji that already have a
+# card here, and a ledger Kanji row takes over (adopts) the Core Kanji card
+# for the same kanji instead of duplicating it.
+LEDGER_KANJI_DECK = f"{DECK_ROOT}::Kanji"
+LEDGER_KANJI_SCOPE = f'"deck:{LEDGER_KANJI_DECK}"'
+
+# The 1000 most frequent kanji, generated from KANJIDIC2 (see its header).
+KANJI_FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)),
+                          "kanji_top1000.tsv")
 
 # Ledger notes are tagged notion_<page id without dashes>. That tag, not
 # the Front text, is what links a card to its Notion row.
@@ -254,6 +274,85 @@ def seed_kana(dry_run=False, update=True):
         return
 
     add_or_update_notes(notes, KANA_SCOPE, update=update)
+
+
+# ---------------------------------------------------------------------------
+# Core kanji seed — the 1000 most frequent kanji, from kanji_top1000.tsv
+# ---------------------------------------------------------------------------
+
+def load_kanji():
+    """Rows of KANJI_FILE as dicts, in frequency order."""
+    rows = []
+    try:
+        with open(KANJI_FILE, encoding="utf-8") as f:
+            for line in f:
+                if line.startswith("#") or not line.strip():
+                    continue
+                rank, kanji, strokes, jlpt, meanings, on, kun = \
+                    line.rstrip("\n").split("\t")
+                rows.append({"rank": rank, "kanji": kanji, "strokes": strokes,
+                             "jlpt": jlpt, "meanings": meanings.split("; "),
+                             "on": on, "kun": kun})
+    except OSError as e:
+        print(f"Could not read the kanji list: {e}", file=sys.stderr)
+        sys.exit(1)
+    return rows
+
+
+def kanji_note(row):
+    """Build an AnkiConnect note dict for one Core Kanji row."""
+    esc = html.escape
+    parts = [_HEADLINE.format(esc(", ".join(row["meanings"])))]
+    if row["on"]:
+        parts.append(_LINE.format(esc(f"On: {row['on']}")))
+    if row["kun"]:
+        parts.append(_LINE.format(esc(f"Kun: {row['kun']}")))
+    facts = [f"{row['strokes']} stroke" + ("" if row["strokes"] == "1" else "s")]
+    if row["jlpt"]:
+        facts.append(f"JLPT N{row['jlpt']}")
+    facts.append(f"#{row['rank']} by frequency")
+    parts.append(_NOTE.format(esc(" · ".join(facts))))
+
+    tags = ["kanji", "core_kanji"]
+    if row["jlpt"]:
+        tags.append(f"jlpt_n{row['jlpt']}")
+    return {
+        "deckName": KANJI_DECK,
+        "modelName": NOTE_TYPE,
+        "fields": {"Front": row["kanji"], "Back": "".join(parts)},
+        "tags": tags,
+        "options": NOTE_OPTIONS,
+    }
+
+
+def without_ledger_kanji(notes):
+    """Drop kanji that already have a card in the ledger's Kanji deck."""
+    have = {_field(info, "Front").strip() for info in find_notes(LEDGER_KANJI_SCOPE)}
+    kept = [n for n in notes if n["fields"]["Front"] not in have]
+    skipped = [n["fields"]["Front"] for n in notes if n["fields"]["Front"] in have]
+    if skipped:
+        print(f"Skipping {len(skipped)} kanji already in {LEDGER_KANJI_DECK}: "
+              + " ".join(skipped))
+    return kept
+
+
+def seed_kanji(dry_run=False, update=True):
+    """Seed the Core Kanji deck (safe to re-run). Notes are added in
+    frequency order, so Anki introduces the most common kanji first."""
+    notes = [kanji_note(row) for row in load_kanji()]
+
+    if dry_run:
+        print(f"Would ensure deck {KANJI_DECK} and seed up to {len(notes)} kanji.")
+        for n in notes[:5]:
+            print(f"\n[{n['deckName']}] {n['fields']['Front']}")
+            print(preview_html(n["fields"]["Back"]))
+        if anki_available():
+            notes = without_ledger_kanji(notes)
+        preview_changes(notes, KANJI_SCOPE, update=update)
+        return
+
+    notes = without_ledger_kanji(notes)
+    add_or_update_notes(notes, KANJI_SCOPE, update=update)
 
 
 # ---------------------------------------------------------------------------
@@ -521,7 +620,13 @@ def same_html(a, b):
     return norm(a) == norm(b)
 
 
-def plan_changes(notes, scope, update=True, prune=False):
+def find_notes(scope):
+    """notesInfo for every NOTE_TYPE note matching the Anki search `scope`."""
+    ids = anki_request("findNotes", query=f'note:"{NOTE_TYPE}" {scope}') or []
+    return (anki_request("notesInfo", notes=ids) or []) if ids else []
+
+
+def plan_changes(notes, scope, update=True, prune=False, adopt=None):
     """Work out what syncing `notes` would change in Anki. Read-only.
 
     Only notes of NOTE_TYPE inside `scope` (an Anki search) are considered.
@@ -531,6 +636,9 @@ def plan_changes(notes, scope, update=True, prune=False):
 
     update=False: matched notes are left exactly as they are.
     prune=True: linked notes whose row is gone are marked for deletion.
+    adopt=(other scope, deck): an incoming note for `deck` that matched
+    nothing may take over the note with the same Front in the other scope
+    (it's then moved into `deck`, keeping its review history).
     """
     plan = {"add": [], "rejected": [], "update": [], "move": [], "retag": [],
             "delete": [], "unlinked": [], "unchanged": 0, "kept": 0}
@@ -547,15 +655,19 @@ def plan_changes(notes, scope, update=True, prune=False):
         seen.add(key)
         unique.append(n)
 
-    ids = anki_request("findNotes", query=f'note:"{NOTE_TYPE}" {scope}') or []
-    existing = (anki_request("notesInfo", notes=ids) or []) if ids else []
     by_link, by_front = {}, {}
-    for info in existing:
+    for info in find_notes(scope):
         link = _note_link(info.get("tags", []))
         if link:
             by_link.setdefault(link, info)
         else:
             by_front.setdefault(_field(info, "Front"), info)
+
+    adopt_deck, adoptable = None, {}
+    if adopt and any(n["deckName"] == adopt[1] for n in unique):
+        adopt_deck = adopt[1]
+        for info in find_notes(adopt[0]):
+            adoptable.setdefault(_field(info, "Front").strip(), info)
 
     matched = []
     for n in unique:
@@ -563,6 +675,8 @@ def plan_changes(notes, scope, update=True, prune=False):
         info = by_link.pop(link, None) if link else None
         if info is None:
             info = by_front.pop(n["fields"]["Front"], None)
+        if info is None and n["deckName"] == adopt_deck:
+            info = adoptable.pop(n["fields"]["Front"].strip(), None)
         if info is None:
             plan["add"].append(n)
         elif update:
@@ -620,7 +734,9 @@ def plan_changes(notes, scope, update=True, prune=False):
             checks = [{"canAdd": True}] * len(plan["add"])
         addable = []
         for n, check in zip(plan["add"], checks):
-            if check.get("canAdd"):
+            # A missing deck is fine: the run creates it before adding.
+            if check.get("canAdd") or (check.get("error") or "").startswith(
+                    "deck was not found"):
                 addable.append(n)
             else:
                 plan["rejected"].append((n, check.get("error") or "rejected by Anki"))
@@ -673,23 +789,23 @@ def summarize(plan, dry_run, added=None):
     return text
 
 
-def preview_changes(notes, scope, update=True, prune=False):
+def preview_changes(notes, scope, update=True, prune=False, adopt=None):
     """--dry-run: show what a real run would change, if Anki is open."""
     if not anki_available():
         print("\nAnki isn't open, so this preview can't show what would "
               "change in Anki.")
         return
-    plan = plan_changes(notes, scope, update=update, prune=prune)
+    plan = plan_changes(notes, scope, update=update, prune=prune, adopt=adopt)
     print()
     print_plan(plan)
     print(summarize(plan, dry_run=True))
 
 
-def add_or_update_notes(notes, scope, update=True, prune=False):
+def add_or_update_notes(notes, scope, update=True, prune=False, adopt=None):
     """Bring the Anki notes in `scope` in line with `notes` (dicts with
     deckName, modelName, fields, tags, options). See plan_changes for how
-    notes are matched and what update/prune do."""
-    plan = plan_changes(notes, scope, update=update, prune=prune)
+    notes are matched and what update/prune/adopt do."""
+    plan = plan_changes(notes, scope, update=update, prune=prune, adopt=adopt)
     print_plan(plan)
 
     decks = {n["deckName"] for n in plan["add"]}
@@ -752,10 +868,12 @@ def sync_ledger(dry_run=False, update=True, prune=False):
         for n in notes[:5]:
             print(f"\n[{n['deckName']}] {n['fields']['Front']}")
             print(preview_html(n["fields"]["Back"]))
-        preview_changes(notes, LEDGER_SCOPE, update=update, prune=prune)
+        preview_changes(notes, LEDGER_SCOPE, update=update, prune=prune,
+                        adopt=(KANJI_SCOPE, LEDGER_KANJI_DECK))
         return
 
-    add_or_update_notes(notes, LEDGER_SCOPE, update=update, prune=prune)
+    add_or_update_notes(notes, LEDGER_SCOPE, update=update, prune=prune,
+                        adopt=(KANJI_SCOPE, LEDGER_KANJI_DECK))
 
 
 def preview_html(back):
@@ -784,6 +902,12 @@ def main():
              "syncing the Notion ledger",
     )
     parser.add_argument(
+        "--seed-kanji", action="store_true",
+        help="Seed the 1000 most frequent kanji into Nihongo::Core Kanji "
+             "(skipping any already in Nihongo::Kanji), instead of syncing "
+             "the Notion ledger",
+    )
+    parser.add_argument(
         "--no-update", dest="update", action="store_false",
         help="Only add new notes; leave existing notes untouched even if "
              "their content has changed (updating is ON by default)",
@@ -796,13 +920,18 @@ def main():
     parser.set_defaults(update=True)
     args = parser.parse_args()
 
-    if args.prune and args.seed_kana:
-        parser.error("--prune only applies to the ledger sync, not --seed-kana")
+    if args.seed_kana and args.seed_kanji:
+        parser.error("--seed-kana and --seed-kanji are separate runs")
+    if args.prune and (args.seed_kana or args.seed_kanji):
+        parser.error("--prune only applies to the ledger sync, not the seeds")
     if args.prune and not args.update:
         parser.error("--prune can't be combined with --no-update")
 
     if args.seed_kana:
         seed_kana(dry_run=args.dry_run, update=args.update)
+        return
+    if args.seed_kanji:
+        seed_kanji(dry_run=args.dry_run, update=args.update)
         return
 
     sync_ledger(dry_run=args.dry_run, update=args.update, prune=args.prune)
