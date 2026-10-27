@@ -115,7 +115,7 @@ All writes except `addNotes` go through `anki_multi` in chunks of `ANKI_MULTI_CH
 
 Confirm the user wants a fix before changing behaviour.
 
-1. **Unlinked orphans.** A note whose row was deleted before the note got its `notion_` tag looks the same as a hand-made card, so `--prune` won't delete it (today: `聴く`, whose row became `IGNORE — 聴く`). It must be deleted by hand.
+1. **Unlinked orphans.** A note whose row was deleted before the note got its `notion_` tag looks the same as a hand-made card, so `--prune` won't delete it. It must be deleted by hand. (The one known case, a lesson-3 `聴く`, was deleted on 2026-10-28; `--prune --dry-run` now lists none.)
 2. **Front fallback can adopt a hand-made card.** A hand-made `Basic` card in a ledger deck whose Front equals a ledger `Item` gets matched once, overwritten and linked. Cards outside `Nihongo` are safe.
 3. **Notion result cap.** `/data_sources/{id}/query` stops at 10,000 results per query. The ledger is about 400 rows.
 4. **Core Kanji is a snapshot.** Kanji that already had a ledger card when the seed ran are skipped (110 on 2026-10-27). If such a ledger row is later deleted and pruned, the next `--seed-kanji` adds that kanji back as a fresh Core Kanji card.
