@@ -129,6 +129,9 @@ LEDGER_KANJI_SCOPE = f'"deck:{DECK_ROOT}" {_LINKED} tag:kanji'
 # The 1000 most frequent kanji, generated from KANJIDIC2 (see its header).
 KANJI_FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)),
                           "kanji_top1000.tsv")
+# Ledger kanji outside the top 1000, same columns. Only gives those ledger
+# cards the Core Kanji layout; the seed never reads it.
+KANJI_EXTRA_FILE = os.path.join(os.path.dirname(KANJI_FILE), "kanji_extra.tsv")
 
 # Tags the script owns. On update, a note's tags matching these (or any tag
 # the current batch produces) are removed when no longer wanted; every
@@ -287,11 +290,11 @@ def seed_kana(dry_run=False, update=True):
 # Core kanji seed — the 1000 most frequent kanji, from kanji_top1000.tsv
 # ---------------------------------------------------------------------------
 
-def load_kanji():
-    """Rows of KANJI_FILE as dicts, in frequency order."""
+def load_kanji(path=KANJI_FILE):
+    """Rows of a kanji TSV (KANJI_FILE by default) as dicts, in file order."""
     rows = []
     try:
-        with open(KANJI_FILE, encoding="utf-8") as f:
+        with open(path, encoding="utf-8") as f:
             for line in f:
                 if line.startswith("#") or not line.strip():
                     continue
@@ -308,8 +311,15 @@ def load_kanji():
 
 @functools.cache
 def core_kanji():
-    """KANJI_FILE rows keyed by kanji (loaded once)."""
-    return {row["kanji"]: row for row in load_kanji()}
+    """KANJI_FILE and KANJI_EXTRA_FILE rows keyed by kanji (loaded once)."""
+    rows = load_kanji() + load_kanji(KANJI_EXTRA_FILE)
+    return {row["kanji"]: row for row in rows}
+
+
+def kanji_key(front):
+    """The kanji a Kanji card is about: its Front up to the first space, so
+    a ledger Item like "万 (man, 10000)" still counts as 万."""
+    return (front.split() or [""])[0]
 
 
 def kanji_readings(label, readings):
@@ -363,7 +373,7 @@ def kanji_note(row):
 def without_ledger_kanji(notes):
     """Drop kanji that already have a ledger Kanji card (in Core Kanji, or
     still in another deck before the ledger sync moves it there)."""
-    have = {_field(info, "Front").strip() for info in find_notes(LEDGER_KANJI_SCOPE)}
+    have = {kanji_key(_field(info, "Front")) for info in find_notes(LEDGER_KANJI_SCOPE)}
     kept = [n for n in notes if n["fields"]["Front"] not in have]
     skipped = [n["fields"]["Front"] for n in notes if n["fields"]["Front"] in have]
     if skipped:
@@ -564,7 +574,7 @@ def row_to_note(page):
     item_type = get_prop(props, "Type", "select") or "Vocab"
     lesson = get_prop(props, "Lesson", "number")
 
-    kanji_row = core_kanji().get(item.strip()) if item_type == "Kanji" else None
+    kanji_row = core_kanji().get(kanji_key(item)) if item_type == "Kanji" else None
     back = format_back(item_type, readings, meaning, kanji_row)
 
     deck = TYPE_DECKS.get(item_type, f"{DECK_ROOT}::{item_type}")
@@ -718,7 +728,7 @@ def plan_changes(notes, scope, update=True, prune=False, adopt=None):
         if info is None:
             info = by_front.pop(n["fields"]["Front"], None)
         if info is None and n["deckName"] == adopt_deck:
-            info = adoptable.pop(n["fields"]["Front"].strip(), None)
+            info = adoptable.pop(kanji_key(n["fields"]["Front"]), None)
         if info is None:
             plan["add"].append(n)
         elif update:

@@ -1,0 +1,19 @@
+# Ledger kanji outside kanji_top1000.tsv, in the same columns and format.
+# Only gives these ledger cards the Core Kanji layout; --seed-kanji never reads it.
+# Readings, meanings, strokes and rank (KANJIDIC newspaper frequency, via kanji-data),
+#   JLPT levels and WaniKani reading order: kanji-data by David Gouveia (MIT),
+#   https://github.com/davidluzgouveia/kanji-data (commit 00fd707);
+#   its KANJIDIC data is (c) EDRDG, CC BY-SA 4.0.
+# Meanings are capped at 4; kun'yomi okurigana is shown as き(く).
+# A leading * marks the most common on/kun reading (the one WaniKani
+#   lists first among the kanji's readings); it is moved to the front of its list.
+# Columns: rank, kanji, strokes, jlpt (N level, blank if none),
+#   meanings (; separated), on'yomi (、 separated), kun'yomi (、 separated)
+1090	冬	5	4	winter	*トウ	*ふゆ
+1161	弟	7	4	younger brother; faithful service to elders	*ダイ、テイ、デ	*おとうと
+1208	魚	11	4	fish	*ギョ	*さかな、うお、-ざかな
+1219	兄	5	4	elder brother; big brother	*キョウ、ケイ	*あに
+1328	耳	6	3	ear	*ジ	*みみ
+1446	妹	8	4	younger sister	*マイ	*いもうと
+1456	寒	12	3	cold	*カン	*さむ(い)
+1473	姉	8	4	elder sister	*シ	*あね、はは
