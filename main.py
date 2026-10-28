@@ -77,6 +77,7 @@ import html
 import json
 import time
 import argparse
+import functools
 import urllib.request
 import urllib.error
 
@@ -305,6 +306,12 @@ def load_kanji():
     return rows
 
 
+@functools.cache
+def core_kanji():
+    """KANJI_FILE rows keyed by kanji (loaded once)."""
+    return {row["kanji"]: row for row in load_kanji()}
+
+
 def kanji_readings(label, readings):
     """One "On:"/"Kun:" line. The most common reading (marked * in
     KANJI_FILE, always first, or the only one) is bold; the rest are faded.
@@ -320,27 +327,34 @@ def kanji_readings(label, readings):
     return _LINE.format(line)
 
 
-def kanji_note(row):
-    """Build an AnkiConnect note dict for one Core Kanji row."""
+def kanji_back(row, headline=None, notes=()):
+    """The Core Kanji Back layout for one KANJI_FILE row. The ledger passes
+    its own Meaning as `headline` (HTML) and its side notes as `notes`."""
     esc = html.escape
-    parts = [_HEADLINE.format(esc(", ".join(row["meanings"])))]
+    parts = [headline or _HEADLINE.format(esc(", ".join(row["meanings"])))]
     if row["on"]:
         parts.append(kanji_readings("On", row["on"]))
     if row["kun"]:
         parts.append(kanji_readings("Kun", row["kun"]))
+    for note in notes:
+        parts.append(_NOTE.format(esc(note)))
     facts = [f"{row['strokes']} stroke" + ("" if row["strokes"] == "1" else "s")]
     if row["jlpt"]:
         facts.append(f"JLPT N{row['jlpt']}")
     facts.append(f"#{row['rank']} by frequency")
     parts.append(_NOTE.format(esc(" · ".join(facts))))
+    return "".join(parts)
 
+
+def kanji_note(row):
+    """Build an AnkiConnect note dict for one Core Kanji row."""
     tags = ["kanji", "core_kanji"]
     if row["jlpt"]:
         tags.append(f"jlpt_n{row['jlpt']}")
     return {
         "deckName": KANJI_DECK,
         "modelName": NOTE_TYPE,
-        "fields": {"Front": row["kanji"], "Back": "".join(parts)},
+        "fields": {"Front": row["kanji"], "Back": kanji_back(row)},
         "tags": tags,
         "options": NOTE_OPTIONS,
     }
@@ -492,9 +506,11 @@ def sentences(text):
     return [s for s in _SENTENCE_BREAK.split(text.strip()) if s]
 
 
-def format_back(item_type, readings, meaning):
+def format_back(item_type, readings, meaning, kanji_row=None):
     """Render the Back field as HTML: meaning first as a headline, then
-    readings, then any side notes in smaller, faded text."""
+    readings, then any side notes in smaller, faded text. A Kanji row whose
+    kanji is in KANJI_FILE (`kanji_row`) gets the Core Kanji layout instead,
+    keeping its own meaning and side notes but the file's readings."""
     esc = html.escape
     parts = []
 
@@ -515,6 +531,9 @@ def format_back(item_type, readings, meaning):
     if meaning_lines:
         parts.append(_HEADLINE.format(esc(meaning_lines[0])))
         parts.extend(_LINE.format(esc(s)) for s in meaning_lines[1:])
+    if kanji_row:
+        notes = [n for n in (readings_note, meaning_note) if n]
+        return kanji_back(kanji_row, "".join(parts) or None, notes)
     if readings_core:
         parts.append(_LINE.format(esc(readings_core)))
     for note in (readings_note, meaning_note):
@@ -545,7 +564,8 @@ def row_to_note(page):
     item_type = get_prop(props, "Type", "select") or "Vocab"
     lesson = get_prop(props, "Lesson", "number")
 
-    back = format_back(item_type, readings, meaning)
+    kanji_row = core_kanji().get(item.strip()) if item_type == "Kanji" else None
+    back = format_back(item_type, readings, meaning, kanji_row)
 
     deck = TYPE_DECKS.get(item_type, f"{DECK_ROOT}::{item_type}")
     tags = [f"lesson{lesson}"] if lesson else []
