@@ -9,7 +9,8 @@ workaround needed) and pushes them into Anki via AnkiConnect.
 Also supports a one-time seed of the FULL hiragana + katakana charts
 (gojuon, dakuten/handakuten, and yoon combos) into their own Anki
 decks, for kana recognition practice separate from the Notion ledger,
-and a seed of the 1000 most frequent kanji (kanji_top1000.tsv).
+and a seed of the 1000 most frequent kanji (kanji_top1000.tsv) plus the
+JLPT N5/N4 kanji outside them (kanji_extra.tsv).
 
 SETUP (one-time)
 -----------------
@@ -49,7 +50,7 @@ USAGE
    python3 main.py --seed-kana --dry-run       # preview the kana seed only
    python3 main.py --seed-kana --no-update     # only add new kana, don't fix existing ones
 
-   python3 main.py --seed-kanji               # add the 1000 most frequent kanji
+   python3 main.py --seed-kanji               # add the 1000 most frequent kanji + N5/N4
    python3 main.py --seed-kanji --dry-run     # preview the kanji seed only
 
 Safe to re-run any time. Each mode only looks at its own notes: the kana
@@ -129,8 +130,8 @@ LEDGER_KANJI_SCOPE = f'"deck:{DECK_ROOT}" {_LINKED} tag:kanji'
 # The 1000 most frequent kanji, generated from KANJIDIC2 (see its header).
 KANJI_FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)),
                           "kanji_top1000.tsv")
-# Ledger kanji outside the top 1000, same columns. Only gives those ledger
-# cards the Core Kanji layout; the seed never reads it.
+# Kanji outside the top 1000, same columns: JLPT N5/N4 kanji the top 1000
+# misses, and ledger kanji. The seed adds them after the top 1000.
 KANJI_EXTRA_FILE = os.path.join(os.path.dirname(KANJI_FILE), "kanji_extra.tsv")
 
 # Tags the script owns. On update, a note's tags matching these (or any tag
@@ -287,7 +288,8 @@ def seed_kana(dry_run=False, update=True):
 
 
 # ---------------------------------------------------------------------------
-# Core kanji seed — the 1000 most frequent kanji, from kanji_top1000.tsv
+# Core kanji seed — the 1000 most frequent kanji, from kanji_top1000.tsv,
+# then the N5/N4 kanji outside them, from kanji_extra.tsv
 # ---------------------------------------------------------------------------
 
 def load_kanji(path=KANJI_FILE):
@@ -396,8 +398,9 @@ def without_ledger_kanji(notes):
 
 def seed_kanji(dry_run=False, update=True):
     """Seed the Core Kanji deck (safe to re-run). Notes are added in
-    frequency order, so Anki introduces the most common kanji first."""
-    notes = [kanji_note(row) for row in load_kanji()]
+    frequency order, so Anki introduces the most common kanji first; the
+    extra N5/N4 kanji follow the top 1000."""
+    notes = [kanji_note(row) for row in core_kanji().values()]
 
     if dry_run:
         print(f"Would ensure deck {KANJI_DECK} and seed up to {len(notes)} kanji.")
@@ -967,7 +970,8 @@ def main():
     )
     parser.add_argument(
         "--seed-kanji", action="store_true",
-        help="Seed the 1000 most frequent kanji into Nihongo::Core Kanji "
+        help="Seed the 1000 most frequent kanji, plus the N5/N4 kanji outside "
+             "them, into Nihongo::Core Kanji "
              "(skipping any with a card from the ledger), instead of syncing "
              "the Notion ledger",
     )

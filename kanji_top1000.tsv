@@ -130,7 +130,7 @@
 109	治	8	3	reign; be at peace; calm down; subdue	*ジ、チ	*なお(る)、おさ(める)、おさ(まる)、なお(す)	政治|せいじ|politics|N4
 110	度	9	4	degrees; occurrence; time; counter for occurrences	*ド、ト、タク	*たび、-た(い)	丁度|ちょうど|just|N5
 111	務	11	3	task; duties	*ム	*つと(める)	事務所|じむしょ|office|N4
-112	強	11	4	strong	*キョウ、ゴウ	*つよ(い)、つよ(まる)、つよ(める)、し(いる)、こわ(い)	強力|きょうりょく|powerful|N3
+112	強	11	4	strong	*キョウ、ゴウ	*つよ(い)、つよ(まる)、つよ(める)、し(いる)、こわ(い)	勉強|べんきょう|study|N5
 113	気	6	5	spirit; mind; air; atmosphere	*キ、ケ	*いき、き	電気|でんき|electricity|N5
 114	小	3	5	little; small	*ショウ	*ちい(さい)、こ-、お-、さ-	小学校|しょうがっこう|elementary school|N4
 115	七	2	5	seven	*シチ	*なな、なな(つ)、なの	七月|しちがつ|July|
@@ -612,7 +612,7 @@
 591	編	15	2	compilation; knit; plait; braid	*ヘン	*あ(む)、-あ(み)	編集|へんしゅう|editing|N2
 592	捜	10	2	search; look for; locate	*ソウ、シュ、シュウ	*さが(す)	捜査|そうさ|search (esp. in criminal investigations|N3
 593	竹	6	2	bamboo	チク	*たけ	爆竹|ばくちく|firecracker|
-594	除	10	3	exclude; division (x/3); remove; abolish	*ジョ、ジ	*のぞ(く)、-よ(け)	削除|さくじょ|elimination|N2
+594	除	10	3	exclude; division (x/3); remove; abolish	*ジョ、ジ	*のぞ(く)、-よ(け)	掃除|そうじ|cleaning|N5
 595	完	7	3	perfect; completion; end	*カン		完成|かんせい|complete|N3
 596	降	10	3	descend; precipitate; fall; surrender	*コウ、ゴ	*お(りる)、お(ろす)、ふ(る)、ふ(り)、くだ(る)、くだ(す)	降伏|こうふく|capitulation|N3
 597	超	12	2	transcend; super-; ultra-	*チョウ	*こ(える)、こ(す)	超過|ちょうか|excess|N2
@@ -724,7 +724,7 @@
 703	伊	6	1	Italy; that one	*イ	かれ	
 704	江	6	1	creek; inlet; bay	*コウ	*え	江上|こうじょう|(on the) bank of a large river|
 705	清	11	2	pure; purify; cleanse; exorcise	*セイ、ショウ、シン	*きよ(い)、きよ(まる)、きよ(める)	清潔|せいけつ|clean|N3
-706	習	11	4	learn	*シュウ、ジュ	*なら(う)、なら(い)	習慣|しゅうかん|custom (in reference to culture)|N4
+706	習	11	4	learn	*シュウ、ジュ	*なら(う)、なら(い)	練習|れんしゅう|(to) practice|N5
 707	険	11	3	precipitous; inaccessible place; impregnable position; steep place	*ケン	*けわ(しい)	危険|きけん|danger|N4
 708	頼	16	3	trust; request	*ライ	*たの(む)、たの(もしい)、たよ(る)	信頼|しんらい|reliance|N3
 709	僚	14	1	colleague; official; companion	*リョウ		官僚|かんりょう|bureaucrat|N3
@@ -776,7 +776,7 @@
 755	乱	7	2	riot; war; disorder; disturb	*ラン、ロン	*みだ(れる)、みだ(る)、みだ(す)、みだ、おさ(める)、わた(る)	混乱|こんらん|chaos|N3
 756	避	16	1	evade; avoid; avert; ward off	*ヒ	*さ(ける)、よ(ける)	避難|ひなん|taking refuge|N1
 757	普	12	2	universal; wide(ly); generally; Prussia	*フ	あまね(く)、あまねし	普通|ふつう|common|N4
-758	散	12	3	scatter; disperse; spend; squander	*サン	*ち(る)、ち(らす)、ち(らかす)、ち(らかる)、ち(らばる)、ばら、ばら(ける)	解散|かいさん|breakup|N2
+758	散	12	3	scatter; disperse; spend; squander	*サン	*ち(る)、ち(らす)、ち(らかす)、ち(らかる)、ち(らばる)、ばら、ばら(ける)	散歩|さんぽ|walk|N5
 759	司	5	1	director; official; govt office; rule	*シ	*つかさど(る)	上司|じょうし|one's superior|N3
 760	康	11	1	ease; peace	*コウ		健康|けんこう|health(y)|N3
 761	測	12	2	fathom; plan; scheme; measure	*ソク	*はか(る)	予測|よそく|prediction|N3
@@ -785,7 +785,7 @@
 764	静	14	3	quiet	*セイ、ジョウ	*しず(か)、しず(まる)、しず(める)、しず-	冷静|れいせい|calm|N3
 765	善	12	1	virtuous; good; goodness	*ゼン	よ(い)、い(い)、よ(く)、よし(とする)	改善|かいぜん|betterment|N3
 766	逮	11	1	apprehend; chase	*タイ		逮捕|たいほ|arrest|N3
-767	婚	11	3	marriage	*コン		離婚|りこん|divorce|N3
+767	婚	11	3	marriage	*コン		結婚|けっこん|marriage (get married)|N5
 768	厚	9	2	thick; heavy; rich; kind	*コウ	*あつ(い)、あか	厚生|こうせい|welfare|
 769	喜	12	3	rejoice; take pleasure in	*キ	*よろこ(ぶ)、よろこ(ばす)	喜劇|きげき|comedy|N1
 770	齢	17	2	age	*レイ	*よわい、とし	年齢|ねんれい|age|N3
@@ -806,7 +806,7 @@
 785	級	9	1	class; rank; grade	*キュウ		高級|こうきゅう|high class|N2
 786	幸	8	3	happiness; blessing; fortune	*コウ	*しあわ(せ)、さいわ(い)、さち	不幸|ふこう|unhappiness|N3
 787	岩	8	2	boulder; rock; cliff	*ガン	*いわ	溶岩|ようがん|lava|N2
-788	練	14	2	practice; gloss; train; drill	*レン	*ね(る)、ね(り)	訓練|くんれん|practice|N3
+788	練	14	2	practice; gloss; train; drill	*レン	*ね(る)、ね(り)	練習|れんしゅう|(to) practice|N5
 789	押	8	3	push; stop; check; subdue	*オウ	*お(す)、お(し-)、お(っ-)、お(さえる)、おさ(える)	押収|おうしゅう|seizure|
 790	軽	12	2	lightly; trifling; unimportant	*ケイ、キョウ、キン	*かる(い)、かろ(やか)、かろ(んじる)	軽快|けいかい|lively|N1
 791	倒	10	3	overthrow; fall; collapse; drop	*トウ	*たお(れる)、たお(す)、さかさま、さかさ、さかしま、-だお(れ)	倒産|とうさん|(corporate) bankruptcy|N3

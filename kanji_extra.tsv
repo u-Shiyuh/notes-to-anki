@@ -1,5 +1,7 @@
-# Ledger kanji outside kanji_top1000.tsv, in the same columns and format.
-# Only gives these ledger cards the Core Kanji layout; --seed-kanji never reads it.
+# Kanji outside kanji_top1000.tsv, in the same columns and format: every
+#   JLPT N5/N4 kanji the top 1,000 misses, plus ledger kanji outside it.
+# --seed-kanji adds these after the top 1,000 (skipping ones with a ledger
+#   card), and ledger cards for them get the Core Kanji layout.
 # Readings, meanings, strokes and rank (KANJIDIC newspaper frequency, via kanji-data),
 #   JLPT levels and WaniKani reading order: kanji-data by David Gouveia (MIT),
 #   https://github.com/davidluzgouveia/kanji-data (commit 00fd707);
@@ -20,11 +22,20 @@
 #   https://www.edrdg.org/wiki/index.php/JMdict-EDICT_Dictionary_Project
 #   Which kanji carries which reading: JmdictFurigana (CC BY-SA 4.0),
 #   https://github.com/Doublevil/JmdictFurigana (2.3.1+2026-10-25).
+1010	堂	11	4	public chamber; hall	*ドウ		食堂|しょくどう|cafeteria|N5
+1043	鳥	11	4	bird; chicken	*チョウ	*とり	白鳥|はくちょう|swan (Cygnus spp.)|
+1046	飯	12	4	meal; boiled rice	*ハン	*めし	夕飯|ゆうはん|dinner|N5
+1066	勉	10	4	exertion; endeavour; encourage; strive	*ベン	つと(める)	勉強|べんきょう|study|N5
 1090	冬	5	4	winter	*トウ	*ふゆ	冬眠|とうみん|hibernation|N1
+1115	昼	9	4	daytime; noon	*チュウ	*ひる	昼食|ちゅうしょく|lunch (same as 昼ご飯 (ひるごはん))|N3
+1116	茶	9	4	tea	*チャ、サ		紅茶|こうちゃ|black tea|N5
 1161	弟	7	4	younger brother; faithful service to elders	*ダイ、テイ、デ	*おとうと	兄弟|きょうだい|siblings (humble)|N5
+1202	牛	4	4	cow	*ギュウ	*うし	牛肉|ぎゅうにく|beef|N5
 1208	魚	11	4	fish	*ギョ	*さかな、うお、-ざかな	金魚|きんぎょ|goldfish|N2
 1219	兄	5	4	elder brother; big brother	*キョウ、ケイ	*あに	兄弟|きょうだい|siblings (humble)|N5
+1326	犬	4	4	dog	*ケン	*いぬ、いぬ-	愛犬|あいけん|pet dog|
 1328	耳	6	3	ear	*ジ	*みみ	耳鼻科|じびか|otolaryngology|N1
 1446	妹	8	4	younger sister	*マイ	*いもうと	姉妹|しまい|sisters|N3
 1456	寒	12	3	cold	*カン	*さむ(い)	寒帯|かんたい|frigid zone|N2
 1473	姉	8	4	elder sister	*シ	*あね、はは	姉妹|しまい|sisters|N3
+1487	漢	13	4	sino-; China	*カン		漢字|かんじ|kanji|N5

@@ -1,6 +1,6 @@
 # notion-to-anki
 
-This tool syncs a Notion "Language Learning Ledger" database into Anki flashcards. It can also seed full hiragana and katakana decks, and a deck of the 1,000 most frequent kanji.
+This tool syncs a Notion "Language Learning Ledger" database into Anki flashcards. It can also seed full hiragana and katakana decks, and a deck of the 1,000 most frequent kanji plus every JLPT N5/N4 kanji.
 
 It is a single Python script. It reads your Notion database through the official API and writes cards into Anki through [AnkiConnect](https://ankiweb.net/shared/info/2055492159). It is safe to re-run: new rows are added, and existing cards are updated (text, deck and tags) when their row changes.
 
@@ -8,7 +8,7 @@ It is a single Python script. It reads your Notion database through the official
 
 - **Ledger sync:** each Notion row becomes a `Basic` Anki card in a deck named after its `Type` (for example `Nihongo::Vocab`), except `Kanji` rows, which go to `Nihongo::Core Kanji` so all your kanji are in one deck. Each card is tagged with its lesson number.
 - **Kana seed:** 208 recognition cards (hiragana and katakana, including dakuten/handakuten and yōon combinations). They go in `Nihongo::Kana::Hiragana` and `Nihongo::Kana::Katakana`.
-- **Core Kanji seed:** the 1,000 most frequent kanji (by newspaper frequency) go in `Nihongo::Core Kanji`, in frequency order, so Anki introduces the most common ones first. Your daily new-card limit sets the pace. Kanji that already have a card from your Notion ledger are skipped, so each kanji has exactly one card.
+- **Core Kanji seed:** the 1,000 most frequent kanji (by newspaper frequency) go in `Nihongo::Core Kanji`, in frequency order, so Anki introduces the most common ones first. They're followed by the JLPT N5/N4 kanji that are too rare in newspapers to make the top 1,000 (犬, 牛, 茶, 鳥, 漢, 勉, 昼, 飯, 堂, and five more you already have from your ledger), so every N5 and N4 kanji is covered. Your daily new-card limit sets the pace. Kanji that already have a card from your Notion ledger are skipped, so each kanji has exactly one card.
 - **Idempotent:** each ledger card carries a `notion_<page id>` tag that links it to its row, so running the script again never creates duplicates, and renaming an `Item` updates its card instead of making a new one.
 - **Stays in its lane:** the kana seed only touches `Nihongo::Kana::*`, the kanji seed only its own cards in `Nihongo::Core Kanji`, and the ledger sync only cards from your ledger. Core Kanji holds both kinds; the ledger's cards are told apart by their `notion_` tag, so the seed never overwrites your notes. The one crossover: when you add a `Kanji` row to Notion for a kanji that's already in Core Kanji, the sync takes over that card and rewrites it from your row, keeping its review history, instead of making a second card. Tags you add yourself are never removed.
 - **Dry-run mode** lets you preview changes before touching Anki. With Anki open, it lists every card that would be added, changed, moved, retagged or deleted.
@@ -90,7 +90,7 @@ BACK    hear, listen, ask                      (bold)
         新聞(しんぶん, newspaper) is N5 vocab   (small, faded)
 ```
 
-Kanji cards from your ledger use the layout above, unless the kanji is one of the 1,000 in Core Kanji or listed in `kanji_extra.tsv` (ledger kanji outside the top 1,000). An Item like `万 (man, 10000)` counts as `万`. Then the card looks like the seed's Core Kanji cards, with your own meaning as the headline and any `—` side notes kept; your `Readings` text is replaced by the readings from the kanji list. The seed's Core Kanji cards show up to four meanings, the on'yomi in katakana and the kun'yomi in hiragana (okurigana in brackets), then the stroke count, JLPT level and frequency rank. Under the on'yomi line, an example such as `e.g. 毎日 (まいにち) every day · N5` pairs an on'yomi with a word that uses it, so you learn the reading in context. The example is the easiest JLPT word available (N5 first, then N4 and so on), and the level after it is the word's own level. In each reading line, the most common reading comes first in bold, with the rarer ones faded after it. "Most common" means the reading WaniKani teaches first. If none of a kanji's kun'yomi are common (such as 発), the whole kun line is faded. They're tagged `kanji`, `core_kanji` and `jlpt_n<level>`.
+Kanji cards from your ledger use the layout above, unless the kanji is one of the 1,000 in Core Kanji or listed in `kanji_extra.tsv` (N5/N4 and ledger kanji outside the top 1,000). An Item like `万 (man, 10000)` counts as `万`. Then the card looks like the seed's Core Kanji cards, with your own meaning as the headline and any `—` side notes kept; your `Readings` text is replaced by the readings from the kanji list. The seed's Core Kanji cards show up to four meanings, the on'yomi in katakana and the kun'yomi in hiragana (okurigana in brackets), then the stroke count, JLPT level and frequency rank. Under the on'yomi line, an example such as `e.g. 毎日 (まいにち) every day · N5` pairs an on'yomi with a word that uses it, so you learn the reading in context. The example is the easiest JLPT word available (N5 first, then N4 and so on), and the level after it is the word's own level. In each reading line, the most common reading comes first in bold, with the rarer ones faded after it. "Most common" means the reading WaniKani teaches first. If none of a kanji's kun'yomi are common (such as 発), the whole kun line is faded. They're tagged `kanji`, `core_kanji` and `jlpt_n<level>`.
 
 ```
 FRONT   連
@@ -116,7 +116,7 @@ python main.py --seed-kana              # add all hiragana + katakana cards
 python main.py --seed-kana --dry-run    # preview the kana seed
 python main.py --seed-kana --no-update  # add missing kana only
 
-python main.py --seed-kanji             # add the 1,000 most frequent kanji
+python main.py --seed-kanji             # add the 1,000 most frequent kanji + N5/N4
 python main.py --seed-kanji --dry-run   # preview the kanji seed
 ```
 
