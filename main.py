@@ -298,11 +298,12 @@ def load_kanji(path=KANJI_FILE):
             for line in f:
                 if line.startswith("#") or not line.strip():
                     continue
-                rank, kanji, strokes, jlpt, meanings, on, kun = \
+                rank, kanji, strokes, jlpt, meanings, on, kun, example = \
                     line.rstrip("\n").split("\t")
                 rows.append({"rank": rank, "kanji": kanji, "strokes": strokes,
                              "jlpt": jlpt, "meanings": meanings.split("; "),
-                             "on": on, "kun": kun})
+                             "on": on, "kun": kun,
+                             "example": example.split("|") if example else None})
     except OSError as e:
         print(f"Could not read the kanji list: {e}", file=sys.stderr)
         sys.exit(1)
@@ -337,6 +338,13 @@ def kanji_readings(label, readings):
     return _LINE.format(line)
 
 
+def example_word(word, kana, gloss):
+    """The line under "On:" that pairs the on'yomi with a common word."""
+    esc = html.escape
+    return _LINE.format(f"e.g. {esc(word)} ({esc(kana)}) "
+                        f'<span style="opacity:0.65">{esc(gloss)}</span>')
+
+
 def kanji_back(row, headline=None, notes=()):
     """The Core Kanji Back layout for one KANJI_FILE row. The ledger passes
     its own Meaning as `headline` (HTML) and its side notes as `notes`."""
@@ -344,6 +352,8 @@ def kanji_back(row, headline=None, notes=()):
     parts = [headline or _HEADLINE.format(esc(", ".join(row["meanings"])))]
     if row["on"]:
         parts.append(kanji_readings("On", row["on"]))
+    if row["example"]:
+        parts.append(example_word(*row["example"]))
     if row["kun"]:
         parts.append(kanji_readings("Kun", row["kun"]))
     for note in notes:

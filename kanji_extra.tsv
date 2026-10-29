@@ -8,12 +8,20 @@
 # A leading * marks the most common on/kun reading (the one WaniKani
 #   lists first among the kanji's readings); it is moved to the front of its list.
 # Columns: rank, kanji, strokes, jlpt (N level, blank if none),
-#   meanings (; separated), on'yomi (、 separated), kun'yomi (、 separated)
-1090	冬	5	4	winter	*トウ	*ふゆ
-1161	弟	7	4	younger brother; faithful service to elders	*ダイ、テイ、デ	*おとうと
-1208	魚	11	4	fish	*ギョ	*さかな、うお、-ざかな
-1219	兄	5	4	elder brother; big brother	*キョウ、ケイ	*あに
-1328	耳	6	3	ear	*ジ	*みみ
-1446	妹	8	4	younger sister	*マイ	*いもうと
-1456	寒	12	3	cold	*カン	*さむ(い)
-1473	姉	8	4	elder sister	*シ	*あね、はは
+#   meanings (; separated), on'yomi (、 separated), kun'yomi (、 separated),
+#   example (a common word using the main on'yomi: word|kana|gloss, blank if none)
+# Example words: JMdict, (c) EDRDG, CC BY-SA 4.0 (release 2026-10-26),
+#   https://www.edrdg.org/wiki/index.php/JMdict-EDICT_Dictionary_Project ;
+#   which kanji carries which reading: JmdictFurigana (CC BY-SA 4.0),
+#   https://github.com/Doublevil/JmdictFurigana (2.3.1+2026-10-25).
+#   The word is the most frequent (JMdict news frequency) 2-3 kanji word that
+#   reads this kanji with its main on'yomi, preferring everyday (ichi1) words
+#   and kanji in this list; it falls back to the next on'yomi if needed.
+1090	冬	5	4	winter	*トウ	*ふゆ	冬季|とうき|winter season
+1161	弟	7	4	younger brother; faithful service to elders	*ダイ、テイ、デ	*おとうと	兄弟|きょうだい|brothers and sisters
+1208	魚	11	4	fish	*ギョ	*さかな、うお、-ざかな	金魚|きんぎょ|goldfish (Carassius auratus)
+1219	兄	5	4	elder brother; big brother	*キョウ、ケイ	*あに	兄弟|きょうだい|brothers and sisters
+1328	耳	6	3	ear	*ジ	*みみ	耳目|じもく|eyes and ears
+1446	妹	8	4	younger sister	*マイ	*いもうと	姉妹|しまい|sisters
+1456	寒	12	3	cold	*カン	*さむ(い)	寒冷|かんれい|cold
+1473	姉	8	4	elder sister	*シ	*あね、はは	姉妹|しまい|sisters
