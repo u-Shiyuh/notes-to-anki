@@ -9,19 +9,22 @@
 #   lists first among the kanji's readings); it is moved to the front of its list.
 # Columns: rank, kanji, strokes, jlpt (N level, blank if none),
 #   meanings (; separated), on'yomi (、 separated), kun'yomi (、 separated),
-#   example (a common word using the main on'yomi: word|kana|gloss, blank if none)
-# Example words: JMdict, (c) EDRDG, CC BY-SA 4.0 (release 2026-10-26),
-#   https://www.edrdg.org/wiki/index.php/JMdict-EDICT_Dictionary_Project ;
-#   which kanji carries which reading: JmdictFurigana (CC BY-SA 4.0),
+#   example (word|kana|gloss|JLPT level of the word, blank if none)
+# Example words: the easiest word (JLPT N5 first, then N4 ... N1) that reads
+#   this kanji with one of its on'yomi, the main on'yomi winning ties; if no
+#   JLPT word fits, the most frequent common 2-3 kanji word in JMdict.
+#   JLPT word levels and glosses: open-anki-jlpt-decks by Jamie Sinclair (MIT),
+#   https://github.com/jamsinclair/open-anki-jlpt-decks (commit 1ad6673),
+#   built from Jonathan Waller's JLPT lists (CC BY), https://www.tanos.co.uk/jlpt/
+#   Other words and glosses: JMdict, (c) EDRDG, CC BY-SA 4.0 (2026-10-26),
+#   https://www.edrdg.org/wiki/index.php/JMdict-EDICT_Dictionary_Project
+#   Which kanji carries which reading: JmdictFurigana (CC BY-SA 4.0),
 #   https://github.com/Doublevil/JmdictFurigana (2.3.1+2026-10-25).
-#   The word is the most frequent (JMdict news frequency) 2-3 kanji word that
-#   reads this kanji with its main on'yomi, preferring everyday (ichi1) words
-#   and kanji in this list; it falls back to the next on'yomi if needed.
-1090	冬	5	4	winter	*トウ	*ふゆ	冬季|とうき|winter season
-1161	弟	7	4	younger brother; faithful service to elders	*ダイ、テイ、デ	*おとうと	兄弟|きょうだい|brothers and sisters
-1208	魚	11	4	fish	*ギョ	*さかな、うお、-ざかな	金魚|きんぎょ|goldfish (Carassius auratus)
-1219	兄	5	4	elder brother; big brother	*キョウ、ケイ	*あに	兄弟|きょうだい|brothers and sisters
-1328	耳	6	3	ear	*ジ	*みみ	耳目|じもく|eyes and ears
-1446	妹	8	4	younger sister	*マイ	*いもうと	姉妹|しまい|sisters
-1456	寒	12	3	cold	*カン	*さむ(い)	寒冷|かんれい|cold
-1473	姉	8	4	elder sister	*シ	*あね、はは	姉妹|しまい|sisters
+1090	冬	5	4	winter	*トウ	*ふゆ	冬眠|とうみん|hibernation|N1
+1161	弟	7	4	younger brother; faithful service to elders	*ダイ、テイ、デ	*おとうと	兄弟|きょうだい|siblings (humble)|N5
+1208	魚	11	4	fish	*ギョ	*さかな、うお、-ざかな	金魚|きんぎょ|goldfish|N2
+1219	兄	5	4	elder brother; big brother	*キョウ、ケイ	*あに	兄弟|きょうだい|siblings (humble)|N5
+1328	耳	6	3	ear	*ジ	*みみ	耳鼻科|じびか|otolaryngology|N1
+1446	妹	8	4	younger sister	*マイ	*いもうと	姉妹|しまい|sisters|N3
+1456	寒	12	3	cold	*カン	*さむ(い)	寒帯|かんたい|frigid zone|N2
+1473	姉	8	4	elder sister	*シ	*あね、はは	姉妹|しまい|sisters|N3

@@ -338,9 +338,11 @@ def kanji_readings(label, readings):
     return _LINE.format(line)
 
 
-def example_word(word, kana, gloss):
-    """The line under "On:" that pairs the on'yomi with a common word."""
+def example_word(word, kana, gloss, level):
+    """The line under "On:" that pairs the on'yomi with a common word,
+    and the word's own JLPT level if it has one."""
     esc = html.escape
+    gloss += f" · {level}" if level else ""
     return _LINE.format(f"e.g. {esc(word)} ({esc(kana)}) "
                         f'<span style="opacity:0.65">{esc(gloss)}</span>')
 
