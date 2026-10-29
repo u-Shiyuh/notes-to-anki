@@ -327,12 +327,13 @@ def kanji_key(front):
 
 def kanji_readings(label, readings):
     """One "On:"/"Kun:" line. The most common reading (marked * in
-    KANJI_FILE, always first, or the only one) is bold; the rest are faded.
-    With no common reading, the readings are all rare, so all are faded."""
+    KANJI_FILE, always first) is bold; the rest are faded. With no common
+    reading, the readings are all rare, so all are faded, even a lone one
+    (万's よろず)."""
     esc = html.escape
     items = readings.split("、")
     line, sep = f"{label}: ", ""
-    if items[0].startswith("*") or len(items) == 1:
+    if items[0].startswith("*"):
         line += f"<b>{esc(items.pop(0).lstrip('*'))}</b>"
         sep = "、"
     if items:
