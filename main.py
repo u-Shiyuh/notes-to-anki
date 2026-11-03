@@ -10,8 +10,9 @@ Also supports a one-time seed of the FULL hiragana + katakana charts
 (gojuon, dakuten/handakuten, and yoon combos) into their own Anki
 decks, for kana recognition practice separate from the Notion ledger,
 and a seed of the 1000 most frequent kanji (kanji_top1000.tsv) plus the
-JLPT N5/N4 kanji outside them (kanji_extra.tsv), and a seed of the verbs
-from the user's reviewer book (verbs.tsv).
+JLPT N5/N4 kanji outside them (kanji_extra.tsv), a seed of the verbs
+from the user's reviewer book (verbs.tsv), and a seed of the JLPT N5/N4
+words other than verbs (words.tsv).
 
 SETUP (one-time)
 -----------------
@@ -57,10 +58,15 @@ USAGE
    python3 main.py --seed-verbs               # add the reviewer book's verbs (verbs.tsv)
    python3 main.py --seed-verbs --dry-run     # preview the verb seed only
 
+   python3 main.py --seed-words               # add the JLPT N5/N4 words (words.tsv)
+   python3 main.py --seed-words --dry-run     # preview the word seed only
+
 Safe to re-run any time. Each mode only looks at its own notes: the kana
 seed at Nihongo::Kana::*, the kanji seed at its own (unlinked) notes in
-Nihongo::Core Kanji, the verb seed at Nihongo::Verbs, the ledger sync at
-the other Nihongo notes. Ledger
+Nihongo::Core Kanji, the verb seed at Nihongo::Verbs, the word seed at
+Nihongo::Words, the ledger sync at the other Nihongo notes. A Notion Vocab
+row whose word is in words.tsv or verbs.tsv is skipped, and that seed takes
+over its card (keeping its review history). Ledger
 Kanji rows also go to Nihongo::Core Kanji. The kanji seed skips kanji
 that already have a ledger card, and when a ledger Kanji row is added for
 a seeded kanji, the sync takes over that card (keeping its review
@@ -121,12 +127,16 @@ LINK_TAG_PREFIX = "notion_"
 # Anki searches, where a bare "_" matches any character.)
 KANJI_DECK = f"{DECK_ROOT}::Core Kanji"
 VERB_DECK = f"{DECK_ROOT}::Verbs"
+WORD_DECK = f"{DECK_ROOT}::Words"
+VOCAB_DECK = f"{DECK_ROOT}::Vocab"
 _LINKED = "tag:" + LINK_TAG_PREFIX.replace("_", "\\_") + "*"
 KANA_SCOPE = f'"deck:{DECK_ROOT}::Kana"'
 KANJI_SCOPE = f'"deck:{KANJI_DECK}" -{_LINKED}'
 VERB_SCOPE = f'"deck:{VERB_DECK}"'
+WORD_SCOPE = f'"deck:{WORD_DECK}"'
+VOCAB_SCOPE = f'"deck:{VOCAB_DECK}"'
 LEDGER_SCOPE = (f'"deck:{DECK_ROOT}" -"deck:{DECK_ROOT}::Kana" -{VERB_SCOPE} '
-                f'(-"deck:{KANJI_DECK}" OR {_LINKED})')
+                f'-{WORD_SCOPE} (-"deck:{KANJI_DECK}" OR {_LINKED})')
 
 # Ledger rows go to Nihongo::<Type>, except these. The kanji seed skips
 # kanji that already have a ledger card, and a new ledger Kanji row takes
@@ -142,6 +152,8 @@ KANJI_FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)),
 KANJI_EXTRA_FILE = os.path.join(os.path.dirname(KANJI_FILE), "kanji_extra.tsv")
 # Verbs from the reviewer book, in book order (see its header).
 VERB_FILE = os.path.join(os.path.dirname(KANJI_FILE), "verbs.tsv")
+# JLPT N5/N4 words (no verbs), in study order (see its header).
+WORD_FILE = os.path.join(os.path.dirname(KANJI_FILE), "words.tsv")
 
 # Tags the script owns. On update, a note's tags matching these (or any tag
 # the current batch produces) are removed when no longer wanted; every
@@ -514,10 +526,119 @@ def seed_verbs(dry_run=False, update=True):
         for n in notes[:5]:
             print(f"\n[{n['deckName']}] {n['fields']['Front']}")
             print(preview_html(n["fields"]["Back"]))
-        preview_changes(notes, VERB_SCOPE, update=update)
+        preview_changes(notes, VERB_SCOPE, update=update,
+                        adopt=(VOCAB_SCOPE, VERB_DECK, str.strip))
         return
 
-    add_or_update_notes(notes, VERB_SCOPE, update=update)
+    add_or_update_notes(notes, VERB_SCOPE, update=update,
+                        adopt=(VOCAB_SCOPE, VERB_DECK, str.strip))
+
+
+# ---------------------------------------------------------------------------
+# Word seed — JLPT N5/N4 words (no verbs), from words.tsv, in study order
+# ---------------------------------------------------------------------------
+
+# Tags for the file's types; any other type is tagged as written, with "_"
+# for spaces.
+WORD_TYPE_TAGS = {"い-adjective": "i_adjective", "な-adjective": "na_adjective",
+                  "noun (+する)": "suru_noun", "する-verb": "suru_verb",
+                  "pre-noun word": "pre_noun", "noun (grammar)": "noun"}
+_KATAKANA = re.compile(r"[ァ-ヺ]")
+
+
+def load_words(path=WORD_FILE):
+    """Rows of WORD_FILE as dicts, in file order."""
+    rows = []
+    try:
+        with open(path, encoding="utf-8") as f:
+            for line in f:
+                if line.startswith("#") or not line.strip():
+                    continue
+                cols = line.rstrip("\n").split("\t")
+                level, word, kana, meaning, typ, note = (cols + [""] * 6)[:6]
+                rows.append({"level": level, "word": word, "kana": kana,
+                             "meaning": meaning, "type": typ, "note": note})
+    except OSError as e:
+        print(f"Could not read the word list: {e}", file=sys.stderr)
+        sys.exit(1)
+    return rows
+
+
+def _hiragana(text):
+    return "".join(chr(ord(c) - 0x60) if "ァ" <= c <= "ヶ" else c for c in text)
+
+
+def kanji_card_covers(row):
+    """True if the word is a single kanji whose Core Kanji card already
+    teaches it: the word's reading is one of the card's bold (*) readings."""
+    k = core_kanji().get(row["word"])
+    if not k:
+        return False
+    bold = {_hiragana(re.sub(r"[*\-.()]", "", r))
+            for line in (k["on"], k["kun"]) for r in line.split("、")
+            if r.startswith("*")}
+    return _hiragana(row["kana"]) in bold
+
+
+@functools.cache
+def seeded_words():
+    """WORD_FILE rows the word seed adds: all but verbs.tsv's verbs and the
+    one-kanji words their Core Kanji card covers."""
+    verbs = {v["word"] for v in load_verbs()}
+    return [r for r in load_words()
+            if r["word"] not in verbs and not kanji_card_covers(r)]
+
+
+def word_back(row):
+    """Back layout: meaning, reading (unless the word is all kana), then the
+    file's note and the JLPT level and type in small, faded text."""
+    esc = html.escape
+    parts = [_HEADLINE.format(esc(row["meaning"]))]
+    if row["kana"] != row["word"]:
+        parts.append(_LINE.format(esc(row["kana"])))
+    if row["note"]:
+        parts.append(_NOTE.format(esc(row["note"])))
+    facts = [row["level"].upper()] if row["level"] else []
+    parts.append(_NOTE.format(esc(" · ".join(facts + [row["type"]]))))
+    return "".join(parts)
+
+
+def word_note(row):
+    """Build an AnkiConnect note dict for one WORD_FILE row."""
+    tags = ["word", WORD_TYPE_TAGS.get(row["type"], row["type"].replace(" ", "_"))]
+    if row["level"]:
+        tags.append(f"jlpt_{row['level']}")
+    if _KATAKANA.search(row["word"]):
+        tags.append("katakana")
+    return {
+        "deckName": WORD_DECK,
+        "modelName": NOTE_TYPE,
+        "fields": {"Front": row["word"], "Back": word_back(row)},
+        "tags": tags,
+        "options": NOTE_OPTIONS,
+    }
+
+
+def seed_words(dry_run=False, update=True):
+    """Seed Nihongo::Words from WORD_FILE (safe to re-run), in file order. A
+    word that has a ledger card in Nihongo::Vocab takes it over (keeping its
+    review history) instead of adding a second card."""
+    rows = seeded_words()
+    skipped = len(load_words()) - len(rows)
+    notes = [word_note(row) for row in rows]
+    adopt = (VOCAB_SCOPE, WORD_DECK, str.strip)
+
+    if dry_run:
+        print(f"Would ensure deck {WORD_DECK} and seed {len(notes)} words "
+              f"({skipped} skipped: verbs.tsv verbs and words their Core Kanji "
+              "card covers).")
+        for n in notes[:5]:
+            print(f"\n[{n['deckName']}] {n['fields']['Front']}")
+            print(preview_html(n["fields"]["Back"]))
+        preview_changes(notes, WORD_SCOPE, update=update, adopt=adopt)
+        return
+
+    add_or_update_notes(notes, WORD_SCOPE, update=update, adopt=adopt)
 
 
 # ---------------------------------------------------------------------------
@@ -797,7 +918,7 @@ def find_notes(scope):
     return (anki_request("notesInfo", notes=ids) or []) if ids else []
 
 
-def plan_changes(notes, scope, update=True, prune=False, adopt=None):
+def plan_changes(notes, scope, update=True, prune=False, adopt=None, keep=()):
     """Work out what syncing `notes` would change in Anki. Read-only.
 
     Only notes of NOTE_TYPE inside `scope` (an Anki search) are considered.
@@ -806,10 +927,12 @@ def plan_changes(notes, scope, update=True, prune=False, adopt=None):
     and with the same Front. Each existing note is matched at most once.
 
     update=False: matched notes are left exactly as they are.
-    prune=True: linked notes whose row is gone are marked for deletion.
-    adopt=(other scope, deck): an incoming note for `deck` that matched
-    nothing may take over the note with the same Front in the other scope
-    (it's then moved into `deck`, keeping its review history).
+    prune=True: linked notes whose row is gone are marked for deletion,
+    except those whose link tag is in `keep`.
+    adopt=(other scope, deck, key): an incoming note for `deck` that matched
+    nothing may take over the note in the other scope whose stripped Front
+    equals key(incoming Front) (it's then moved into `deck` and loses its
+    link tag, keeping its review history).
     """
     plan = {"add": [], "rejected": [], "update": [], "move": [], "retag": [],
             "delete": [], "unlinked": [], "unchanged": 0, "kept": 0}
@@ -836,8 +959,8 @@ def plan_changes(notes, scope, update=True, prune=False, adopt=None):
 
     adopt_deck, adoptable = None, {}
     if adopt and any(n["deckName"] == adopt[1] for n in unique):
-        adopt_deck = adopt[1]
-        for info in find_notes(adopt[0]):
+        adopt_scope, adopt_deck, adopt_key = adopt
+        for info in find_notes(adopt_scope):
             adoptable.setdefault(_field(info, "Front").strip(), info)
 
     matched = []
@@ -847,7 +970,7 @@ def plan_changes(notes, scope, update=True, prune=False, adopt=None):
         if info is None:
             info = by_front.pop(n["fields"]["Front"], None)
         if info is None and n["deckName"] == adopt_deck:
-            info = adoptable.pop(kanji_key(n["fields"]["Front"]), None)
+            info = adoptable.pop(adopt_key(n["fields"]["Front"]), None)
         if info is None:
             plan["add"].append(n)
         elif update:
@@ -858,7 +981,7 @@ def plan_changes(notes, scope, update=True, prune=False, adopt=None):
     if prune:
         # Linked notes left over belong to rows that are gone (or now
         # skipped). Unlinked leftovers may be hand-made, so never delete them.
-        plan["delete"] = list(by_link.values())
+        plan["delete"] = [info for link, info in by_link.items() if link not in keep]
         plan["unlinked"] = list(by_front.values())
 
     # Which deck each matched card is in, to catch Type changes.
@@ -960,23 +1083,25 @@ def summarize(plan, dry_run, added=None):
     return text
 
 
-def preview_changes(notes, scope, update=True, prune=False, adopt=None):
+def preview_changes(notes, scope, update=True, prune=False, adopt=None, keep=()):
     """--dry-run: show what a real run would change, if Anki is open."""
     if not anki_available():
         print("\nAnki isn't open, so this preview can't show what would "
               "change in Anki.")
         return
-    plan = plan_changes(notes, scope, update=update, prune=prune, adopt=adopt)
+    plan = plan_changes(notes, scope, update=update, prune=prune, adopt=adopt,
+                        keep=keep)
     print()
     print_plan(plan)
     print(summarize(plan, dry_run=True))
 
 
-def add_or_update_notes(notes, scope, update=True, prune=False, adopt=None):
+def add_or_update_notes(notes, scope, update=True, prune=False, adopt=None, keep=()):
     """Bring the Anki notes in `scope` in line with `notes` (dicts with
     deckName, modelName, fields, tags, options). See plan_changes for how
-    notes are matched and what update/prune/adopt do."""
-    plan = plan_changes(notes, scope, update=update, prune=prune, adopt=adopt)
+    notes are matched and what update/prune/adopt/keep do."""
+    plan = plan_changes(notes, scope, update=update, prune=prune, adopt=adopt,
+                        keep=keep)
     print_plan(plan)
 
     decks = {n["deckName"] for n in plan["add"]}
@@ -1023,14 +1148,26 @@ def sync_ledger(dry_run=False, update=True, prune=False):
     pages = fetch_all_rows()
     print(f"Found {len(pages)} rows in the ledger.")
 
-    notes = []
+    # Vocab rows for a word that words.tsv or verbs.tsv has are left to that
+    # seed, which takes over their card; prune must not delete it meanwhile.
+    in_files = ({r["word"] for r in seeded_words()}
+                | {v["word"] for v in load_verbs()})
+    notes, handed_over = [], set()
     for p in pages:
         reason = skip_reason(p)
         if reason:
             item = get_prop(p["properties"], "Item", "title") or "(untitled)"
             print(f"Skipping {item!r}: {reason}")
             continue
-        notes.append(row_to_note(p))
+        note = row_to_note(p)
+        if "vocab" in note["tags"] and note["fields"]["Front"].strip() in in_files:
+            handed_over.add(link_tag(p["id"]))
+            continue
+        notes.append(note)
+    if handed_over:
+        print(f"Skipping {len(handed_over)} Vocab rows whose word is in "
+              f"{os.path.basename(WORD_FILE)} or {os.path.basename(VERB_FILE)} "
+              "(those seeds own their cards).")
     decks = sorted(set(n["deckName"] for n in notes))
 
     if dry_run:
@@ -1040,11 +1177,11 @@ def sync_ledger(dry_run=False, update=True, prune=False):
             print(f"\n[{n['deckName']}] {n['fields']['Front']}")
             print(preview_html(n["fields"]["Back"]))
         preview_changes(notes, LEDGER_SCOPE, update=update, prune=prune,
-                        adopt=(KANJI_SCOPE, KANJI_DECK))
+                        adopt=(KANJI_SCOPE, KANJI_DECK, kanji_key), keep=handed_over)
         return
 
     add_or_update_notes(notes, LEDGER_SCOPE, update=update, prune=prune,
-                        adopt=(KANJI_SCOPE, KANJI_DECK))
+                        adopt=(KANJI_SCOPE, KANJI_DECK, kanji_key), keep=handed_over)
 
 
 def preview_html(back):
@@ -1085,6 +1222,11 @@ def main():
              "in book order, instead of syncing the Notion ledger",
     )
     parser.add_argument(
+        "--seed-words", action="store_true",
+        help="Seed the JLPT N5/N4 words (words.tsv) into Nihongo::Words, in "
+             "study order, instead of syncing the Notion ledger",
+    )
+    parser.add_argument(
         "--no-update", dest="update", action="store_false",
         help="Only add new notes; leave existing notes untouched even if "
              "their content has changed (updating is ON by default)",
@@ -1097,9 +1239,10 @@ def main():
     parser.set_defaults(update=True)
     args = parser.parse_args()
 
-    seeds = args.seed_kana + args.seed_kanji + args.seed_verbs
+    seeds = args.seed_kana + args.seed_kanji + args.seed_verbs + args.seed_words
     if seeds > 1:
-        parser.error("--seed-kana, --seed-kanji and --seed-verbs are separate runs")
+        parser.error("--seed-kana, --seed-kanji, --seed-verbs and --seed-words "
+                     "are separate runs")
     if args.prune and seeds:
         parser.error("--prune only applies to the ledger sync, not the seeds")
     if args.prune and not args.update:
@@ -1113,6 +1256,9 @@ def main():
         return
     if args.seed_verbs:
         seed_verbs(dry_run=args.dry_run, update=args.update)
+        return
+    if args.seed_words:
+        seed_words(dry_run=args.dry_run, update=args.update)
         return
 
     sync_ledger(dry_run=args.dry_run, update=args.update, prune=args.prune)

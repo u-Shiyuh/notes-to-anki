@@ -1,0 +1,1125 @@
+# Words for Nihongo::Words (python main.py --seed-words), in study order.
+# Generated 2026-11-03. Words, readings and glosses: the JLPT N5 and N4 lists of
+# open-anki-jlpt-decks (https://github.com/jamsinclair/open-anki-jlpt-decks, MIT;
+# built on Jonathan Waller's JLPT lists, CC BY). Part of speech and the order within
+# each level (newspaper frequency, nf): JMdict (EDRDG, CC BY-SA 4.0). Words that had
+# a Notion card keep its meaning and notes; Notion-only words come first (greetings)
+# or after N5 (travel). Verbs are left out: they come from verbs.tsv.
+# Columns: level (n5/n4/blank), word, kana, meaning, type, note. The first word
+# using a kana feature the kana decks lack (small っ, ー, ティ...) explains it in its note.
+	こんにちは	こんにちは	hello	expression	
+	おはようございます	おはようございます	good morning (polite)	expression	
+	ありがとうございます	ありがとうございます	thank you (polite)	expression	
+	すみません	すみません	excuse me / sorry	expression	
+	日本	にほん	Japan	noun	
+	日本語	にほんご	Japanese language	noun	日本 (Japan) + 語 (language, ご) · same pattern as 中国語 (Chinese), 英語 (English)
+	中国	ちゅうごく	China	noun	
+	東京	とうきょう	Tokyo	noun	
+	何時	なんじ	what time	expression	
+	携帯	けいたい	mobile phone (short for 携帯電話, けいたいでんわ)	noun	
+n5	秋	あき	fall (season)	noun	
+n5	足	あし	foot; leg	noun	also written 脚 (leg)
+n5	後	あと	afterwards (later); in the future; the rest; since then	noun	
+n5	一番	いちばん	best (most), first, number one	noun	
+n5	意味	いみ	meaning, significance	noun (+する)	
+n5	映画	えいが	movie, film	noun	
+n5	男	おとこ	man, male	noun	
+n5	音楽	おんがく	Music	noun	
+n5	外国	がいこく	foreign country	noun	
+n5	外国人	がいこくじん	foreigner	noun	
+n5	会社	かいしゃ	company, corporation	noun	
+n5	顔	かお	face (body part)	noun	
+n5	学生	がくせい	student	noun	
+n5	家族	かぞく	family, members of a family	noun	
+n5	学校	がっこう	school	noun	がく + こう shortens to がっこう · small っ = a short pause that doubles the next consonant (がっこう = gak-kō)
+n5	家庭	かてい	home; family	noun	
+n5	木	き	tree, wood, timber	noun	
+n5	北	きた	north	noun	
+n5	九	きゅう	nine	number	
+n5	銀行	ぎんこう	bank	noun	
+n5	国	くに	country; place of origin	noun	
+n5	車	くるま	car, vehicle	noun	
+n5	五	ご	five	number	
+n5	声	こえ	voice	noun	
+n5	午後	ごご	PM (after noon)	noun	
+n5	午前	ごぜん	AM (before noon)	noun	
+n5	今年	ことし	this year	noun	IRREGULAR reading
+n5	言葉	ことば	language; word(s); expression(s)	noun	
+n5	子供	こども	child(ren)	noun	
+n5	今月	こんげつ	this month	noun	
+n5	三	さん	three	number	
+n5	四	し	four	number	
+n5	時間	じかん	time; hours (duration)	noun	also a counter: 二時間 (にじかん, two hours)
+n5	仕事	しごと	work, job, occupation, employment	noun (+する)	
+n5	七	しち	seven	number	
+n5	質問	しつもん	question, inquiry	noun (+する)	
+n5	自動車	じどうしゃ	automobile	noun	
+n5	自分	じぶん	myself, oneself	pronoun	
+n5	写真	しゃしん	a picture; a photograph	noun	
+n5	十	じゅう	ten	number	
+n5	新聞	しんぶん	newspaper	noun	
+n5	少し	すこし	little, few	adverb	
+n5	千	せん	thousand	number	
+n5	大学	だいがく	university	noun	
+n5	父	ちち	(my) father	noun	
+n5	手	て	hand	noun	
+n5	電話	でんわ	telephone	noun (+する)	
+n5	夏	なつ	summer	noun	
+n5	二	に	two	number	
+n5	八	はち	eight	number	
+n5	花	はな	flower	noun	
+n5	話	はなし	talk (chat), story	noun	
+n5	母	はは	(my) mother	noun	
+n5	春	はる	spring	noun	
+n5	東	ひがし	east	noun	
+n5	左	ひだり	left hand side	noun	
+n5	一つ	ひとつ	one thing	number	
+n5	百	ひゃく	hundred	number	
+n5	病院	びょういん	hospital	noun	
+n5	二人	ふたり	two people	noun	
+n5	毎日	まいにち	every day	noun	
+n5	右	みぎ	right hand side	noun	
+n5	水	みず	water	noun	
+n5	道	みち	road, street; way, directions	noun	
+n5	南	みなみ	South	noun	
+n5	問題	もんだい	a problem	noun	
+n5	来年	らいねん	next year	noun	
+n5	六	ろく	six	number	
+n5	私	わたし	I, myself	pronoun	
+n5	雨	あめ	rain	noun	
+n5	一緒	いっしょ	together	noun	
+n5	色	いろ	color	noun	
+n5	歌	うた	a song	noun	
+n5	海	うみ	sea, beach	noun	
+n5	絵	え	a painting; a picture; a drawing	noun	
+n5	英語	えいご	English (language)	noun	
+n5	女	おんな	woman, female	noun	
+n5	体	からだ	body; health	noun	
+n5	今日	きょう	today	noun	IRREGULAR reading, don't sound it out as いま+ひ
+n5	口	くち	job opening; mouth	noun	
+n5	結婚	けっこん	marriage (get married)	noun (+する)	
+n5	公園	こうえん	a park	noun	
+n5	雑誌	ざっし	magazine, journal	noun	
+n5	生徒	せいと	student; pupil	noun	
+n5	先月	せんげつ	last month	noun	
+n5	先生	せんせい	teacher	noun	先 alone has other readings depending on the word, e.g. 先ず (まず, first); don't over-generalize the せん reading
+n5	外	そと	outside, exterior	noun	
+n5	大切	たいせつ	important	な-adjective	
+n5	大変	たいへん	very; difficult, hard	adverb	
+n5	電気	でんき	electricity / (electric) light	noun	
+n5	動物	どうぶつ	animal	noun	
+n5	年	とし	year, age	noun	
+n5	名前	なまえ	name	noun	polite: お名前 (おなまえ)
+n5	西	にし	west	noun	
+n5	はく	はく	to put on (items below your waist)	noun	
+n5	半分	はんぶん	half	noun	
+n5	一人	ひとり	one person	noun	
+n5	病気	びょうき	illness; sickness	noun	
+n5	二つ	ふたつ	two things	number	
+n5	部屋	へや	a room	noun	
+n5	本当	ほんとう	real, true	な-adjective	
+n5	町	まち	town; city	noun	
+n5	山	やま	mountain	counter	
+n5	夜	よる	evening, night	noun	
+n5	料理	りょうり	cooking; cuisine	noun (+する)	
+n5	旅行	りょこう	travel / trip	noun (+する)	旅行する = to travel
+n5	練習	れんしゅう	(to) practice	noun (+する)	
+n5	青	あお	blue	noun	
+n5	犬	いぬ	dog	noun	
+n5	大人	おとな	adult	な-adjective	
+n5	紙	かみ	paper	noun	
+n5	川	かわ	river	noun	also 河 (a large river)
+n5	教室	きょうしつ	classroom	noun	
+n5	黒	くろ	black	noun	
+n5	魚	さかな	fish	noun	
+n5	授業	じゅぎょう	a class (of school)	noun (+する)	
+n5	白	しろ	white	noun	
+n5	全部	ぜんぶ	all, entire, whole	noun	
+n5	そば	そば	near, close, beside; Japanese traditional buckwheat noodle	noun	
+n5	大使館	たいしかん	embassy	noun	
+n5	建物	たてもの	building	noun	
+n5	手紙	てがみ	letter	noun	
+n5	半	はん	half (e.g., にじはん | half-past two)	noun	
+n5	番号	ばんごう	number, series of digits	noun	
+n5	冬	ふゆ	winter	noun	
+n5	三つ	みっつ	three things	number	
+n5	緑	みどり	green	noun	
+n5	耳	みみ	ear	noun	
+n5	村	むら	village	noun	
+n5	門	もん	gate	noun	
+n5	野菜	やさい	vegetable	noun	
+n5	有名	ゆうめい	famous	な-adjective	
+n5	雪	ゆき	snow	noun	
+n5	横	よこ	beside; side; width	noun	
+n5	来月	らいげつ	next month	noun	
+n5	両親	りょうしん	parents (lit., both parents)	noun	
+n5	大きな	おおきな	big	pre-noun word	
+n5	大勢	おおぜい	great number of people	noun	
+n5	お金	おかね	money	noun	
+n5	弟	おとうと	younger brother	noun	
+n5	薬	くすり	medicine	noun	
+n5	自転車	じてんしゃ	bicycle	noun	
+n5	そこ	そこ	that place, there; bottom, sole	noun	
+n5	電車	でんしゃ	electric train	noun	
+n5	隣	となり	next to, next door to	noun	
+n5	鳥	とり	chicken (lit., bird)	noun	
+n5	昼	ひる	noon, daytime	noun	
+n5	広い	ひろい	spacious; wide; broad	い-adjective	
+n5	服	ふく	clothes	noun	
+n5	窓	まど	window	noun	
+n5	明日	あした	tomorrow	noun	
+n5	兄	あに	(my) older brother (humble)	noun	
+n5	池	いけ	pond	noun	
+n5	駅	えき	station	noun	
+n5	お母さん	おかあさん	mother (formal)	noun	
+n5	兄弟	きょうだい	siblings (humble), brothers and sisters	noun	
+n5	警官	けいかん	police officer	noun	
+n5	玄関	げんかん	entrance (to a house or a building)	noun	
+n5	今週	こんしゅう	this week	noun	
+n5	静か	しずか	quiet, calm	な-adjective	
+n5	先週	せんしゅう	last week	noun	
+n5	卵	たまご	egg	noun	
+n5	地下鉄	ちかてつ	underground train, subway	noun	
+n5	地図	ちず	a map	noun	
+n5	どう	どう	how, in what way	noun	
+n5	図書館	としょかん	library	noun	
+n5	どの	どの	which	pre-noun word	
+n5	友達	ともだち	friend	noun	
+n5	夏休み	なつやすみ	summer vacation	noun	
+n5	肉	にく	meat	noun	
+n5	歯	は	tooth	noun	
+n5	橋	はし	bridge	noun	
+n5	飛行機	ひこうき	airplane	noun	
+n5	文章	ぶんしょう	sentence, text	noun	
+n5	毎週	まいしゅう	every week	noun	
+n5	休み	やすみ	holiday; day off; absence	noun	
+n5	留学生	りゅうがくせい	international student	noun	
+n5	医者	いしゃ	doctor; physician	noun	
+n5	妹	いもうと	younger sister (humble)	noun	
+n5	後ろ	うしろ	back, behind, rear	noun	
+n5	お茶	おちゃ	(green) tea	noun	
+n5	女の子	おんなのこ	girl	expression	
+n5	買い物	かいもの	shopping	noun (+する)	
+n5	角	かど	corner (e.g., desk, pavement)	noun	
+n5	靴	くつ	shoes, footwear	noun	
+n5	元気	げんき	healthy / energetic / well	な-adjective	な-adj: 元気じゃない, 元気な人
+n5	塩	しお	salt	noun	
+n5	大丈夫	だいじょうぶ	It's ok (all right); No need to worry; Everything is under control	な-adjective	
+n5	天気	てんき	weather	noun	
+n5	庭	にわ	garden	noun	
+n5	便利	べんり	convenient, handy	な-adjective	
+n5	皆さん	みなさん	all of you, everyone	noun	
+n5	四つ	よっつ	four things	number	
+n5	来週	らいしゅう	next week	noun	
+n5	りっぱ	りっぱ	splendid, fine	な-adjective	
+n5	姉	あね	(my) older sister (humble)	noun	
+n5	今	いま	now	noun	
+n5	嫌	いや	disagreeable, detestable, unpleasant	な-adjective	
+n5	大きい	おおきい	big, large	い-adjective	
+n5	お父さん	おとうさん	father (formal)	noun	
+n5	男の子	おとこのこ	boy	expression	
+n5	階段	かいだん	stairs	noun	
+n5	漢字	かんじ	kanji; Chinese character	noun	
+n5	ここ	ここ	here, this place	noun	
+n5	台所	だいどころ	kitchen	noun	
+n5	机	つくえ	desk	noun	
+n5	戸	と	door (Japanese style)	noun	
+n5	時々	ときどき	sometimes	noun	
+n5	時計	とけい	a watch; a clock	noun	
+n5	猫	ねこ	cat	noun	
+n5	晩	ばん	evening	noun	
+n5	難しい	むずかしい	difficult	い-adjective	
+n5	夕方	ゆうがた	late afternoon (typically just before dinner time), evening	noun	
+n5	郵便局	ゆうびんきょく	post office	noun	
+n5	新しい	あたらしい	new	い-adjective	
+n5	うち	うち	home; house; my place	noun	
+n5	切手	きって	postal (postage) stamps	noun	
+n5	牛肉	ぎゅうにく	beef	noun	
+n5	牛乳	ぎゅうにゅう	milk	noun	
+n5	嫌い	きらい	dislike	な-adjective	
+n5	結構	けっこう	splendid; enough, tolerably	な-adjective	
+n5	砂糖	さとう	sugar	noun	
+n5	食堂	しょくどう	cafeteria, dining hall	noun	
+n5	大好き	だいすき	very like-able, like very much	な-adjective	
+n5	高い	たかい	tall, high; expensive	い-adjective	
+n5	たて	たて	length, height	noun	
+n5	食べ物	たべもの	food	noun	
+n5	出口	でぐち	an exit	noun	
+n5	鼻	はな	nose	noun	
+n5	冷蔵庫	れいぞうこ	refrigerator	noun	
+n5	明るい	あかるい	bright (in reference to personality or weather); cheerful	い-adjective	
+n5	朝	あさ	morning	noun	
+n5	五つ	いつつ	five things	number	
+n5	映画館	えいがかん	movie theater, cinema	noun	
+n5	風邪	かぜ	cold, flu	noun	
+n5	果物	くだもの	fruit	noun	
+n5	作文	さくぶん	essay; composition	noun (+する)	
+n5	背	せい	(one's) height, stature	noun	
+n5	洗濯	せんたく	washing, laundry	noun (+する)	
+n5	そう	そう	yes; appears, to be the case	noun	そうです = that's right
+n5	掃除	そうじ	cleaning, sweeping	noun (+する)	
+n5	その	その	that	noun	
+n5	荷物	にもつ	luggage; baggage	noun	
+n5	箱	はこ	box	noun	
+n5	帽子	ぼうし	hat; cap	noun	
+n5	喫茶店	きっさてん	café	noun	
+n5	切符	きっぷ	a ticket	noun	
+n5	昨日	きのう	yesterday	noun	
+n5	去年	きょねん	last year	noun	
+n5	財布	さいふ	wallet	noun	
+n5	散歩	さんぽ	walk, stroll	noun (+する)	
+n5	辞書	じしょ	dictionary	noun	
+n5	辺	へん	area, vicinity	noun	
+n5	廊下	ろうか	corridor	noun	
+n5	傘	かさ	umbrella, parasol	noun	
+n5	黄色	きいろ	yellow	な-adjective	
+n5	交差点	こうさてん	intersection	noun	
+n5	封筒	ふうとう	envelope	noun	
+n5	毎朝	まいあさ	every morning	noun	
+n5	洋服	ようふく	Western-style clothes	noun	
+n5	よく	よく	frequently, often (much); well, skillfully	noun	
+n5	鉛筆	えんぴつ	pencil	noun	
+n5	上手	じょうず	skilled / good at	な-adjective	IRREGULAR reading; な-adj, takes が: 日本語が上手です
+n5	背広	せびろ	men's suit	noun	
+n5	下さい	ください	(with te-form verb) please do for me	expression	
+n5	紅茶	こうちゃ	black tea	noun	
+n5	宿題	しゅくだい	homework	noun	
+n5	多分	たぶん	perhaps, probably, maybe	adverb	
+n5	誰	だれ	who	pronoun	
+n5	七つ	ななつ	seven things	number	
+n5	眼鏡	めがね	eye glasses	noun	
+n5	熱い	あつい	hot (objects)	い-adjective	
+n5	低い	ひくい	short, low	い-adjective	
+n5	暇	ひま	free time, leisure	noun	
+n5	赤い	あかい	red	い-adjective	
+n5	余り	あまり	not very; surplus	noun	
+n5	丈夫	じょうぶ	strong, solid, durable	な-adjective	
+n5	茶色	ちゃいろ	brown	noun	
+n5	長い	ながい	long, lengthy	い-adjective	
+n5	晴れ	はれ	clear (sunny) weather	noun	
+n5	下手	へた	unskilled / bad at	な-adjective	IRREGULAR reading; な-adj, takes が
+n5	向こう	むこう	beyond, over there	noun	
+n5	いくつ	いくつ	how many, how old	adverb	
+n5	痛い	いたい	hurt; painful; sore	い-adjective	
+n5	白い	しろい	white	い-adjective	
+n5	少ない	すくない	a little; a few	い-adjective	
+n5	楽しい	たのしい	enjoyable, fun	い-adjective	
+n5	早い	はやい	early	い-adjective	
+n5	古い	ふるい	old (in reference to objects, not people), aged, ancient	い-adjective	
+n5	細い	ほそい	thin, slender, fine	い-adjective	
+n5	上着	うわぎ	coat, jacket	noun	
+n5	火曜日	かようび	Tuesday	noun	
+n5	豚肉	ぶたにく	pork	noun	
+n5	忙しい	いそがしい	busy (people, days)	い-adjective	
+n5	遅い	おそい	slow; (to be) late	い-adjective	
+n5	鍵	かぎ	a lock; a key	noun	
+n5	黒い	くろい	black; dark	い-adjective	
+n5	交番	こうばん	police box	noun	
+n5	強い	つよい	strong, powerful	い-adjective	
+n5	欲しい	ほしい	to want, in need of	い-adjective	
+n5	毎晩	まいばん	every night	noun	
+n5	昨夜	ゆうべ	last night	noun	
+n5	甘い	あまい	generous, sweet	い-adjective	
+n5	面白い	おもしろい	interesting, amusing	い-adjective	
+n5	靴下	くつした	socks	noun	
+n5	今朝	けさ	this morning	noun	
+n5	箸	はし	chopsticks	noun	
+n5	また	また	and; furthermore	adverb	
+n5	丸い	まるい	round, circular	い-adjective	also 円い
+n5	薄い	うすい	thin, weak	い-adjective	
+n5	曇り	くもり	cloudiness, cloudy weather	noun	
+n5	近い	ちかい	near, close by, short	い-adjective	
+n5	飲み物	のみもの	drink, beverage	noun	
+n5	太い	ふとい	fat, thick	い-adjective	
+n5	万年筆	まんねんひつ	fountain pen	noun	
+n5	あれ	あれ	that one (over there)	noun	
+n5	九つ	ここのつ	nine things	number	
+n5	灰皿	はいざら	ashtray	noun	
+n5	椅子	いす	chair	noun	
+n5	鶏肉	とりにく	chicken meat	noun	
+n5	辛い	からい	hot and spicy; salty	い-adjective	
+n5	小さい	ちいさい	small, little	い-adjective	
+n5	弱い	よわい	weak	い-adjective	
+n5	青い	あおい	blue	い-adjective	
+n5	重い	おもい	heavy; serious	い-adjective	
+n5	短い	みじかい	short (length)	い-adjective	
+n5	八百屋	やおや	greengrocer	noun	
+n5	花瓶	かびん	(flower) vase	noun	
+n5	本棚	ほんだな	bookshelf	noun	
+n5	あちら	あちら	this way (polite)	pronoun	
+n5	誰か	だれか	someone	pronoun	
+n5	冷たい	つめたい	cold (things, people)	い-adjective	
+n5	厚い	あつい	kind, warm(hearted), thick, deep	い-adjective	
+n5	いつ	いつ	when	pronoun	
+n5	今晩	こんばん	tonight, this evening	noun	
+n5	ああ	ああ	Ah!, Oh!	interjection	
+n5	赤	あか	red	noun	
+n5	明後日	あさって	day after tomorrow	noun	
+n5	あそこ	あそこ	there, over there, that place	pronoun	
+n5	暖かい	あたたかい	warm	い-adjective	
+n5	頭	あたま	head	noun	
+n5	あっち	あっち	over there	pronoun	
+n5	あなた	あなた	you	pronoun	
+n5	アパート	アパート	apartment (abbr.)	noun	ー = long vowel: hold the sound before it twice as long
+n5	あの	あの	that over there; like that, that way; um...	pre-noun word	
+n5	いい	いい	good	い-adjective	also よい; past/negative use よ-: よかった, よくない
+n5	家	いえ	house, home	noun	
+n5	いかが	いかが	how, in what way	adverb	
+n5	一日	いちにち	one day (duration)	noun	
+n5	五日	いつか	five days; fifth day of the month	noun	
+n5	いつも	いつも	always, usually, every time, never (with neg. verb)	adverb	
+n5	入口	いりぐち	entrance	noun	
+n5	上	うえ	above (up, top, etc.), over, on top of	noun	
+n5	うるさい	うるさい	noisy; annoying	い-adjective	
+n5	ええ	ええ	yes	interjection	
+n5	エレベーター	エレベーター	elevator	noun	
+n5	美味しい	おいしい	delicious, tasty	い-adjective	
+n5	お菓子	おかし	confections, sweets, snack	noun	
+n5	奥さん	おくさん	(someone else's) wife (hon.)	noun	
+n5	おじいさん	おじいさん	grandfather, male senior citizen	noun	
+n5	お手洗い	おてあらい	bathroom / toilet (polite, literally "hand-washing place")	noun	
+n5	おととし	おととし	year before last	noun	
+n5	お腹	おなか	stomach	noun	
+n5	お兄さん	おにいさん	(someone else's) older brother (formal)	noun	
+n5	お姉さん	おねえさん	older sister (formal)	noun	
+n5	おばあさん	おばあさん	grandmother, female senior-citizen	noun	
+n5	お風呂	おふろ	a bath	noun	
+n5	お弁当	おべんとう	a boxed lunch	noun	
+n5	風	かぜ	wind, breeze	noun	
+n5	方	かた	-- honorific form for 人 (ひと) --; way of doing	noun	
+n5	カップ	カップ	cup	noun	small ッ = a short pause, like っ: it doubles the next consonant
+n5	かばん	かばん	bag, basket	noun	
+n5	カメラ	カメラ	camera	noun	
+n5	カレー	カレー	curry (abbr. for curry and rice)	noun	
+n5	カレンダー	カレンダー	calendar	noun	
+n5	ギター	ギター	guitar	noun	
+n5	綺麗	きれい	pretty, clean, tidy	な-adjective	
+n5	キロ	キロ	kilo: kilogram; kilometre	expression	short for キログラム / キロメートル
+n5	金曜日	きんようび	Friday	noun	
+n5	クラス	クラス	a class	noun	
+n5	グラム	グラム	gram	noun	
+n5	月曜日	げつようび	Monday	noun	
+n5	コート	コート	coat; court (e.g., tennis)	noun	
+n5	コーヒー	コーヒー	coffee	noun	
+n5	九日	ここのか	nine days; ninth day of the month	noun	
+n5	こちら	こちら	this person (polite); this way (polite)	pronoun	
+n5	こっち	こっち	this person; this direction; this side	pronoun	
+n5	コップ	コップ	a tumbler; a glass	noun	
+n5	この	この	this	pre-noun word	
+n5	これ	これ	this one	pronoun	
+n5	こんな	こんな	such, like this	pre-noun word	
+n5	さあ	さあ	come now, well	interjection	
+n5	先	さき	future; recent, previous	noun	
+n5	しかし	しかし	however; but	conjunction	
+n5	下	した	under, below, beneath	noun	
+n5	字引	じびき	dictionary	noun	
+n5	じゃあ	じゃあ	well, well then	conjunction	also じゃ
+n5	シャツ	シャツ	shirt	noun	
+n5	シャワー	シャワー	shower	noun	
+n5	水曜日	すいようび	Wednesday	noun	
+n5	スカート	スカート	skirt	noun	
+n5	好き	すき	liking, fondness, love	な-adjective	
+n5	すぐに	すぐに	immediately, soon	adverb	
+n5	涼しい	すずしい	cool, refreshing (in reference to weather)	い-adjective	
+n5	ストーブ	ストーブ	heater (lit: stove)	noun	
+n5	スプーン	スプーン	spoon	noun	
+n5	スポーツ	スポーツ	sport(s)	noun	
+n5	ズボン	ズボン	trousers	noun	
+n5	セーター	セーター	sweater	noun	
+n5	ゼロ	ゼロ	zero	noun	
+n5	そして	そして	and, like that	conjunction	also そうして
+n5	そちら	そちら	over there	pronoun	
+n5	そっち	そっち	over there	pronoun	
+n5	空	そら	sky	noun	
+n5	それ	それ	that one	pronoun	
+n5	それから	それから	and then, after that	expression	
+n5	それでは	それでは	in that situation, well then...	conjunction	
+n5	タクシー	タクシー	taxi	noun	
+n5	誕生日	たんじょうび	birthday	noun	
+n5	小さな	ちいさな	small, little	pre-noun word	
+n5	近く	ちかく	nearby; in the neighborhood	noun	
+n5	茶碗	ちゃわん	rice bowl	noun	
+n5	丁度	ちょうど	just, right, exactly	adverb	
+n5	ちょっと	ちょっと	a little, somewhat; just a little, somewhat	adverb	
+n5	次	つぎ	next	noun	
+n5	つまらない	つまらない	boring, dull; insignificant	い-adjective	
+n5	テープ	テープ	tape	noun	
+n5	テーブル	テーブル	table	noun	
+n5	テスト	テスト	test	noun (+する)	
+n5	では	では	then, well, so	conjunction	
+n5	デパート	デパート	(abbr.) department store	noun	
+n5	でも	でも	but, however	conjunction	
+n5	テレビ	テレビ	television, TV	noun	
+n5	ドア	ドア	door (Western style)	noun	
+n5	トイレ	トイレ	bathroom; toilet	noun	
+n5	どうして	どうして	why, for what reason	adverb	
+n5	どうぞ	どうぞ	please, kindly, by all means	adverb	
+n5	どうも	どうも	Thank you; somehow; no matter how hard one may try	interjection	
+n5	十日	とおか	ten days; tenth day of the month	noun	
+n5	所	ところ	place	noun	
+n5	どちら	どちら	which (one) (way); where (polite)	pronoun	
+n5	どっち	どっち	which one, which way	pronoun	
+n5	とても	とても	very (much), greatly, exceedingly	adverb	
+n5	どなた	どなた	who	pronoun	
+n5	土曜日	どようび	Saturday	noun	
+n5	どれ	どれ	which one	pronoun	
+n5	どんな	どんな	what, what kind of	pre-noun word	
+n5	ない	ない	there isn't; doesn't have	い-adjective	the negative of ある
+n5	ナイフ	ナイフ	knife	noun	
+n5	中	なか	inside, middle, among	noun	
+n5	なぜ	なぜ	why (same as どうして)	adverb	
+n5	七日	なのか	seven days; seventh day (of the month)	noun	
+n5	にぎやか	にぎやか	bustling, busy	な-adjective	
+n5	日曜日	にちようび	Sunday	noun	
+n5	ニュース	ニュース	news	noun	
+n5	温い	ぬるい	lukewarm	い-adjective	
+n5	ネクタイ	ネクタイ	tie, necktie	noun	
+n5	ノート	ノート	notebook	noun	
+n5	パーティー	パーティー	a party	noun	ティ = テ + small ィ → "ti" (not chi)
+n5	葉書	はがき	postcard	noun	
+n5	初め	はじめ	beginning, start	noun	also 始め (the start of an activity)
+n5	初めて	はじめて	for the first time	noun	
+n5	バス	バス	bus; bath; bass	noun	
+n5	バター	バター	butter	noun	
+n5	二十歳	はたち	20 years old	noun	
+n5	二十日	はつか	twenty days, twentieth (day of the month)	noun	
+n5	パン	パン	bread	noun	
+n5	ハンカチ	ハンカチ	handkerchief	noun	
+n5	晩御飯	ばんごはん	dinner, evening meal	noun	
+n5	人	ひと	man, person	noun	
+n5	一月	ひとつき	one month	noun	
+n5	フィルム	フィルム	film (roll of)	noun	フィ = フ + small ィ → "fi"
+n5	プール	プール	swimming pool	noun	
+n5	フォーク	フォーク	fork	noun	フォ = フ + small ォ → "fo"
+n5	二日	ふつか	two days; second day of the month	noun	
+n5	ページ	ページ	a page	counter	
+n5	ベッド	ベッド	bed	noun	
+n5	ペット	ペット	pet	noun	
+n5	ペン	ペン	pen	noun	
+n5	ボールペン	ボールペン	ball-point pen	noun	
+n5	ポケット	ポケット	pocket	noun	
+n5	ポスト	ポスト	mailbox; post, position	noun	
+n5	ボタン	ボタン	button	noun	
+n5	ホテル	ホテル	hotel	noun	
+n5	本	ほん	book	noun	
+n5	前	まえ	before, in front	noun	
+n5	まずい	まずい	terrible (in reference to food), unappetizing, unpleasant (taste)	い-adjective	
+n5	まだ	まだ	yet, still, besides	adverb	
+n5	まっすぐ	まっすぐ	straight (ahead), direct	な-adjective	
+n5	マッチ	マッチ	match	noun	
+n5	万	まん	ten thousand	number	
+n5	店	みせ	store, shop	noun	
+n5	三日	みっか	three days, third day of the month	noun	
+n5	みんな	みんな	all, everyone, everybody	pronoun	
+n5	六日	むいか	six days; sixth day of month	noun	
+n5	六つ	むっつ	six things	number	
+n5	目	め	eye(s)	noun	
+n5	メートル	メートル	meter	noun	
+n5	もう	もう	already; again; more	adverb	
+n5	木曜日	もくようび	Thursday	noun	
+n5	もしもし	もしもし	Hello? (used on the phone)	interjection	
+n5	もっと	もっと	more	adverb	
+n5	物	もの	thing (concrete object)	noun	
+n5	八つ	やっつ	eight things	number	
+n5	八日	ようか	eight days; eighth day of the month	noun	
+n5	四日	よっか	four days; fourth day of the month	noun	
+n5	ラジオ	ラジオ	radio	noun	
+n5	レコード	レコード	record	noun	
+n5	レストラン	レストラン	restaurant	noun	
+n5	ワイシャツ	ワイシャツ	shirt (lit: white shirt), business shirt	noun	
+n5	若い	わかい	young	い-adjective	
+n5	醤油	しょうゆ	soy sauce	noun	
+n5	速い	はやい	fast, quick	い-adjective	
+n5	可愛い	かわいい	cute, adorable	い-adjective	
+n5	石鹸	せっけん	soap	noun	
+n5	一	いち	one	number	
+n5	同じ	おなじ	same, identical	な-adjective	
+n5	暑い	あつい	hot (in reference to weather), warm	い-adjective	
+n5	軽い	かるい	light, non-serious, minor	い-adjective	
+n5	遠い	とおい	far (away), distant	い-adjective	
+n5	汚い	きたない	dirty, unclean, filthy	い-adjective	
+n5	平仮名	ひらがな	hiragana	noun	
+n5	いくら	いくら	how much, how many	noun	
+n5	零	れい	zero, nought	noun	
+n5	たばこ	たばこ	tobacco, cigarettes	noun	
+n5	段々	だんだん	gradually, by degrees	adverb	
+n5	危ない	あぶない	dangerous, critical	い-adjective	
+n5	易しい	やさしい	easy, plain, simple	い-adjective	
+n5	一昨日	おととい	the day before yesterday	noun	
+n5	おまわりさん	おまわりさん	policeman (friendly term)	noun	
+n5	寒い	さむい	cold (in reference to weather)	い-adjective	
+n5	夕飯	ゆうはん	dinner, supper, evening meal	noun	
+n5	黄色い	きいろい	yellow	い-adjective	
+n5	暗い	くらい	dark, gloomy	い-adjective	
+n5	色々	いろいろ	various	な-adjective	
+n5	沢山	たくさん	many, much	な-adjective	
+n5	飴	あめ	(hard) candy	noun	
+n5	多い	おおい	many; there are a lot	い-adjective	
+n5	テープレコーダー	テープレコーダー	tape recorder	noun	
+n5	御飯	ごはん	rice (cooked); meal	noun	
+n5	狭い	せまい	narrow; not spacious	い-adjective	
+n5	どこ	どこ	where, what place	pronoun	
+n5	安い	やすい	inexpensive; cheap (things)	い-adjective	
+n5	悪い	わるい	bad, sinful; inferior	い-adjective	
+n5	朝御飯	あさごはん	breakfast	noun	
+n5	はい / いいえ	いいえ	yes / no	expression	
+n5	～円	～えん	Yen	counter	
+n5	お～	お～	honorable ~ (honorific)	prefix	
+n5	お酒	おさけ	sake; alcohol	noun	
+n5	お皿	おさら	plate, dish	noun	
+n5	おじさん	おじさん	uncle	noun	伯父/叔父 in kanji; おじいさん (long い) = grandfather
+n5	おばさん	おばさん	aunt	noun	伯母/叔母 in kanji; おばあさん (long あ) = grandmother
+n5	～回	～かい	counter for occurrences (~ times)	counter	
+n5	～階	～かい	counter for stories (floors) of a building	counter	
+n5	～か月	～かげつ	(number of) months	counter	
+n5	片仮名	かたかな	katakana	noun	
+n5	～月	～がつ	month of year	counter	
+n5	～がる	～がる	feel	suffix	
+n5	～側	～がわ	~ side	suffix	
+n5	～くらい	～くらい	approximate (quantity)	suffix	also ～ぐらい
+n5	～個	～こ	counter for small items (e.g., fruits, cups)	counter	
+n5	～語	～ご	word, language	suffix	
+n5	コピーする	コピーする	to copy	する-verb	
+n5	～ごろ	～ごろ	about, toward, approximately (time)	suffix	also ～ころ
+n5	～歳	～さい	~ years old	counter	
+n5	～冊	～さつ	counter for books	counter	
+n5	さ来年	さらいねん	year after next	noun	
+n5	～さん	～さん	Mr. ~, Ms. ~	suffix	
+n5	～時	～じ	~ o'clock (time)	counter	
+n5	～時間	～じかん	~ hours	counter	
+n5	～中	～じゅう	during, while	suffix	
+n5	～週間	～しゅうかん	~ weeks	counter	
+n5	～人	～じん	counter for people	counter	
+n5	～すぎ	～すぎ	past; to exceed, ~ too much	suffix	
+n5	～ずつ	～ずつ	at a time	suffix	
+n5	～台	～だい	counter for vehicles; machines	counter	
+n5	～だけ	～だけ	only ~, just ~, as ~	suffix	
+n5	～たち	～たち	plural suffix	suffix	
+n5	～度	～ど	counter for occurrences; ~ degree; ~ point	counter	
+n5	～など	～など	et cetera	suffix	
+n5	何	なん; なに	what	expression	
+n5	何～	なん～	what sort of ~	prefix	
+n5	～日	～にち	~ day of the month, for ~ days	counter	
+n5	～年	～ねん	~ years	counter	
+n5	～杯	～はい	counter for cupfuls	counter	
+n5	～番	～ばん	~st; ~th best	counter	
+n5	～匹	～ひき	counter for small animals	counter	
+n5	昼御飯	ひるごはん	lunch, midday meal	noun	
+n5	～分	～ふん	~ minutes	counter	
+n5	勉強する	べんきょう	to study (noun 勉強 + する, irregular し-stem conjugation: 勉強します, 勉強しました, 勉強して)	noun (+する)	
+n5	～本	～ほん	counter for long cylindrical things	counter	
+n5	～枚	～まい	counter for flat things	counter	
+n5	毎月	まいげつ; まいつき	every month, monthly	expression	
+n5	毎年	まいねん; まいとし	every year	expression	
+n5	～前	～まえ	in front of ~	suffix	
+n5	～屋	～や	~ shop	suffix	
+n5	ゆっくりと	ゆっくりと	slowly, at ease	adverb	
+	乗り場	のりば	platform / boarding point	noun	
+	自由席 / 指定席	じゆうせき / していせき	unreserved seat / reserved seat (contrast pair, Shinkansen tickets)	noun	
+	精算	せいさん	fare adjustment (paying the difference at a ticket gate)	noun (+する)	
+	禁煙	きんえん	no smoking	noun	
+	両替	りょうがえ	currency exchange	noun (+する)	
+n4	意見	いけん	opinion, view, idea	noun	
+n4	運動	うんどう	exercise	noun (+する)	
+n4	気	き	spirit, mood	noun	
+n4	必要	ひつよう	necessary	な-adjective	
+n4	人口	じんこう	population	noun	
+n4	時代	じだい	age, period, epoch, era	noun	
+n4	社長	しゃちょう	president of a company	noun	
+n4	世界	せかい	world	noun	
+n4	戦争	せんそう	war	noun (+する)	
+n4	夫	おっと	husband	noun	
+n4	事務所	じむしょ	office	noun	
+n4	客	きゃく	guest, customer	noun	
+n4	試合	しあい	match, game, competition	noun (+する)	
+n4	事故	じこ	accident	noun	
+n4	原因	げんいん	cause, origin, source	noun (+する)	
+n4	場所	ばしょ	place, location	noun	
+n4	予定	よてい	plans, arrangement, schedule	noun (+する)	
+n4	形	かたち	shape	noun	
+n4	技術	ぎじゅつ	technique, technology, skill	noun	
+n4	貿易	ぼうえき	trade	noun (+する)	
+n4	反対	はんたい	oppose, opposition, resistance	な-adjective	
+n4	空港	くうこう	airport	noun	
+n4	気持ち	きもち	feeling, sensation, mood	noun	
+n4	部長	ぶちょう	department (division) manager	noun	
+n4	男性	だんせい	man; male	noun	
+n4	理由	りゆう	reason	noun	
+n4	生産	せいさん	production; to produce	noun (+する)	
+n4	教育	きょういく	education	noun (+する)	
+n4	女性	じょせい	woman	noun	
+n4	国際	こくさい	international	noun	
+n4	最近	さいきん	recently, nowadays, in recent years, most recent, latest	noun	
+n4	歴史	れきし	history	noun	
+n4	子	こ	child	noun	
+n4	特に	とくに	particularly	adverb	
+n4	計画	けいかく	plan, project, schedule	noun (+する)	
+n4	経済	けいざい	economics, finance, economy	noun	
+n4	輸入	ゆにゅう	import	noun (+する)	
+n4	産業	さんぎょう	industry	noun	
+n4	妻	つま	wife (humble)	noun	
+n4	放送	ほうそう	broadcasting	noun (+する)	
+n4	政治	せいじ	politics	noun	
+n4	市民	しみん	citizen	noun	
+n4	高校	こうこう	high school; senior high school	noun	short for 高等学校 (こうとうがっこう)
+n4	光	ひかり	light	noun	
+n4	最も	もっとも	most	adverb	
+n4	最後	さいご	last, end	noun	
+n4	最初	さいしょ	beginning, first	noun	
+n4	将来	しょうらい	(in the) future; prospects	noun	
+n4	文化	ぶんか	culture	noun	
+n4	自由	じゆう	freedom	な-adjective	
+n4	工場	こうじょう	factory	noun	
+n4	警察	けいさつ	police; police station	noun	
+n4	特別	とくべつ	special	な-adjective	
+n4	研究	けんきゅう	study, research, investigation	noun (+する)	
+n4	安全	あんぜん	safety, security	な-adjective	
+n4	会議	かいぎ	business meeting; conference	noun (+する)	
+n4	生活	せいかつ	living, life; to live	noun (+する)	
+n4	関係	かんけい	relation(ship), connection	noun (+する)	
+n4	番組	ばんぐみ	broadcast program	noun	
+n4	輸出	ゆしゅつ	export	noun (+する)	
+n4	社会	しゃかい	society	noun	
+n4	医学	いがく	medical science	noun	
+n4	今度	こんど	now, this time, near future, one of these days, next time	noun	
+n4	機会	きかい	chance, opportunity	noun	
+n4	課長	かちょう	section manager	noun	
+n4	地震	じしん	earthquake	noun	
+n4	親	おや	a parent	noun	
+n4	利用	りよう	use, utilization	noun (+する)	
+n4	準備	じゅんび	prepare	noun (+する)	
+n4	林	はやし	woods, forest	noun	
+n4	連絡	れんらく	communication, contact, connection	noun (+する)	
+n4	昔	むかし	old days; past	noun	
+n4	壁	かべ	wall	noun	
+n4	確か	たしか	if I remember correctly; certain, definite	な-adjective	
+n4	森	もり	forest	noun	
+n4	以内	いない	within, less (no more) than	noun	
+n4	運転	うんてん	driving	noun (+する)	
+n4	火	ひ	fire	noun	
+n4	法律	ほうりつ	law	noun	
+n4	試験	しけん	an exam	noun (+する)	
+n4	交通	こうつう	traffic, transportation	noun (+する)	
+n4	科学	かがく	science	noun	
+n4	彼ら	かれら	they (usually male)	pronoun	
+n4	夢	ゆめ	a dream	noun	
+n4	例えば	たとえば	for example, e.g.	adverb	
+n4	十分	じゅうぶん	enough	な-adjective	
+n4	音	おと	sound, note	noun	
+n4	説明	せつめい	explanation	noun (+する)	
+n4	島	しま	island	noun	
+n4	危険	きけん	danger, risk, hazard	な-adjective	
+n4	彼女	かのじょ	girlfriend; she	pronoun	
+n4	専門	せんもん	major; speciality	noun	
+n4	寺	てら	Buddhist temple	noun	
+n4	普通	ふつう	common; usual	な-adjective	
+n4	会場	かいじょう	venue, meeting place	noun	
+n4	文学	ぶんがく	literature	noun	
+n4	工業	こうぎょう	(manufacturing) industry	noun	
+n4	経験	けいけん	experience	noun (+する)	
+n4	簡単	かんたん	simple	な-adjective	
+n4	途中	とちゅう	on the way, midway	noun	
+n4	相談	そうだん	consultation	noun (+する)	
+n4	娘	むすめ	daughter (humble)	noun	
+n4	競争	きょうそう	competition, contest	noun (+する)	
+n4	必ず	かならず	surely, certainly	adverb	
+n4	複雑	ふくざつ	complexity, complication	な-adjective	
+n4	日	ひ	sun, sunshine, day	noun	
+n4	小説	しょうせつ	novel	noun	
+n4	出席	しゅっせき	attendance	noun (+する)	
+n4	残念	ざんねん	regret; regrettable	な-adjective	
+n4	気分	きぶん	feeling, mood	noun	
+n4	住所	じゅうしょ	address; place of residence	noun	
+n4	決して	けっして	never	adverb	
+n4	小学校	しょうがっこう	elementary school	noun	
+n4	美術館	びじゅつかん	art gallery, art museum	noun	
+n4	一度	いちど	once, one time	noun	
+n4	空気	くうき	air, atmosphere	noun	
+n4	味	あじ	flavor, taste	noun	
+n4	校長	こうちょう	principal, headmaster	noun	
+n4	血	ち	blood	noun	
+n4	卒業	そつぎょう	graduation	noun (+する)	
+n4	高校生	こうこうせい	high school student	noun	
+n4	割合	わりあい	rate, ratio, percentage	noun	
+n4	息子	むすこ	(humble) son	noun	
+n4	首	くび	neck	noun	
+n4	代わり	かわり	substitute, replacement	noun	
+n4	食事	しょくじ	meal	noun (+する)	
+n4	急	きゅう	urgent, sudden; steep	な-adjective	
+n4	運転手	うんてんしゅ	driver (by occupation)	noun	
+n4	心配	しんぱい	worry, concern	な-adjective	
+n4	郊外	こうがい	suburb, outskirts	noun	
+n4	注意	ちゅうい	caution, attention	noun (+する)	
+n4	台風	たいふう	typhoon	noun	
+n4	葉	は	leaf	noun	
+n4	中学校	ちゅうがっこう	junior high school pupil	noun	
+n4	季節	きせつ	season (in reference to weather)	noun	
+n4	線	せん	line, wire	noun	
+n4	以下	いか	less than, below	noun	
+n4	会話	かいわ	conversation	noun (+する)	
+n4	興味	きょうみ	interest (in something)	noun	
+n4	港	みなと	harbor, port	noun	
+n4	入学	にゅうがく	entry to school or university	noun (+する)	
+n4	裏	うら	reverse side, back	noun	
+n4	遊び	あそび	play	noun	
+n4	席	せき	a seat	noun	
+n4	値段	ねだん	price	noun	
+n4	格好	かっこう	appearance, manner, shape, form, posture	noun	
+n4	仕方	しかた	way (of doing something)	noun	
+n4	失敗	しっぱい	failure, mistake	noun (+する)	
+n4	入院	にゅういん	hospitalization	noun (+する)	
+n4	看護婦	かんごふ	(female) nurse	noun	
+n4	楽しみ	たのしみ	pleasure, joy	な-adjective	
+n4	漫画	まんが	comic (book), cartoon	noun	
+n4	点	てん	mark, score, grade; point, dot	noun	
+n4	盛ん	さかん	prosperous, active, thriving	な-adjective	
+n4	無理	むり	unreasonable, impossible	な-adjective	
+n4	人形	にんぎょう	doll, figure	noun	
+n4	故障	こしょう	breakdown	noun (+する)	
+n4	星	ほし	star	noun	
+n4	柔道	じゅうどう	judo	noun	
+n4	終わり	おわり	end	noun	
+n4	熱心	ねっしん	enthusiasm	な-adjective	
+n4	熱	ねつ	fever, temperature	noun	
+n4	おかしい	おかしい	strange; odd; funny	い-adjective	
+n4	公務員	こうむいん	government worker, public servant	noun	
+n4	用意	ようい	preparation	noun (+する)	
+n4	海岸	かいがん	coast, seashore	noun	
+n4	招待	しょうたい	invitation	noun (+する)	
+n4	皆	みな	everyone	pronoun	
+n4	教会	きょうかい	church	noun	
+n4	周り	まわり	surroundings	noun	
+n4	是非	ぜひ	certainly, by all means; without fail	adverb	
+n4	駐車場	ちゅうしゃじょう	parking lot	noun	
+n4	間	あいだ	space, interval	noun	
+n4	枝	えだ	branch, twig	noun	
+n4	腕	うで	arm (in reference to body)	noun	
+n4	安心	あんしん	peace of mind, relief	な-adjective	
+n4	先輩	せんぱい	senior members of a group	noun	
+n4	約束	やくそく	arrangement, appointment, promise	noun (+する)	
+n4	世話	せわ	looking after; to look after	noun (+する)	
+n4	出発	しゅっぱつ	departure	noun (+する)	
+n4	新聞社	しんぶんしゃ	newspaper company	noun	
+n4	紹介	しょうかい	an introduction	noun (+する)	
+n4	神社	じんじゃ	Shinto shrine	noun	
+n4	趣味	しゅみ	hobby; pastime	noun	
+n4	表	おもて	surface; front; outside	noun	
+n4	売り場	うりば	place where things are sold	noun	
+n4	正月	しょうがつ	New Year, New Year's Day	noun	
+n4	規則	きそく	rule, regulation	noun	
+n4	一生懸命	いっしょうけんめい	very hard (as in "to work hard"), with utmost effort	な-adjective	
+n4	赤ちゃん	あかちゃん	baby, infant	noun	
+n4	雲	くも	cloud	noun	
+n4	適当	てきとう	fitness, suitability	な-adjective	
+n4	水道	すいどう	water service, water line	noun	
+n4	鏡	かがみ	mirror	noun	
+n4	予約	よやく	reservation	noun (+する)	
+n4	毛	け	hair, fur	noun	
+n4	髪	かみ	hair	noun	
+n4	近所	きんじょ	neighborhood	noun	
+n4	習慣	しゅうかん	custom (in reference to culture)	noun	
+n4	虫	むし	insect	noun	
+n4	砂	すな	sand	noun	
+n4	草	くさ	grass	noun	
+n4	翻訳	ほんやく	translation	noun (+する)	
+n4	湯	ゆ	hot water	noun	
+n4	指	ゆび	finger	noun	
+n4	僕	ぼく	I (used by men towards those of equal or lower status)	pronoun	
+n4	動物園	どうぶつえん	zoo	noun	
+n4	案内	あんない	information / guide	noun (+する)	
+n4	店員	てんいん	clerk; shop-employee	noun	
+n4	都合	つごう	circumstances, convenience	noun	
+n4	道具	どうぐ	tool	noun	
+n4	帰り	かえり	return, coming back	noun	
+n4	具合	ぐあい	condition, state, health	noun	
+n4	日記	にっき	diary, journal	noun	
+n4	久しぶり	ひさしぶり	it has been a long time; for the first time in a long time	な-adjective	
+n4	背中	せなか	back (of body)	noun	
+n4	両方	りょうほう	both sides, both parties	noun	
+n4	水泳	すいえい	swimming	noun (+する)	
+n4	糸	いと	thread	noun	
+n4	大事	だいじ	important, valuable, serious matter	な-adjective	
+n4	西洋	せいよう	the West, Western countries	noun	
+n4	会議室	かいぎしつ	conference room	noun	
+n4	美しい	うつくしい	beautiful, lovely	い-adjective	
+n4	事	こと	thing(s), matter(s), fact	noun	
+n4	内	うち	within, inside	noun	
+n4	踊り	おどり	dance	noun	
+n4	昼間	ひるま	daytime, during the day	noun	
+n4	返事	へんじ	reply, answer	noun (+する)	
+n4	講義	こうぎ	a lecture	noun (+する)	
+n4	展覧会	てんらんかい	exhibition	noun	
+n4	研究室	けんきゅうしつ	the professor's office; laboratory	noun	
+n4	湖	みずうみ	lake	noun	
+n4	うん	うん	yes (informal), all right (ok)	noun	
+n4	丁寧	ていねい	polite, courteous, careful	な-adjective	
+n4	場合	ばあい	case, situation	noun	
+n4	倍	ばい	double	noun	
+n4	坂	さか	slope, hill	noun	
+n4	食料品	しょくりょうひん	foodstuff, groceries	noun	
+n4	細かい	こまかい	small; fine, minute	い-adjective	
+n4	旅館	りょかん	a Japanese inn	noun	
+n4	祖父	そふ	grandfather	noun	
+n4	着物	きもの	kimono; Japanese traditional dress	noun	
+n4	隅	すみ	corner	noun	
+n4	為	ため	good, advantage, in order to	noun	
+n4	田舎	いなか	rural, countryside	noun	
+n4	注射	ちゅうしゃ	injection	noun (+する)	
+n4	数学	すうがく	mathematics	noun	
+n4	屋上	おくじょう	rooftop	noun	
+n4	布団	ふとん	futon	noun	
+n4	地理	ちり	geography	noun	
+n4	辞典	じてん	encyclopedia, reference book	noun	
+n4	祖母	そぼ	grandmother	noun	
+n4	火事	かじ	fire	noun	
+n4	講堂	こうどう	auditorium	noun	
+n4	こう	こう	like this, this way	noun	
+n4	特急	とっきゅう	limited express (train faster than an express)	noun	
+n4	苦い	にがい	bitter	い-adjective	
+n4	ぶどう	ぶどう	grapes	noun	
+n4	下着	したぎ	underwear	noun	
+n4	引き出し	ひきだし	drawer	noun	
+n4	承知	しょうち	consent, acceptance	noun (+する)	
+n4	留守	るす	absence; not at home	noun (+する)	
+n4	棚	たな	shelves, rack	noun	
+n4	大分	だいぶ	fairly well, to a large extent, considerably, pretty much	adverb	
+n4	絹	きぬ	silk	noun	
+n4	畳	たたみ	tatami mat (Japanese straw mat)	noun	
+n4	消しゴム	けしゴム	eraser	noun	
+n4	冷房	れいぼう	cooling, air conditioning	noun (+する)	
+n4	以上	いじょう	more than; this is all	noun	
+n4	退院	たいいん	leaving hospital	noun (+する)	
+n4	花見	はなみ	cherry-blossom viewing	noun (+する)	
+n4	大体	だいたい	approximately; in most cases; in general; to begin with (same as もともと)	adverb	
+n4	贈り物	おくりもの	a gift; a present	noun	
+n4	品物	しなもの	goods	noun	
+n4	飛行場	ひこうじょう	airport	noun	
+n4	赤ん坊	あかんぼう	baby	noun	
+n4	景色	けしき	scenery, landscape	noun	
+n4	邪魔	じゃま	hindrance, intrusion	な-adjective	
+n4	指輪	ゆびわ	(finger) ring	noun	
+n4	優しい	やさしい	kind (person), gentle (person), easy (problem)	い-adjective	
+n4	見物	けんぶつ	sightseeing	noun (+する)	
+n4	電報	でんぽう	telegram	noun	
+n4	泥棒	どろぼう	thief; burglar	noun	
+n4	親切	しんせつ	kindness	な-adjective	
+n4	変	へん	strange, odd	な-adjective	
+n4	または	または	or, otherwise	conjunction	
+n4	一杯	いっぱい	full, to the utmost	noun	
+n4	支度	したく	preparation	noun (+する)	
+n4	暖房	だんぼう	heating	noun (+する)	
+n4	素晴らしい	すばらしい	wonderful; terrific	い-adjective	
+n4	全然	ぜんぜん	not at all; wholly, entirely	adverb	
+n4	発音	はつおん	pronunciation	noun (+する)	
+n4	下宿	げしゅく	lodging, boarding house	noun (+する)	
+n4	手袋	てぶくろ	glove(s)	noun	
+n4	厳しい	きびしい	hard; rigorous; strict	い-adjective	
+n4	できるだけ	できるだけ	if at all possible, as much as possible	expression	
+n4	小鳥	ことり	small bird	noun	
+n4	今夜	こんや	this evening, tonight	noun	
+n4	昼休み	ひるやすみ	lunch break, noon recess	noun	
+n4	怖い	こわい	scary, frightening	い-adjective	
+n4	乗り物	のりもの	vehicle	noun	
+n4	遠慮	えんりょ	restraint, reserve, hesitate	noun (+する)	
+n4	汽車	きしゃ	train (steam)	noun	
+n4	柔らかい	やわらかい	soft (in reference to texture), tender	い-adjective	
+n4	急行	きゅうこう	express train or bus	noun (+する)	
+n4	家内	かない	(one's own) wife	noun	
+n4	お嬢さん	おじょうさん	(someone's) daughter (polite)	noun	
+n4	とうとう	とうとう	finally, at last	adverb	
+n4	嘘	うそ	lie	noun	
+n4	文法	ぶんぽう	grammar	noun	
+n4	おもちゃ	おもちゃ	a toy	noun	
+n4	不便	ふべん	inconvenience	な-adjective	
+n4	訳	わけ	reason; explanation	noun	
+n4	木綿	もめん	cotton	noun	
+n4	深い	ふかい	deep, profound	い-adjective	
+n4	大抵	たいてい	generally, usually	な-adjective	
+n4	だめ	だめ	useless, no good, hopeless	な-adjective	
+n4	挨拶	あいさつ	greet(ing)	noun (+する)	
+n4	電灯	でんとう	electric light	noun	
+n4	正しい	ただしい	correct	い-adjective	
+n4	用事	ようじ	business to take care of; tasks; errands	noun	
+n4	以外	いがい	other than, with the exception of, excepting	noun	
+n4	すり	すり	pickpocket	noun	
+n4	程	ほど	degree, extent	noun	
+n4	恥ずかしい	はずかしい	ashamed, embarrassed	い-adjective	
+n4	匂い	におい	odor, smell	noun	
+n4	すっと	すっと	straight, quickly	noun (+する)	
+n4	ガソリン	ガソリン	gasoline, petrol	noun	
+n4	しっかり	しっかり	firmly, steady	noun (+する)	
+n4	やっぱり	やっぱり	as I thought, absolutely	adverb	also やはり (more formal)
+n4	ステレオ	ステレオ	stereo	noun	
+n4	テキスト	テキスト	text; text book	noun	
+n4	床屋	とこや	barber's (shop)	noun	
+n4	オートバイ	オートバイ	motorcycle (lit: auto-bi(ke))	noun	
+n4	もし	もし	if	adverb	
+n4	大学生	だいがくせい	college student, university student	noun	
+n4	別	べつ	distinction, different	noun	
+n4	非常に	ひじょうに	extremely; very	adverb	
+n4	お宅	おたく	(someone else's) house; home -- polite word for 家 (いえ) --	noun	
+n4	ほとんど	ほとんど	mostly, almost	adverb	
+n4	アフリカ	アフリカ	Africa	noun	
+n4	彼	かれ	he, boyfriend	pronoun	
+n4	レポート	レポート	report	noun (+する)	also リポート
+n4	すると	すると	and, then	conjunction	
+n4	ガラス	ガラス	glass, pane	noun	
+n4	エスカレーター	エスカレーター	escalator	noun	
+n4	月	つき	moon	noun	
+n4	ちっとも	ちっとも	not at all (neg. verb)	adverb	
+n4	ガス	ガス	gas	noun	
+n4	アルバイト	アルバイト	part-time job	noun (+する)	
+n4	それに	それに	moreover; besides	conjunction	
+n4	パート	パート	part time (esp. female part time employees)	noun	short for パートタイム
+n4	だから	だから	so; therefore	conjunction	
+n4	さっき	さっき	a little while ago	noun	
+n4	なるべく	なるべく	if possible, as much as possible	adverb	
+n4	サンドイッチ	サンドイッチ	sandwich	noun	
+n4	ビル	ビル	(abbr.) building	noun	
+n4	力	ちから	strength, power	noun	
+n4	そんな	そんな	such, like that, that sort of	pre-noun word	
+n4	やっと	やっと	at last, finally	adverb	
+n4	再来月	さらいげつ	the month after next	noun	
+n4	寝坊	ねぼう	sleeping in late	な-adjective	
+n4	パパ	パパ	papa, daddy	noun	
+n4	どんどん	どんどん	quickly and steadily; at a rapid pace	adverb	
+n4	お礼	おれい	expression of gratitude; thanking; gift of appreciation; bow	noun	
+n4	ベル	ベル	bell	noun	
+n4	答	こたえ	answer, response	noun	
+n4	もちろん	もちろん	certainly, of course	adverb	
+n4	受付	うけつけ	reception(ist) desk	noun	
+n4	スクリーン	スクリーン	screen	noun	
+n4	心	こころ	heart, mind	noun	
+n4	サラダ	サラダ	salad	noun	
+n4	ステーキ	ステーキ	steak	noun	
+n4	オーバー	オーバー	overcoat; over, exceeding, exaggeration	noun	
+n4	石	いし	stone	noun	
+n4	ご主人	ごしゅじん	(your, her) husband	noun	
+n4	用	よう	errand, task, business (to take care of)	noun	
+n4	すっかり	すっかり	all, completely	adverb	
+n4	アナウンサー	アナウンサー	announcer	noun	
+n4	お土産	おみやげ	souvenir	noun	
+n4	お祝い	おいわい	congratulation, celebration	noun	
+n4	ジャム	ジャム	jam	noun	
+n4	よろしい	よろしい	(hon.) good, OK, all right	い-adjective	
+n4	おつり	おつり	change; balance of money returned to the purchaser	noun	
+n4	ワープロ	ワープロ	word processor	noun	
+n4	ごちそう	ごちそう	feast, treating (someone)	noun (+する)	
+n4	はっきり	はっきり	clearly, distinctly	adverb	
+n4	凄い	すごい	terrific, great	い-adjective	
+n4	パソコン	パソコン	(personal) computer	noun	
+n4	アメリカ	アメリカ	America, U.S.A.	noun	
+n4	あんな	あんな	such, like that	pre-noun word	
+n4	米	こめ	uncooked rice	noun	
+n4	再来週	さらいしゅう	the week after next	noun	
+n4	ひどい	ひどい	terrible, awful, unfair, cruel	い-adjective	
+n4	中々	なかなか	very, considerably, quite	な-adjective	
+n4	随分	ずいぶん	extremely	adverb	
+n4	押し入れ	おしいれ	closet	noun	
+n4	サンダル	サンダル	sandal	noun	
+n4	うまい	うまい	delicious; skillful; fortunate	い-adjective	
+n4	レジ	レジ	register	noun	
+n4	しばらく	しばらく	little while	noun (+する)	
+n4	通り	とおり	~ Street, ~ Avenue	noun	
+n4	ハンバーグ	ハンバーグ	hamburger steak	noun	
+n4	市	し	city	noun	
+n4	きっと	きっと	surely, definitely, undoubtedly, certainly	adverb	
+n4	まず	まず	first (of all), to start with	adverb	
+n4	遠く	とおく	far away, distant	noun	
+n4	お金持ち	おかねもち	rich person	noun	also 金持ち (かねもち)
+n4	それほど	それほど	to that degree; extent	adverb	
+n4	プレゼント	プレゼント	present, gift	noun (+する)	
+n4	スーツ	スーツ	suit	noun	
+n4	天気予報	てんきよほう	weather forecast	noun	
+n4	それで	それで	and (conj.), thereupon, because of that	conjunction	
+n4	そろそろ	そろそろ	gradually, soon	adverb	
+n4	ファックス	ファックス	fax	noun (+する)	ファ = フ + small ァ → "fa"
+n4	そんなに	そんなに	so much, like that	adverb	
+n4	なるほど	なるほど	I see; I now understand	interjection	
+n4	ご存じ	ごぞんじ	knowing, acquaintance	noun	
+n4	字	じ	letter; character	noun	
+n4	アジア	アジア	Asia	noun	
+n4	カーテン	カーテン	curtain	noun	
+n4	様	よう	way, manner, kind	noun	
+n4	君	きみ	you (informal for men)	pronoun	
+n4	この間	このあいだ	the other day, recently	noun	
+n4	眠い	ねむい	sleepy, drowsy	い-adjective	
+n4	スーパー	スーパー	supermarket	noun	short for スーパーマーケット
+n4	アクセサリー	アクセサリー	accessory	noun	
+n4	スーツケース	スーツケース	suitcase	noun	
+n4	ひげ	ひげ	beard	noun	
+n4	けれども	けれども	but, although	conjunction	also けれど, けど
+n4	コンサート	コンサート	concert	noun	
+n4	コンピューター	コンピューター	computer	noun	also コンピュータ
+n4	ケーキ	ケーキ	cake	noun	
+n4	この頃	このごろ	these days, nowadays	noun	
+n4	ガソリンスタンド	ガソリンスタンド	gas station, service station	noun	
+n4	テニス	テニス	tennis	noun	
+n4	ピアノ	ピアノ	piano	noun	
+n4	タイプ	タイプ	type, style	noun	
+n4	嬉しい	うれしい	to be happy; to be glad	い-adjective	
+n4	アルコール	アルコール	alcohol	noun	
+n4	ソフト	ソフト	soft; soft hat; software	な-adjective	
+n4	これから	これから	from now on, after this	expression	
+n4	たまに	たまに	occasionally	adverb	
+n4	失礼	しつれい	discourtesy, impoliteness; Excuse me	な-adjective	
+n4	拝見	はいけん	(humble) (polite) seeing, look at	noun (+する)	
+n4	歯医者	はいしゃ	dentist	noun	
+n4	味噌	みそ	miso, bean paste	noun	
+n4	喉	のど	throat	noun	
+n4	珍しい	めずらしい	unusual, rare	い-adjective	
+n4	寂しい	さびしい	lonely, lonesome	い-adjective	
+n4	忘れ物	わすれもの	lost item / something left behind	noun	
+n4	つもり	つもり	intention, plan	noun	
+n4	悲しい	かなしい	sad, sorrowful	い-adjective	
+n4	予習	よしゅう	preparation of lessons (for class)	noun (+する)	
+n4	ごみ	ごみ	trash, garbage	noun	
+n4	真面目	まじめ	diligent, serious	な-adjective	
+n4	復習	ふくしゅう	review (of lessons), revision	noun (+する)	
+n4	はず	はず	it should be so	noun (grammar)	
+n4	億	おく	hundred million	number	
+n4	浅い	あさい	shallow, superficial	い-adjective	
+n4	固い	かたい	solid, hard, firm	い-adjective	also 硬い, 堅い
+n4	～区	～く	~ district, ~ ward, ~ borough	suffix	
+n4	～会	～かい	~ meeting	suffix	
+n4	～ございます	～ございます	to be (polite), to exist	suffix	
+n4	～製	～せい	made in ~	suffix	
+n4	～軒	～けん	counter for houses	counter	
+n4	～学部	～がくぶ	department of a university	suffix	
+n4	～式	～しき	~ ceremony; ~ style	suffix	
+n4	～家	～か	person who is specialized in ~	suffix	
+n4	～建て	～だて	~ storied, separate housing	suffix	
+n4	いくら～ても	いくら～ても	however much one may ~	expression	
+n4	けんかする	けんかする	quarrel	する-verb	
+n4	～(て) しまう	～(て) しまう	to end up ~	suffix	
+n4	お祭り	おまつり	festival	noun	
+n4	～員	～いん	member of ~	suffix	
+n4	けがする	けがする	injury (to animate object), hurt	する-verb	
+n4	～ばかり	～ばかり	just did ~, only	suffix	
+n4	～だす	～だす	to start doing ~	suffix	
+n4	チェックする	チェックする	check	する-verb	チェ = チ + small ェ → "che"
+n4	～ちゃん	～ちゃん	suffix for familiar (female) person	suffix	
+n4	～続ける	～つづける	to continue doing ~	suffix	
+n4	～やすい	～やすい	easy to do ~	suffix	
+n4	びっくりする	びっくりする	to be surprised	する-verb	
+n4	～始める	～はじめる	to start doing ~	suffix	
+n4	都	と	metropolitan	noun	
+n4	～まま	～まま	as it is	suffix	
+n4	～(に) よると	～(に) よると	according to ~	suffix	
+n4	～おわる	～おわる	to finish doing ~	suffix	
+n4	お子さん	おこさん	(someone else's) child (polite)	noun	
+n4	お見舞い	おみまい	calling on someone who is ill, visit	noun	
+n4	～様	～さま	Mr., Mrs., Ms.	suffix	
+n4	あ	あ	Ah	noun	
+n4	～代	～だい	~ age; period	suffix	
+n4	～おき	～おき	after every ~	suffix	
+n4	御～	ご～	honorable ~	prefix	
+n4	～君	～くん	Mr. (junior) ~, master ~	suffix	
+n4	舟	ふね	ship, boat	noun	
+n4	～(に) ついて	～(に) ついて	about, concerning	suffix	
+n4	もうすぐ	もうすぐ	very soon; in a few moments; days	expression	
+n4	真中	まんなか	middle, center	expression	
+n4	～町	～ちょう	the town of ~	suffix	
+n4	お陰	おかげ	thanks or owing to	noun	
+n4	～にくい	～にくい	difficult to do ~	suffix	
+n4	～目	～め	number ~ sequence, ~nd; ~th	suffix	

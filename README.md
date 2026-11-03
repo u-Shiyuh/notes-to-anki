@@ -1,6 +1,6 @@
 # notion-to-anki
 
-This tool syncs a Notion "Language Learning Ledger" database into Anki flashcards. It can also seed full hiragana and katakana decks, and a deck of the 1,000 most frequent kanji plus every JLPT N5/N4 kanji.
+This tool syncs a Notion "Language Learning Ledger" database into Anki flashcards. It can also seed full hiragana and katakana decks, a deck of the 1,000 most frequent kanji plus every JLPT N5/N4 kanji, your reviewer book's verbs, and the JLPT N5/N4 vocabulary.
 
 It is a single Python script. It reads your Notion database through the official API and writes cards into Anki through [AnkiConnect](https://ankiweb.net/shared/info/2055492159). It is safe to re-run: new rows are added, and existing cards are updated (text, deck and tags) when their row changes.
 
@@ -10,8 +10,10 @@ It is a single Python script. It reads your Notion database through the official
 - **Kana seed:** 208 recognition cards (hiragana and katakana, including dakuten/handakuten and yōon combinations). They go in `Nihongo::Kana::Hiragana` and `Nihongo::Kana::Katakana`.
 - **Core Kanji seed:** the 1,000 most frequent kanji (by newspaper frequency) go in `Nihongo::Core Kanji`, in frequency order, so Anki introduces the most common ones first. They're followed by the JLPT N5/N4 kanji that are too rare in newspapers to make the top 1,000 (犬, 牛, 茶, 鳥, 漢, 勉, 昼, 飯, 堂, and five more you already have from your ledger), so every N5 and N4 kanji is covered. Your daily new-card limit sets the pace. Kanji that already have a card from your Notion ledger are skipped, so each kanji has exactly one card.
 - **Verb seed:** the verbs from your reviewer book, listed in `verbs.tsv`, go in `Nihongo::Verbs` in book order. Each card shows the meaning, the reading and the group, plus a faded note where one helps (irregular forms, transitive/intransitive pairs, look-alikes). They're tagged `verb`, the group (`godan`, `ichidan`, `irregular`) and `section<N>`. To add the book's next section, append its rows to `verbs.tsv` and run the seed again.
+- **Word seed:** the JLPT N5 and N4 words other than verbs (nouns, adjectives, adverbs, counters, numbers, set phrases), listed in `words.tsv`, go in `Nihongo::Words`: a few greetings first, then N5, then N4, most common first within each level. Each card shows the meaning, the reading (unless the word is all kana), a faded note where one helps, and the JLPT level and type. The first word that uses a kana feature the kana decks don't teach (small っ, the long-vowel ー, ティ, フォ…) explains it. Cards are tagged `word`, the type (`noun`, `i_adjective`, `na_adjective`…), `jlpt_n5`/`jlpt_n4`, and `katakana` for loanwords. Two kinds of word are left out: verbs, which come from `verbs.tsv`, and one-kanji words whose Core Kanji card already teaches that reading in bold (木 き, 車 くるま). A one-kanji word with a different reading, like 後 あと, keeps its card.
+- **One card per word:** when a Notion `Vocab` row's word is also in `words.tsv` or `verbs.tsv`, the file owns it. The ledger sync skips the row, and the seed takes over its existing card (moving it and rewriting it, keeping its review history) instead of making a second one. `--prune` leaves such cards alone.
 - **Idempotent:** each ledger card carries a `notion_<page id>` tag that links it to its row, so running the script again never creates duplicates, and renaming an `Item` updates its card instead of making a new one.
-- **Stays in its lane:** the kana seed only touches `Nihongo::Kana::*`, the kanji seed only its own cards in `Nihongo::Core Kanji`, the verb seed only `Nihongo::Verbs`, and the ledger sync only cards from your ledger. Core Kanji holds both kinds; the ledger's cards are told apart by their `notion_` tag, so the seed never overwrites your notes. The one crossover: when you add a `Kanji` row to Notion for a kanji that's already in Core Kanji, the sync takes over that card and rewrites it from your row, keeping its review history, instead of making a second card. Tags you add yourself are never removed.
+- **Stays in its lane:** the kana seed only touches `Nihongo::Kana::*`, the kanji seed only its own cards in `Nihongo::Core Kanji`, the verb seed only `Nihongo::Verbs`, the word seed only `Nihongo::Words`, and the ledger sync only cards from your ledger. Core Kanji holds both kinds; the ledger's cards are told apart by their `notion_` tag, so the seed never overwrites your notes. The one crossover: when you add a `Kanji` row to Notion for a kanji that's already in Core Kanji, the sync takes over that card and rewrites it from your row, keeping its review history, instead of making a second card. Tags you add yourself are never removed.
 - **Dry-run mode** lets you preview changes before touching Anki. With Anki open, it lists every card that would be added, changed, moved, retagged or deleted.
 
 ## Requirements
@@ -113,6 +115,17 @@ BACK    to open                                     (bold)
         Godan (group 1) · ends in く                (small, faded)
 ```
 
+Word cards from `words.tsv`:
+
+```
+FRONT   学校
+
+BACK    school                                      (bold)
+        がっこう
+        がく + こう shortens to がっこう · small っ = a short pause…   (small, faded)
+        N5 · noun                                   (small, faded)
+```
+
 The formatting uses inline styles, so it works with Anki's stock `Basic` note type and in night mode. Use `--dry-run` to preview the first few cards.
 
 ## Usage
@@ -133,6 +146,9 @@ python main.py --seed-kanji --dry-run   # preview the kanji seed
 
 python main.py --seed-verbs             # add the verbs in verbs.tsv
 python main.py --seed-verbs --dry-run   # preview the verb seed
+
+python main.py --seed-words             # add the words in words.tsv
+python main.py --seed-words --dry-run   # preview the word seed
 ```
 
 By default, cards already in Anki are brought in line with their source: the text is rewritten when it changed (for example after you fix a meaning in Notion), the card moves deck when you change its `Type`, and old `lesson<N>` / type tags are swapped for the current ones. Pass `--no-update` to only add new cards.
@@ -149,6 +165,8 @@ The first sync after upgrading to linked cards reports every ledger card under "
 ## Kanji data
 
 `kanji_top1000.tsv` was generated once and is read locally, so seeding needs no network. Frequency ranks, readings, meanings and stroke counts come from [KANJIDIC2](https://www.edrdg.org/wiki/index.php/KANJIDIC_Project), © the Electronic Dictionary Research and Development Group, used under [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/). JLPT N-levels and the most-common-reading order (WaniKani's) come from [kanji-data](https://github.com/davidluzgouveia/kanji-data) (MIT). The frequency ranking is based on newspaper text, so news-heavy kanji such as 党 (political party) rank higher than they would in everyday conversation. Ten of the 1,000 have no JLPT level. Example words and their JLPT levels come from [open-anki-jlpt-decks](https://github.com/jamsinclair/open-anki-jlpt-decks) (MIT), built on [Jonathan Waller's JLPT lists](https://www.tanos.co.uk/jlpt/) (CC BY). For kanji with no JLPT word, the example is the most frequent common word in [JMdict](https://www.edrdg.org/wiki/index.php/JMdict-EDICT_Dictionary_Project) (© EDRDG, CC BY-SA 4.0), shown without a level. Readings are matched to each kanji using [JmdictFurigana](https://github.com/Doublevil/JmdictFurigana) (CC BY-SA 4.0). Twenty kanji, mostly ones used in names such as 藤 and 岡, have no example.
+
+`words.tsv` was generated once, too. Its words, readings and glosses come from the N5 and N4 lists of [open-anki-jlpt-decks](https://github.com/jamsinclair/open-anki-jlpt-decks) (MIT), built on [Jonathan Waller's JLPT lists](https://www.tanos.co.uk/jlpt/) (CC BY). Part of speech and the order within each level (newspaper frequency) come from [JMdict](https://www.edrdg.org/wiki/index.php/JMdict-EDICT_Dictionary_Project) (© EDRDG, CC BY-SA 4.0). Words that had a Notion card keep that card's meaning and notes.
 
 ## Troubleshooting
 
