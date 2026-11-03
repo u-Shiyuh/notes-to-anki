@@ -3,8 +3,8 @@
 # open-anki-jlpt-decks (https://github.com/jamsinclair/open-anki-jlpt-decks, MIT;
 # built on Jonathan Waller's JLPT lists, CC BY). Part of speech and the order within
 # each level (newspaper frequency, nf): JMdict (EDRDG, CC BY-SA 4.0). Words that had
-# a Notion card keep its meaning and notes; Notion-only words come first (greetings)
-# or after N5 (travel). Verbs are left out: they come from verbs.tsv.
+# a Notion card keep its meaning and notes; Notion-only words come first (greetings),
+# travel words last (user, 2026-11-04). Verbs are left out: they come from verbs.tsv.
 # Columns: level (n5/n4/blank), word, kana, meaning, type, note. The first word
 # using a kana feature the kana decks lack (small っ, ー, ティ...) explains it in its note.
 	こんにちは	こんにちは	hello	expression	
@@ -614,11 +614,6 @@ n5	毎年	まいねん; まいとし	every year	expression
 n5	～前	～まえ	in front of ~	suffix	
 n5	～屋	～や	~ shop	suffix	
 n5	ゆっくりと	ゆっくりと	slowly, at ease	adverb	
-	乗り場	のりば	platform / boarding point	noun	
-	自由席 / 指定席	じゆうせき / していせき	unreserved seat / reserved seat (contrast pair, Shinkansen tickets)	noun	
-	精算	せいさん	fare adjustment (paying the difference at a ticket gate)	noun (+する)	
-	禁煙	きんえん	no smoking	noun	
-	両替	りょうがえ	currency exchange	noun (+する)	
 n4	意見	いけん	opinion, view, idea	noun	
 n4	運動	うんどう	exercise	noun (+する)	
 n4	気	き	spirit, mood	noun	
@@ -1123,3 +1118,8 @@ n4	～町	～ちょう	the town of ~	suffix
 n4	お陰	おかげ	thanks or owing to	noun	
 n4	～にくい	～にくい	difficult to do ~	suffix	
 n4	～目	～め	number ~ sequence, ~nd; ~th	suffix	
+	乗り場	のりば	platform / boarding point	noun	
+	自由席 / 指定席	じゆうせき / していせき	unreserved seat / reserved seat (contrast pair, Shinkansen tickets)	noun	
+	精算	せいさん	fare adjustment (paying the difference at a ticket gate)	noun (+する)	
+	禁煙	きんえん	no smoking	noun	
+	両替	りょうがえ	currency exchange	noun (+する)	
