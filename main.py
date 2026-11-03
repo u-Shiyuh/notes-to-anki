@@ -10,7 +10,8 @@ Also supports a one-time seed of the FULL hiragana + katakana charts
 (gojuon, dakuten/handakuten, and yoon combos) into their own Anki
 decks, for kana recognition practice separate from the Notion ledger,
 and a seed of the 1000 most frequent kanji (kanji_top1000.tsv) plus the
-JLPT N5/N4 kanji outside them (kanji_extra.tsv).
+JLPT N5/N4 kanji outside them (kanji_extra.tsv), and a seed of the verbs
+from the user's reviewer book (verbs.tsv).
 
 SETUP (one-time)
 -----------------
@@ -53,9 +54,13 @@ USAGE
    python3 main.py --seed-kanji               # add the 1000 most frequent kanji + N5/N4
    python3 main.py --seed-kanji --dry-run     # preview the kanji seed only
 
+   python3 main.py --seed-verbs               # add the reviewer book's verbs (verbs.tsv)
+   python3 main.py --seed-verbs --dry-run     # preview the verb seed only
+
 Safe to re-run any time. Each mode only looks at its own notes: the kana
 seed at Nihongo::Kana::*, the kanji seed at its own (unlinked) notes in
-Nihongo::Core Kanji, the ledger sync at the other Nihongo notes. Ledger
+Nihongo::Core Kanji, the verb seed at Nihongo::Verbs, the ledger sync at
+the other Nihongo notes. Ledger
 Kanji rows also go to Nihongo::Core Kanji. The kanji seed skips kanji
 that already have a ledger card, and when a ledger Kanji row is added for
 a seeded kanji, the sync takes over that card (keeping its review
@@ -115,10 +120,12 @@ LINK_TAG_PREFIX = "notion_"
 # apart from the seed's notes by their link tag. ("\_" is a literal "_" in
 # Anki searches, where a bare "_" matches any character.)
 KANJI_DECK = f"{DECK_ROOT}::Core Kanji"
+VERB_DECK = f"{DECK_ROOT}::Verbs"
 _LINKED = "tag:" + LINK_TAG_PREFIX.replace("_", "\\_") + "*"
 KANA_SCOPE = f'"deck:{DECK_ROOT}::Kana"'
 KANJI_SCOPE = f'"deck:{KANJI_DECK}" -{_LINKED}'
-LEDGER_SCOPE = (f'"deck:{DECK_ROOT}" -"deck:{DECK_ROOT}::Kana" '
+VERB_SCOPE = f'"deck:{VERB_DECK}"'
+LEDGER_SCOPE = (f'"deck:{DECK_ROOT}" -"deck:{DECK_ROOT}::Kana" -{VERB_SCOPE} '
                 f'(-"deck:{KANJI_DECK}" OR {_LINKED})')
 
 # Ledger rows go to Nihongo::<Type>, except these. The kanji seed skips
@@ -133,6 +140,8 @@ KANJI_FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)),
 # Kanji outside the top 1000, same columns: JLPT N5/N4 kanji the top 1000
 # misses, and ledger kanji. The seed adds them after the top 1000.
 KANJI_EXTRA_FILE = os.path.join(os.path.dirname(KANJI_FILE), "kanji_extra.tsv")
+# Verbs from the reviewer book, in book order (see its header).
+VERB_FILE = os.path.join(os.path.dirname(KANJI_FILE), "verbs.tsv")
 
 # Tags the script owns. On update, a note's tags matching these (or any tag
 # the current batch produces) are removed when no longer wanted; every
@@ -415,6 +424,100 @@ def seed_kanji(dry_run=False, update=True):
 
     notes = without_ledger_kanji(notes)
     add_or_update_notes(notes, KANJI_SCOPE, update=update)
+
+
+# ---------------------------------------------------------------------------
+# Verb seed — the reviewer book's verbs, from verbs.tsv, in book order
+# ---------------------------------------------------------------------------
+
+VERB_GROUPS = {"godan": "Godan (group 1)", "ichidan": "Ichidan (group 2)",
+               "irregular": "Irregular (group 3)"}
+# Before ます, a godan verb's final u-row kana becomes its i-row partner.
+_GODAN_STEM = dict(zip("うくぐすつぬぶむる", "いきぎしちにびみり"))
+
+
+def load_verbs(path=VERB_FILE):
+    """Rows of VERB_FILE as dicts, in file order. Exits on a row whose
+    ます-form can't be built (unknown group, wrong ending, or an irregular
+    verb with no masu column)."""
+    rows = []
+    try:
+        with open(path, encoding="utf-8") as f:
+            for lineno, line in enumerate(f, 1):
+                if line.startswith("#") or not line.strip():
+                    continue
+                # Trailing blank columns may have lost their tabs to an editor.
+                cols = line.rstrip("\n").split("\t")
+                section, no, word, kana, meaning, group, masu, note = \
+                    (cols + [""] * 8)[:8]
+                ok =(masu or (group == "godan" and word[-1] in _GODAN_STEM)
+                      or (group == "ichidan" and word.endswith("る")))
+                if group not in VERB_GROUPS or not ok:
+                    print(f"{path}:{lineno}: can't build the ます-form of {word} "
+                          f"({group or 'no group'})", file=sys.stderr)
+                    sys.exit(1)
+                rows.append({"section": section, "no": no, "word": word,
+                             "kana": kana, "meaning": meaning, "group": group,
+                             "masu": masu, "note": note})
+    except OSError as e:
+        print(f"Could not read the verb list: {e}", file=sys.stderr)
+        sys.exit(1)
+    return rows
+
+
+def masu_form(row):
+    """The polite ます-form: godan 書く → 書きます, ichidan 食べる → 食べます.
+    A masu column in the file (irregular verbs) overrides the rule."""
+    word = row["word"]
+    if row["masu"]:
+        return row["masu"]
+    if row["group"] == "godan":
+        return word[:-1] + _GODAN_STEM[word[-1]] + "ます"
+    return word[:-1] + "ます"
+
+
+def verb_back(row):
+    """Back layout: meaning, reading (unless the word is all kana), then the
+    file's note and the group in small, faded text. Conjugations (masu_form)
+    aren't shown until the reviewer book teaches them."""
+    esc = html.escape
+    parts = [_HEADLINE.format(esc(row["meaning"]))]
+    if row["kana"] != row["word"]:
+        parts.append(_LINE.format(esc(row["kana"])))
+    if row["note"]:
+        parts.append(_NOTE.format(esc(row["note"])))
+    facts = [VERB_GROUPS[row["group"]]]
+    if row["group"] == "godan":
+        facts.append(f"ends in {row['word'][-1]}")
+    parts.append(_NOTE.format(esc(" · ".join(facts))))
+    return "".join(parts)
+
+
+def verb_note(row):
+    """Build an AnkiConnect note dict for one VERB_FILE row."""
+    return {
+        "deckName": VERB_DECK,
+        "modelName": NOTE_TYPE,
+        "fields": {"Front": row["word"], "Back": verb_back(row)},
+        "tags": ["verb", row["group"], f"section{row['section']}"],
+        "options": NOTE_OPTIONS,
+    }
+
+
+def seed_verbs(dry_run=False, update=True):
+    """Seed Nihongo::Verbs from VERB_FILE (safe to re-run). Notes are added
+    in book order, so Anki introduces them in that order."""
+    notes = [verb_note(row) for row in load_verbs()]
+
+    if dry_run:
+        print(f"Would ensure deck {VERB_DECK} and seed {len(notes)} verbs.")
+        for n in notes[:5]:
+            print(f"\n[{n['deckName']}] {n['fields']['Front']}")
+            print(preview_html(n["fields"]["Back"]))
+        preview_changes(notes, VERB_SCOPE, update=update)
+        return
+
+    add_or_update_notes(notes, VERB_SCOPE, update=update)
 
 
 # ---------------------------------------------------------------------------
@@ -977,6 +1080,11 @@ def main():
              "the Notion ledger",
     )
     parser.add_argument(
+        "--seed-verbs", action="store_true",
+        help="Seed the reviewer book's verbs (verbs.tsv) into Nihongo::Verbs, "
+             "in book order, instead of syncing the Notion ledger",
+    )
+    parser.add_argument(
         "--no-update", dest="update", action="store_false",
         help="Only add new notes; leave existing notes untouched even if "
              "their content has changed (updating is ON by default)",
@@ -989,9 +1097,10 @@ def main():
     parser.set_defaults(update=True)
     args = parser.parse_args()
 
-    if args.seed_kana and args.seed_kanji:
-        parser.error("--seed-kana and --seed-kanji are separate runs")
-    if args.prune and (args.seed_kana or args.seed_kanji):
+    seeds = args.seed_kana + args.seed_kanji + args.seed_verbs
+    if seeds > 1:
+        parser.error("--seed-kana, --seed-kanji and --seed-verbs are separate runs")
+    if args.prune and seeds:
         parser.error("--prune only applies to the ledger sync, not the seeds")
     if args.prune and not args.update:
         parser.error("--prune can't be combined with --no-update")
@@ -1001,6 +1110,9 @@ def main():
         return
     if args.seed_kanji:
         seed_kanji(dry_run=args.dry_run, update=args.update)
+        return
+    if args.seed_verbs:
+        seed_verbs(dry_run=args.dry_run, update=args.update)
         return
 
     sync_ledger(dry_run=args.dry_run, update=args.update, prune=args.prune)

@@ -10,6 +10,10 @@ A single-file Python CLI (`main.py`) that pushes Japanese study material into An
 - **Kana seed** (`--seed-kana`): writes the built-in hiragana and katakana tables (104 each: gojūon, dakuten/handakuten, yōon) to `Nihongo::Kana::Hiragana` and `Nihongo::Kana::Katakana`.
 - **Kanji seed** (`--seed-kanji`): writes the 1,000 most frequent kanji from `kanji_top1000.tsv`, then the rows of `kanji_extra.tsv`, to `Nihongo::Core Kanji`, in frequency order. It skips kanji that already have a ledger card. Ledger `Kanji` rows also live in `Nihongo::Core Kanji` (`TYPE_DECKS`; merged on 2026-10-27, so `Nihongo::Kanji` is now unused). Inside that deck, a `notion_` link tag marks a ledger note, and its absence marks a seed note.
 
+- **Verb seed** (`--seed-verbs`): writes the verbs in `verbs.tsv` to `Nihongo::Verbs`, in file (book) order. Unlike the kanji seed, it doesn't skip verbs that also have a ledger card in `Nihongo::Vocab` (6 on 2026-11-03: 行く 書く 聞く 話す 飲む 読む); the user chose to keep both.
+
+`verbs.tsv` is hand-made from the user's reviewer book (added 2026-11-03; section 1 = the book's 87 godan verbs). Columns: `section`, `no` (book number), `word` (as printed, so つく/ある/やる are kana), `kana`, `meaning` (the book's gloss), `group` (`godan`/`ichidan`/`irregular`), `masu` (blank = built by `masu_form`; required for irregular verbs), `note` (faded line: irregular forms, transitive/intransitive pairs, look-alikes). Missing trailing columns count as blank. The book's later sections are appended as the user sends them. The card shows no conjugations (the user removed the ます-form line on 2026-11-03, following the book, which hasn't taught them yet). `masu_form` is kept for when it does: conjugations go on the same cards then, so they update in place.
+
 `kanji_extra.tsv` holds, in the same columns, kanji outside the top 1,000: every JLPT N5/N4 kanji the top 1,000 misses (all 79 N5 are in it; 15 N4 aren't) and the ledger kanji outside it. 17 rows on 2026-10-29: 耳魚姉兄弟妹冬寒 (ledger, added 2026-10-28) and 犬牛茶鳥漢勉昼飯堂 (N4, added 2026-10-29), built from kanji-data alone (漢's "China" capitalised by hand). The seed adds them after the top 1,000 (skipping those with a ledger card), and ledger kanji in it get the Core Kanji layout. A new ledger kanji outside both files keeps the plain layout until a row is added here.
 
 `kanji_top1000.tsv` is generated data. It was built once from KANJIDIC2 (CC BY-SA 4.0: frequency, readings, meanings, strokes) and kanji-data (MIT: JLPT N-levels and WaniKani's reading order). Its `#` header lists the sources and formatting rules. A leading `*` marks each kanji's most common on/kun reading, which comes first in its list. `kanji_readings` renders it bold and fades the rest. A line with no marked reading is faded entirely, even a lone reading (since 2026-10-29; before, a lone reading was bold, which made rare ones like 万's よろず look essential): about 133 kun lines and 5 on lines. The 8th column, `example` (`word|kana|gloss|level`), is a word that reads the kanji with one of its on'yomi; `example_word` shows it, with the word's JLPT level, under the On line. It's the easiest JLPT word (N5 first, from open-anki-jlpt-decks, MIT, built on Jonathan Waller's CC BY lists), the main on'yomi winning ties; with no JLPT word, the most frequent common JMdict word (EDRDG, CC BY-SA 4.0) and a blank level. JmdictFurigana (CC BY-SA 4.0) says which kana belong to which kanji. Across both files (1,017 kanji, 2026-10-29): 156 N5, 149 N4, 442 N3, 180 N2/N1, 70 unlevelled, and 20 kanji (mostly name kanji like 藤, 岡) with none. The generators aren't in the repo. To change the list, regenerate the file with the same columns rather than hand-editing 1,000 rows. Keep the attribution in the header and README.
@@ -28,6 +32,8 @@ python main.py --seed-kana --dry-run   # preview the kana seed (no network)
 python main.py --seed-kana
 python main.py --seed-kanji --dry-run  # preview the kanji seed (reads Anki if open)
 python main.py --seed-kanji
+python main.py --seed-verbs --dry-run  # preview the verb seed (reads Anki if open)
+python main.py --seed-verbs
 python main.py --no-update             # add new notes only; never modify existing ones
 python main.py --prune --dry-run       # list linked notes whose Notion row is gone (needs Anki)
 ```
@@ -42,7 +48,7 @@ A non-dry run writes to the user's real Anki collection, so ask before running o
 
 ## How it's used
 
-The ledger sync runs over and over, not once. The user adds a row to Notion whenever they learn a new kanji, word or grammar point, then runs `python main.py`. That adds the new cards and keeps existing ones in line with Notion without touching review history. The kana and kanji seeds are meant to run once, because their tables don't change. They are safe to re-run.
+The ledger sync runs over and over, not once. The user adds a row to Notion whenever they learn a new kanji, word or grammar point, then runs `python main.py`. That adds the new cards and keeps existing ones in line with Notion without touching review history. The kana and kanji seeds are meant to run once, because their tables don't change. The verb seed runs again each time a section is appended to `verbs.tsv`. All are safe to re-run.
 
 As of 2026-10-19, every ledger note in the real collection carries its `notion_` link tag. So the Front-text fallback match only applies to notes created by hand or by older versions of the script.
 
@@ -61,13 +67,14 @@ The script can't run on GitHub-hosted Actions. AnkiConnect is an HTTP server ins
 
 | Area | Functions / constants |
 |---|---|
-| Config | `NOTION_TOKEN`, `NOTION_DATABASE_ID` (from env via dotenv; `sync_ledger` treats any value containing `paste_your` (any case) as missing), `DECK_ROOT="Nihongo"`, `NOTE_TYPE="Basic"`, `KANJI_DECK`, `TYPE_DECKS` (Type → deck overrides), `KANA_SCOPE` / `KANJI_SCOPE` / `LEDGER_SCOPE` / `LEDGER_KANJI_SCOPE` (Anki searches; `_LINKED` is `tag:notion\_*`, escaped because `_` is a wildcard in Anki search), `KANJI_FILE`, `LINK_TAG_PREFIX`, `TYPE_TAGS`, `NOTE_OPTIONS` (`duplicateScope: "deck"`), `ANKICONNECT_URL` |
+| Config | `NOTION_TOKEN`, `NOTION_DATABASE_ID` (from env via dotenv; `sync_ledger` treats any value containing `paste_your` (any case) as missing), `DECK_ROOT="Nihongo"`, `NOTE_TYPE="Basic"`, `KANJI_DECK`, `TYPE_DECKS` (Type → deck overrides), `VERB_DECK`, `KANA_SCOPE` / `KANJI_SCOPE` / `VERB_SCOPE` / `LEDGER_SCOPE` / `LEDGER_KANJI_SCOPE` (Anki searches; `_LINKED` is `tag:notion\_*`, escaped because `_` is a wildcard in Anki search), `KANJI_FILE`, `VERB_FILE`, `LINK_TAG_PREFIX`, `TYPE_TAGS`, `NOTE_OPTIONS` (`duplicateScope: "deck"`), `ANKICONNECT_URL` |
 | Kana data | `HIRAGANA_*`, `KATAKANA_*` lists of `(kana, romaji)`; `kana_note`, `build_kana_notes`, `seed_kana` |
 | Kanji seed | `load_kanji` (parses `KANJI_FILE` or `KANJI_EXTRA_FILE`), `core_kanji` (cached rows of `KANJI_FILE` + `KANJI_EXTRA_FILE` by kanji), `kanji_key` (Front up to the first space, so `万 (man, 10000)` counts as `万`; used for layout lookup, adoption and `without_ledger_kanji`), `kanji_readings`, `example_word` (the on'yomi example line), `kanji_back` (the Core Kanji Back layout, shared with ledger kanji), `kanji_note` (adds the `kanji`/`core_kanji`/`jlpt_nN` tags), `without_ledger_kanji`, `seed_kanji` |
+| Verb seed | `VERB_GROUPS`, `_GODAN_STEM`, `load_verbs` (exits on a row whose ます-form can't be built), `masu_form`, `verb_back`, `verb_note` (tags `verb`, the group, `section<N>`), `seed_verbs` |
 | Notion | `notion_request` (retries 429/5xx/network errors with backoff, honouring `Retry-After`; exits on other errors), `fetch_all_rows` (API `2025-09-03`: reads the database's `data_sources`, then pages through `/data_sources/{id}/query`), `get_prop`, `skip_reason`, `row_to_note`, `link_tag` |
 | Card layout | `format_back`, `split_note`, `sentences`, `preview_html` (dry-run only) |
 | Anki | `anki_request` (exits if AnkiConnect is unreachable; *logs but does not raise* on AnkiConnect errors), `anki_available`, `anki_multi` (batches writes through `multi`), `find_notes`, `same_html`, `plan_changes` (read-only), `print_plan`, `summarize`, `preview_changes` (dry-run), `add_or_update_notes` |
-| CLI | `main` (argparse: `--dry-run`, `--seed-kana`, `--seed-kanji`, `--no-update`, `--prune`; the two seeds are mutually exclusive, and `--prune` is rejected with either seed or with `--no-update`) |
+| CLI | `main` (argparse: `--dry-run`, `--seed-kana`, `--seed-kanji`, `--seed-verbs`, `--no-update`, `--prune`; the three seeds are mutually exclusive, and `--prune` is rejected with any seed or with `--no-update`) |
 
 `_GOJUON` is defined and then `del`'d.
 
@@ -82,7 +89,7 @@ The script can't run on GitHub-hosted Actions. AnkiConnect is an HTTP server ins
 | `Lesson` | number | Tag `lesson<N>` |
 | `Language` | select | Rows whose value isn't `LANGUAGE` ("Japanese") are skipped; empty is kept |
 
-The database also has `Status`, `Attempts`, `Correct Streak` and `Last Reviewed`, which the script ignores. Missing properties quietly become `""`. Changing these names requires editing `row_to_note` / `skip_reason`.
+The database also has `Status`, `Attempts`, `Correct Streak` and `Last Reviewed`, which the script ignores. They predate Anki and are stale: nothing has updated them since 2026-09-22, and the sync is one-way (Notion → Anki). Anki is the record of study progress; don't read progress from these columns. Missing properties quietly become `""`. Changing these names requires editing `row_to_note` / `skip_reason`.
 
 Rows are skipped (and reported) when `Item` is empty, starts with `IGNORE` (`SKIP_PREFIX`), or has a different `Language`.
 
@@ -101,7 +108,7 @@ All text is HTML-escaped. Changing `format_back` changes every Back field, so th
 
 `plan_changes` is read-only and returns a plan. `add_or_update_notes` prints it and applies it; `--dry-run` prints it via `preview_changes` (only if Anki is reachable).
 
-1. **Scope.** Each mode only reads notes matching `note:"Basic" <scope>`: `KANA_SCOPE` (`Nihongo::Kana` and below) for the kana seed, `KANJI_SCOPE` (unlinked notes in `Nihongo::Core Kanji`) for the kanji seed, `LEDGER_SCOPE` (`Nihongo` minus `Nihongo::Kana` and minus `KANJI_SCOPE`) for the ledger. Notes outside the scope are never matched or changed, with one exception: adoption (step 3). `NOTE_OPTIONS` sets `duplicateScope: "deck"` so the same Front can exist in a kana deck and a ledger deck.
+1. **Scope.** Each mode only reads notes matching `note:"Basic" <scope>`: `KANA_SCOPE` (`Nihongo::Kana` and below) for the kana seed, `KANJI_SCOPE` (unlinked notes in `Nihongo::Core Kanji`) for the kanji seed, `VERB_SCOPE` (`Nihongo::Verbs`) for the verb seed, `LEDGER_SCOPE` (`Nihongo` minus `Nihongo::Kana`, minus `Nihongo::Verbs` and minus `KANJI_SCOPE`) for the ledger. Notes outside the scope are never matched or changed, with one exception: adoption (step 3). `NOTE_OPTIONS` sets `duplicateScope: "deck"` so the same Front can exist in a kana deck and a ledger deck.
 2. **In-batch duplicates.** If two incoming notes share deck and Front, only the first is used; the rest are reported under "Not added".
 3. **Matching.** Ledger notes carry a `notion_<page id without dashes>` tag (`link_tag`). An incoming note matches the existing note with the same link tag; otherwise an existing note *without* a link tag and with the same Front (this is how pre-link notes and the kana cards match). Each existing note is matched at most once.
    - **Adoption** (`adopt=` on `plan_changes`; only the ledger sync passes it). A ledger `Kanji` note that matched nothing takes over the seed's `Nihongo::Core Kanji` note with the same Front. That note then goes through the normal update path, so it's rewritten and gets its link tag (it's already in the right deck), and its review history is kept. Its `core_kanji`/`jlpt_nN` tags aren't owned by the ledger, so they stay. Only `Kanji`-type rows adopt; a `Vocab` row `会` doesn't take over the Core Kanji `会` card. Once the note is linked, it leaves `KANJI_SCOPE`. `without_ledger_kanji` checks `LEDGER_KANJI_SCOPE` (linked `kanji` notes anywhere under `Nihongo`, even before the sync has moved them) so the seed doesn't re-add the kanji.

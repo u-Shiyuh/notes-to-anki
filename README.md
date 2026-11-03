@@ -9,8 +9,9 @@ It is a single Python script. It reads your Notion database through the official
 - **Ledger sync:** each Notion row becomes a `Basic` Anki card in a deck named after its `Type` (for example `Nihongo::Vocab`), except `Kanji` rows, which go to `Nihongo::Core Kanji` so all your kanji are in one deck. Each card is tagged with its lesson number.
 - **Kana seed:** 208 recognition cards (hiragana and katakana, including dakuten/handakuten and yōon combinations). They go in `Nihongo::Kana::Hiragana` and `Nihongo::Kana::Katakana`.
 - **Core Kanji seed:** the 1,000 most frequent kanji (by newspaper frequency) go in `Nihongo::Core Kanji`, in frequency order, so Anki introduces the most common ones first. They're followed by the JLPT N5/N4 kanji that are too rare in newspapers to make the top 1,000 (犬, 牛, 茶, 鳥, 漢, 勉, 昼, 飯, 堂, and five more you already have from your ledger), so every N5 and N4 kanji is covered. Your daily new-card limit sets the pace. Kanji that already have a card from your Notion ledger are skipped, so each kanji has exactly one card.
+- **Verb seed:** the verbs from your reviewer book, listed in `verbs.tsv`, go in `Nihongo::Verbs` in book order. Each card shows the meaning, the reading and the group, plus a faded note where one helps (irregular forms, transitive/intransitive pairs, look-alikes). They're tagged `verb`, the group (`godan`, `ichidan`, `irregular`) and `section<N>`. To add the book's next section, append its rows to `verbs.tsv` and run the seed again.
 - **Idempotent:** each ledger card carries a `notion_<page id>` tag that links it to its row, so running the script again never creates duplicates, and renaming an `Item` updates its card instead of making a new one.
-- **Stays in its lane:** the kana seed only touches `Nihongo::Kana::*`, the kanji seed only its own cards in `Nihongo::Core Kanji`, and the ledger sync only cards from your ledger. Core Kanji holds both kinds; the ledger's cards are told apart by their `notion_` tag, so the seed never overwrites your notes. The one crossover: when you add a `Kanji` row to Notion for a kanji that's already in Core Kanji, the sync takes over that card and rewrites it from your row, keeping its review history, instead of making a second card. Tags you add yourself are never removed.
+- **Stays in its lane:** the kana seed only touches `Nihongo::Kana::*`, the kanji seed only its own cards in `Nihongo::Core Kanji`, the verb seed only `Nihongo::Verbs`, and the ledger sync only cards from your ledger. Core Kanji holds both kinds; the ledger's cards are told apart by their `notion_` tag, so the seed never overwrites your notes. The one crossover: when you add a `Kanji` row to Notion for a kanji that's already in Core Kanji, the sync takes over that card and rewrites it from your row, keeping its review history, instead of making a second card. Tags you add yourself are never removed.
 - **Dry-run mode** lets you preview changes before touching Anki. With Anki open, it lists every card that would be added, changed, moved, retagged or deleted.
 
 ## Requirements
@@ -101,6 +102,17 @@ BACK    take along, lead, join, connect           (bold)
         10 strokes · JLPT N3 · #30 by frequency    (small, faded)
 ```
 
+Verb cards from `verbs.tsv` look like this (a word printed in kana, such as ある, skips the reading line):
+
+```
+FRONT   開く
+
+BACK    to open                                     (bold)
+        あく
+        intransitive (the door opens); transitive: 開ける · also read ひらく   (small, faded)
+        Godan (group 1) · ends in く                (small, faded)
+```
+
 The formatting uses inline styles, so it works with Anki's stock `Basic` note type and in night mode. Use `--dry-run` to preview the first few cards.
 
 ## Usage
@@ -118,6 +130,9 @@ python main.py --seed-kana --no-update  # add missing kana only
 
 python main.py --seed-kanji             # add the 1,000 most frequent kanji + N5/N4
 python main.py --seed-kanji --dry-run   # preview the kanji seed
+
+python main.py --seed-verbs             # add the verbs in verbs.tsv
+python main.py --seed-verbs --dry-run   # preview the verb seed
 ```
 
 By default, cards already in Anki are brought in line with their source: the text is rewritten when it changed (for example after you fix a meaning in Notion), the card moves deck when you change its `Type`, and old `lesson<N>` / type tags are swapped for the current ones. Pass `--no-update` to only add new cards.
