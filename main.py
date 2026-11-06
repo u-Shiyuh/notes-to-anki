@@ -176,6 +176,8 @@ KANJI_EXTRA_FILE = os.path.join(os.path.dirname(KANJI_FILE), "kanji_extra.tsv")
 VERB_FILE = os.path.join(os.path.dirname(KANJI_FILE), "verbs.tsv")
 # JLPT N5/N4 words (no verbs), in study order (see its header).
 WORD_FILE = os.path.join(os.path.dirname(KANJI_FILE), "words.tsv")
+# words.tsv's topic column becomes a tag, e.g. topic_body (Custom Study by tag).
+TOPIC_TAG_PREFIX = "topic_"
 NUMBER_FILE = os.path.join(os.path.dirname(KANJI_FILE), "numbers.tsv")
 
 # Tags the script owns. On update, a note's tags matching these (or any tag
@@ -415,11 +417,22 @@ def kanji_back(row, headline=None, notes=()):
     return "".join(parts)
 
 
+@functools.cache
+def kanji_topics():
+    """Topic of each one-kanji word whose Core Kanji card teaches it (頭 →
+    body): the word seed skips those words, so their kanji card carries the
+    words.tsv topic instead."""
+    return {r["word"]: r["topic"] for r in load_words()
+            if r["topic"] and kanji_card_covers(r)}
+
+
 def kanji_note(row):
     """Build an AnkiConnect note dict for one Core Kanji row."""
     tags = ["kanji", "core_kanji"]
     if row["jlpt"]:
         tags.append(f"jlpt_n{row['jlpt']}")
+    if row["kanji"] in kanji_topics():
+        tags.append(TOPIC_TAG_PREFIX + kanji_topics()[row["kanji"]])
     return {
         "deckName": KANJI_DECK,
         "modelName": NOTE_TYPE,
@@ -578,9 +591,10 @@ def load_words(path=WORD_FILE):
                 if line.startswith("#") or not line.strip():
                     continue
                 cols = line.rstrip("\n").split("\t")
-                level, word, kana, meaning, typ, note = (cols + [""] * 6)[:6]
+                level, word, kana, meaning, typ, note, topic = (cols + [""] * 7)[:7]
                 rows.append({"level": level, "word": word, "kana": kana,
-                             "meaning": meaning, "type": typ, "note": note})
+                             "meaning": meaning, "type": typ, "note": note,
+                             "topic": topic})
     except OSError as e:
         print(f"Could not read the word list: {e}", file=sys.stderr)
         sys.exit(1)
@@ -633,6 +647,8 @@ def word_note(row):
         tags.append(f"jlpt_{row['level']}")
     if _KATAKANA.search(row["word"]):
         tags.append("katakana")
+    if row["topic"]:
+        tags.append(TOPIC_TAG_PREFIX + row["topic"])
     return {
         "deckName": WORD_DECK,
         "modelName": NOTE_TYPE,
@@ -1103,6 +1119,7 @@ def plan_changes(notes, scope, update=True, prune=False, adopt=None, keep=()):
         remove = [t for t in info.get("tags", [])
                   if t.lower() not in wanted
                   and (t.lower() in owned or _LESSON_TAG.fullmatch(t)
+                       or t.lower().startswith(TOPIC_TAG_PREFIX)
                        or t.lower().startswith(LINK_TAG_PREFIX))]
         if add or remove:
             plan["retag"].append((n, info, add, remove))

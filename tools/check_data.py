@@ -224,7 +224,7 @@ def check_verbs(index):
     return flags
 
 
-WORD_COLUMNS = ["level", "word", "kana", "meaning", "type", "note"]
+WORD_COLUMNS = ["level", "word", "kana", "meaning", "type", "note", "topic"]
 VERB_COLUMNS = ["section", "no", "word", "kana", "meaning", "group", "masu", "note"]
 
 
