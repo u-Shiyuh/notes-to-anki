@@ -11,17 +11,21 @@ Checks:
              - a levelled row (n5/n4) that isn't in that JLPT list.
   verbs.tsv  - the row's `group` (godan/ichidan/irregular) agrees with JMdict.
 
-Sources are pinned (see SOURCES) and downloaded once into tools/cache/
-(gitignored). Delete the cache to re-download.
+Sources are pinned (see SOURCES) and committed in sources/: the two JLPT
+lists as-is, and sources/jmdict-subset.json, the JMdict entries for every word
+in the two files. So a normal run needs no network. A word the subset doesn't
+cover (a row added since the last refresh) makes the run download the full
+JMdict once into tools/cache/ (gitignored) and say to refresh.
 
 Usage:
   python3 tools/check_data.py            # check both files
   python3 tools/check_data.py words      # or just one
+  python3 tools/check_data.py --refresh  # rebuild sources/ from the pinned
+                                         # sources, after editing a .tsv
 Exit status is 1 if anything was flagged, so it can gate a commit.
 """
 
 import csv
-import io
 import json
 import re
 import sys
@@ -31,6 +35,8 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 CACHE = ROOT / "tools" / "cache"
+SOURCES_DIR = ROOT / "sources"
+SUBSET = SOURCES_DIR / "jmdict-subset.json"
 
 # Bump these deliberately; a moving source would make the check drift.
 JLPT_COMMIT = "1ad66734417aca9dbcca6b2d5ee440cb13ab3ba0"  # open-anki-jlpt-decks
@@ -75,10 +81,20 @@ def fetch(name):
     return path
 
 
-def load_jmdict():
+def source(name):
+    """The committed copy in sources/ if there is one, else the cached download."""
+    path = SOURCES_DIR / name
+    return path if path.exists() else fetch(name)
+
+
+def load_full_jmdict():
     with zipfile.ZipFile(fetch("jmdict.zip")) as z:
         name = next(n for n in z.namelist() if n.endswith(".json"))
-        words = json.loads(z.read(name))["words"]
+        data = json.loads(z.read(name))
+    return data, build_index(data["words"])
+
+
+def build_index(words):
     index = {}
     for w in words:
         for form in {k["text"] for k in w["kanji"]} | {k["text"] for k in w["kana"]}:
@@ -90,7 +106,7 @@ def load_jlpt(level):
     """Every written form in the JLPT list. Entries like "いい; よい",
     "さんぽ (する)" or "スーパー (マーケット)" count under each form."""
     forms = set()
-    with open(fetch(f"{level}.csv"), encoding="utf-8") as f:
+    with open(source(f"{level}.csv"), encoding="utf-8") as f:
         for r in csv.DictReader(f):
             for text in (r["expression"], r["reading"]):
                 for form in text.split(";"):
@@ -163,7 +179,7 @@ def labels(codes):
 def check_words(index):
     lists = {lvl: load_jlpt(lvl) for lvl in ("n5", "n4")}
     flags = []
-    for n, r in read_tsv(ROOT / "words.tsv", ["level", "word", "kana", "meaning", "type", "note"]):
+    for n, r in read_tsv(ROOT / "words.tsv", WORD_COLUMNS):
         where = f"words.tsv:{n} {r['word']} ({r['kana']})"
         forms = {re.sub(r"する$", "", clean(f)) for f in re.split(r"/|;", r["word"])}
         if r["level"] in lists and not forms & lists[r["level"]]:
@@ -192,8 +208,7 @@ GROUP_OF = [(re.compile(r"^v5"), "godan"), (re.compile(r"^v1"), "ichidan"),
 
 def check_verbs(index):
     flags = []
-    cols = ["section", "no", "word", "kana", "meaning", "group", "masu", "note"]
-    for n, r in read_tsv(ROOT / "verbs.tsv", cols):
+    for n, r in read_tsv(ROOT / "verbs.tsv", VERB_COLUMNS):
         entry = best_entry(index, r["word"], r["kana"], r["meaning"])
         where = f"verbs.tsv:{n} {r['word']} ({r['kana']})"
         if entry is None:
@@ -206,7 +221,64 @@ def check_verbs(index):
     return flags
 
 
+WORD_COLUMNS = ["level", "word", "kana", "meaning", "type", "note"]
+VERB_COLUMNS = ["section", "no", "word", "kana", "meaning", "group", "masu", "note"]
+
+
+def lookup_keys():
+    """The JMdict lookups best_entry makes: each row's cleaned word."""
+    return sorted({clean(r["word"]) for _, r in read_tsv(ROOT / "words.tsv", WORD_COLUMNS)}
+                  | {clean(r["word"]) for _, r in read_tsv(ROOT / "verbs.tsv", VERB_COLUMNS)})
+
+
+def load_jmdict():
+    """Index from the committed subset; the full JMdict if the subset is
+    missing or doesn't cover every row."""
+    if SUBSET.exists():
+        subset = json.loads(SUBSET.read_text(encoding="utf-8"))
+        missing = set(lookup_keys()) - set(subset["keys"])
+        if not missing:
+            return build_index(subset["words"])
+        print(f"sources/jmdict-subset.json doesn't cover {len(missing)} word(s) "
+              f"({', '.join(sorted(missing)[:5])}...); using the full JMdict. "
+              "Run with --refresh to update sources/.", file=sys.stderr)
+    return load_full_jmdict()[1]
+
+
+def refresh():
+    """Rewrite sources/ from the pinned downloads."""
+    SOURCES_DIR.mkdir(exist_ok=True)
+    for name in ("n5.csv", "n4.csv"):
+        (SOURCES_DIR / name).write_bytes(fetch(name).read_bytes())
+    data, index = load_full_jmdict()
+    keys = lookup_keys()
+    wanted = {id(w) for k in keys for w in index.get(k, [])}
+    subset = {
+        "source": f"jmdict-simplified {JMDICT_TAG} (jmdict-eng), "
+                  "https://github.com/scriptin/jmdict-simplified",
+        "license": "CC BY-SA 4.0, (c) Electronic Dictionary Research and Development "
+                   "Group (EDRDG), https://www.edrdg.org/edrdg/licence.html",
+        "changes": "Only the entries indexed under the words in words.tsv and "
+                   "verbs.tsv (see keys); entries otherwise unmodified.",
+        "dictDate": data.get("dictDate"),
+        "keys": keys,
+        "words": [w for w in data["words"] if id(w) in wanted],
+    }
+    # One entry per line: compact, and a refresh shows up as a readable diff.
+    words = subset.pop("words")
+    head = json.dumps(subset, ensure_ascii=False, indent=1)[:-2]
+    body = ",\n".join(json.dumps(w, ensure_ascii=False, separators=(",", ":"))
+                      for w in words)
+    SUBSET.write_text(f'{head},\n "words": [\n{body}\n]}}\n', encoding="utf-8")
+    subset["words"] = words
+    print(f"Wrote sources/: n5.csv, n4.csv, jmdict-subset.json "
+          f"({len(subset['words'])} entries for {len(keys)} words).", file=sys.stderr)
+
+
 def main(argv):
+    if "--refresh" in argv:
+        refresh()
+        argv = [a for a in argv if a != "--refresh"]
     which = argv or ["words", "verbs"]
     index = load_jmdict()
     flags = []

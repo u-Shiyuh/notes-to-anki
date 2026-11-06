@@ -170,7 +170,7 @@ The first sync after upgrading to linked cards reports every ledger card under "
 
 ### Checking the data
 
-`tools/check_data.py` compares `words.tsv` and `verbs.tsv` with the sources above (a pinned JLPT list commit and JMdict release, downloaded once into `tools/cache/`). It flags a word whose type disagrees with the dictionary, a levelled word missing from its JLPT list, and a verb whose group is wrong. It never edits the files; fix flagged rows by hand, then run the seed again.
+`tools/check_data.py` compares `words.tsv` and `verbs.tsv` with the sources above. Pinned copies of them are committed in [`sources/`](sources/README.md) (the JLPT lists, and the JMdict entries for the words in the two files), so it runs offline. After adding rows, run it with `--refresh` to update `sources/`. It flags a word whose type disagrees with the dictionary, a levelled word missing from its JLPT list, and a verb whose group is wrong. It never edits the files; fix flagged rows by hand, then run the seed again.
 
 ```bash
 python3 tools/check_data.py
