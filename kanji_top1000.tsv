@@ -4,6 +4,9 @@
 # JLPT levels: kanji-data by David Gouveia (MIT),
 #   https://github.com/davidluzgouveia/kanji-data (commit 00fd707)
 # Meanings are capped at 4; kun'yomi okurigana is shown as き(く).
+# The * marks are set by tools/mark_readings.py (see its docstring; fixed 2026-11-06:
+#   読 ドク, 頭 トウ, 色 ショク, 夏 カ, 終 おわ(る), 帯 おび; 夏's example 夏季).
+#   WaniKani's order is retained for now; replace it if a better open source appears.
 # A leading * marks the most common on/kun reading (the one WaniKani
 #   lists first, via kanji-data); it is moved to the front of its list.
 # Columns: rank, kanji, strokes, jlpt (N level, blank if none),
@@ -274,7 +277,7 @@
 253	村	7	2	village; town	*ソン	*むら	農村|のうそん|agricultural community|N2
 254	提	12	1	propose; take along; carry in hand	*テイ、チョウ、ダイ	さ(げる)	提案|ていあん|proposal|N3
 255	運	12	4	carry; luck; destiny; fate	*ウン	*はこ(ぶ)	運転手|うんてんしゅ|driver (by occupation)|N4
-256	終	11	4	end; finish	*シュウ	*お(わる)、おわ(る)、お(える)、つい、つい(に)	最終|さいしゅう|last|N3
+256	終	11	4	end; finish	*シュウ	*おわ(る)、お(わる)、お(える)、つい、つい(に)	最終|さいしゅう|last|N3
 257	挙	10	1	raise; plan; project; behavior	*キョ	*あ(げる)、あ(がる)、こぞ(る)	選挙|せんきょ|election|N3
 258	果	8	3	fruit; reward; carry out; achieve	*カ	は(たす)、はた(す)、は(てる)、は(て)	結果|けっか|result|N3
 259	西	6	5	west; Spain	*セイ、サイ、ス	*にし	西洋|せいよう|the West|N4
@@ -451,7 +454,7 @@
 430	英	8	4	England; English; hero; outstanding	*エイ	はなぶさ	英語|えいご|English (language)|N5
 431	被	10	2	incur; cover; veil; brood over	*ヒ	*かぶ(る)、こうむ(る)、おお(う)、かぶ(せる)	被害|ひがい|damage|N3
 432	株	10	1	stocks; stump; shares; stock	*シュ	*かぶ	
-433	頭	16	3	head; counter for large animals	*ズ、トウ、ト	*あたま、かしら、かぶり、-がしら	頭痛|ずつう|headache|N3
+433	頭	16	3	head; counter for large animals	*トウ、ズ、ト	*あたま、かしら、かぶり、-がしら	頭痛|ずつう|headache|N3
 434	技	7	2	skill; art; craft; ability	*ギ	*わざ	技術|ぎじゅつ|technique|N4
 435	低	7	2	lower; short; humble	*テイ	*ひく(い)、ひく(める)、ひく(まる)	最低|さいてい|least|N3
 436	毎	6	5	every	*マイ	*ごと、-ごと(に)	毎日|まいにち|every day|N5
@@ -636,10 +639,10 @@
 615	給	12	3	salary; wage; gift; allow	*キュウ	*たま(う)、たも(う)、-たま(え)	供給|きょうきゅう|supply|N3
 616	屋	9	4	roof; house; shop; dealer	*オク	*や	屋上|おくじょう|rooftop|N4
 617	介	4	2	jammed in; shellfish; mediate; concern oneself with	*カイ		紹介|しょうかい|an introduction|N4
-618	読	14	5	read	*トウ、ドク、トク	*よ(む)、-よ(み)	読書|どくしょ|reading|N3
+618	読	14	5	read	*ドク、トウ、トク	*よ(む)、-よ(み)	読書|どくしょ|reading|N3
 619	弁	5	1	valve; petal; braid; speech	*ベン、ヘン	かんむり、わきま(える)、わ(ける)、はなびら、あらそ(う)	弁当|べんとう|box lunch|N3
 620	根	10	2	root; radical; head (pimple)	*コン	*ね	根拠|こんきょ|basis|N1
-621	色	6	4	color	*シキ、ショク	*いろ	特色|とくしょく|characteristic|N2
+621	色	6	4	color	*ショク、シキ	*いろ	特色|とくしょく|characteristic|N2
 622	友	4	5	friend	*ユウ	*とも	友人|ゆうじん|friend (formal)|N3
 623	苦	8	3	suffering; trial; worry; hardship	*ク	*くる(しい)、くる(しむ)、くる(しめる)、にが(い)、にが(る)、-ぐる(しい)	苦労|くろう|hardship|N3
 624	就	12	1	concerning; settle; take position; depart	*シュウ、ジュ	*つ(く)、つ(ける)	就職|しゅうしょく|finding employment|N3
@@ -677,7 +680,7 @@
 656	林	8	2	grove; forest	*リン	*はやし	森林|しんりん|forest|N2
 657	装	12	2	attire; dress; pretend; disguise	*ソウ、ショウ	*よそお(う)、よそお(い)	装置|そうち|equipment|N3
 658	諸	15	2	various; many; several; together	*ショ	*もろ	諸君|しょくん|Gentlemen!|N1
-659	夏	10	4	summer	*ゲ、カ、ガ	*なつ	夏至|げし|summer solstice|
+659	夏	10	4	summer	*カ、ゲ、ガ	*なつ	夏季|かき|summer season|
 660	素	10	1	elementary; principle; naked; uncovered	*ソ、ス	もと	要素|ようそ|element|N3
 661	亡	3	3	deceased; the late; dying; perish	*ボウ、モウ	*な(い)、な(き-)、ほろ(びる)、ほろ(ぶ)、ほろ(ぼす)	死亡|しぼう|death|N3
 662	劇	15	2	drama; play	*ゲキ		劇場|げきじょう|theater|N3
@@ -764,7 +767,7 @@
 743	継	13	1	inherit; succeed; continue; patch	*ケイ	*つ(ぐ)、まま-	継続|けいぞく|continuation|N2
 744	筋	12	1	muscle; sinew; tendon; fiber	*キン	*すじ	筋肉|きんにく|muscle|N3
 745	狙	8		aim at; sight; shadow; stalk	*ソ、ショ	*ねら(う)、ねら(い)	狙撃|そげき|shooting|
-746	帯	10	2	sash; belt; obi; zone	*タイ	*お(びる)、おび	熱帯|ねったい|tropics|N3
+746	帯	10	2	sash; belt; obi; zone	*タイ	*おび、お(びる)	熱帯|ねったい|tropics|N3
 747	延	8	2	prolong; stretching	*エン	*の(ばす)、の(びる)、の(べる)、の(べ)	延期|えんき|postponement|N3
 748	羽	6	2	feathers; counter for birds, rabbits	*ウ	*はね、は、わ	羽化|うか|emergence (of insects)|
 749	努	7	3	toil; diligent; as much as possible	*ド	*つと(める)	努力|どりょく|great effort|N3
