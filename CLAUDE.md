@@ -6,6 +6,8 @@ Guidance for Claude Code when working in this repo.
 
 A single-file Python CLI (`main.py`) that pushes Japanese study material into Anki through the AnkiConnect add-on. It has two modes:
 
+**Notion sync disabled (2026-11-06).** The user said the Notion ledger is outdated; Anki is the source of truth. `NOTION_SYNC_ENABLED = False` in `main.py` makes a run without a `--seed-*` option exit 1 before touching Notion or Anki (`--prune` with it). Don't re-enable it or run the ledger sync unless the user asks. The same day, at the user's request, the ledger's `Nihongo::Grammar` (35 notes) and `Nihongo::Grammar Drill` (168 notes, 23 studied) decks were deleted from Anki, after exporting both with scheduling to `~/Documents/anki-backups/` on the Mac. Ledger `Kanji` notes (with `notion_` tags) remain in `Nihongo::Core Kanji` as ordinary cards. `python-dotenv` is now optional (only the sync reads `.env`).
+
 - **Ledger sync** (default): reads every row of a Notion database (the "Language Learning Ledger") and creates or updates one Anki `Basic` note per row.
 - **Kana seed** (`--seed-kana`): writes the built-in hiragana and katakana tables (104 each: gojūon, dakuten/handakuten, yōon) to `Nihongo::Kana::Hiragana` and `Nihongo::Kana::Katakana`.
 - **Kanji seed** (`--seed-kanji`): writes the 1,000 most frequent kanji from `kanji_top1000.tsv`, then the rows of `kanji_extra.tsv`, to `Nihongo::Core Kanji`, in frequency order. It skips kanji that already have a ledger card. Ledger `Kanji` rows also live in `Nihongo::Core Kanji` (`TYPE_DECKS`; merged on 2026-10-27, so `Nihongo::Kanji` is now unused). Inside that deck, a `notion_` link tag marks a ledger note, and its absence marks a seed note.
@@ -64,7 +66,7 @@ A non-dry run writes to the user's real Anki collection, so ask before running o
 
 ## How it's used
 
-The ledger sync runs over and over, not once. The user adds a row to Notion whenever they learn a new kanji, word or grammar point, then runs `python main.py`. That adds the new cards and keeps existing ones in line with Notion without touching review history. The kana and kanji seeds are meant to run once, because their tables don't change. The verb seed runs again each time a section is appended to `verbs.tsv`, and the word seed after `words.tsv` changes. All are safe to re-run.
+(Historical, until 2026-11-06; the sync is now disabled.) The ledger sync runs over and over, not once. The user adds a row to Notion whenever they learn a new kanji, word or grammar point, then runs `python main.py`. That adds the new cards and keeps existing ones in line with Notion without touching review history. The kana and kanji seeds are meant to run once, because their tables don't change. The verb seed runs again each time a section is appended to `verbs.tsv`, and the word seed after `words.tsv` changes. All are safe to re-run.
 
 As of 2026-10-19, every ledger note in the real collection carries its `notion_` link tag. So the Front-text fallback match only applies to notes created by hand or by older versions of the script.
 

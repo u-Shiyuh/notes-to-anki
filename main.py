@@ -2,9 +2,16 @@
 """
 main.py
 
-Syncs your Notion "Language Learning Ledger" database into Anki.
-Reads database rows directly via the Notion API (no toggle-block
-workaround needed) and pushes them into Anki via AnkiConnect.
+Seeds Japanese study decks into Anki via AnkiConnect.
+
+NOTION SYNC IS DISABLED (2026-11-06): the Notion ledger is outdated and
+Anki is now the source of truth, so running the sync would overwrite newer
+Anki cards with stale Notion text. Running without a --seed-* option exits
+with an error. The sync code is kept; set NOTION_SYNC_ENABLED = True to
+bring it back. The Notion setup steps below only apply then.
+
+Originally: syncs your Notion "Language Learning Ledger" database into
+Anki, reading rows via the Notion API.
 
 Also supports a one-time seed of the FULL hiragana + katakana charts
 (gojuon, dakuten/handakuten, and yoon combos) into their own Anki
@@ -43,6 +50,7 @@ SETUP (one-time)
 
 USAGE
 -----
+   (Notion sync, disabled; only with NOTION_SYNC_ENABLED = True:)
    python3 main.py                 # sync the Notion ledger into Anki
    python3 main.py --dry-run       # preview the Notion sync only
    python3 main.py --no-update     # only add new notes, don't touch existing ones
@@ -93,7 +101,11 @@ import functools
 import urllib.request
 import urllib.error
 
-from dotenv import load_dotenv
+try:
+    from dotenv import load_dotenv
+except ImportError:  # only the (disabled) Notion sync needs .env
+    def load_dotenv():
+        pass
 
 # Loads variables from a .env file (same folder as this script) into the
 # environment. Create a .env file next to this script with:
@@ -102,6 +114,11 @@ from dotenv import load_dotenv
 #   NOTION_DATABASE_ID=your_database_id_here
 #
 load_dotenv()
+
+# The Notion ledger is outdated (2026-11-06); Anki is the source of truth.
+# The sync would overwrite newer Anki cards with stale Notion text, so it's
+# off. Flip to True only once Notion is brought up to date.
+NOTION_SYNC_ENABLED = False
 
 NOTION_TOKEN = os.environ.get("NOTION_TOKEN", "PASTE_YOUR_NOTION_TOKEN_HERE")
 NOTION_DATABASE_ID = os.environ.get("NOTION_DATABASE_ID", "PASTE_YOUR_DATABASE_ID_HERE")
@@ -1206,25 +1223,23 @@ def main():
     parser.add_argument(
         "--seed-kana", action="store_true",
         help="One-time seed of the full hiragana + katakana charts into "
-             "Nihongo::Kana::Hiragana / Nihongo::Kana::Katakana, instead of "
-             "syncing the Notion ledger",
+             "Nihongo::Kana::Hiragana / Nihongo::Kana::Katakana",
     )
     parser.add_argument(
         "--seed-kanji", action="store_true",
         help="Seed the 1000 most frequent kanji, plus the N5/N4 kanji outside "
              "them, into Nihongo::Core Kanji "
-             "(skipping any with a card from the ledger), instead of syncing "
-             "the Notion ledger",
+             "(skipping any with a card from the ledger)",
     )
     parser.add_argument(
         "--seed-verbs", action="store_true",
         help="Seed the reviewer book's verbs (verbs.tsv) into Nihongo::Verbs, "
-             "in book order, instead of syncing the Notion ledger",
+             "in book order",
     )
     parser.add_argument(
         "--seed-words", action="store_true",
         help="Seed the JLPT N5/N4 words (words.tsv) into Nihongo::Words, in "
-             "study order, instead of syncing the Notion ledger",
+             "study order",
     )
     parser.add_argument(
         "--no-update", dest="update", action="store_false",
@@ -1243,6 +1258,12 @@ def main():
     if seeds > 1:
         parser.error("--seed-kana, --seed-kanji, --seed-verbs and --seed-words "
                      "are separate runs")
+    if not seeds and not NOTION_SYNC_ENABLED:
+        print("The Notion ledger sync is disabled: Notion is outdated and Anki "
+              "is the source of truth (see NOTION_SYNC_ENABLED in main.py).\n"
+              "Use --seed-kana, --seed-kanji, --seed-verbs or --seed-words.",
+              file=sys.stderr)
+        sys.exit(1)
     if args.prune and seeds:
         parser.error("--prune only applies to the ledger sync, not the seeds")
     if args.prune and not args.update:

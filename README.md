@@ -1,5 +1,7 @@
 # notion-to-anki
 
+> **The Notion sync is disabled (2026-11-06).** The Notion ledger is outdated and Anki is now the source of truth, so syncing would overwrite newer cards with stale text. `python main.py` without a `--seed-*` option now exits with an error. The code is kept: set `NOTION_SYNC_ENABLED = True` in `main.py` to turn it back on. The Notion sections below describe it for that case. The seeds work as before and don't need Notion or `.env`.
+
 This tool syncs a Notion "Language Learning Ledger" database into Anki flashcards. It can also seed full hiragana and katakana decks, a deck of the 1,000 most frequent kanji plus every JLPT N5/N4 kanji, your reviewer book's verbs, and the JLPT N5/N4 vocabulary.
 
 It is a single Python script. It reads your Notion database through the official API and writes cards into Anki through [AnkiConnect](https://ankiweb.net/shared/info/2055492159). It is safe to re-run: new rows are added, and existing cards are updated (text, deck and tags) when their row changes.
@@ -131,6 +133,7 @@ The formatting uses inline styles, so it works with Anki's stock `Basic` note ty
 ## Usage
 
 ```bash
+# Notion sync (disabled; needs NOTION_SYNC_ENABLED = True in main.py)
 python main.py                          # sync the Notion ledger into Anki
 python main.py --dry-run                # preview the sync without touching Anki
 python main.py --no-update              # only add new cards; leave existing ones alone
