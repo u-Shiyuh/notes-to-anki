@@ -16,6 +16,8 @@ A single-file Python CLI (`main.py`) that pushes Japanese study material into An
 
 - **Word seed** (`--seed-words`): writes the words in `words.tsv` to `Nihongo::Words`, in file order (added 2026-11-03). `seeded_words` drops two kinds of row: verbs that are in `verbs.tsv`, and one-kanji words their Core Kanji card covers (`kanji_card_covers`: the word's kana is one of the kanji's bold `*` readings; 147 on 2026-11-03, while 9 such as 後 あと keep a card). It adopts the matching `Nihongo::Vocab` ledger card (`adopt=(VOCAB_SCOPE, WORD_DECK, str.strip)`), so the card moves to Words, loses its `notion_`/`lessonN`/`vocab` tags and keeps its history. The verb seed adopts from Vocab the same way.
 
+- **Numbers seed** (`--seed-numbers`, added 2026-11-06): writes `numbers.tsv` to `Nihongo::Numbers & Time` (one deck; the user wanted one subdeck, with groups as tags rather than sub-subdecks). Cards are expressions in real-world formats, Arabic digits as usually written (`3本`, `4階`, `午後2時`, `2:30 PM`, `3月14日`, `¥1,980`); the Back's bold headline is the reading, because reading the format is the skill. Columns: `group` (validated against `NUMBER_GROUPS`; becomes a tag next to `numbers`), `front`, `kana`, `meaning`, `note`. Hand-made, N5/N4. Single vocabulary words (一人, 二日, 去年, 毎日, weekdays, 〜本) stay in `words.tsv`; Fronts don't collide because Words uses kanji numerals. `tools/check_data.py` checks each small number + counter (3本 → 三本) against JMdict's readings (77 of 161 rows on 2026-11-06); clock times, prices and phrases are compositional and checked by hand.
+
 **One owner per word.** A ledger `Vocab` row whose Item is in `seeded_words()` or `verbs.tsv` is skipped by `sync_ledger` (one summary line) and its link tag goes in `keep`, so `--prune` doesn't delete the card before the seed adopts it. New Notion words outside the files still sync to `Nihongo::Vocab`. On 2026-11-03, 60 rows were handed over: 54 words, plus 6 verbs (聞く 読む 飲む 話す 書く 行く) whose Vocab cards duplicate existing Verbs cards and must be deleted by hand once. 洗う 寝る 見る 帰る 食べる 来る stay in Vocab until the book's ichidan/irregular section adds them to `verbs.tsv`.
 
 `words.tsv` is generated data (columns `level` n5/n4/blank, `word`, `kana`, `meaning`, `type`, `note`). It was built on 2026-11-03 from open-anki-jlpt-decks N5/N4 (MIT, on Waller's CC BY lists) plus JMdict (CC BY-SA 4.0) for part of speech and the nf frequency that orders each level. Words that had a Notion Vocab card keep that card's meaning and notes; the 15 Notion-only words go first (greetings), except the 5 travel words, which the user moved to the very end on 2026-11-04 (the 3 started ones were reset to new). Verbs are excluded. Multi-form source entries (足; 脚) were hand-mapped to one Front with an "also" note. The first word using each kana feature the kana decks lack (small っ/ッ, ー, ティ, ファ…) gets an explanation in its note. The generator was never committed and is lost; it matched kana-only words to JMdict by reading alone, so 10 kana-only rows got a homonym's part of speech (はく as 伯/箔 "noun" instead of 履く, そこ with 底's "bottom, sole" gloss). They were fixed on 2026-11-06 with `tools/check_data.py`. はく stays in this file as type `verb` (it isn't in the book's verbs yet). Hand edits to rows are fine. Keep the header's attribution.
@@ -53,6 +55,8 @@ python main.py --seed-verbs --dry-run  # preview the verb seed (reads Anki if op
 python main.py --seed-verbs
 python main.py --seed-words --dry-run  # preview the word seed (reads Anki if open)
 python main.py --seed-words
+python main.py --seed-numbers --dry-run # preview the numbers seed (reads Anki if open)
+python main.py --seed-numbers
 python main.py --no-update             # add new notes only; never modify existing ones
 python main.py --prune --dry-run       # list linked notes whose Notion row is gone (needs Anki)
 ```
@@ -94,7 +98,8 @@ The script can't run on GitHub-hosted Actions. AnkiConnect is an HTTP server ins
 | Notion | `notion_request` (retries 429/5xx/network errors with backoff, honouring `Retry-After`; exits on other errors), `fetch_all_rows` (API `2025-09-03`: reads the database's `data_sources`, then pages through `/data_sources/{id}/query`), `get_prop`, `skip_reason`, `row_to_note`, `link_tag` |
 | Card layout | `format_back`, `split_note`, `sentences`, `preview_html` (dry-run only) |
 | Anki | `anki_request` (exits if AnkiConnect is unreachable; *logs but does not raise* on AnkiConnect errors), `anki_available`, `anki_multi` (batches writes through `multi`), `find_notes`, `same_html`, `plan_changes` (read-only), `print_plan`, `summarize`, `preview_changes` (dry-run), `add_or_update_notes` |
-| CLI | `main` (argparse: `--dry-run`, `--seed-kana`, `--seed-kanji`, `--seed-verbs`, `--seed-words`, `--no-update`, `--prune`; the four seeds are mutually exclusive, and `--prune` is rejected with any seed or with `--no-update`) |
+| Numbers seed | `NUMBER_GROUPS`, `load_numbers` (exits on a row with an unknown group or a missing front/reading/meaning), `number_back`, `number_note` (tags `numbers` + group), `seed_numbers` |
+| CLI | `main` (argparse: `--dry-run`, `--seed-kana`, `--seed-kanji`, `--seed-verbs`, `--seed-words`, `--seed-numbers`, `--no-update`, `--prune`; the five seeds are mutually exclusive, and `--prune` is rejected with any seed or with `--no-update`) |
 
 `_GOJUON` is defined and then `del`'d.
 

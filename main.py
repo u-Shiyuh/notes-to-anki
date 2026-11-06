@@ -69,6 +69,9 @@ USAGE
    python3 main.py --seed-words               # add the JLPT N5/N4 words (words.tsv)
    python3 main.py --seed-words --dry-run     # preview the word seed only
 
+   python3 main.py --seed-numbers             # add numbers, counters, times, dates (numbers.tsv)
+   python3 main.py --seed-numbers --dry-run   # preview the numbers seed only
+
 Safe to re-run any time. Each mode only looks at its own notes: the kana
 seed at Nihongo::Kana::*, the kanji seed at its own (unlinked) notes in
 Nihongo::Core Kanji, the verb seed at Nihongo::Verbs, the word seed at
@@ -145,15 +148,17 @@ LINK_TAG_PREFIX = "notion_"
 KANJI_DECK = f"{DECK_ROOT}::Core Kanji"
 VERB_DECK = f"{DECK_ROOT}::Verbs"
 WORD_DECK = f"{DECK_ROOT}::Words"
+NUMBER_DECK = f"{DECK_ROOT}::Numbers & Time"
 VOCAB_DECK = f"{DECK_ROOT}::Vocab"
 _LINKED = "tag:" + LINK_TAG_PREFIX.replace("_", "\\_") + "*"
 KANA_SCOPE = f'"deck:{DECK_ROOT}::Kana"'
 KANJI_SCOPE = f'"deck:{KANJI_DECK}" -{_LINKED}'
 VERB_SCOPE = f'"deck:{VERB_DECK}"'
 WORD_SCOPE = f'"deck:{WORD_DECK}"'
+NUMBER_SCOPE = f'"deck:{NUMBER_DECK}"'
 VOCAB_SCOPE = f'"deck:{VOCAB_DECK}"'
 LEDGER_SCOPE = (f'"deck:{DECK_ROOT}" -"deck:{DECK_ROOT}::Kana" -{VERB_SCOPE} '
-                f'-{WORD_SCOPE} (-"deck:{KANJI_DECK}" OR {_LINKED})')
+                f'-{WORD_SCOPE} -{NUMBER_SCOPE} (-"deck:{KANJI_DECK}" OR {_LINKED})')
 
 # Ledger rows go to Nihongo::<Type>, except these. The kanji seed skips
 # kanji that already have a ledger card, and a new ledger Kanji row takes
@@ -171,6 +176,7 @@ KANJI_EXTRA_FILE = os.path.join(os.path.dirname(KANJI_FILE), "kanji_extra.tsv")
 VERB_FILE = os.path.join(os.path.dirname(KANJI_FILE), "verbs.tsv")
 # JLPT N5/N4 words (no verbs), in study order (see its header).
 WORD_FILE = os.path.join(os.path.dirname(KANJI_FILE), "words.tsv")
+NUMBER_FILE = os.path.join(os.path.dirname(KANJI_FILE), "numbers.tsv")
 
 # Tags the script owns. On update, a note's tags matching these (or any tag
 # the current batch produces) are removed when no longer wanted; every
@@ -656,6 +662,74 @@ def seed_words(dry_run=False, update=True):
         return
 
     add_or_update_notes(notes, WORD_SCOPE, update=update, adopt=adopt)
+
+
+# ---------------------------------------------------------------------------
+# Numbers & time seed
+# ---------------------------------------------------------------------------
+
+NUMBER_GROUPS = ("number", "price", "people", "age", "counter", "clock",
+                 "duration", "date", "month", "year", "phrase")
+
+
+def load_numbers(path=NUMBER_FILE):
+    """Rows of NUMBER_FILE as dicts, in file order."""
+    rows = []
+    try:
+        with open(path, encoding="utf-8") as f:
+            for n, line in enumerate(f, 1):
+                if line.startswith("#") or not line.strip():
+                    continue
+                cols = line.rstrip("\n").split("\t")
+                group, front, kana, meaning, note = (cols + [""] * 5)[:5]
+                if group not in NUMBER_GROUPS or not (front and kana and meaning):
+                    print(f"{os.path.basename(path)}:{n}: needs a known group, "
+                          "a front, a reading and a meaning", file=sys.stderr)
+                    sys.exit(1)
+                rows.append({"group": group, "front": front, "kana": kana,
+                             "meaning": meaning, "note": note})
+    except OSError as e:
+        print(f"Could not read the numbers list: {e}", file=sys.stderr)
+        sys.exit(1)
+    return rows
+
+
+def number_back(row):
+    """Back layout: the reading as the headline (reading it is the skill),
+    the meaning, then the note and the group in small, faded text."""
+    esc = html.escape
+    return "".join([_HEADLINE.format(esc(row["kana"])),
+                    _LINE.format(esc(row["meaning"])),
+                    _NOTE.format(esc(row["note"])) if row["note"] else "",
+                    _NOTE.format(esc(row["group"]))])
+
+
+def number_note(row):
+    """Build an AnkiConnect note dict for one NUMBER_FILE row."""
+    return {
+        "deckName": NUMBER_DECK,
+        "modelName": NOTE_TYPE,
+        "fields": {"Front": row["front"], "Back": number_back(row)},
+        "tags": ["numbers", row["group"]],
+        "options": NOTE_OPTIONS,
+    }
+
+
+def seed_numbers(dry_run=False, update=True):
+    """Seed Nihongo::Numbers & Time from NUMBER_FILE (safe to re-run), in file
+    order: numbers, prices, people, ages, counters, clock times, durations,
+    dates, months and phrases."""
+    notes = [number_note(row) for row in load_numbers()]
+
+    if dry_run:
+        print(f"Would ensure deck {NUMBER_DECK} and seed {len(notes)} cards.")
+        for n in notes[:5]:
+            print(f"\n[{n['deckName']}] {n['fields']['Front']}")
+            print(preview_html(n["fields"]["Back"]))
+        preview_changes(notes, NUMBER_SCOPE, update=update)
+        return
+
+    add_or_update_notes(notes, NUMBER_SCOPE, update=update)
 
 
 # ---------------------------------------------------------------------------
@@ -1242,6 +1316,11 @@ def main():
              "study order",
     )
     parser.add_argument(
+        "--seed-numbers", action="store_true",
+        help="Seed the number, counter, time and date expressions "
+             "(numbers.tsv) into Nihongo::Numbers & Time, in study order",
+    )
+    parser.add_argument(
         "--no-update", dest="update", action="store_false",
         help="Only add new notes; leave existing notes untouched even if "
              "their content has changed (updating is ON by default)",
@@ -1254,14 +1333,16 @@ def main():
     parser.set_defaults(update=True)
     args = parser.parse_args()
 
-    seeds = args.seed_kana + args.seed_kanji + args.seed_verbs + args.seed_words
+    seeds = (args.seed_kana + args.seed_kanji + args.seed_verbs + args.seed_words
+             + args.seed_numbers)
     if seeds > 1:
-        parser.error("--seed-kana, --seed-kanji, --seed-verbs and --seed-words "
-                     "are separate runs")
+        parser.error("--seed-kana, --seed-kanji, --seed-verbs, --seed-words and "
+                     "--seed-numbers are separate runs")
     if not seeds and not NOTION_SYNC_ENABLED:
         print("The Notion ledger sync is disabled: Notion is outdated and Anki "
               "is the source of truth (see NOTION_SYNC_ENABLED in main.py).\n"
-              "Use --seed-kana, --seed-kanji, --seed-verbs or --seed-words.",
+              "Use --seed-kana, --seed-kanji, --seed-verbs, --seed-words or "
+              "--seed-numbers.",
               file=sys.stderr)
         sys.exit(1)
     if args.prune and seeds:
@@ -1280,6 +1361,9 @@ def main():
         return
     if args.seed_words:
         seed_words(dry_run=args.dry_run, update=args.update)
+        return
+    if args.seed_numbers:
+        seed_numbers(dry_run=args.dry_run, update=args.update)
         return
 
     sync_ledger(dry_run=args.dry_run, update=args.update, prune=args.prune)

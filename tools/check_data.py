@@ -10,6 +10,9 @@ Checks:
              - a verb (by JMdict) whose type doesn't say so;
              - a levelled row (n5/n4) that isn't in that JLPT list.
   verbs.tsv  - the row's `group` (godan/ichidan/irregular) agrees with JMdict.
+  numbers.tsv - a number + counter (3本, 何階, 4月) whose JMdict entry (written
+               in kanji, 三本) doesn't list the row's reading. Clock times,
+               prices and phrases are compositional and aren't in JMdict.
 
 Sources are pinned (see SOURCES) and committed in sources/: the two JLPT
 lists as-is, and sources/jmdict-subset.json, the JMdict entries for every word
@@ -19,7 +22,7 @@ JMdict once into tools/cache/ (gitignored) and say to refresh.
 
 Usage:
   python3 tools/check_data.py            # check both files
-  python3 tools/check_data.py words      # or just one
+  python3 tools/check_data.py words      # or just one (words/verbs/numbers)
   python3 tools/check_data.py --refresh  # rebuild sources/ from the pinned
                                          # sources, after editing a .tsv
 Exit status is 1 if anything was flagged, so it can gate a commit.
@@ -225,10 +228,35 @@ WORD_COLUMNS = ["level", "word", "kana", "meaning", "type", "note"]
 VERB_COLUMNS = ["section", "no", "word", "kana", "meaning", "group", "masu", "note"]
 
 
+NUMBER_COLUMNS = ["group", "front", "kana", "meaning", "note"]
+DIGITS = "〇一二三四五六七八九"
+
+
+def kanji_number(n):
+    """1-99 in kanji numerals: 3 -> 三, 14 -> 十四, 20 -> 二十."""
+    n = int(n)
+    if n < 10:
+        return DIGITS[n]
+    tens, ones = divmod(n, 10)
+    return ("" if tens == 1 else DIGITS[tens]) + "十" + (DIGITS[ones] if ones else "")
+
+
+def number_forms(front):
+    """JMdict spellings of a numbers.tsv front like 3本, 何階 or 6か月, or []
+    for fronts that aren't a small number + counter."""
+    if not re.fullmatch(r"(\d{1,2}|何)[^\d:]+", front):
+        return []
+    f = re.sub(r"\d+", lambda m: kanji_number(m.group()), front)
+    return [f, f.replace("か月", "ヶ月"), f.replace("か月", "箇月")]
+
+
 def lookup_keys():
-    """The JMdict lookups best_entry makes: each row's cleaned word."""
-    return sorted({clean(r["word"]) for _, r in read_tsv(ROOT / "words.tsv", WORD_COLUMNS)}
-                  | {clean(r["word"]) for _, r in read_tsv(ROOT / "verbs.tsv", VERB_COLUMNS)})
+    """The JMdict lookups the checks make."""
+    keys = {clean(r["word"]) for _, r in read_tsv(ROOT / "words.tsv", WORD_COLUMNS)}
+    keys |= {clean(r["word"]) for _, r in read_tsv(ROOT / "verbs.tsv", VERB_COLUMNS)}
+    keys |= {f for _, r in read_tsv(ROOT / "numbers.tsv", NUMBER_COLUMNS)
+             for f in number_forms(r["front"])}
+    return sorted(keys)
 
 
 def load_jmdict():
@@ -275,17 +303,32 @@ def refresh():
           f"({len(subset['words'])} entries for {len(keys)} words).", file=sys.stderr)
 
 
+def check_numbers(index):
+    flags = []
+    for n, r in read_tsv(ROOT / "numbers.tsv", NUMBER_COLUMNS):
+        for form in number_forms(r["front"]):
+            if form in index:
+                readings = {k["text"] for w in index[form] for k in w["kana"]}
+                if r["kana"].replace(" ", "") not in readings:
+                    flags.append(f"numbers.tsv:{n} {r['front']} ({r['kana']}): JMdict reads "
+                                 f"{form} as {', '.join(sorted(readings))}")
+                break
+    return flags
+
+
 def main(argv):
     if "--refresh" in argv:
         refresh()
         argv = [a for a in argv if a != "--refresh"]
-    which = argv or ["words", "verbs"]
+    which = argv or ["words", "verbs", "numbers"]
     index = load_jmdict()
     flags = []
     if "words" in which:
         flags += check_words(index)
     if "verbs" in which:
         flags += check_verbs(index)
+    if "numbers" in which:
+        flags += check_numbers(index)
     for f in flags:
         print(f)
     print(f"{len(flags)} row(s) flagged.", file=sys.stderr)

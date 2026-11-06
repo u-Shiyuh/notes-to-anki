@@ -1,0 +1,169 @@
+# Numbers & time for Nihongo::Numbers & Time (python3 main.py --seed-numbers), in study order.
+# Each card is an expression as it's written in real life (3本, 午後2時, 2:30, 3月14日, ¥1,980),
+#   and the card back gives its reading. The point is the sound changes (さんぼん, よじ,
+#   いっぷん, ついたち) and reading mixed formats. Single words (一人, 二日, 去年, 毎日,
+#   the weekdays) are in words.tsv; the phrase cards at the end combine them.
+# Hand-made on 2026-11-06 (user's request), N5/N4 level. Hand edits are fine.
+# Columns: group (number/price/people/age/counter/clock/duration/date/month/year/phrase;
+#   becomes a tag), front (as written), kana (the reading), meaning, note (faded on the card).
+number	0	ゼロ	zero	also れい (零), e.g. in phone numbers or 0℃
+number	4	よん	four	し is avoided (it sounds like 死, death), except in 四月 しがつ
+number	7	なな	seven	also しち; なな is safer when counting aloud
+number	9	きゅう	nine	く is avoided (it sounds like 苦, suffering), except in 九時 くじ and 九月 くがつ
+number	11	じゅういち	eleven	10 + 1: 11–19 are じゅう + the digit
+number	20	にじゅう	twenty	2 × 10
+number	100	ひゃく	one hundred	not いっぴゃく: no 1 before 百
+number	300	さんびゃく	three hundred	3 + ひゃく → びゃく
+number	600	ろっぴゃく	six hundred	ろく + ひゃく → ろっぴゃく
+number	800	はっぴゃく	eight hundred	はち + ひゃく → はっぴゃく
+number	1,000	せん	one thousand	not いっせん: no 1 before 千
+number	3,000	さんぜん	three thousand	3 + せん → ぜん
+number	8,000	はっせん	eight thousand	はち + せん → はっせん
+number	1,500	せんごひゃく	one thousand five hundred	1,000 + 500
+number	10,000	いちまん	ten thousand	万 needs the 1: いちまん, never just まん
+number	120,000	じゅうにまん	one hundred twenty thousand	Japanese groups by 4 digits: 12 × 万 (10,000)
+number	1,000,000	ひゃくまん	one million	100 × 万
+price	¥4	よえん	4 yen	よん + えん → よえん
+price	¥500	ごひゃくえん	500 yen	the 500-yen coin
+price	¥1,980	せんきゅうひゃくはちじゅうえん	1,980 yen	read the groups in order: せん · きゅうひゃく · はちじゅう · えん
+price	¥3,600	さんぜんろっぴゃくえん	3,600 yen	two sound changes: さんぜん, ろっぴゃく
+price	¥10,000	いちまんえん	10,000 yen	the 10,000-yen note
+people	1人	ひとり	one person	special reading
+people	2人	ふたり	two people	special reading
+people	3人	さんにん	three people	from 3 on: number + にん
+people	4人	よにん	four people	not よんにん
+people	7人	ななにん	seven people	also しちにん
+people	9人	きゅうにん	nine people	not くにん
+people	10人	じゅうにん	ten people
+people	何人	なんにん	how many people?	何人ですか: how many people? (at a restaurant: 何名様 なんめいさま is the polite form)
+age	1歳	いっさい	one year old	いち + さい → いっさい
+age	8歳	はっさい	eight years old	はち + さい → はっさい
+age	10歳	じゅっさい	ten years old	also じっさい
+age	20歳	はたち	twenty years old	special reading (the coming-of-age year); にじゅっさい also works
+age	何歳	なんさい	how old?	polite: おいくつですか
+counter	1本	いっぽん	one (long, thin thing)	本 counts bottles, pens, umbrellas, trains: いち + ほん → いっぽん
+counter	2本	にほん	two (long, thin things)	no change
+counter	3本	さんぼん	three (long, thin things)	3 + ほん → ぼん
+counter	6本	ろっぽん	six (long, thin things)	ろく + ほん → ろっぽん
+counter	8本	はっぽん	eight (long, thin things)	はち + ほん → はっぽん
+counter	10本	じゅっぽん	ten (long, thin things)	also じっぽん
+counter	何本	なんぼん	how many (long things)?	何 + ほん → なんぼん, like 3本
+counter	1階	いっかい	1st floor	the ground floor in Japan; いち + かい → いっかい
+counter	2階	にかい	2nd floor
+counter	3階	さんがい	3rd floor	3 + かい → がい (さんかい is also heard)
+counter	4階	よんかい	4th floor
+counter	6階	ろっかい	6th floor	ろく + かい → ろっかい
+counter	8階	はっかい	8th floor	also はちかい
+counter	10階	じゅっかい	10th floor	also じっかい
+counter	何階	なんがい	which floor?	何 + かい → なんがい, like 3階
+counter	地下1階	ちかいっかい	basement level 1 (B1)	地下 (ちか) = underground
+counter	1回	いっかい	once (one time)	回 counts times: same sounds as 階 (floors)
+counter	6回	ろっかい	six times
+counter	8回	はっかい	eight times	also はちかい
+counter	10回	じゅっかい	ten times	also じっかい
+counter	1杯	いっぱい	one cup / glass / bowl	いっぱい also means "full"
+counter	2杯	にはい	two cups	no change
+counter	3杯	さんばい	three cups	3 + はい → ばい
+counter	6杯	ろっぱい	six cups	ろく + はい → ろっぱい
+counter	8杯	はっぱい	eight cups	also はちはい
+counter	10杯	じゅっぱい	ten cups	also じっぱい
+counter	何杯	なんばい	how many cups?	何 + はい → なんばい, like 3杯
+counter	1匹	いっぴき	one (small animal)	匹 counts cats, dogs, fish: いち + ひき → いっぴき
+counter	2匹	にひき	two (small animals)	no change
+counter	3匹	さんびき	three (small animals)	3 + ひき → びき
+counter	6匹	ろっぴき	six (small animals)	ろく + ひき → ろっぴき
+counter	8匹	はっぴき	eight (small animals)	also はちひき
+counter	10匹	じゅっぴき	ten (small animals)	also じっぴき
+counter	何匹	なんびき	how many (small animals)?	何 + ひき → なんびき, like 3匹
+counter	1個	いっこ	one (small item)	個 counts apples, eggs, boxes: いち + こ → いっこ
+counter	6個	ろっこ	six (small items)	ろく + こ → ろっこ
+counter	8個	はっこ	eight (small items)	はち + こ → はっこ
+counter	10個	じゅっこ	ten (small items)	also じっこ
+counter	1冊	いっさつ	one (book)	冊 counts books and notebooks: いち + さつ → いっさつ
+counter	8冊	はっさつ	eight (books)	はち + さつ → はっさつ
+counter	10冊	じゅっさつ	ten (books)	also じっさつ
+counter	3枚	さんまい	three (flat things)	枚 counts paper, tickets, shirts: never changes (いちまい, ろくまい, はちまい)
+counter	1台	いちだい	one (car / machine)	台 never changes (さんだい, はちだい)
+counter	1番	いちばん	number one; the most	1番線 (いちばんせん) = platform 1; 一番好き = like the most
+clock	1時	いちじ	1 o'clock
+clock	4時	よじ	4 o'clock	not よんじ
+clock	7時	しちじ	7 o'clock	not ななじ (ななじ is heard, but しちじ is standard)
+clock	9時	くじ	9 o'clock	not きゅうじ
+clock	12時	じゅうにじ	12 o'clock
+clock	1分	いっぷん	1 minute	いち + ふん → いっぷん
+clock	2分	にふん	2 minutes	no change
+clock	3分	さんぷん	3 minutes	3 + ふん → ぷん
+clock	4分	よんぷん	4 minutes	よん + ふん → ぷん
+clock	5分	ごふん	5 minutes	no change
+clock	6分	ろっぷん	6 minutes	ろく + ふん → ろっぷん
+clock	7分	ななふん	7 minutes	also しちふん
+clock	8分	はっぷん	8 minutes	also はちふん
+clock	9分	きゅうふん	9 minutes
+clock	10分	じゅっぷん	10 minutes	also じっぷん
+clock	15分	じゅうごふん	15 minutes	ends in 5 → ふん
+clock	20分	にじゅっぷん	20 minutes	ends in 10 → ぷん
+clock	30分	さんじゅっぷん	30 minutes	at the half hour, 半 (はん) is more common
+clock	何分	なんぷん	how many minutes?	何 + ふん → なんぷん
+clock	2:30	にじはん	half past two	半 (はん) = half; にじさんじゅっぷん also works
+clock	午後2時	ごごにじ	2 p.m.	午後 (ごご) = p.m.; it comes before the time
+clock	2:00 PM	ごごにじ	2 p.m.	the same time as 午後2時, written the English way
+clock	午前7時半	ごぜんしちじはん	7:30 a.m.	午前 (ごぜん) = a.m.
+clock	7:45	しちじよんじゅうごふん	7:45	or 8時15分前 (はちじじゅうごふんまえ): quarter to eight
+clock	9:15 AM	ごぜんくじじゅうごふん	9:15 a.m.	午前 + 9時 (くじ) + 15分
+clock	4:10	よじじゅっぷん	4:10	よじ + じゅっぷん
+clock	6:20 PM	ごごろくじにじゅっぷん	6:20 p.m.
+clock	11:55	じゅういちじごじゅうごふん	11:55
+clock	8時5分前	はちじごふんまえ	five to eight (7:55)	〜前 (まえ) = before: 5 minutes before 8
+clock	3時ごろ	さんじごろ	around 3 o'clock	ごろ = around (a point in time); ぐらい = about (an amount)
+clock	10時から5時まで	じゅうじからごじまで	from 10 to 5	から = from, まで = until
+duration	1時間	いちじかん	one hour	時間 (じかん) = hours of time; 時 (じ) = o'clock
+duration	4時間	よじかん	four hours	like 4時: よ
+duration	9時間	くじかん	nine hours	like 9時: く
+duration	1時間半	いちじかんはん	an hour and a half
+duration	1週間	いっしゅうかん	one week	いち + しゅう → いっしゅう
+duration	8週間	はっしゅうかん	eight weeks	はち + しゅう → はっしゅう
+duration	1か月	いっかげつ	one month (duration)	か月 counts months; 1月 (いちがつ) is January
+duration	6か月	ろっかげつ	six months	also 半年 (はんとし), half a year
+duration	10か月	じゅっかげつ	ten months	also じっかげつ
+duration	何か月	なんかげつ	how many months?
+duration	1年	いちねん	one year	also 1年間 (いちねんかん), for one year
+duration	4年	よねん	four years	not よんねん
+duration	何年	なんねん	how many years? / what year?
+date	1日	ついたち	the 1st (of the month)	special reading; "one day" (duration) is いちにち
+date	2日	ふつか	the 2nd; two days	1–10 and 20 have special readings, and each also counts days
+date	3日	みっか	the 3rd; three days
+date	4日	よっか	the 4th; four days
+date	5日	いつか	the 5th; five days
+date	6日	むいか	the 6th; six days
+date	7日	なのか	the 7th; seven days	also なぬか
+date	8日	ようか	the 8th; eight days
+date	9日	ここのか	the 9th; nine days
+date	10日	とおか	the 10th; ten days
+date	11日	じゅういちにち	the 11th	from 11 on: number + にち
+date	14日	じゅうよっか	the 14th	ends in 4 → よっか
+date	20日	はつか	the 20th; twenty days	special reading
+date	24日	にじゅうよっか	the 24th	ends in 4 → よっか
+date	何日	なんにち	what day (of the month)? / how many days?
+month	1月	いちがつ	January	months are number + がつ
+month	4月	しがつ	April	not よんがつ
+month	7月	しちがつ	July	not なながつ
+month	9月	くがつ	September	not きゅうがつ
+month	12月	じゅうにがつ	December
+month	何月	なんがつ	which month?
+date	1月1日	いちがつついたち	January 1st (New Year's Day)	お正月 (おしょうがつ) = New Year
+date	3月14日	さんがつじゅうよっか	March 14th	White Day in Japan
+date	4月8日(水)	しがつようか すいようび	Wednesday, April 8th	(水) = 水曜日 (すいようび), the day of the week in brackets
+year	2026年	にせんにじゅうろくねん	(the year) 2026	read as a normal number + ねん
+date	2026年11月6日	にせんにじゅうろくねん じゅういちがつ むいか	November 6th, 2026	Japanese order: year → month → day
+phrase	来年の3月	らいねんのさんがつ	March next year	来年 (らいねん) = next year
+phrase	去年の夏	きょねんのなつ	last summer	去年 (きょねん) = last year
+phrase	おととしの12月	おととしのじゅうにがつ	December the year before last	おととし = the year before last
+phrase	毎年4月	まいとし しがつ	every April	毎年 (まいとし / まいねん) = every year
+phrase	毎週月曜日	まいしゅう げつようび	every Monday	毎週 (まいしゅう) = every week
+phrase	先週の金曜日	せんしゅうのきんようび	last Friday	先週 (せんしゅう) = last week
+phrase	来週の土曜日	らいしゅうのどようび	next Saturday	来週 (らいしゅう) = next week
+phrase	今月の20日	こんげつのはつか	the 20th of this month	今月 (こんげつ) = this month
+phrase	毎朝7時に	まいあさ しちじに	at 7 every morning	に marks a clock time: 7時に起きます
+phrase	毎日2時間	まいにち にじかん	two hours every day	no に after a duration
+phrase	1日3回	いちにち さんかい	three times a day	1日 here is いちにち (per day), not ついたち
+phrase	1時間に1本	いちじかんに いっぽん	one (train/bus) an hour	本 also counts train and bus departures
