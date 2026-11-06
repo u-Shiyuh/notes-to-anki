@@ -4,7 +4,9 @@
 # built on Jonathan Waller's JLPT lists, CC BY). Part of speech and the order within
 # each level (newspaper frequency, nf): JMdict (EDRDG, CC BY-SA 4.0). Words that had
 # a Notion card keep its meaning and notes; Notion-only words come first (greetings),
-# travel words last (user, 2026-11-04). Verbs are left out: they come from verbs.tsv.
+# travel words last (user, 2026-11-04). Verbs are left out: they come from verbs.tsv
+# (except はく, which the generator mislabelled; kept here as type "verb" on 2026-11-06).
+# Check rows against the sources with: python3 tools/check_data.py
 # Columns: level (n5/n4/blank), word, kana, meaning, type, note. The first word
 # using a kana feature the kana decks lack (small っ, ー, ティ...) explains it in its note.
 	こんにちは	こんにちは	hello	expression	
@@ -111,7 +113,7 @@ n5	動物	どうぶつ	animal	noun
 n5	年	とし	year, age	noun	
 n5	名前	なまえ	name	noun	polite: お名前 (おなまえ)
 n5	西	にし	west	noun	
-n5	はく	はく	to put on (items below your waist)	noun	
+n5	はく	はく	to put on (items below your waist)	verb	godan verb; kanji 履く, usually written in kana
 n5	半分	はんぶん	half	noun	
 n5	一人	ひとり	one person	noun	
 n5	病気	びょうき	illness; sickness	noun	
@@ -159,7 +161,7 @@ n5	お金	おかね	money	noun
 n5	弟	おとうと	younger brother	noun	
 n5	薬	くすり	medicine	noun	
 n5	自転車	じてんしゃ	bicycle	noun	
-n5	そこ	そこ	that place, there; bottom, sole	noun	
+n5	そこ	そこ	there, that place (near you)	pronoun	not 底 (そこ, bottom), a different word with the same sound
 n5	電車	でんしゃ	electric train	noun	
 n5	隣	となり	next to, next door to	noun	
 n5	鳥	とり	chicken (lit., bird)	noun	
@@ -181,7 +183,7 @@ n5	先週	せんしゅう	last week	noun
 n5	卵	たまご	egg	noun	
 n5	地下鉄	ちかてつ	underground train, subway	noun	
 n5	地図	ちず	a map	noun	
-n5	どう	どう	how, in what way	noun	
+n5	どう	どう	how, in what way	adverb
 n5	図書館	としょかん	library	noun	
 n5	どの	どの	which	pre-noun word	
 n5	友達	ともだち	friend	noun	
@@ -220,7 +222,7 @@ n5	お父さん	おとうさん	father (formal)	noun
 n5	男の子	おとこのこ	boy	expression	
 n5	階段	かいだん	stairs	noun	
 n5	漢字	かんじ	kanji; Chinese character	noun	
-n5	ここ	ここ	here, this place	noun	
+n5	ここ	ここ	here, this place	pronoun
 n5	台所	だいどころ	kitchen	noun	
 n5	机	つくえ	desk	noun	
 n5	戸	と	door (Japanese style)	noun	
@@ -256,9 +258,9 @@ n5	果物	くだもの	fruit	noun
 n5	作文	さくぶん	essay; composition	noun (+する)	
 n5	背	せい	(one's) height, stature	noun	
 n5	洗濯	せんたく	washing, laundry	noun (+する)	
-n5	そう	そう	yes; appears, to be the case	noun	そうです = that's right
+n5	そう	そう	yes; appears, to be the case	adverb	そうです = that's right
 n5	掃除	そうじ	cleaning, sweeping	noun (+する)	
-n5	その	その	that	noun	
+n5	その	その	that	pre-noun word
 n5	荷物	にもつ	luggage; baggage	noun	
 n5	箱	はこ	box	noun	
 n5	帽子	ぼうし	hat; cap	noun	
@@ -277,7 +279,7 @@ n5	交差点	こうさてん	intersection	noun
 n5	封筒	ふうとう	envelope	noun	
 n5	毎朝	まいあさ	every morning	noun	
 n5	洋服	ようふく	Western-style clothes	noun	
-n5	よく	よく	frequently, often (much); well, skillfully	noun	
+n5	よく	よく	frequently, often (much); well, skillfully	adverb
 n5	鉛筆	えんぴつ	pencil	noun	
 n5	上手	じょうず	skilled / good at	な-adjective	IRREGULAR reading; な-adj, takes が: 日本語が上手です
 n5	背広	せびろ	men's suit	noun	
@@ -846,7 +848,7 @@ n4	講義	こうぎ	a lecture	noun (+する)
 n4	展覧会	てんらんかい	exhibition	noun	
 n4	研究室	けんきゅうしつ	the professor's office; laboratory	noun	
 n4	湖	みずうみ	lake	noun	
-n4	うん	うん	yes (informal), all right (ok)	noun	
+n4	うん	うん	yes (informal), all right (ok)	interjection
 n4	丁寧	ていねい	polite, courteous, careful	な-adjective	
 n4	場合	ばあい	case, situation	noun	
 n4	倍	ばい	double	noun	
@@ -868,7 +870,7 @@ n4	辞典	じてん	encyclopedia, reference book	noun
 n4	祖母	そぼ	grandmother	noun	
 n4	火事	かじ	fire	noun	
 n4	講堂	こうどう	auditorium	noun	
-n4	こう	こう	like this, this way	noun	
+n4	こう	こう	like this, this way	adverb
 n4	特急	とっきゅう	limited express (train faster than an express)	noun	
 n4	苦い	にがい	bitter	い-adjective	
 n4	ぶどう	ぶどう	grapes	noun	
@@ -1105,7 +1107,7 @@ n4	～おわる	～おわる	to finish doing ~	suffix
 n4	お子さん	おこさん	(someone else's) child (polite)	noun	
 n4	お見舞い	おみまい	calling on someone who is ill, visit	noun	
 n4	～様	～さま	Mr., Mrs., Ms.	suffix	
-n4	あ	あ	Ah	noun	
+n4	あ	あ	Ah	interjection
 n4	～代	～だい	~ age; period	suffix	
 n4	～おき	～おき	after every ~	suffix	
 n4	御～	ご～	honorable ~	prefix	

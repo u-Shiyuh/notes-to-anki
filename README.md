@@ -168,6 +168,14 @@ The first sync after upgrading to linked cards reports every ledger card under "
 
 `words.tsv` was generated once, too. Its words, readings and glosses come from the N5 and N4 lists of [open-anki-jlpt-decks](https://github.com/jamsinclair/open-anki-jlpt-decks) (MIT), built on [Jonathan Waller's JLPT lists](https://www.tanos.co.uk/jlpt/) (CC BY). Part of speech and the order within each level (newspaper frequency) come from [JMdict](https://www.edrdg.org/wiki/index.php/JMdict-EDICT_Dictionary_Project) (© EDRDG, CC BY-SA 4.0). Words that had a Notion card keep that card's meaning and notes.
 
+### Checking the data
+
+`tools/check_data.py` compares `words.tsv` and `verbs.tsv` with the sources above (a pinned JLPT list commit and JMdict release, downloaded once into `tools/cache/`). It flags a word whose type disagrees with the dictionary, a levelled word missing from its JLPT list, and a verb whose group is wrong. It never edits the files; fix flagged rows by hand, then run the seed again.
+
+```bash
+python3 tools/check_data.py
+```
+
 ## Troubleshooting
 
 | Message | Fix |
