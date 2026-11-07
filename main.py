@@ -172,6 +172,8 @@ KANJI_FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)),
 # Kanji outside the top 1000, same columns: JLPT N5/N4 kanji the top 1000
 # misses, and ledger kanji. The seed adds them after the top 1000.
 KANJI_EXTRA_FILE = os.path.join(os.path.dirname(KANJI_FILE), "kanji_extra.tsv")
+# Radicals (部首) the kanji files' 9th column points to, by number and form.
+RADICAL_FILE = os.path.join(os.path.dirname(KANJI_FILE), "radicals.tsv")
 # Verbs from the reviewer book, in book order (see its header).
 VERB_FILE = os.path.join(os.path.dirname(KANJI_FILE), "verbs.tsv")
 # JLPT N5/N4 words (no verbs), in study order (see its header).
@@ -346,12 +348,14 @@ def load_kanji(path=KANJI_FILE):
             for line in f:
                 if line.startswith("#") or not line.strip():
                     continue
-                rank, kanji, strokes, jlpt, meanings, on, kun, example = \
-                    line.rstrip("\n").split("\t")
+                cols = line.rstrip("\n").split("\t")
+                cols += [""] * (9 - len(cols))
+                rank, kanji, strokes, jlpt, meanings, on, kun, example, radical = cols
                 rows.append({"rank": rank, "kanji": kanji, "strokes": strokes,
                              "jlpt": jlpt, "meanings": meanings.split("; "),
                              "on": on, "kun": kun,
-                             "example": example.split("|") if example else None})
+                             "example": example.split("|") if example else None,
+                             "radical": radical})
     except OSError as e:
         print(f"Could not read the kanji list: {e}", file=sys.stderr)
         sys.exit(1)
@@ -396,6 +400,40 @@ def example_word(word, kana, gloss, level):
                         f'<span style="opacity:0.65">{esc(gloss)}</span>')
 
 
+@functools.cache
+def radicals():
+    """RADICAL_FILE rows keyed by "number|form" (the kanji files' 9th column)."""
+    out = {}
+    try:
+        with open(RADICAL_FILE, encoding="utf-8") as f:
+            for line in f:
+                if line.startswith("#") or not line.strip():
+                    continue
+                no, form, name, meaning = line.rstrip("\n").split("\t")[:4]
+                out[f"{no}|{form}"] = {"form": form, "name": name, "meaning": meaning}
+    except OSError as e:
+        print(f"Could not read the radical list: {e}", file=sys.stderr)
+        sys.exit(1)
+    return out
+
+
+def radical_line(row):
+    """The faded "Radical:" line, or "" when the kanji is its own radical
+    (日, 水) or has none. Exits on a radical missing from RADICAL_FILE."""
+    if not row["radical"]:
+        return ""
+    rad = radicals().get(row["radical"])
+    if rad is None:
+        print(f"Kanji {row['kanji']}: radical {row['radical']} is not in "
+              f"{os.path.basename(RADICAL_FILE)} (run tools/add_radicals.py --write)",
+              file=sys.stderr)
+        sys.exit(1)
+    if rad["form"] == row["kanji"]:
+        return ""
+    text = " · ".join(x for x in (f"{rad['form']} {rad['name']}".strip(), rad["meaning"]) if x)
+    return _NOTE.format(html.escape(f"Radical: {text}"))
+
+
 def kanji_back(row, headline=None, notes=()):
     """The Core Kanji Back layout for one KANJI_FILE row. The ledger passes
     its own Meaning as `headline` (HTML) and its side notes as `notes`."""
@@ -409,6 +447,7 @@ def kanji_back(row, headline=None, notes=()):
         parts.append(kanji_readings("Kun", row["kun"]))
     for note in notes:
         parts.append(_NOTE.format(esc(note)))
+    parts.append(radical_line(row))
     facts = [f"{row['strokes']} stroke" + ("" if row["strokes"] == "1" else "s")]
     if row["jlpt"]:
         facts.append(f"JLPT N{row['jlpt']}")

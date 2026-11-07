@@ -1,0 +1,192 @@
+# Radicals (部首) used by the kanji in kanji_top1000.tsv and kanji_extra.tsv.
+# One row per form: a radical's positional variants have their own names
+#   (水 みず, 氵 さんずい). The kanji files' 9th column points here as `no|form`.
+# Columns: no (Kangxi radical number, 1-214), form, name (Japanese, kana),
+#   meaning (English), kanji (how many of the 1,017 kanji use this form;
+#   set by tools/add_radicals.py, used to order a future radical deck).
+# Which radical each kanji has: KANJIDIC2 (classical radical) and KRADFILE
+#   (visible parts, which pick the form), (c) EDRDG, CC BY-SA 4.0,
+#   https://www.edrdg.org/wiki/index.php/KANJIDIC_Project
+# Meanings start from the Unicode Kangxi radical names and are edited by hand;
+#   names are written by hand.
+1	一	いち	one	11
+2	丨	ぼう	line	1
+3	丶	てん	dot	2
+4	丿	の	slash	2
+5	乙	おつ	second; hook	2
+6	亅	はねぼう	hook	4
+7	二	に	two	4
+8	亠	なべぶた	lid	3
+9	人	ひと	person	8
+9	亻	にんべん	person	54
+10	儿	ひとあし	legs	7
+11	入	いる	enter	2
+12	八	はち	eight	6
+13	冂	けいがまえ	open frame	3
+14	冖	わかんむり	cover	1
+15	冫	にすい	ice	2
+16	几	つくえ	table	1
+17	凵	うけばこ	open box	1
+18	刀	かたな	knife	4
+18	刂	りっとう	knife	15
+19	力	ちから	power	14
+20	勹	つつみがまえ	wrap	1
+21	匕	さじ	spoon	2
+23	匸	かくしがまえ	hiding enclosure	2
+24	十	じゅう	ten	9
+25	卜	ぼく	divination	1
+26	卩	ふしづくり	seal	3
+27	厂	がんだれ	cliff	3
+28	厶	む	private	2
+29	又	また	again; right hand	6
+30	口	くち	mouth	32
+31	囗	くにがまえ	enclosure	10
+32	土	つち	earth	20
+33	士	さむらい	samurai; scholar	3
+34	夂	ふゆがしら	go	1
+35	夊	すいにょう	go slowly	1
+36	夕	ゆうべ	evening	5
+37	大	だい	big	9
+38	女	おんな	woman	10
+39	子	こ	child	5
+40	宀	うかんむり	roof	23
+41	寸	すん	inch	6
+42	小	しょう	small	2
+43	尢	だいのまげあし	lame	1
+44	尸	しかばね	corpse	8
+46	山	やま	mountain	7
+47	巛	かわ	river	2
+48	工	たくみ	work	4
+49	己	おのれ	oneself	1
+50	巾	はば	cloth	10
+51	干	かん	dry	4
+53	广	まだれ	slanting roof	11
+54	廴	えんにょう	long stride	2
+55	廾	にじゅうあし	two hands	1
+56	弋	しきがまえ	shoot	1
+57	弓	ゆみ	bow	6
+58	彐	けいがしら	snout	1
+59	彡	さんづくり	hair; bristle	2
+60	彳	ぎょうにんべん	step	11
+61	心	こころ	heart	21
+61	忄	りっしんべん	heart	3
+62	戈	ほこ	halberd	3
+63	戸	と	door	4
+64	手	て	hand	4
+64	扌	てへん	hand	39
+65	支	しにょう	branch	1
+66	攵	のぶん	strike	11
+67	文	ぶん	writing	1
+68	斗	とます	dipper	1
+69	斤	おの	axe	2
+70	方	ほう	direction	4
+72	日	ひ	sun; day	18
+73	曰	ひらび	say	5
+74	月	つき	moon	6
+75	木	き	tree	43
+76	欠	あくび	yawn; lack	5
+77	止	とめる	stop	6
+78	歹	がつへん	death	2
+79	殳	るまた	weapon	2
+80	毋	なかれ	mother; do not	2
+81	比	くらべる	compare	1
+83	氏	うじ	clan	2
+84	气	きがまえ	steam	1
+85	水	みず	water	3
+85	氵	さんずい	water	39
+86	火	ひ	fire	4
+86	灬	れっか	fire	7
+88	父	ちち	father	1
+91	片	かた	slice	1
+93	牛	うし	cow	3
+94	犬	いぬ	dog	3
+94	犭	けものへん	animal	4
+95	玄	げん	profound	1
+96	玉	たま	jewel	1
+96	王	おうへん	jewel	5
+100	生	うまれる	life	2
+101	用	もちいる	use	1
+102	田	た	rice field	11
+103	疋	ひき	bolt of cloth	1
+104	疒	やまいだれ	sickness	3
+105	癶	はつがしら	dotted tent	2
+106	白	しろ	white	4
+108	皿	さら	dish	5
+109	目	め	eye	8
+111	矢	や	arrow	2
+112	石	いし	stone	4
+113	示	しめす	altar; spirit	3
+113	礻	しめすへん	altar; spirit	3
+115	禾	のぎ	grain	11
+116	穴	あな	hole	3
+117	立	たつ	stand	4
+118	竹	たけ	bamboo	13
+119	米	こめ	rice	2
+120	糸	いと	thread	34
+122	罒	あみがしら	net	3
+123	羊	ひつじ	sheep	2
+124	羽	はね	feather	2
+125	老	おい	old	1
+125	耂	おいかんむり	old	2
+128	耳	みみ	ear	4
+130	月	にくづき	flesh	6
+130	肉	にく	meat	1
+131	臣	しん	retainer	1
+132	自	みずから	self	1
+133	至	いたる	arrive	2
+134	臼	うす	mortar	1
+136	舛	まいあし	oppose	1
+137	舟	ふね	boat	3
+138	艮	こんづくり	stopping	1
+139	色	いろ	color	1
+140	艹	くさかんむり	grass	14
+142	虫	むし	insect	1
+143	血	ち	blood	2
+144	行	ぎょうがまえ	go	5
+145	衣	ころも	clothes	5
+145	衤	ころもへん	clothes	3
+146	襾	にし	west; cover	2
+147	見	みる	see	6
+148	角	つの	horn	3
+149	言	げん	speech	30
+150	谷	たに	valley	1
+151	豆	まめ	bean	1
+152	豕	いのこ	pig	1
+154	貝	かい	shell; money	17
+155	赤	あか	red	1
+156	走	はしる	run	4
+157	足	あし	foot	5
+158	身	み	body	1
+159	車	くるま	vehicle	7
+160	辛	からい	bitter	1
+161	辰	しんのたつ	dragon (zodiac)	1
+162	辶	しんにょう	walk; road	35
+163	阝	おおざと	village	7
+164	酉	ひよみのとり	wine jar	1
+166	里	さと	village	3
+167	金	かね	metal; gold	6
+168	長	ながい	long	1
+169	門	もん	gate	7
+170	阝	こざとへん	hill	13
+172	隹	ふるとり	short-tailed bird	6
+173	雨	あめ	rain	5
+174	青	あお	blue	2
+175	非	あらず	wrong; not	1
+176	面	めん	face	1
+177	革	かくのかわ	leather	1
+178	韋	なめしがわ	tanned leather	1
+180	音	おと	sound	2
+181	頁	おおがい	head	11
+182	風	かぜ	wind	1
+183	飛	とぶ	fly	1
+184	食	しょく	eat; food	5
+185	首	くび	neck; head	1
+186	香	かおり	fragrance	1
+187	馬	うま	horse	4
+188	骨	ほね	bone	1
+189	高	たかい	tall	1
+195	魚	うお	fish	2
+196	鳥	とり	bird	1
+198	鹿	しか	deer	1
+203	黒	くろ	black	1
+211	歯	は	tooth	1

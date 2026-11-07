@@ -11,7 +11,9 @@
 #   lists first, via kanji-data); it is moved to the front of its list.
 # Columns: rank, kanji, strokes, jlpt (N level, blank if none),
 #   meanings (; separated), on'yomi (、 separated), kun'yomi (、 separated),
-#   example (word|kana|gloss|JLPT level of the word, blank if none)
+#   example (word|kana|gloss|JLPT level of the word, blank if none),
+#   radical (Kangxi number|form as written in this kanji, e.g. 85|氵; names and
+#   meanings in radicals.tsv; set by tools/add_radicals.py from KANJIDIC2 + KRADFILE)
 # Example words: the easiest word (JLPT N5 first, then N4 ... N1) that reads
 #   this kanji with one of its on'yomi, the main on'yomi winning ties; if no
 #   JLPT word fits, the most frequent common 2-3 kanji word in JMdict.
@@ -22,1003 +24,1003 @@
 #   https://www.edrdg.org/wiki/index.php/JMdict-EDICT_Dictionary_Project
 #   Which kanji carries which reading: JmdictFurigana (CC BY-SA 4.0),
 #   https://github.com/Doublevil/JmdictFurigana (2.3.1+2026-10-25).
-1	日	4	5	day; sun; Japan; counter for days	*ニチ、ジツ	*ひ、-び、-か	毎日|まいにち|every day|N5
-2	一	1	5	one	*イチ、イツ	*ひと(つ)、ひと-	一番|いちばん|best (most)|N5
-3	国	8	5	country	*コク	*くに	外国|がいこく|foreign country|N5
-4	会	6	4	meeting; meet; party; association	*カイ、エ	*あ(う)、あ(わせる)、あつ(まる)	会社|かいしゃ|company|N5
-5	人	2	5	person	*ニン、ジン	*ひと、-り、-と	外国人|がいこくじん|foreigner|N5
-6	年	6	5	year; counter for years	*ネン	*とし	来年|らいねん|next year|N5
-7	大	3	5	large; big	*タイ、ダイ	*おお(きい)、おお-、-おお(いに)	大変|たいへん|very|N5
-8	十	2	5	ten	*ジュウ、ジッ、ジュッ	*とお、と、そ	十分|じゅうぶん|enough|N4
-9	二	2	5	two	*ニ、ジ	*ふた、ふた(つ)、ふたたび	二階|にかい|second floor|
-10	本	5	5	book; present; main; origin	*ホン	*もと	本当|ほんとう|real|N5
-11	中	4	5	in; inside; middle; mean	*チュウ	*なか、うち、あた(る)	途中|とちゅう|on the way|N4
-12	長	8	5	long; leader; superior; senior	*チョウ	*なが(い)、おさ	社長|しゃちょう|president of a company|N4
-13	出	5	5	exit; leave; go out; come out	*シュツ、スイ	*で(る)、だ(す)、い(でる)、い(だす)、-で	出場|しゅつじょう|participation|N3
-14	三	3	5	three	*サン、ゾウ	*み、み(つ)、みっ(つ)	再三|さいさん|again and again|N2
-15	同	6	4	same; agree; equal	*ドウ	*おな(じ)	同時|どうじ|simultaneous(ly)|N3
-16	時	10	5	time; hour	*ジ	*とき、-どき	時間|じかん|time|N5
-17	政	9	3	politics; government	*セイ、ショウ	まつりごと、まん	政治|せいじ|politics|N4
-18	事	8	4	matter; thing; fact; business	*ジ、ズ	*こと、つか(う)、つか(える)	事務所|じむしょ|office|N4
-19	自	6	4	oneself	*ジ、シ	みずか(ら)、おの(ずから)、おの(ずと)	自分|じぶん|myself|N5
-20	行	6	5	going; journey; carry out; conduct	*コウ、ギョウ、アン	*い(く)、ゆ(く)、おこな(う)、おこ(なう)、-ゆ(き)、-ゆき、-い(き)、-いき	銀行|ぎんこう|bank|N5
-21	社	7	4	company; firm; office; association	*シャ	*やしろ	会社|かいしゃ|company|N5
-22	見	7	5	see; hopes; chances; idea	*ケン	*み(る)、み(える)、み(せる)	意見|いけん|opinion|N4
-23	月	4	5	month; moon	*ゲツ、ガツ	*つき	今月|こんげつ|this month|N5
-24	分	4		part; minute of time; segment; share	*ブン、フン、ブ	*わ(ける)、わ(け)、わ(かれる)、わ(かる)、わ(かつ)	自分|じぶん|myself|N5
-25	議	20	3	deliberation; consultation; debate; consideration	*ギ		会議|かいぎ|business meeting|N4
-26	後	9	5	behind; back; later	*ゴ、コウ	*うし(ろ)、のち、うしろ、あと、おく(れる)	午後|ごご|afternoon|N5
-27	前	9	5	in front; before	*ゼン	*まえ	午前|ごぜん|morning|N5
-28	民	5	3	people; nation; subjects	*ミン	*たみ	市民|しみん|citizen|N4
-29	生	5	5	life; genuine; birth	*セイ、ショウ	*い(きる)、い(かす)、い(ける)、う(まれる)、うま(れる)、う(まれ)、うまれ、う(む)、お(う)、は(える)、は(やす)、き、なま、な(る)、な(す)、む(す)、-う	学生|がくせい|student|N5
-30	連	10	3	take along; lead; join; connect	*レン	*つ(れる)、つら(なる)、つら(ねる)、-づ(れ)	連絡|れんらく|communication|N4
-31	五	4	5	five	*ゴ	*いつ、いつ(つ)	五十音|ごじゅうおん|the Japanese syllabary|N2
-32	発	9	4	departure; discharge; publish; emit	*ハツ、ホツ	た(つ)、あば(く)、おこ(る)、つか(わす)、はな(つ)	発音|はつおん|pronunciation|N4
-33	間	12	5	interval; space	*カン、ケン	*あいだ、ま、あい	時間|じかん|time|N5
-34	対	7	3	vis-a-vis; opposite; even; equal	*タイ、ツイ	あいて、こた(える)、そろ(い)、つれあ(い)、なら(ぶ)、むか(う)	反対|はんたい|oppose|N4
-35	上	3	5	above; up	*ジョウ、ショウ、シャン	*うえ、かみ、あ(げる)、あ(がる)、あ(がり)、のぼ(る)、のぼ(り)、のぼ(せる)、のぼ(す)、たてまつ(る)、うわ-	屋上|おくじょう|rooftop|N4
-36	部	11	3	section; bureau; dept; class	*ブ	-べ	全部|ぜんぶ|all|N5
-37	東	8	5	east	*トウ	*ひがし	東洋|とうよう|Orient|N3
-38	者	8	4	someone; person	*シャ	*もの	医者|いしゃ|doctor|N5
-39	党	10	2	party; faction; clique	*トウ	なかま、むら	野党|やとう|opposition party|N3
-40	地	6	4	ground; earth	*チ、ジ		地図|ちず|a map|N5
-41	合	6	3	fit; suit; join; 0.1	*ゴウ、ガッ、カッ	*あ(う)、あ(い)、あ(わす)、あ(わせる)、あい-、-あい	都合|つごう|circumstances|N4
-42	市	5	3	market; city; town	*シ	*いち	市民|しみん|citizen|N4
-43	業	13	4	business; vocation; arts; performance	*ギョウ、ゴウ	わざ	授業|じゅぎょう|a class (of school)|N5
-44	内	4	3	inside; within; between; among	*ナイ、ダイ	*うち	以内|いない|within|N4
-45	相	9	3	inter-; mutual; together; each other	*ソウ、ショウ	*あい-	相当|そうとう|considerably|N3
-46	方	4	4	direction; person; alternative	*ホウ	*かた、-がた	両方|りょうほう|both sides|N4
-47	四	5	5	four	*シ	*よん、よ、よ(つ)、よっ(つ)	四季|しき|four seasons|N3
-48	定	8	3	determine; fix; establish; decide	*テイ、ジョウ	*さだ(める)、さだ(まる)、さだ(か)	予定|よてい|plans|N4
-49	今	4	5	now	*コン、キン	*いま	今月|こんげつ|this month|N5
-50	回	6	3	-times; round; game; revolve	*カイ、エ	*まわ(る)、まわ(す)、まわ(し-)、もとお(る)、か(える)、-まわ(り)、-まわ(し)	今回|こんかい|now|N3
-51	新	13	4	new	*シン	*あたら(しい)、あら(た)、あら-、にい-	新聞|しんぶん|newspaper|N5
-52	場	12	4	location; place	*ジョウ、チョウ	*ば	工場|こうじょう|factory|N4
-53	金	8	5	gold	*キン、コン、ゴン	*かね、かな-、-がね	金曜日|きんようび|Friday|N5
-54	員	10	4	employee; member; number; the one in charge	*イン		公務員|こうむいん|government worker|N4
-55	九	2	5	nine	*ク、キュウ	*ここの、ここの(つ)	九月|くがつ|September|
-56	入	2	5	enter; insert	*ニュウ、ジュ	*はい(る)、い(る)、い(れる)、-い(り)、-い(れ)	輸入|ゆにゅう|import|N4
-57	選	15	3	elect; select; choose; prefer	*セン	*えら(ぶ)、え(る)、よ(る)	選手|せんしゅ|player selected for a team (usually athletic)|N3
-58	立	5	4	stand up; rise; set up; erect	*リツ、リュウ、リットル	*た(つ)、た(ち-)、た(てる)、た(て-)、たて-、-た(て)、-だ(て)、-だ(てる)	独立|どくりつ|independence (e.g.|N3
-59	開	12	4	open; unfold; unseal	*カイ	*あ(く)、ひら(く)、ひら(き)、ひら(ける)、あ(ける)、-びら(き)	開始|かいし|start|N3
-60	手	4	4	hand	*シュ、ズ	*て、た-	運転手|うんてんしゅ|driver (by occupation)|N4
-61	米	6	3	rice; USA; metre	*ベイ、マイ、メエトル	*こめ、よね	欧米|おうべい|Europe and America|N2
-62	力	2	4	power; strength; strong; strain	*リョク、リキ、リイ	*ちから	協力|きょうりょく|cooperation|N3
-63	学	8	5	study; learning; science	*ガク	*まな(ぶ)	学生|がくせい|student|N5
-64	問	11	4	question; ask; problem	*モン	*と(う)、と(い)、とん	問題|もんだい|a problem|N5
-65	高	10	5	tall; high; expensive	*コウ	*たか(い)、たか、たか(まる)、たか(める)、-だか	高校生|こうこうせい|high school student|N4
-66	代	5	4	substitute; change; convert; replace	*ダイ、タイ	*か(わる)、かわ(る)、かわ(り)、か(わり)、か(える)、よ、しろ、-がわ(り)、-が(わり)	時代|じだい|age|N4
-67	明	8	4	bright; light	*メイ、ミョウ、ミン	*あ(かり)、あか(るい)、あか(るむ)、あか(らむ)、あき(らか)、あ(ける)、あ(く)、あ(くる)、あ(かす)、-あ(け)	説明|せつめい|explanation|N4
-68	実	8	3	reality; truth; seed; fruit	*ジツ、シツ	*み、みの(る)、まこと、みの、みち(る)	事実|じじつ|fact|N3
-69	円	4	5	circle; yen; round	*エン	*まる(い)、まる、まど、まど(か)、まろ(やか)	円周|えんしゅう|circumference|N2
-70	関	14	3	connection; barrier; gateway; involve	*カン	*かか(わる)、せき、からくり、かんぬき、-ぜき	玄関|げんかん|entrance (to a house or a building)|N5
-71	決	7	3	decide; fix; agree upon; appoint	*ケツ	*き(める)、き(まる)、さ(く)、-ぎ(め)	解決|かいけつ|settlement|N3
-72	子	3	5	child; sign of the rat; 11PM-1AM; first sign of Chinese zodiac	*シ、ス、ツ	*こ、ね	帽子|ぼうし|hat|N5
-73	動	11	4	move; motion; change; confusion	*ドウ	*うご(く)、うご(かす)	自動車|じどうしゃ|automobile|N5
-74	京	8	4	capital; 10**16	*キョウ、ケイ、キン	*みやこ	上京|じょうきょう|proceeding to the capital (Tokyo)|N3
-75	全	6	3	whole; entire; all; complete	*ゼン	*すべ(て)、まった(く)	全部|ぜんぶ|all|N5
-76	目	5	4	eye; class; look; insight	*モク、ボク	*め、ま-	目的|もくてき|purpose|N3
-77	表	8	3	surface; table; chart; diagram	*ヒョウ	*あらわ(す)、おもて、あらわ(れる)、あら(わす)	代表|だいひょう|representative|N3
-78	戦	13	3	war; battle; match	*セン	*たたか(う)、いくさ、おのの(く)、そよ(ぐ)、わなな(く)	戦争|せんそう|war|N4
-79	経	11	3	sutra; longitude; pass thru; expire	*ケイ、キョウ、キン	*た(つ)、へ(る)、たていと、はか(る)、のり	経済|けいざい|economics|N4
-80	通	10	4	traffic; pass through; avenue; commute	*ツウ、ツ	*とお(る)、とお(り)、とお(す)、とお(し)、かよ(う)、-どお(り)、-どお(し)	交通|こうつう|traffic|N4
-81	外	5	5	outside	*ガイ、ゲ	*そと、ほか、はず(す)、はず(れる)、と-	外国|がいこく|foreign country|N5
-82	最	12	3	utmost; most; extreme	*サイ、シュ	*もっと(も)、つま	最後|さいご|last|N4
-83	言	7	4	say; word	*ゲン、ゴン	*い(う)、こと	言語|げんご|language|N3
-84	氏	4	1	family name; surname; clan	*シ	*うじ	氏名|しめい|full name|N2
-85	現	11	3	present; existing; actual	*ゲン	*あらわ(れる)、あらわ(す)、うつつ、うつ(つ)	現実|げんじつ|reality|N3
-86	理	11	4	logic; arrangement; reason; justice	*リ	*ことわり	料理|りょうり|cooking|N5
-87	調	15	3	tune; tone; meter; key (music)	*チョウ	*しら(べる)、しら(べ)、ととの(う)、ととの(える)	調査|ちょうさ|survey|N3
-88	体	7	4	body; substance; object; reality	*タイ、テイ	*からだ、かたち	大体|だいたい|approximately|N4
-89	化	4	3	change; take the form of; influence; enchant	*カ、ケ	*ば(ける)、ば(かす)、ふ(ける)、け(する)	文化|ぶんか|culture|N4
-90	田	5	4	rice field; rice paddy	*デン	*た	水田|すいでん|(water-filled) paddy field|N1
-91	当	6	3	hit; right; appropriate; himself	*トウ	*あ(たる)、あ(たり)、あ(てる)、あ(て)、まさ(に)、まさ(にべし)	本当|ほんとう|real|N5
-92	八	2	5	eight	*ハチ、ハツ	*や、や(つ)、やっ(つ)、よう	八月|はちがつ|August|
-93	六	4	5	six	*ロク、リク	*む、む(つ)、むっ(つ)、むい	六月|ろくがつ|June|
-94	約	9	3	promise; approximately; shrink	*ヤク	つづ(まる)、つづ(める)、つづま(やか)	約束|やくそく|arrangement|N4
-95	主	5	4	lord; chief; master; main thing	*シュ、ス、シュウ	*おも、ぬし、あるじ	主要|しゅよう|chief|N3
-96	題	18	4	topic; subject	*ダイ		問題|もんだい|a problem|N5
-97	下	3	5	below; down; descend; give	*カ、ゲ	*した、しも、もと、さ(げる)、さ(がる)、くだ(る)、くだ(り)、くだ(す)、くだ(さる)、お(ろす)、お(りる)	地下鉄|ちかてつ|underground train|N5
-98	首	9	3	neck; counter for songs and poems	*シュ	*くび	首相|しゅしょう|Prime Minister|N3
-99	意	13	4	idea; mind; heart; taste	*イ		意味|いみ|meaning|N5
-100	法	8	3	method; law; rule; principle	*ホウ、ハッ、ホッ、フラン	のり	法律|ほうりつ|law|N4
-101	不	4	4	negative; non-; bad; ugly	*フ、ブ		不便|ふべん|inconvenience|N4
-102	来	7	5	come; due; next; cause	*ライ、タイ	*く(る)、きた(る)、きた(す)、き(たす)、き(たる)、き、こ	来年|らいねん|next year|N5
-103	作	7	4	make; production; prepare; build	*サク、サ	*つく(る)、つく(り)、-づく(り)	作文|さくぶん|essay|N5
-104	性	8	3	sex; gender; nature	*セイ、ショウ	さが	女性|じょせい|woman|N4
-105	的	8		bull's eye; mark; target; object	*テキ	*まと	目的|もくてき|purpose|N3
-106	要	9	3	need; main point; essence; pivot	*ヨウ	*い(る)、かなめ	必要|ひつよう|necessary|N4
-107	用	5	4	utilize; business; service; use	*ヨウ	*もち(いる)	利用|りよう|use|N4
-108	制	8	3	system; law; rule	*セイ		制度|せいど|system|N3
-109	治	8	3	reign; be at peace; calm down; subdue	*ジ、チ	*なお(る)、おさ(める)、おさ(まる)、なお(す)	政治|せいじ|politics|N4
-110	度	9	4	degrees; occurrence; time; counter for occurrences	*ド、ト、タク	*たび、-た(い)	丁度|ちょうど|just|N5
-111	務	11	3	task; duties	*ム	*つと(める)	事務所|じむしょ|office|N4
-112	強	11	4	strong	*キョウ、ゴウ	*つよ(い)、つよ(まる)、つよ(める)、し(いる)、こわ(い)	勉強|べんきょう|study|N5
-113	気	6	5	spirit; mind; air; atmosphere	*キ、ケ	*いき、き	電気|でんき|electricity|N5
-114	小	3	5	little; small	*ショウ	*ちい(さい)、こ-、お-、さ-	小学校|しょうがっこう|elementary school|N4
-115	七	2	5	seven	*シチ	*なな、なな(つ)、なの	七月|しちがつ|July|
-116	成	6	3	turn into; become; get; grow	*セイ、ジョウ	*な(る)、な(す)	成長|せいちょう|growth|N3
-117	期	12	3	period; time; date; term	*キ、ゴ		期間|きかん|period|N3
-118	公	4	4	public; prince; official; governmental	*コウ、ク	おおやけ	公園|こうえん|a park|N5
-119	持	9	4	hold; have	*ジ	*も(つ)、も(てる)、-も(ち)	維持|いじ|maintenance|N3
-120	野	11	4	plains; field; rustic; civilian life	*ヤ、ショ	*の	野菜|やさい|vegetable|N5
-121	協	8	2	co-; cooperation	*キョウ		協議|きょうぎ|conference|N3
-122	取	8	3	take; fetch; take up	*シュ	*と(る)、と(り)、と(り-)、とり、-ど(り)	取材|しゅざい|coverage|N1
-123	都	11	3	metropolis; capital; all; everything	*ト、ツ	*みやこ	都合|つごう|circumstances|N4
-124	和	8	3	harmony; Japanese style; peace; soften	*ワ、オ、カ	*なご(む)、やわ(らぐ)、やわ(らげる)、なご(やか)、あ(える)	平和|へいわ|peace|N3
-125	統	12	1	overall; relationship; ruling; governing	*トウ	*す(べる)	大統領|だいとうりょう|president|N3
-126	以	5	4	by means of; because; in view of; compared with	*イ	もっ(て)	以内|いない|within|N4
-127	機	16	3	loom; mechanism; machine; airplane	*キ	*はた	飛行機|ひこうき|airplane|N5
-128	平	5	3	even; flat; peace	*ヘイ、ビョウ、ヒョウ	*たい(ら)、たい(らげる)、ひら	平和|へいわ|peace|N3
-129	総	14	2	general; whole; all; full	*ソウ	す(べて)、すべ(て)、ふさ	総会|そうかい|general meeting|N1
-130	加	5	3	add; addition; increase; join	*カ	*くわ(える)、くわ(わる)	参加|さんか|participation|N3
-131	山	3	5	mountain	*サン、セン	*やま	沢山|たくさん|many|N5
-132	思	9	4	think	*シ	*おも(う)、おもえら(く)、おぼ(す)	思想|しそう|thought|N3
-133	家	10	4	house; home; family; professional	*カ、ケ	*いえ、や、うち	家族|かぞく|family|N5
-134	話	13	5	tale; talk	*ワ	*はな(す)、はなし	電話|でんわ|a telephone|N5
-135	世	5	4	generation; world; society; public	*セ、セイ、ソウ	*よ	世界|せかい|world|N4
-136	受	8	3	accept; undergo; answer (phone); take	*ジュ	*う(ける)、う(かる)、-う(け)	享受|きょうじゅ|enjoyment|N3
-137	区	4	2	ward; district	*ク、オウ、コウ		区別|くべつ|distinction|N3
-138	領	14	2	jurisdiction; dominion; territory; fief	*リョウ	えり	大統領|だいとうりょう|president|N3
-139	多	6	4	many; frequent; much	*タ	*おお(い)、まさ(に)、まさ(る)	多分|たぶん|perhaps|N5
-140	県	9	2	prefecture	*ケン	か(ける)	県庁|けんちょう|prefectural office|N2
-141	続	13	3	continue; series; sequel	*ゾク、ショク、コウ、キョウ	*つづ(く)、つづ(ける)、つぐ(ない)	連続|れんぞく|consecutive|N3
-142	進	11	3	advance; proceed; progress; promote	*シン	*すす(む)、すす(める)	進学|しんがく|going on to university|N3
-143	正	5	4	correct; justice; righteous; 10**40	*セイ、ショウ	*ただ(しい)、ただ(す)、まさ、まさ(に)	正月|しょうがつ|New Year|N4
-144	安	6	4	relax; cheap; low; quiet	*アン	*やす(い)、やす(まる)、やす、やす(らか)	安全|あんぜん|safety|N4
-145	設	11	2	establishment; provision; prepare	*セツ	*もう(ける)	建設|けんせつ|construction|N3
-146	保	9	1	protect; guarantee; keep; preserve	*ホ、ホウ	*たも(つ)	保護|ほご|care|N3
-147	改	7	2	reformation; change; modify; mend	*カイ	*あらた(める)、あらた(まる)	改善|かいぜん|betterment|N3
-148	数	13	3	number; strength; fate; law	*スウ、ス、サク、ソク、シュ	*かぞ(える)、かず、しばしば、せ(める)、わずらわ(しい)	数学|すうがく|mathematics|N4
-149	記	10	3	scribe; account; narrative	*キ	*しる(す)	日記|にっき|diary|N4
-150	院	10	4	Inst.; institution; temple; mansion	*イン		病院|びょういん|hospital|N5
-151	女	3	5	woman; female	*ジョ、ニョ、ニョウ	*おんな、め	女性|じょせい|woman|N4
-152	初	7	3	first time; beginning	*ショ	*はじ(め)、はじ(めて)、はつ、うい-、-そ(める)、-ぞ(め)	最初|さいしょ|beginning|N4
-153	北	5	5	north	*ホク	*きた	北部|ほくぶ|northern part|
-154	午	4	5	noon; sign of the horse; 11AM-1PM; seventh sign of Chinese zodiac	*ゴ	うま	午後|ごご|afternoon|N5
-155	指	9	3	finger; point to; indicate; put into	*シ	*ゆび、さ(す)、-さ(し)	指導|しどう|leadership|N3
-156	権	15	3	authority; power; rights	*ケン、ゴン	おもり、かり、はか(る)	権利|けんり|right|N3
-157	心	4	4	heart; mind; spirit	*シン	*こころ、-ごころ	安心|あんしん|peace of mind|N4
-158	界	9	4	world; boundary	*カイ		世界|せかい|world|N4
-159	支	4	3	branch; support; sustain	*シ	*ささ(える)、つか(える)、か(う)	支店|してん|branch store (office)|N3
-160	第	11	1	No.; residence	*ダイ、テイ		次第|しだい|order|N3
-161	産	11	3	products; bear; give birth; yield	*サン	*う(む)、う(まれる)、む(す)、うぶ-	産業|さんぎょう|industry|N4
-162	結	12	1	tie; bind; contract; join	*ケツ、ケチ	*むす(ぶ)、ゆ(う)、ゆ(わえる)	結論|けつろん|conclusion|N3
-163	百	6	5	hundred	*ヒャク、ビャク	*もも	数百|すうひゃく|several hundred|
-164	派	9	1	faction; group; party; clique	*ハ		派手|はで|showy|N3
-165	点	9	3	spot; point; mark; speck	*テン	*つ(ける)、つ(く)、た(てる)、さ(す)、とぼ(す)、とも(す)、ぼち	交差点|こうさてん|intersection|N5
-166	教	11	4	teach; faith; doctrine	*キョウ	*おし(える)、おそ(わる)	教室|きょうしつ|classroom|N5
-167	報	12	3	report; news; reward; retribution	*ホウ	*むく(いる)	報告|ほうこく|report|N3
-168	済	11	3	settle (debt, etc.); relieve (burden); finish; come to an end	*サイ、セイ	*す(む)、す(まない)、す(ます)、すく(う)、な(す)、わたし、わた(る)、-ず(み)、-ずみ	返済|へんさい|repayment|N1
-169	書	10	5	write	*ショ	*か(く)、-が(き)、-がき	図書館|としょかん|library|N5
-170	府	8	2	borough; urban prefecture; govt office; representative body	*フ		政府|せいふ|government|N3
-171	活	9	3	lively; resuscitation; being helped; living	*カツ	*い(きる)、い(かす)、い(ける)	活動|かつどう|action|N3
-172	原	10	3	meadow; original; primitive; field	*ゲン	*はら	原因|げんいん|cause|N4
-173	先	6	5	before; ahead; previous; future	*セン	*さき、ま(ず)	先月|せんげつ|last month|N5
-174	共	6	3	together; both; neither; all	*キョウ	*とも、とも(に)、-ども	共同|きょうどう|cooperation|N3
-175	得	11	3	gain; get; find; earn	*トク	*え(る)、う(る)	得意|とくい|pride|N3
-176	解	13	3	unravel; notes; key; explanation	*カイ、ゲ	*と(く)、と(かす)、と(ける)、ほど(く)、ほぐ(す)、わか(る)、さと(る)	解決|かいけつ|settlement|N3
-177	名	6	5	name; noted; distinguished; reputation	*メイ、ミョウ	*な	有名|ゆうめい|famous|N5
-178	交	6	3	mingle; mixing; association; coming & going	*コウ	*まじ(わる)、まじ(える)、ま(じる)、まじ(る)、ま(ざる)、ま(ぜる)、か(わす)、かわ(す)、こもごも、-か(う)	交差点|こうさてん|intersection|N5
-179	資	13	3	assets; resources; capital; funds	*シ		資本|しほん|funds|N3
-180	予	4	3	beforehand; previous; myself; I	*ヨ、シャ	*あらかじ(め)	予定|よてい|plans|N4
-181	川	3	5	stream; river	*セン	*かわ	河川|かせん|rivers|N1
-182	向	6	3	yonder; facing; beyond; confront	*コウ	*む(く)、む(い)、む(ける)、む(かう)、む(かい)、む(こう)、む(こう-)、むこ、むか(い)、-む(き)、-む(け)	方向|ほうこう|direction|N3
-183	際	14	3	occasion; side; edge; verge	*サイ	*きわ、-ぎわ	国際|こくさい|international|N4
-184	査	9	2	investigate	*サ		調査|ちょうさ|survey|N3
-185	勝	12	3	victory; win; prevail; excel	*ショウ	*か(つ)、まさ(る)、すぐ(れる)、かつ、-が(ち)	優勝|ゆうしょう|overall victory|N3
-186	面	9	3	mask; face; features; surface	*メン、ベン	*おも、おもて、つら	場面|ばめん|scene|N3
-187	委	8	2	committee; entrust to; leave to; devote	*イ	ゆだ(ねる)	委員|いいん|committee member|N3
-188	告	7	3	revelation; tell; inform; announce	*コク	*つ(げる)	報告|ほうこく|report|N3
-189	軍	9	2	army; force; troops; war	*グン	いくさ	軍隊|ぐんたい|army|N3
-190	文	4	4	sentence; literature; style; art	*ブン、モン	ふみ、あや	文章|ぶんしょう|sentence|N5
-191	反	4	3	anti-	*ハン、ホン、タン、ホ	そ(る)、そ(らす)、かえ(す)、かえ(る)	反対|はんたい|oppose|N4
-192	元	4	4	beginning; former time; origin	*ゲン、ガン	*もと	元気|げんき|health(y)|N5
-193	重	9	4	heavy; important; esteem; respect	*ジュウ、チョウ	*おも(い)、え、おも(り)、おも(なう)、かさ(ねる)、かさ(なる)、おも	重要|じゅうよう|important|N3
-194	近	7	4	near; early; akin; tantamount	*キン、コン	*ちか(い)	最近|さいきん|recently|N4
-195	千	3	5	thousand	*セン	*ち	千秋楽|せんしゅうらく|final day of a performance|
-196	考	6	4	consider; think over	*コウ	*かんが(える)、かんが(え)	参考|さんこう|reference|N3
-197	判	7	3	judgement; judgment; signature; stamp	*ハン、バン	わか(る)	判断|はんだん|judgment|N3
-198	認	14	3	acknowledge; witness; discern; recognize	*ニン	*みと(める)、したた(める)	承認|しょうにん|recognition|N3
-199	画	8	4	brush-stroke; picture	*ガ、カク、エ、カイ	えが(く)、かく(する)、かぎ(る)、はかりごと、はか(る)	映画|えいが|movie|N5
-200	海	9	4	sea; ocean	*カイ	*うみ	海岸|かいがん|coast|N4
-201	参	8	3	nonplussed; three (in documents); going; coming	*サン、シン	*まい(る)、まじわる、みつ、まい-	参加|さんか|participation|N3
-202	売	7	4	sell	*バイ	*う(る)、う(れる)	販売|はんばい|sale|N3
-203	利	7	3	profit; advantage; benefit	*リ	*き(く)	便利|べんり|convenient|N5
-204	組	11	3	association; braid; plait; construct	*ソ	*くみ、く(む)、-ぐみ	組織|そしき|organization|N3
-205	知	8	4	know; wisdom	*チ	*し(る)、し(らせる)	知事|ちじ|prefectural governor|N3
-206	案	10	1	plan; suggestion; draft; ponder	*アン	つくえ	提案|ていあん|proposal|N3
-207	道	12	4	road-way; street; district; journey	*ドウ、トウ	*みち、いう	柔道|じゅうどう|judo|N4
-208	信	9	3	faith; truth; fidelity; trust	*シン		通信|つうしん|correspondence|N3
-209	策	12	1	scheme; plan; policy; step	*サク		対策|たいさく|counter-plan|N2
-210	集	12	4	gather; meet; congregate; swarm	*シュウ	*あつ(まる)、あつ(める)、つど(う)	集団|しゅうだん|group|N3
-211	在	6	3	exist; outskirts; suburbs; located in	*ザイ	あ(る)	現在|げんざい|now (same as 今 (いま))|N3
-212	件	6	3	affair; case; matter; item	*ケン	くだん	事件|じけん|event|N3
-213	団	6	2	group; association	*ダン、トン	かたまり、まる(い)	布団|ふとん|futon|N4
-214	別	7	4	separate; branch off; diverge; fork	*ベツ	*わか(れる)、わ(ける)	特別|とくべつ|special|N4
-215	物	8	4	thing; object; matter	*ブツ、モツ	*もの	動物|どうぶつ|animal|N5
-216	側	11	3	side; lean; oppose; regret	*ソク	*がわ、かわ、そば	側面|そくめん|side|N1
-217	任	6	3	responsibility; duty; term; entrust to	*ニン	*まか(せる)、まか(す)	責任|せきにん|duty|N3
-218	引	4	3	pull; tug; jerk; admit	*イン	*ひ(く)、ひ(ける)	引退|いんたい|retirement|N3
-219	使	8	4	use; send on a mission; order; messenger	*シ	*つか(う)、つか(い)、-づか(い)	大使館|たいしかん|embassy|N5
-220	求	7	3	request; want; wish for; require	*キュウ、グ	*もと(める)	要求|ようきゅう|request|N3
-221	所	8	3	place; extent	*ショ	*ところ、どころ、とこ	場所|ばしょ|place|N4
-222	次	6	3	next; order; sequence	*ジ、シ	*つぎ、つ(ぐ)	次第|しだい|order|N3
-223	水	4	5	water	*スイ	*みず	水曜日|すいようび|Wednesday|N5
-224	半	5	5	half; middle; odd number; semi-	*ハン	*なか(ば)	半分|はんぶん|half|N5
-225	品	9	4	goods; refinement; dignity; article	*ヒン、ホン	*しな	食料品|しょくりょうひん|foodstuff|N4
-226	昨	9	3	yesterday; previous	*サク		一昨年|いっさくねん|year before last|N2
-227	論	15	3	argument; discourse	*ロン	あげつら(う)	議論|ぎろん|argument|N3
-228	計	9	4	plot; plan; scheme; measure	*ケイ	*はか(る)、はか(らう)	合計|ごうけい|sum total|N3
-229	死	6	4	death; die	*シ	*し(ぬ)、し(に-)	死亡|しぼう|death|N3
-230	官	8	3	bureaucrat; the government; organ	*カン		警官|けいかん|police officer|N5
-231	増	14	3	increase; add; augment; gain	*ゾウ	*ふ(える)、ま(す)、ま(し)、ふ(やす)	増加|ぞうか|increase|N3
-232	係	9	3	person in charge; connection; duty; concern oneself	*ケイ	*かか(る)、かかり、かか(わる)、-がかり	関係|かんけい|relation(ship)|N4
-233	感	13	3	emotion; feeling; sensation	*カン		感覚|かんかく|sense|N3
-234	特	10	4	special	*トク		特別|とくべつ|special|N4
-235	情	11	3	feelings; emotion; passion; sympathy	*ジョウ、セイ	*なさ(け)	事情|じじょう|circumstances|N3
-236	投	7	3	throw; discard; abandon; launch into	*トウ	*な(げる)、-な(げ)	投票|とうひょう|voting|N3
-237	示	5	3	show; indicate; point out; express	*ジ、シ	*しめ(す)	掲示|けいじ|notice|N3
-238	変	9	3	unusual; change; strange	*ヘン	*か(わる)、か(わり)、か(える)	大変|たいへん|very|N5
-239	打	5	3	strike; hit; knock; pound	*ダ、ダース	*う(つ)、う(ち-)、ぶ(つ)	打撃|だげき|blow|N1
-240	男	7	5	male	*ダン、ナン	*おとこ、お	男性|だんせい|man|N4
-241	基	11	1	fundamentals; radical (chem); counter for machines; foundation	*キ	*もと、もとい	基本|きほん|basic|N3
-242	私	7	4	private; I; me	*シ	*わたし、わたくし	私用|しよう|personal use|N3
-243	各	6	2	each; every; either	*カク	おのおの	各自|かくじ|individual|N2
-244	始	8	4	commence; begin	*シ	*はじ(める)、はじ(まる)	開始|かいし|start|N3
-245	島	10	2	island	*トウ	*しま	半島|はんとう|peninsula|N2
-246	直	8	3	straightaway; honesty; frankness; fix	*チョク、ジキ、ジカ	*なお(す)、ただ(ちに)、なお(る)、なお(き)、す(ぐ)	直接|ちょくせつ|direct|N3
-247	両	6	3	both; old Japanese coin; counter for carriages (e.g., in a train); two	*リョウ	てる、ふたつ	両親|りょうしん|parents (lit.|N5
-248	朝	12	4	morning; dynasty; regime; epoch	*チョウ	*あさ	早朝|そうちょう|early morning|
-249	革	9	2	leather; skin; reform; become serious	*カク	*かわ	改革|かいかく|reform|N1
-250	価	8	1	value; price	*カ、ケ	*あたい	価格|かかく|price|N3
-251	式	6	3	style; ceremony; rite; function	*シキ		正式|せいしき|official|N3
-252	確	15	3	assurance; firm; tight; hard	*カク、コウ	*たし(か)、たし(かめる)	確実|かくじつ|certainty|N3
-253	村	7	2	village; town	*ソン	*むら	農村|のうそん|agricultural community|N2
-254	提	12	1	propose; take along; carry in hand	*テイ、チョウ、ダイ	さ(げる)	提案|ていあん|proposal|N3
-255	運	12	4	carry; luck; destiny; fate	*ウン	*はこ(ぶ)	運転手|うんてんしゅ|driver (by occupation)|N4
-256	終	11	4	end; finish	*シュウ	*おわ(る)、お(わる)、お(える)、つい、つい(に)	最終|さいしゅう|last|N3
-257	挙	10	1	raise; plan; project; behavior	*キョ	*あ(げる)、あ(がる)、こぞ(る)	選挙|せんきょ|election|N3
-258	果	8	3	fruit; reward; carry out; achieve	*カ	は(たす)、はた(す)、は(てる)、は(て)	結果|けっか|result|N3
-259	西	6	5	west; Spain	*セイ、サイ、ス	*にし	西洋|せいよう|the West|N4
-260	勢	13	2	forces; energy; military strength	*セイ、ゼイ	*いきお(い)、はずみ	大勢|おおぜい|great number of people|N5
-261	減	12	2	dwindle; decrease; reduce; decline	*ゲン	*へ(る)、へ(らす)	減少|げんしょう|decrease|N3
-262	台	5	4	pedestal; a stand; counter for machines and vehicles	*ダイ、タイ	うてな、われ、つかさ	台所|だいどころ|kitchen|N5
-263	広	5	4	wide; broad; spacious	*コウ	*ひろ(い)、ひろ(まる)、ひろ(める)、ひろ(がる)、ひろ(げる)	広告|こうこく|advertisement|N3
-264	容	10	3	contain; form; looks	*ヨウ	い(れる)	内容|ないよう|subject|N3
-265	必	5	3	invariably; certain; inevitable	*ヒツ	*かなら(ず)	必要|ひつよう|necessary|N4
-266	応	7	1	apply; answer; yes; OK	*オウ、ヨウ、-ノウ	あた(る)、まさに、こた(える)	応援|おうえん|aid|N3
-267	演	14	3	performance; act; play; render	*エン		公演|こうえん|public performance|N3
-268	電	13	5	electricity	*デン		電話|でんわ|a telephone|N5
-269	歳	13	3	year-end; age; occasion; opportunity	*サイ、セイ	とし、とせ、よわい	歳月|さいげつ|time|
-270	住	7	4	dwell; reside; live; inhabit	*ジュウ、ヂュウ、チュウ	*す(む)、す(まう)、-ず(まい)	住所|じゅうしょ|address|N4
-271	争	6	3	contend; dispute; argue	*ソウ	*あらそ(う)、いか(でか)	戦争|せんそう|war|N4
-272	談	15	3	discuss; talk	*ダン		冗談|じょうだん|a joke|N3
-273	能	10	3	ability; talent; skill; capacity	*ノウ	よ(く)、あた(う)	機能|きのう|function|N3
-274	無	12		nothingness; none; ain't; nothing	*ム、ブ	*な(い)	無理|むり|unreasonable|N4
-275	再	6	2	again; twice; second time	*サ、サイ	*ふたた(び)	再来月|さらいげつ|the month after next|N4
-276	位	7	3	rank; grade; throne; crown	*イ	*くらい、ぐらい	地位|ちい|(social) position|N3
-277	置	13	3	placement; put; set; deposit	*チ	*お(く)、-お(き)	装置|そうち|equipment|N3
-278	企	6	1	undertake; scheme; design; attempt	*キ	*くわだ(てる)、たくら(む)	企業|きぎょう|industry|N3
-279	真	10	4	true; reality; Buddhist sect	*シン	*ま、まこと	写真|しゃしん|a picture|N5
-280	流	10	3	current; a sink; flow; forfeit	*リュウ、ル	*なが(れる)、なが(れ)、なが(す)	流行|りゅうこう|fashionable|N3
-281	格	10	3	status; rank; capacity; character	*カク、コウ、キャク、ゴウ		価格|かかく|price|N3
-282	有	6	4	possess; have; exist; happen	*ユウ、ウ	*あ(る)	有名|ゆうめい|famous|N5
-283	疑	14	3	doubt; distrust; be suspicious; question	*ギ	*うたが(う)	疑問|ぎもん|question|N3
-284	口	3	4	mouth	*コウ、ク	*くち	人口|じんこう|population|N4
-285	過	12	3	overdo; exceed; go beyond; error	*カ	*す(ぎる)、す(ごす)、あやま(ち)、あやま(つ)、よぎ(る)、よ(ぎる)	過去|かこ|past|N3
-286	局	7	3	bureau; board; office; affair	*キョク	つぼね	郵便局|ゆうびんきょく|post office|N5
-287	少	4	4	few; little	*ショウ	*すこ(し)、すく(ない)	少年|しょうねん|boys|N3
-288	放	8	3	set free; release; fire; shoot	*ホウ	*はな(す)、はな(つ)、はな(れる)、こ(く)、ほう(る)、-っぱな(し)	開放|かいほう|open|N2
-289	税	12	2	tax; duty	*ゼイ		税金|ぜいきん|tax|N3
-290	検	12	1	examination; investigate	*ケン	しら(べる)	検査|けんさ|inspection|N3
-291	藤	18	1	wisteria	*トウ、ドウ	*ふじ	
-292	町	7	4	town; village; block; street	*チョウ	*まち	市町村|しちょうそん|cities, towns and villages|
-293	常	11	3	usual; ordinary; normal; common	*ジョウ	*つね、とこ-	非常|ひじょう|emergency|N3
-294	校	10	5	exam; school; printing; proof	*コウ、キョウ		学校|がっこう|a school|N5
-295	料	10	4	fee; materials	*リョウ		料理|りょうり|cooking|N5
-296	沢	7	1	swamp; marsh; brilliance; grace	*タク	*さわ、うるお(い)、うるお(す)、つや	沢山|たくさん|many|N5
-297	裁	12	1	tailor; judge; decision; cut out (pattern)	*サイ	*さば(く)、た(つ)	裁判|さいばん|trial|N3
-298	状	7	3	status quo; conditions; circumstances; form	*ジョウ		状態|じょうたい|condition|N3
-299	工	3	4	craft; construction	*コウ、ク、グ		工場|こうじょう|factory|N4
-300	建	9	4	build	*ケン、コン	*た(てる)、た(て)、た(つ)、-だ(て)	建設|けんせつ|construction|N3
-301	語	14	5	word; speech; language	*ゴ	*かた(る)、かた(らう)	英語|えいご|English (language)|N5
-302	球	11	3	ball; sphere	*キュウ	*たま	地球|ちきゅう|the earth|N3
-303	営	12	2	camp; perform; build; conduct (business)	*エイ	*いとな(む)、いとな(み)	経営|けいえい|management|N3
-304	空	8	4	empty; sky; void; vacant	*クウ	*そら、あ(く)、あ(き)、あ(ける)、から、す(く)、す(かす)、むな(しい)	空港|くうこう|airport|N4
-305	職	18	3	post; employment; work	*ショク、ソク		職業|しょくぎょう|occupation|N3
-306	証	12	1	evidence; proof; certificate	*ショウ	*あかし	保証|ほしょう|guarantee|N3
-307	土	3	5	soil; earth; ground; Turkey	*ド、ト	*つち	土曜日|どようび|Saturday|N5
-308	与	3	3	bestow; participate in; give; award	*ヨ	*あた(える)、あずか(る)、くみ(する)、ともに	給与|きゅうよ|salary|N2
-309	急	9	4	hurry; emergency; sudden; steep	*キュウ	*いそ(ぐ)、いそ(ぎ)、せ(く)	特急|とっきゅう|limited express (train faster than an express)|N4
-310	止	4	4	stop; halt	*シ	*と(まる)、と(める)、とど(める)、とど(め)、とど(まる)、や(める)、や(む)、よ(す)、-ど(まり)、-ど(め)、-さ(す)、-さ(し)	禁止|きんし|prohibition|N3
-311	送	9	4	escort; send	*ソウ	*おく(る)	輸送|ゆそう|transport|N2
-312	援	12	1	abet; help; save	*エン		援助|えんじょ|assistance|N3
-313	供	8	3	submit; offer; present; serve (meal)	*キョウ、ク、クウ、グ	*とも、そな(える)、-ども	供給|きょうきゅう|supply|N3
-314	可	5		can; passable; approval	*カ、コク	-べ(き)、-べ(し)	可能|かのう|possible|N3
-315	役	7	3	duty; war; campaign; drafted labor	*ヤク、エキ		役割|やくわり|assigning (allotment of) parts|N3
-316	構	14	3	posture; stance; appearance; build	*コウ	*かま(える)、かま(う)	結構|けっこう|splendid|N5
-317	木	4	5	tree; wood	*モク、ボク	*き、こ-	木曜日|もくようび|Thursday|N5
-318	割	12	3	proportion; comparatively; divide; cut	*カツ	*わり、わ(る)、わ(り)、わ(れる)、さ(く)	分割|ぶんかつ|partition|
-319	聞	14	5	hear; ask; listen	*ブン、モン	*き(く)、き(こえる)	新聞|しんぶん|newspaper|N5
-320	身	7		somebody; person; one's station in life	*シン	*み	自身|じしん|oneself|N3
-321	費	12	3	expense; cost; spend; consume	*ヒ	*つい(やす)、つい(える)	費用|ひよう|cost|N3
-322	付	5	3	adhere; attach; refer to; append	*フ	*つ(ける)、つ(け)、つ(け-)、つ(く)、つ(き)、-づ(ける)、-づ(け)、-づけ、-づ(く)、-つき、-づ(き)、-づき	寄付|きふ|contribution|N3
-323	施	9	1	give; bestow; perform; alms	*シ、セ	*ほどこ(す)	実施|じっし|enforcement|N3
-324	切	4	4	cut; cutoff; be sharp	*セツ、サイ	*き(る)、き(り)、き(れる)、き(れ)、-ぎ(り)、-ぎ(れ)	大切|たいせつ|important|N5
-325	由	5	3	wherefore; a reason	*ユウ、ユ、ユイ	*よし、よ(る)	自由|じゆう|freedom|N4
-326	説	14	3	opinion; theory; explanation; rumor	*セツ、ゼイ	*と(く)	説明|せつめい|explanation|N4
-327	転	11	4	revolve; turn around; change	*テン	*ころ(がる)、ころ(げる)、ころ(がす)、ころ(ぶ)、まろ(ぶ)、うたた、うつ(る)、くる(めく)	自転車|じてんしゃ|bicycle|N5
-328	食	9	5	eat; food	*ショク、ジキ	*た(べる)、く(う)、く(らう)、は(む)	食堂|しょくどう|cafeteria|N5
-329	比	4	2	compare; race; ratio; Philippines	*ヒ	*くら(べる)	比較|ひかく|comparison|N3
-330	難	18	3	difficult; impossible; trouble; accident	*ナン	*むずか(しい)、かた(い)、むづか(しい)、むつか(しい)、-がた(い)、-にく(い)	困難|こんなん|difficulty|N3
-331	防	7	2	ward off; defend; protect; resist	*ボウ	*ふせ(ぐ)	予防|よぼう|prevention|N3
-332	補	12	2	supplement; supply; make good; offset	*ホ	*おぎな(う)	候補|こうほ|candidacy|N3
-333	車	7	5	car	*シャ	*くるま	自動車|じどうしゃ|automobile|N5
-334	優	17	3	tenderness; excel; surpass; actor	*ユウ、ウ	*やさ(しい)、すぐ(れる)、まさ(る)	優勝|ゆうしょう|overall victory|N3
-335	夫	4	3	husband; man	*フウ、フ、ブ	*おっと、それ	大丈夫|だいじょうぶ|It's ok (all right)|N5
-336	研	9	4	polish; study of; sharpen	*ケン	*と(ぐ)	研究|けんきゅう|study|N4
-337	収	4	3	income; obtain; reap; pay	*シュウ	*おさ(める)、おさ(まる)	収入|しゅうにゅう|income|N3
-338	断	11	3	severance; decline; refuse; apologize	*ダン	*ことわ(る)、た(つ)、さだ(める)	判断|はんだん|judgment|N3
-339	井	4	1	well; well crib; town; community	*ショウ、セイ	*い	油井|ゆせい|oil well|
-340	何	7	5	what	*カ	*なに、なん	
-341	南	9	5	south	*ナン、ナ	*みなみ	南北|なんぼく|south and north|N2
-342	石	5	3	stone	*セキ、シャク、コク	*いし	石油|せきゆ|oil|N3
-343	足	7	4	leg; foot; be sufficient; counter for pairs of footwear	*ソク	*あし、た(りる)、た(る)、た(す)	不足|ふそく|insufficiency|N3
-344	違	13	3	difference; differ	*イ	*ちが(う)、ちが(い)、ちが(える)、たが(う)、たが(える)	違反|いはん|violation (of law)|N3
-345	消	10	3	extinguish; blow out; turn off; neutralize	*ショウ	*き(える)、け(す)	消費|しょうひ|consumption|N3
-346	境	14	2	boundary; border; region	*キョウ、ケイ	*さかい	環境|かんきょう|environment|N3
-347	神	9	3	gods; mind; soul	*シン、ジン	*かみ、かん-、こう-	神社|じんじゃ|Shinto shrine|N4
-348	番	12	3	turn; number in a series	*バン	つが(い)	番号|ばんごう|number|N5
-349	規	11	3	standard; measure	*キ		規則|きそく|rule|N4
-350	術	11	3	art; technique; skill; means	*ジュツ	すべ	技術|ぎじゅつ|technique|N4
-351	護	20	1	safeguard; protect	*ゴ	まも(る)	看護婦|かんごふ|(female) nurse|N4
-352	展	10	1	unfold; expand	*テン		展覧会|てんらんかい|exhibition|N4
-353	態	14	1	attitude; condition; figure; appearance	*タイ	*わざ(と)	状態|じょうたい|condition|N3
-354	導	15	2	guidance; leading; conduct; usher	*ドウ	*みちび(く)	指導|しどう|leadership|N3
-355	鮮	17	1	fresh; vivid; clear; brilliant	*セン	*あざ(やか)	新鮮|しんせん|fresh|N3
-356	備	12	3	equip; provision; preparation	*ビ	*そな(える)、そな(わる)、つぶさ(に)	設備|せつび|equipment|N3
-357	宅	6	3	home; house; residence; our house	*タク		住宅|じゅうたく|resident|N3
-358	害	10	3	harm; injury	*ガイ		被害|ひがい|damage|N3
-359	配	10	3	distribute; spouse; exile; rationing	*ハイ	*くば(る)	支配|しはい|rule|N3
-360	副	11	2	vice-; assistant; aide; duplicate	*フク		副詞|ふくし|adverb|N2
-361	算	14	2	calculate; divining; number; abacus	*サン	*そろ	予算|よさん|estimate|N3
-362	視	11	1	inspection; regard as; see; look at	*シ	み(る)	視点|してん|opinion|N3
-363	条	7	1	article; clause; counter for articles, clauses, paragraphs, etc.; twig	*ジョウ、チョウ、デキ	えだ、すじ	条件|じょうけん|conditions|N3
-364	幹	13	1	tree trunk; main part; talent; capability	*カン	*みき	新幹線|しんかんせん|Shinkansen|N2
-365	独	9	1	single; alone; spontaneously; Germany	*ドク、トク	*ひと(り)	独立|どくりつ|independence (e.g.|N3
-366	警	19	3	admonish; commandment	*ケイ	いまし(める)	警官|けいかん|police officer|N5
-367	宮	10	1	Shinto shrine; constellations; palace; princess	*キュウ、グウ、ク、クウ	*みや	宮殿|きゅうでん|palace|N1
-368	究	7	4	research; study	*キュウ、ク	*きわ(める)	研究|けんきゅう|study|N4
-369	育	8	3	bring up; grow up; raise; rear	*イク	*そだ(つ)、そだ(ち)、そだ(てる)、はぐく(む)	教育|きょういく|education|N4
-370	席	10	3	seat; mat; occasion; place	*セキ	むしろ	座席|ざせき|seat|N3
-371	輸	16	2	transport; send; be inferior	*ユ、シュ		輸入|ゆにゅう|import|N4
-372	訪	11	3	call on; visit; look up; offer sympathy	*ホウ	*たず(ねる)、おとず(れる)、と(う)	訪問|ほうもん|call|N3
-373	楽	13	4	music; comfort; ease	*ラク、ガク、ゴウ	*たの(しい)、たの(しむ)、この(む)	音楽|おんがく|Music|N5
-374	起	10	4	rouse; wake up; get up	*キ	*お(きる)、お(こる)、お(こす)、おこ(す)、た(つ)	起源|きげん|origin|N3
-375	万	3	5	ten thousand; 10,000	*マン、バン	よろず	万年筆|まんねんひつ|fountain pen|N5
-376	着	12	4	don; arrive; wear; counter for suits of clothing	*チャク、ジャク	*き(る)、き(せる)、つ(く)、つ(ける)	到着|とうちゃく|arrival|N3
-377	乗	9	3	ride; power; multiplication; record	*ジョウ、ショウ	*の(る)、の(せる)、-の(り)	乗客|じょうきゃく|passenger|N3
-378	店	8	4	store; shop	*テン	*みせ、たな	喫茶店|きっさてん|café|N5
-379	述	8	2	mention; state; speak; relate	*ジュツ	*の(べる)	述語|じゅつご|predicate|N2
-380	残	10	3	remainder; leftover; balance	*ザン、サン	*のこ(る)、のこ(す)、そこな(う)、のこ(り)	残念|ざんねん|regret|N4
-381	想	13	3	idea; thought; conception; think	*ソウ、ソ	おも(う)	予想|よそう|expectation|N3
-382	線	15	2	line; track	*セン	すじ	地平線|ちへいせん|horizon|N3
-383	率	11	1	ratio; rate; proportion; %	*リツ、ソツ、シュツ	*ひき(いる)	確率|かくりつ|probability|N2
-384	病	10	4	ill; sick	*ビョウ、ヘイ	*や(む)、やまい、-や(み)	病院|びょういん|hospital|N5
-385	農	13	2	agriculture; farmers	*ノウ		農業|のうぎょう|agriculture|N3
-386	州	6	2	state; province	*シュウ、ス	す	欧州|おうしゅう|Europe|
-387	武	8	2	warrior; military; chivalry; arms	*ブ、ム	*たけ、たけ(し)	武器|ぶき|weapon|N3
-388	声	7	3	voice	*セイ、ショウ	*こえ、こわ-	声明|せいめい|declaration|N3
-389	質	15	4	substance; quality; matter; temperament	*シツ、シチ、チ	たち、ただ(す)、もと、わりふ	質問|しつもん|question|N5
-390	念	8	3	wish; sense; idea; thought	*ネン		残念|ざんねん|regret|N4
-391	待	9	4	wait; depend on	*タイ	*ま(つ)、-ま(ち)	期待|きたい|expectation|N3
-392	試	13	4	test; try; attempt; experiment	*シ	*こころ(みる)、ため(す)	試合|しあい|match|N4
-393	族	11	4	tribe; family	*ゾク		家族|かぞく|family|N5
-394	象	12	2	elephant; pattern after; imitate; image	*ショウ、ゾウ	かたど(る)	対象|たいしょう|target|N3
-395	銀	14	4	silver	*ギン	しろがね	銀行|ぎんこう|bank|N5
-396	域	11	2	range; region; limits; stage	*イキ		地域|ちいき|area|N3
-397	助	7	3	help; rescue; assist	*ジョ	*たす(ける)、たす(かる)、す(ける)、すけ	援助|えんじょ|assistance|N3
-398	労	7	3	labor; thank for; reward for; toil	*ロウ	*いたわ(る)、ろう(する)、いた(ずき)、ねぎら、つか(れる)、ねぎら(う)	労働|ろうどう|labor|N3
-399	例	8	3	example; custom; usage; precedent	*レイ	*たと(える)	例外|れいがい|exception|N3
-400	衛	16	1	defense; protection	*エイ、エ		衛星|えいせい|satellite|N3
-401	然	12	3	sort of thing; so; if so; in that case	*ゼン、ネン	*しか、しか(り)、しか(し)、さ	全然|ぜんぜん|not at all|N4
-402	早	6	4	early; fast	*ソウ、サッ	*はや(い)、はや、はや(まる)、はや(める)、さ-	早速|さっそく|at once|N2
-403	張	11	1	counter for bows & stringed instruments; stretch; spread; put up (tent)	*チョウ	*は(る)、-は(り)、-ば(り)	主張|しゅちょう|claim|N3
-404	映	9	4	reflect; reflection; projection	*エイ	*うつ(る)、うつ(す)、は(える)、-ば(え)	映画|えいが|movie|N5
-405	限	9	3	limit; restrict; to best of ability	*ゲン	*かぎ(る)、かぎ(り)	期限|きげん|deadline|N3
-406	親	16	4	parent; intimacy; relative; familiarity	*シン	*おや、した(しい)、した(しむ)	両親|りょうしん|parents (lit.|N5
-407	額	18	2	forehead; tablet; plaque; framed picture	*ガク	*ひたい	金額|きんがく|amount of money|N3
-408	監	15	1	oversee; official; govt office; rule	*カン		監督|かんとく|supervision|N3
-409	環	17	1	ring; circle; loop	*カン	わ	環境|かんきょう|environment|N3
-410	験	18	4	verification; effect; testing	*ケン、ゲン	*ため(す)、あかし、しるし、ためし	試験|しけん|an exam|N4
-411	追	9	3	chase; drive away; follow; pursue	*ツイ	*お(う)	追加|ついか|addition|N2
-412	審	15	1	hearing; judge; trial	*シン	つまび(らか)、つぶさ(に)	審判|しんぱん|umpire|N3
-413	商	11	3	make a deal; selling; dealing in; merchant	*ショウ	*あきな(う)	商品|しょうひん|commodity|N3
-414	葉	12	3	leaf; plane; lobe; needle	*ヨウ	*は	紅葉|こうよう|fall colors (of leaves)|N2
-415	義	13	1	righteousness; justice; morality; honor	*ギ		講義|こうぎ|a lecture|N4
-416	伝	6	3	transmit; go along; walk along; follow	*デン、テン	*つた(わる)、つた(える)、つた(う)、つだ(う)、つて、-づた(い)	伝統|でんとう|tradition|N3
-417	働	13	3	work; (kokuji)	*ドウ	*はたら(く)	労働|ろうどう|labor|N3
-418	形	7	3	shape; form; style	*ケイ、ギョウ	*かた、かたち、なり、-がた	人形|にんぎょう|doll|N4
-419	景	12	3	scenery; view	*ケイ		景気|けいき|condition|N3
-420	落	12	3	fall; drop; come down; village	*ラク	*お(ちる)、お(ち)、お(とす)	落第|らくだい|failure|N2
-421	欧	8	2	Europe	*オウ	うた(う)、は(く)	欧米|おうべい|Europe and America|N2
-422	担	8	2	shouldering; carry; raise; bear	*タン	*にな(う)、かつ(ぐ)	担当|たんとう|(in) charge|N3
-423	好	6	3	fond; pleasing; like something	*コウ	*す(く)、この(む)、よ(い)、い(い)	格好|かっこう|appearance|N4
-424	退	9	3	retreat; withdraw; retire; resign	*タイ	*しりぞ(く)、しりぞ(ける)、ひ(く)、の(く)、の(ける)、ど(く)	引退|いんたい|retirement|N3
-425	準	13	2	semi-; correspond to; proportionate to; conform	*ジュン	じゅん(じる)、じゅん(ずる)、なぞら(える)、のり、ひと(しい)、みずもり	水準|すいじゅん|level|N3
-426	賞	15	2	prize; reward; praise	*ショウ	ほ(める)	賞品|しょうひん|prize|N3
-427	訴	12	1	accusation; sue; complain of pain; appeal to	*ソ	*うった(える)	訴訟|そしょう|litigation|N1
-428	辺	5	2	environs; boundary; border; vicinity	*ヘン	*あた(り)、ほと(り)、-べ	周辺|しゅうへん|circumference|N2
-429	造	10	2	create; make; structure; physique	*ゾウ	*つく(る)、つく(り)、-づく(り)	製造|せいぞう|manufacture|N3
-430	英	8	4	England; English; hero; outstanding	*エイ	はなぶさ	英語|えいご|English (language)|N5
-431	被	10	2	incur; cover; veil; brood over	*ヒ	*かぶ(る)、こうむ(る)、おお(う)、かぶ(せる)	被害|ひがい|damage|N3
-432	株	10	1	stocks; stump; shares; stock	*シュ	*かぶ	
-433	頭	16	3	head; counter for large animals	*トウ、ズ、ト	*あたま、かしら、かぶり、-がしら	頭痛|ずつう|headache|N3
-434	技	7	2	skill; art; craft; ability	*ギ	*わざ	技術|ぎじゅつ|technique|N4
-435	低	7	2	lower; short; humble	*テイ	*ひく(い)、ひく(める)、ひく(まる)	最低|さいてい|least|N3
-436	毎	6	5	every	*マイ	*ごと、-ごと(に)	毎日|まいにち|every day|N5
-437	医	7	4	doctor; medicine	*イ	い(やす)、い(する)、くすし	医者|いしゃ|doctor|N5
-438	復	12	2	restore; return to; revert; resume	*フク	また	復習|ふくしゅう|review (of lessons)|N4
-439	仕	5	4	attend; doing; official; serve	*シ、ジ	*つか(える)	仕事|しごと|work|N5
-440	去	5	4	gone; past; quit; leave	*キョ、コ	*さ(る)	去年|きょねん|last year|N5
-441	姿	9	1	figure; form; shape	*シ	*すがた	姿勢|しせい|attitude|N2
-442	味	8	4	flavor; taste	*ミ	*あじ、あじ(わう)	意味|いみ|meaning|N5
-443	負	9	3	defeat; negative; -; minus	*フ	*ま(ける)、ま(かす)、お(う)	負担|ふたん|burden|N1
-444	閣	14	1	tower; tall building; palace	*カク		内閣|ないかく|cabinet|N1
-445	韓	18		Korea	*カン	から、いげた	日韓|にっかん|Japan and South Korea|
-446	渡	12	3	transit; ford; ferry; cross	*ト	*わた(る)、わた(す)	過渡期|かとき|transition period|
-447	失	5	3	lose; error; fault; disadvantage	*シツ	*うしな(う)、う(せる)	失礼|しつれい|discourtesy|N4
-448	移	11	2	shift; move; change; drift	*イ	*うつ(る)、うつ(す)	移動|いどう|migration|N3
-449	差	10	3	distinction; difference; variation; discrepancy	*サ	*さ(す)、さ(し)	交差点|こうさてん|intersection|N5
-450	衆	12	1	masses; great numbers; multitude; populace	*シュウ、シュ	おお(い)	公衆|こうしゅう|the public|N2
-451	個	10	2	individual; counter for articles	*コ、カ		個人|こじん|individual|N3
-452	門	8	2	gate; counter for cannons	*モン	かど、と	専門|せんもん|major|N4
-453	写	5	4	copy; be photographed; describe	*シャ、ジャ	*うつ(す)、うつ(る)、うつ(し)、うつ-	写真|しゃしん|a picture|N5
-454	評	12	1	evaluate; criticism; comment	*ヒョウ		評価|ひょうか|assessment|N3
-455	課	15	2	chapter; lesson; section; department	*カ		課長|かちょう|section manager|N4
-456	末	5	3	end; close; tip; powder	*マツ、バツ	*すえ、うら、うれ	粗末|そまつ|humble|N3
-457	守	6	3	guard; protect; defend; obey	*ス、シュ	*まも(る)、まも(り)、もり、かみ	留守|るす|absence|N4
-458	若	8	3	young; if; perhaps; possibly	*ジャク、ニャク、ニャ	*わか(い)、も(しくわ)、も(し)、も(しくは)、ごと(し)、わか-	老若|ろうじゃく|young and old|
-459	脳	11	2	brain; memory	*ノウ、ドウ	のうずる	頭脳|ずのう|head|N2
-460	極	12	2	extreme; pole; extremely; very	*キョク、ゴク	*きわ(める)、きわ(まる)、きわ(まり)、きわ(み)、き(める)、き(まる)、-ぎ(め)	積極的|せっきょくてき|positive|N3
-461	種	14	3	species; kind; class; variety	*シュ	*たね、-ぐさ	人種|じんしゅ|race (of people)|N3
-462	美	9	3	beauty; beautiful	*ビ、ミ	*うつく(しい)	美術館|びじゅつかん|art gallery|N4
-463	岡	8		mount; hill; knoll	コウ	*おか	
-464	影	15	1	shadow; silhouette; phantom	*エイ	*かげ	影響|えいきょう|influence|N3
-465	命	8	3	fate; command; decree; destiny	*メイ、ミョウ	*いのち	生命|せいめい|life|N3
-466	含	7	2	contain; include; hold in the mouth; bear in mind	*ガン	*ふく(む)、ふく(める)	含有|がんゆう|containing (an ingredient, mineral, etc.)|
-467	福	13	3	blessing; fortune; luck; wealth	*フク		幸福|こうふく|happiness|N3
-468	蔵	15	2	storehouse; hide; own; have	*ゾウ、ソウ	*くら、おさ(める)、かく(れる)	冷蔵庫|れいぞうこ|refrigerator|N5
-469	量	12	2	quantity; measure; weight; amount	*リョウ	*はか(る)	重量|じゅうりょう|heavyweight|N2
-470	望	11	3	ambition; full moon; hope; desire	*ボウ、モウ	*のぞ(む)、もち	希望|きぼう|hope|N3
-471	松	8	1	pine tree	*ショウ	*まつ	松風|しょうふう|(sound of) wind blowing through pine trees|
-472	非	8	3	un-; mistake; negative; injustice	*ヒ	あら(ず)	是非|ぜひ|certainly|N4
-473	撃	15	1	beat; attack; defeat; conquer	*ゲキ	*う(つ)	攻撃|こうげき|attack|N3
-474	佐	7	1	assistant; help	*サ		補佐|ほさ|aid|
-475	核	10	1	nucleus; core; kernel	*カク		結核|けっかく|tuberculosis|N1
-476	観	18	3	outlook; look; appearance; condition	*カン	*み(る)、しめ(す)	観光|かんこう|sightseeing|N3
-477	察	14	3	guess; presume; surmise; judge	*サツ		警察|けいさつ|police|N4
-478	整	16	1	organize; arranging; tune; tone	*セイ	*ととの(える)、ととの(う)	整理|せいり|sorting|N3
-479	段	9	3	grade; steps; stairs	*ダン、タン		階段|かいだん|stairs|N5
-480	横	15	3	sideways; side; horizontal; width	*オウ	*よこ	横断|おうだん|crossing|N3
-481	融	16	1	dissolve; melt	*ユウ	と(ける)、と(かす)	金融|きんゆう|finance|N3
-482	型	9	2	mould; type; model	*ケイ	*かた、-がた	典型|てんけい|type|N3
-483	白	5	5	white	*ハク、ビャク	*しろ、しろ(い)、しら-	明白|めいはく|obvious|N1
-484	深	11	3	deep; heighten; intensify; strengthen	*シン	*ふか(い)、ふか(まる)、ふか(める)、-ぶか(い)、み-	深刻|しんこく|serious|N3
-485	字	6	4	character; letter; word; section of village	*ジ	あざ、あざな、-な	漢字|かんじ|kanji|N5
-486	答	12	4	solution; answer	*トウ	*こた(える)、こた(え)	答案|とうあん|examination paper|N3
-487	夜	8	4	night; evening	*ヤ	*よ、よる	今夜|こんや|this evening|N4
-488	製	14	1	made in...; manufacture	*セイ		製造|せいぞう|manufacture|N3
-489	票	11	1	ballot; label; ticket; sign	*ヒョウ		投票|とうひょう|voting|N3
-490	況	8	2	condition; situation	*キョウ	まし(て)、いわ(んや)、おもむき	状況|じょうきょう|state of affairs|N3
-491	音	9	4	sound; noise	*オン、イン、-ノン	*おと、ね	音楽|おんがく|Music|N5
-492	申	5	3	have the honor to; sign of the monkey; 3-5PM; ninth sign of Chinese zodiac	*シン	*もう(す)、もう(し-)、さる	申告|しんこく|report|N3
-493	様	14	3	Esq.; way; manner; situation	*ヨウ、ショウ	*さま、さん	同様|どうよう|identical|N3
-494	財	10	3	property; money; wealth; assets	*サイ、ザイ、ゾク	たから	財布|さいふ|wallet|N5
-495	港	12	3	harbor	*コウ	*みなと	空港|くうこう|airport|N4
-496	識	19	3	discriminating; know; write	*シキ	し(る)、しる(す)	意識|いしき|consciousness|N3
-497	注	8	4	pour; irrigate; shed (tears); flow into	*チュウ	*そそ(ぐ)、さ(す)、つ(ぐ)	注意|ちゅうい|caution|N4
-498	呼	8	3	call; call out to; invite	*コ	*よ(ぶ)	呼吸|こきゅう|breath|N3
-499	渉	11	1	ford; go cross; transit; ferry	*ショウ	*わた(る)	交渉|こうしょう|negotiation|N1
-500	達	12	3	accomplished; reach; arrive; attain	*タツ、ダ	*-たち	配達|はいたつ|delivery|N3
-501	良	7	3	good; pleasing; skilled	*リョウ	*よ(い)、い(い)	不良|ふりょう|badness|N1
-502	響	20	1	echo; sound; resound; ring	*キョウ	*ひび(く)	影響|えいきょう|influence|N3
-503	阪	7		heights; slope	*ハン	*さか	阪神|はんしん|Osaka-Kobe|
-504	帰	10	4	homecoming; arrive at; lead to; result in	*キ	*かえ(る)、かえ(す)、おく(る)、とつ(ぐ)	帰宅|きたく|returning home|N3
-505	針	10	2	needle; pin; staple; stinger	*シン	*はり	方針|ほうしん|objective|N2
-506	専	9	2	specialty; exclusive; mainly; solely	*セン	*もっぱ(ら)	専門|せんもん|major|N4
-507	推	11	1	conjecture; infer; guess; suppose	*スイ	*お(す)	推薦|すいせん|recommendation|N3
-508	谷	7	2	valley	*コク	*たに、きわ(まる)	
-509	古	5	4	old	*コ	*ふる(い)、ふる-、-ふる(す)	中古|ちゅうこ|used|N3
-510	候	10	3	climate; season; weather; wait for	*コウ	そうろう	候補|こうほ|candidacy|N3
-511	史	5	2	history; chronicle	*シ		歴史|れきし|history|N4
-512	天	4	5	heavens; sky; imperial	*テン	*あま-、あまつ、あめ	天気|てんき|weather|N5
-513	階	12	2	storey; stair; counter for storeys of a building	*カイ	きざはし	階段|かいだん|stairs|N5
-514	程	12	3	extent; degree; law; formula	*テイ	*ほど	程度|ていど|degree|N3
-515	満	12	3	full; fullness; enough; satisfy	*マン、バン	*み(ちる)、み(つ)、み(たす)	不満|ふまん|dissatisfaction|N3
-516	敗	11	3	failure; defeat; reversal	*ハイ	*やぶ(れる)	勝敗|しょうはい|victory or defeat|N2
-517	管	14	2	pipe; tube; wind instrument; drunken talk	*カン	*くだ	管理|かんり|control|N3
-518	値	10	3	price; cost; value	*チ	*ね、あたい	価値|かち|value|N3
-519	歌	14	4	song; sing	*カ	*うた、うた(う)	歌手|かしゅ|singer|N3
-520	買	12	4	buy	*バイ	*か(う)	売買|ばいばい|trade|N2
-521	突	8	3	stab; protruding; thrust; pierce	*トツ、カ	*つ(く)	衝突|しょうとつ|collision|N3
-522	兵	7	2	soldier; private; troops; army	*ヘイ、ヒョウ	つわもの	兵隊|へいたい|soldier|N2
-523	接	11	2	touch; contact; adjoin; piece together	*セツ、ショウ	*つ(ぐ)	直接|ちょくせつ|direct|N3
-524	請	15	1	solicit; invite; ask	*セイ、シン、ショウ	*う(ける)、こ(う)	請求|せいきゅう|claim|N3
-525	器	15	1	utensil; vessel; receptacle; implement	*キ	*うつわ	武器|ぶき|weapon|N3
-526	士	3	1	gentleman; scholar; samurai	*シ	*さむらい	同士|どうし|one another|N3
-527	光	6	3	ray; light	*コウ	*ひかり、ひか(る)	観光|かんこう|sightseeing|N3
-528	討	10	1	chastise; attack; defeat; destroy	*トウ	う(つ)	検討|けんとう|consideration|N3
-529	路	13	3	path; route; road; distance	*ロ、ル	*-じ、みち	道路|どうろ|road|N3
-530	悪	11	4	bad; vice; rascal; false	*アク、オ	*わる(い)、あ(し)、にく(い)、ああ、いずくに、いずくんぞ、にく(む)、わる-	悪魔|あくま|devil|N3
-531	科	9	3	department; course; section	*カ		科学|かがく|science|N4
-532	攻	7	1	aggression; attack; criticize; polish	*コウ	*せ(める)	攻撃|こうげき|attack|N3
-533	崎	11	1	promontory; cape; spit	*キ	*さき、さい、みさき	
-534	督	13	1	coach; command; urge; lead	*トク		監督|かんとく|supervision|N3
-535	授	11	1	impart; instruct; grant; confer	*ジュ	*さず(ける)、さず(かる)	授業|じゅぎょう|a class (of school)|N5
-536	催	13	1	sponsor; hold (a meeting); give (a dinner)	*サイ	*もよお(す)、もよう(す)	催促|さいそく|demand|N2
-537	細	11	2	dainty; get thin; taper; slender	*サイ	*ほそ(い)、ほそ(る)、こま(か)、こま(かい)	細胞|さいぼう|cell|N1
-538	効	8	2	merit; efficacy; efficiency; benefit	*コウ	*き(く)、ききめ、なら(う)	効果|こうか|effect|N3
-539	図	7	4	map; drawing; plan; extraordinary	*ズ、ト	*え、はか(る)	地図|ちず|a map|N5
-540	週	11	4	week	*シュウ		今週|こんしゅう|this week|N5
-541	積	16	3	volume; product (x*y); acreage; contents	*セキ	*つ(む)、つ(もる)、つ(もり)、-づ(み)	面積|めんせき|area|N2
-542	丸	3	2	round; full (month); perfection; -ship	*ガン	*まる、まる(める)、まる(い)	弾丸|だんがん|bullet|
-543	他	5	3	other; another; the others	*タ	*ほか	他人|たにん|unrelated person|N3
-544	及	3	1	reach out; exert; exercise; cause	*キュウ	*およ(ぶ)、およ(び)、および、およ(ぼす)	普及|ふきゅう|diffusion|N2
-545	湾	12	2	gulf; bay; inlet	*ワン	いりえ	台湾|たいわん|Taiwan|
-546	録	16	2	record	*ロク	しる(す)、と(る)	記録|きろく|record|N3
-547	処	5	3	dispose; manage; deal with; sentence	*ショ	*ところ、お(る)、-こ	処理|しょり|processing|N3
-548	省	9	2	government ministry; conserve; omit	*ショウ、セイ	*はぶ(く)、かえり(みる)	省略|しょうりゃく|omission|N3
-549	旧	5	2	old times; old things; old friend; former	*キュウ	ふる(い)、もと	復旧|ふっきゅう|restoration|N1
-550	室	9	4	room; apartment; chamber; greenhouse	*シツ	むろ	教室|きょうしつ|classroom|N5
-551	憲	16	1	constitution; law	*ケン		憲法|けんぽう|constitution|N3
-552	太	4	3	plump; thick; big around	*タイ、タ	*ふと(い)、ふと(る)	太陽|たいよう|sun|N3
-553	橋	16	2	bridge	*キョウ	*はし	鉄橋|てっきょう|iron bridge|N2
-554	歩	8	4	walk; counter for steps	*ホ、ブ、フ	*ある(く)、あゆ(む)	歩道|ほどう|walkway|N3
-555	離	19	1	detach; separation; disjoin; digress	*リ	*はな(れる)、はな(す)	離婚|りこん|divorce|N3
-556	岸	8	2	beach	*ガン	*きし	海岸|かいがん|coast|N4
-557	客	9	3	guest; visitor; customer; client	*キャク、カク		観客|かんきゃく|audience|N3
-558	風	9	4	wind; air; style; manner	*フウ、フ	*かぜ、かざ-	台風|たいふう|typhoon|N4
-559	紙	10	4	paper	*シ	*かみ	表紙|ひょうし|front cover|N2
-560	激	16	1	violent; get excited; enraged; chafe	*ゲキ	*はげ(しい)	急激|きゅうげき|sudden|N3
-561	否	7	3	negate; no; noes; refuse	*ヒ	*いな、いや	否定|ひてい|negation|N3
-562	周	8	2	circumference; circuit; lap	*シュウ	*まわ(り)	周囲|しゅうい|surroundings|N3
-563	師	10	3	expert; teacher; master; model	*シ	いくさ	医師|いし|doctor|N3
-564	摘	14	1	pinch; pick; pluck; trim	*テキ	*つ(む)	指摘|してき|pointing out|N1
-565	材	7	2	lumber; log; timber; wood	*ザイ		材料|ざいりょう|ingredients|N3
-566	登	12	3	ascend; climb up	*トウ、ト、ドウ、ショウ、チョウ	*のぼ(る)、あ(がる)	登山|とざん|mountain-climbing|N3
-567	系	7	1	lineage; system	*ケイ		体系|たいけい|system|N2
-568	批	7	1	criticism; strike	*ヒ		批判|ひはん|criticism|N3
-569	郎	9	1	son; counter for sons	*ロウ、リョウ	おとこ	新郎|しんろう|bridegroom|
-570	母	5	5	mother	*ボ	*はは、も	祖母|そぼ|grandmother|N4
-571	易	8	3	easy; ready to; simple; fortune-telling	*イ、エキ	*やさ(しい)、やす(い)	貿易|ぼうえき|trade|N4
-572	健	11	1	healthy; health; strength; persistence	*ケン	すこ(やか)	健康|けんこう|health(y)|N3
-573	黒	11	4	black	*コク	*くろ、くろ(ずむ)、くろ(い)	黒板|こくばん|blackboard|N3
-574	火	4	5	fire	*カ	*ひ、-び、ほ-	火曜日|かようび|Tuesday|N5
-575	戸	4	2	door; counter for houses	*コ	*と	戸籍|こせき|census|N1
-576	速	10	3	quick; fast	*ソク	*はや(い)、はや(める)、すみ(やか)、はや-	急速|きゅうそく|rapid (e.g.|N3
-577	存	6	3	exist; suppose; be aware of; believe	*ソン、ゾン	ながら(える)、あ(る)、たも(つ)、と(う)	存在|そんざい|existence|N3
-578	花	7	4	flower	*カ、ケ	*はな	花瓶|かびん|(flower) vase|N5
-579	春	9	4	springtime; spring (season)	*シュン	*はる	青春|せいしゅん|youth|N1
-580	飛	9	3	fly; skip (pages); scatter	*ヒ	*と(ぶ)、と(ばす)	飛行機|ひこうき|airplane|N5
-581	殺	10	3	kill; murder; butcher; slice off	*サツ、サイ、セツ	*ころ(す)、そ(ぐ)、あや(める)、-ごろ(し)	自殺|じさつ|suicide|N3
-582	央	5	2	center; middle	*オウ		中央|ちゅうおう|central|N3
-583	券	8	2	ticket	*ケン		定期券|ていきけん|commuter pass|N2
-584	赤	7	4	red	*セキ、シャク	*あか、あか(い)、あか(らむ)、あか(らめる)	赤道|せきどう|equator|N2
-585	号	5	3	nickname; number; item; title	*ゴウ	さけ(ぶ)、よびな	番号|ばんごう|number|N5
-586	単	9	3	simple; one; single; merely	*タン	ひとえ	簡単|かんたん|simple|N4
-587	盟	13	1	alliance; oath	*メイ		同盟|どうめい|alliance|N1
-588	座	10	3	squat; seat; cushion; gathering	*ザ	*すわ(る)	座席|ざせき|seat|N3
-589	青	8	4	blue; green	*セイ、ショウ	*あお、あお(い)	青年|せいねん|youth|N3
-590	破	10	3	rend; rip; tear; break	*ハ	*やぶ(る)、やぶ(れる)、わ(れる)	破産|はさん|(personal) bankruptcy|N3
-591	編	15	2	compilation; knit; plait; braid	*ヘン	*あ(む)、-あ(み)	編集|へんしゅう|editing|N2
-592	捜	10	2	search; look for; locate	*ソウ、シュ、シュウ	*さが(す)	捜査|そうさ|search (esp. in criminal investigations|N3
-593	竹	6	2	bamboo	チク	*たけ	爆竹|ばくちく|firecracker|
-594	除	10	3	exclude; division (x/3); remove; abolish	*ジョ、ジ	*のぞ(く)、-よ(け)	掃除|そうじ|cleaning|N5
-595	完	7	3	perfect; completion; end	*カン		完成|かんせい|complete|N3
-596	降	10	3	descend; precipitate; fall; surrender	*コウ、ゴ	*お(りる)、お(ろす)、ふ(る)、ふ(り)、くだ(る)、くだ(す)	降伏|こうふく|capitulation|N3
-597	超	12	2	transcend; super-; ultra-	*チョウ	*こ(える)、こ(す)	超過|ちょうか|excess|N2
-598	責	11	3	blame; condemn; censure	*セキ	*せ(める)	責任|せきにん|duty|N3
-599	並	8	2	row; and; besides; as well as	*ヘイ、ホウ	*なら(べる)、な(み)、なみ、なら(ぶ)、なら(びに)	並行|へいこう|(going) side by side|N2
-600	療	17	2	heal; cure	*リョウ		医療|いりょう|medical care|N3
-601	従	10	1	accompany; obey; submit to; comply	*ジュウ、ショウ、ジュ	*したが(う)、したが(える)、より	従来|じゅうらい|up to now|N1
-602	右	5	5	right	*ユウ、ウ	*みぎ	左右|さゆう|left and right|N3
-603	修	10	1	discipline; conduct oneself well; study; master	*シュウ、シュ	*おさ(める)、おさ(まる)	修正|しゅうせい|amendment|N3
-604	捕	10	3	catch; capture	*ホ	*つか(まえる)、と(らえる)、と(らわれる)、と(る)、とら(える)、とら(われる)、つか(まる)	逮捕|たいほ|arrest|N3
-605	隊	12	1	regiment; party; company; squad	*タイ		軍隊|ぐんたい|army|N3
-606	危	6	3	dangerous; fear; uneasy	*キ	*あぶ(ない)、あや(うい)、あや(ぶむ)	危険|きけん|danger|N4
-607	採	11	2	pick; take; fetch; take up	*サイ	*と(る)	採集|さいしゅう|collecting|N3
-608	織	18	1	weave; fabric	*シキ、ショク	*お(る)、お(り)、おり	組織|そしき|organization|N3
-609	森	12	2	forest; woods	*シン	*もり	森林|しんりん|forest|N2
-610	競	20	2	emulate; compete with; bid; sell at auction	*キョウ、ケイ	*きそ(う)、せ(る)、くら(べる)	競争|きょうそう|competition|N4
-611	拡	8	1	broaden; extend; expand; enlarge	*カク、コウ	*ひろ(がる)、ひろ(げる)、ひろ(める)	拡大|かくだい|magnification|N3
-612	故	9	1	happenstance; especially; intentionally; reason	*コ	*ゆえ、ふる(い)、もと	事故|じこ|accident|N4
-613	館	16	4	building; mansion; large building; palace	*カン	やかた、たて	大使館|たいしかん|embassy|N5
-614	振	10	1	shake; wave; wag; swing	*シン	*ふ(る)、ふ(れる)、ふ(るう)	振興|しんこう|promotion|N3
-615	給	12	3	salary; wage; gift; allow	*キュウ	*たま(う)、たも(う)、-たま(え)	供給|きょうきゅう|supply|N3
-616	屋	9	4	roof; house; shop; dealer	*オク	*や	屋上|おくじょう|rooftop|N4
-617	介	4	2	jammed in; shellfish; mediate; concern oneself with	*カイ		紹介|しょうかい|an introduction|N4
-618	読	14	5	read	*ドク、トウ、トク	*よ(む)、-よ(み)	読書|どくしょ|reading|N3
-619	弁	5	1	valve; petal; braid; speech	*ベン、ヘン	かんむり、わきま(える)、わ(ける)、はなびら、あらそ(う)	弁当|べんとう|box lunch|N3
-620	根	10	2	root; radical; head (pimple)	*コン	*ね	根拠|こんきょ|basis|N1
-621	色	6	4	color	*ショク、シキ	*いろ	特色|とくしょく|characteristic|N2
-622	友	4	5	friend	*ユウ	*とも	友人|ゆうじん|friend (formal)|N3
-623	苦	8	3	suffering; trial; worry; hardship	*ク	*くる(しい)、くる(しむ)、くる(しめる)、にが(い)、にが(る)、-ぐる(しい)	苦労|くろう|hardship|N3
-624	就	12	1	concerning; settle; take position; depart	*シュウ、ジュ	*つ(く)、つ(ける)	就職|しゅうしょく|finding employment|N3
-625	迎	7	3	welcome; meet; greet	*ゲイ	*むか(える)	歓迎|かんげい|welcome|N3
-626	走	7	4	run	*ソウ	*はし(る)	逃走|とうそう|flight|N1
-627	販	11	2	marketing; sell; trade	*ハン		販売|はんばい|sale|N3
-628	園	13	3	park; garden; yard; farm	*エン	その	公園|こうえん|a park|N5
-629	具	8	3	tool; utensil; means; possess	*グ	そな(える)、つぶさ(に)	道具|どうぐ|tool|N4
-630	左	5	5	left	*サ、シャ	*ひだり	左右|さゆう|left and right|N3
-631	異	11	1	uncommon; different; queerness; strangeness	*イ	*こと、こと(なる)、け	異常|いじょう|strangeness|N3
-632	歴	14	2	curriculum; continuation; passage of time	*レキ、レッキ		歴史|れきし|history|N4
-633	辞	13	3	resign; word; term; expression	*ジ	*や(める)、いな(む)	辞書|じしょ|dictionary|N5
-634	将	10	2	leader; commander; general; admiral	*ショウ、ソウ	まさ(に)、はた、まさ、ひきい(る)、もって	将来|しょうらい|(in the) future|N4
-635	秋	9	4	autumn	シュウ	*あき、とき	秋分|しゅうぶん|autumnal equinox|
-636	因	6	3	cause; factor; be associated with; depend on	*イン	*よ(る)、ちな(む)	原因|げんいん|cause|N4
-637	献	13	1	offering; counter for drinks; present; offer	*ケン、コン	*たてまつ(る)	貢献|こうけん|contribution|N3
-638	厳	17	1	stern; strictness; severity; rigidity	*ゲン、ゴン	*きび(しい)、おごそ(か)、いか(めしい)、いつくし	厳重|げんじゅう|strict|N2
-639	馬	10	3	horse	*バ、メ、マ、ボ、モ	*うま、ま	馬鹿|ばか|fool|N3
-640	愛	13	3	love; affection; favourite	*アイ	*まな、いと(しい)、かな(しい)、め(でる)、お(しむ)	愛情|あいじょう|love|N3
-641	幅	12	2	hanging scroll; width	*フク	*はば	増幅|ぞうふく|amplification|
-642	休	6	5	rest; day off; retire; sleep	*キュウ	*やす(む)、やす(まる)、やす(める)	休暇|きゅうか|vacation|N3
-643	維	14	1	fiber; tie; rope	*イ		維持|いじ|maintenance|N3
-644	富	12	3	wealth; enrich; abundant	*フ、フウ	*と(む)、とみ	豊富|ほうふ|abundance|N3
-645	浜	10	1	seacoast; beach; seashore	*ヒン	*はま	海浜|かいひん|seashore|
-646	父	4	5	father	*フ	*ちち	祖父|そふ|grandfather|N4
-647	遺	15	1	bequeath; leave behind; reserve	*イ、ユイ	*のこ(す)	遺跡|いせき|historic ruins|N1
-648	彼	8	3	he; that; the	*ヒ	*かれ、かの、か(の)	彼岸|ひがん|equinoctial week (when Buddhist services are held)|
-649	般	10	2	carrier; carry; all; general	*ハン		諸般|しょはん|various|
-650	未	5	3	un-; not yet; hitherto; still	*ミ、ビ	*ま(だ)、いま(だ)、ひつじ	未来|みらい|future (life tense)|N3
-651	塁	12	1	bases; fort; rampart; walls	*ルイ、ライ、スイ	とりで	本塁打|ほんるいだ|home run|
-652	貿	12	2	trade; exchange	*ボウ		貿易|ぼうえき|trade|N4
-653	講	17	2	lecture; club; association	*コウ		講義|こうぎ|a lecture|N4
-654	邦	7	1	home country; country; Japan	*ホウ	*くに	邦人|ほうじん|Japanese national (esp. abroad)|
-655	舞	15	3	dance; flit; circle; wheel	*ブ	*まい、ま(う)	舞台|ぶたい|stage (theater)|N3
-656	林	8	2	grove; forest	*リン	*はやし	森林|しんりん|forest|N2
-657	装	12	2	attire; dress; pretend; disguise	*ソウ、ショウ	*よそお(う)、よそお(い)	装置|そうち|equipment|N3
-658	諸	15	2	various; many; several; together	*ショ	*もろ	諸君|しょくん|Gentlemen!|N1
-659	夏	10	4	summer	*カ、ゲ、ガ	*なつ	夏季|かき|summer season|
-660	素	10	1	elementary; principle; naked; uncovered	*ソ、ス	もと	要素|ようそ|element|N3
-661	亡	3	3	deceased; the late; dying; perish	*ボウ、モウ	*な(い)、な(き-)、ほろ(びる)、ほろ(ぶ)、ほろ(ぼす)	死亡|しぼう|death|N3
-662	劇	15	2	drama; play	*ゲキ		劇場|げきじょう|theater|N3
-663	河	8	2	river	*カ	*かわ	河川|かせん|rivers|N1
-664	遣	13	1	dispatch; despatch; send; give	*ケン	*つか(う)、つか(わす)、や(る)、-つか(い)、-づか(い)	派遣|はけん|dispatch|N1
-665	航	10	2	navigate; sail; cruise; fly	*コウ		航空|こうくう|aviation|N3
-666	抗	7	1	confront; resist; defy; oppose	*コウ	*あらが(う)	抵抗|ていこう|resistance|N3
-667	冷	7	3	cool; cold (beer, person); chill	*レイ	*つめ(たい)、ひ(える)、ひ(や)、ひ(ややか)、ひ(やす)、ひ(やかす)、さ(める)、さ(ます)	冷蔵庫|れいぞうこ|refrigerator|N5
-668	模	14	1	imitation; copy; mock	*モ、ボ		模様|もよう|pattern|N3
-669	雄	12	1	masculine; male; hero; leader	*ユウ	*おす、おん、お-	英雄|えいゆう|hero|N1
-670	適	14	3	suitable; occasional; rare; qualified	*テキ	かな(う)	適当|てきとう|fitness|N4
-671	婦	11	3	lady; woman; wife; bride	*フ	よめ	看護婦|かんごふ|(female) nurse|N4
-672	鉄	13	2	iron	*テツ	くろがね	地下鉄|ちかてつ|underground train|N5
-673	寄	11	3	draw near; stop in; bring near; gather	*キ	*よ(る)、よ(せる)、-よ(り)	寄付|きふ|contribution|N3
-674	益	10	1	benefit; gain; profit; advantage	*エキ、ヤク	ま(す)	利益|りえき|profits|N3
-675	込	5	3	crowded; mixture; in bulk; included		*こ(む)、こ(み)、こ(める)	
-676	顔	18	3	face; expression	*ガン	*かお	顔面|がんめん|face (of person)|
-677	緊	15	1	tense; solid; hard; reliable	*キン	し(める)、し(まる)	緊張|きんちょう|tension|N3
-678	類	18	3	sort; kind; variety; class	*ルイ	*たぐ(い)	人類|じんるい|mankind|N3
-679	児	7	2	newborn babe; child; young of animals	*ジ、ニ、ゲイ	*こ、-っこ	児童|じどう|children|N3
-680	余	7	3	too much; myself; surplus; other	*ヨ	*あま(る)、あま(り)、あま(す)、あんま(り)	余裕|よゆう|excess|N3
-681	禁	13	2	prohibition; ban; forbid	*キン		禁止|きんし|prohibition|N3
-682	印	6	2	stamp; seal; mark; imprint	*イン	*しるし、しる(す)、-じるし	印象|いんしょう|impression|N3
-683	逆	9	2	inverted; reverse; opposite; wicked	*ギャク、ゲキ	*さか、さか(さ)、さか(らう)	逆転|ぎゃくてん|(sudden) change|N1
-684	王	4	3	king; rule; magnate	*オウ、-ノウ		女王|じょおう|queen|N3
-685	返	7	3	return; answer; fade; repay	*ヘン	*かえ(す)、かえ(る)	返事|へんじ|reply|N4
-686	標	15	1	signpost; seal; mark; stamp	*ヒョウ	*しるし、しるべ	目標|もくひょう|mark|N3
-687	換	12	2	interchange; period; change; convert	*カン	*か(える)、か(わる)	交換|こうかん|exchange|N3
-688	久	3	2	long time; old story	*キュウ、ク	*ひさ(しい)	永久|えいきゅう|eternity|N3
-689	短	12	2	short; brevity; fault; defect	*タン	*みじか(い)	短期|たんき|short term|N2
-690	油	8	2	oil; fat	*ユ、ユウ	*あぶら	醤油|しょうゆ|soy sauce|N5
-691	妻	8	3	wife; spouse	*サイ	*つま	夫妻|ふさい|man and wife|N2
-692	暴	15	2	outburst; rave; fret; force	*ボウ、バク	*あば(く)、あば(れる)	乱暴|らんぼう|rude|N2
-693	輪	15	2	wheel; ring; circle; link	*リン	*わ	車輪|しゃりん|(car) wheel|N2
-694	占	5	2	fortune-telling; divining; forecasting; occupy	*セン	*うらな(う)、し(める)	占領|せんりょう|occupation|N1
-695	宣	9	1	proclaim; say; announce	*セン	*のたま(う)	宣伝|せんでん|advertisement|N3
-696	背	9	3	stature; height; back; behind	*ハイ	*せ、せい、そむ(く)、そむ(ける)	背景|はいけい|background|N1
-697	昭	9	1	shining; bright	*ショウ		昭和|しょうわ|Shōwa era (1926.12.25-1989.1.7)|
-698	廃	12	1	abolish; obsolete; cessation; discarding	*ハイ	*すた(れる)、すた(る)	荒廃|こうはい|ruin|N3
-699	植	12	2	plant	*ショク	*う(える)、う(わる)	植物|しょくぶつ|plant|N3
-700	熱	15	3	heat; temperature; fever; mania	*ネツ	*あつ(い)	加熱|かねつ|heating|N2
-701	宿	11	3	inn; lodging; relay station; dwell	*シュク	*やど、やど(る)、やど(す)	宿題|しゅくだい|homework|N5
-702	薬	16	3	medicine; chemical; enamel; gunpowder	*ヤク	*くすり	薬品|やくひん|medicine(s)|N2
-703	伊	6	1	Italy; that one	*イ	かれ	
-704	江	6	1	creek; inlet; bay	*コウ	*え	江上|こうじょう|(on the) bank of a large river|
-705	清	11	2	pure; purify; cleanse; exorcise	*セイ、ショウ、シン	*きよ(い)、きよ(まる)、きよ(める)	清潔|せいけつ|clean|N3
-706	習	11	4	learn	*シュウ、ジュ	*なら(う)、なら(い)	練習|れんしゅう|(to) practice|N5
-707	険	11	3	precipitous; inaccessible place; impregnable position; steep place	*ケン	*けわ(しい)	危険|きけん|danger|N4
-708	頼	16	3	trust; request	*ライ	*たの(む)、たの(もしい)、たよ(る)	信頼|しんらい|reliance|N3
-709	僚	14	1	colleague; official; companion	*リョウ		官僚|かんりょう|bureaucrat|N3
-710	覚	12	3	memorize; learn; remember; awake	*カク	*おぼ(える)、さ(ます)、さ(める)、さと(る)	感覚|かんかく|sense|N3
-711	吉	6	1	good luck; joy; congratulations	*キツ、キチ	*よし	不吉|ふきつ|ominous|N1
-712	盛	11	1	boom; prosper; copulate	*セイ、ジョウ	*も(る)、さか(る)、さか(ん)	盛大|せいだい|grand|N1
-713	船	11	3	ship; boat	*セン	*ふね、ふな-	造船|ぞうせん|shipbuilding|N2
-714	倍	10	2	double; twice; times; fold	*バイ		倍率|ばいりつ|diameter|N1
-715	均	7	2	level; average	*キン	なら(す)	平均|へいきん|equilibrium|N3
-716	億	15	2	hundred million; 10**8	*オク		数億年|すうおくねん|several hundred million years|
-717	途	10	3	route; way; road	*ト	みち	途中|とちゅう|on the way|N4
-718	圧	5	2	pressure; push; overwhelm; oppress	*アツ、エン、オウ	お(す)、へ(す)、おさ(える)、お(さえる)	気圧|きあつ|atmospheric pressure|N2
-719	芸	7	2	technique; art; craft; performance	*ゲイ、ウン	う(える)、のり、わざ	芸術|げいじゅつ|(fine) art|N3
-720	許	11	3	permit; approve	*キョ	*ゆる(す)、もと	許可|きょか|permission|N3
-721	皇	9	1	emperor	*コウ、オウ		皇居|こうきょ|Imperial Palace|N1
-722	臨	18	1	look to; face; meet; confront	*リン	*のぞ(む)	臨時|りんじ|temporary|N2
-723	踏	15	1	step; trample; carry through; appraise	*トウ	*ふ(む)、ふ(まえる)	舞踏|ぶとう|dance (esp. Western style)|
-724	駅	14	4	station	*エキ		駅前|えきまえ|in front of a station|
-725	署	13	2	signature; govt office; police station	*ショ		署名|しょめい|signature|N3
-726	抜	7	3	slip out; extract; pull out; pilfer	*バツ、ハツ、ハイ	*ぬ(く)、ぬ(き)、ぬ(ける)、ぬ(かす)、ぬ(かる)	海抜|かいばつ|height above sea level|N1
-727	壊	16	1	demolition; break; destroy	*カイ、エ	*こわ(す)、こわ(れる)、やぶ(る)	崩壊|ほうかい|collapse|N1
-728	債	13	1	bond; loan; debt	*サイ		負債|ふさい|debt|N1
-729	便	9	3	convenience; facility; excrement; feces	*ベン、ビン	*たよ(り)	便利|べんり|convenient|N5
-730	伸	7	2	expand; stretch; extend; lengthen	*シン	*の(びる)、の(ばす)、の(べる)、の(す)	追伸|ついしん|postscript|
-731	留	10	3	detain; fasten; halt; stop	*ル、リュウ	*と(める)、と(まる)、とど(める)、とど(まる)、るうぶる	留学生|りゅうがくせい|international student|N5
-732	罪	13	3	guilt; sin; crime; fault	*ザイ	*つみ	犯罪|はんざい|crime|N3
-733	停	11	2	halt; stopping	*テイ	と(める)、と(まる)	停電|ていでん|failure of electricity|N3
-734	興	16	1	entertain; revive; retrieve; interest	*キョウ、コウ	おこ(る)、おこ(す)	興味|きょうみ|interest (in something)|N4
-735	爆	19	2	bomb; burst open; pop; split	*バク	*は(ぜる)	爆発|ばくはつ|explosion|N3
-736	陸	11	2	land; six	*リク、ロク	おか	大陸|たいりく|continent|N3
-737	玉	5	2	jewel; ball	*ギョク	*たま、-だま	玉音|ぎょくおん|the Emperor's voice|
-738	源	13	1	source; origin	*ゲン	*みなもと	資源|しげん|resources|N3
-739	儀	15	1	ceremony; rule; affair; case	*ギ		礼儀|れいぎ|manners|N3
-740	波	8	2	waves; billows; Poland	*ハ	*なみ	波乱|はらん|disturbance|
-741	創	12	1	genesis; wound; injury; hurt	*ソウ、ショウ	つく(る)、はじ(める)、きず、けず(しける)	創造|そうぞう|creation|N3
-742	障	14	1	hinder; hurt; harm	*ショウ	*さわ(る)	障害|しょうがい|obstacle|N3
-743	継	13	1	inherit; succeed; continue; patch	*ケイ	*つ(ぐ)、まま-	継続|けいぞく|continuation|N2
-744	筋	12	1	muscle; sinew; tendon; fiber	*キン	*すじ	筋肉|きんにく|muscle|N3
-745	狙	8		aim at; sight; shadow; stalk	*ソ、ショ	*ねら(う)、ねら(い)	狙撃|そげき|shooting|
-746	帯	10	2	sash; belt; obi; zone	*タイ	*おび、お(びる)	熱帯|ねったい|tropics|N3
-747	延	8	2	prolong; stretching	*エン	*の(ばす)、の(びる)、の(べる)、の(べ)	延期|えんき|postponement|N3
-748	羽	6	2	feathers; counter for birds, rabbits	*ウ	*はね、は、わ	羽化|うか|emergence (of insects)|
-749	努	7	3	toil; diligent; as much as possible	*ド	*つと(める)	努力|どりょく|great effort|N3
-750	固	8	2	harden; set; clot; curdle	*コ	*かた(める)、かた(まる)、かた(まり)、かた(い)	固定|こてい|fixation|N1
-751	闘	18	1	fight; war	*トウ	*たたか(う)、あらそ(う)	戦闘|せんとう|battle|N1
-752	精	14	3	refined; ghost; fairy; energy	*セイ、ショウ	しら(げる)、くわ(しい)	精神|せいしん|mind|N3
-753	則	9	2	rule; law; follow; based on	*ソク	*のっと(る)、のり、すなわち	規則|きそく|rule|N4
-754	葬	12	1	interment; bury; shelve	*ソウ	*ほうむ(る)	葬式|そうしき|funeral|N2
-755	乱	7	2	riot; war; disorder; disturb	*ラン、ロン	*みだ(れる)、みだ(る)、みだ(す)、みだ、おさ(める)、わた(る)	混乱|こんらん|chaos|N3
-756	避	16	1	evade; avoid; avert; ward off	*ヒ	*さ(ける)、よ(ける)	避難|ひなん|taking refuge|N1
-757	普	12	2	universal; wide(ly); generally; Prussia	*フ	あまね(く)、あまねし	普通|ふつう|common|N4
-758	散	12	3	scatter; disperse; spend; squander	*サン	*ち(る)、ち(らす)、ち(らかす)、ち(らかる)、ち(らばる)、ばら、ばら(ける)	散歩|さんぽ|walk|N5
-759	司	5	1	director; official; govt office; rule	*シ	*つかさど(る)	上司|じょうし|one's superior|N3
-760	康	11	1	ease; peace	*コウ		健康|けんこう|health(y)|N3
-761	測	12	2	fathom; plan; scheme; measure	*ソク	*はか(る)	予測|よそく|prediction|N3
-762	豊	13	2	bountiful; excellent; rich	*ホウ、ブ	*ゆた(か)、とよ	豊富|ほうふ|abundance|N3
-763	洋	9	4	ocean; sea; foreign; Western style	*ヨウ		洋服|ようふく|Western-style clothes|N5
-764	静	14	3	quiet	*セイ、ジョウ	*しず(か)、しず(まる)、しず(める)、しず-	冷静|れいせい|calm|N3
-765	善	12	1	virtuous; good; goodness	*ゼン	よ(い)、い(い)、よ(く)、よし(とする)	改善|かいぜん|betterment|N3
-766	逮	11	1	apprehend; chase	*タイ		逮捕|たいほ|arrest|N3
-767	婚	11	3	marriage	*コン		結婚|けっこん|marriage (get married)|N5
-768	厚	9	2	thick; heavy; rich; kind	*コウ	*あつ(い)、あか	厚生|こうせい|welfare|
-769	喜	12	3	rejoice; take pleasure in	*キ	*よろこ(ぶ)、よろこ(ばす)	喜劇|きげき|comedy|N1
-770	齢	17	2	age	*レイ	*よわい、とし	年齢|ねんれい|age|N3
-771	囲	7	2	surround; besiege; store; paling	*イ	*かこ(む)、かこ(う)、かこ(い)	周囲|しゅうい|surroundings|N3
-772	卒	8	2	graduate; soldier; private; die	*ソツ、シュツ	そっ(する)、お(える)、お(わる)、ついに、にわか	卒業|そつぎょう|graduation|N4
-773	迫	8	1	urge; force; imminent; spur on	*ハク	*せま(る)	脅迫|きょうはく|threat|N1
-774	略	11	2	abbreviation; omission; outline; shorten	*リャク	ほぼ、はぶ(く)、おか(す)、おさ(める)、はかりごと、はか(る)	省略|しょうりゃく|omission|N3
-775	承	8	2	acquiesce; hear; listen to; be informed	*ショウ、ジョウ	*うけたまわ(る)、う(ける)	承認|しょうにん|recognition|N3
-776	浮	10	3	floating; float; rise to surface	*フ	*う(く)、う(かれる)、う(かぶ)、う(かべる)	浮力|ふりょく|buoyancy|N1
-777	惑	12	1	beguile; delusion; perplexity	*ワク	*まど(う)	迷惑|めいわく|trouble|N3
-778	崩	11	1	crumble; die; demolish; level	*ホウ	*くず(れる)、くず(す)、-くず(れ)	崩壊|ほうかい|collapse|N1
-779	順	12	2	obey; order; turn; right	*ジュン		順調|じゅんちょう|doing well|N3
-780	紀	9	1	chronicle; account; narrative; history	*キ		世紀|せいき|century|N3
-781	聴	17	1	listen; headstrong; naughty; careful inquiry	*チョウ、テイ	*き(く)、ゆる(す)	聴覚|ちょうかく|the sense of hearing|N1
-782	脱	11	1	undress; removing; escape from; get rid of	*ダツ	*ぬ(ぐ)、ぬ(げる)	脱税|だつぜい|tax evasion|
-783	旅	10	4	trip; travel	*リョ	*たび	旅行|りょこう|travel|N5
-784	絶	12	3	discontinue; sever; cut off; abstain	*ゼツ	*た(える)、た(やす)、た(つ)	絶滅|ぜつめつ|destruction|N3
-785	級	9	1	class; rank; grade	*キュウ		高級|こうきゅう|high class|N2
-786	幸	8	3	happiness; blessing; fortune	*コウ	*しあわ(せ)、さいわ(い)、さち	不幸|ふこう|unhappiness|N3
-787	岩	8	2	boulder; rock; cliff	*ガン	*いわ	溶岩|ようがん|lava|N2
-788	練	14	2	practice; gloss; train; drill	*レン	*ね(る)、ね(り)	練習|れんしゅう|(to) practice|N5
-789	押	8	3	push; stop; check; subdue	*オウ	*お(す)、お(し-)、お(っ-)、お(さえる)、おさ(える)	押収|おうしゅう|seizure|
-790	軽	12	2	lightly; trifling; unimportant	*ケイ、キョウ、キン	*かる(い)、かろ(やか)、かろ(んじる)	軽快|けいかい|lively|N1
-791	倒	10	3	overthrow; fall; collapse; drop	*トウ	*たお(れる)、たお(す)、さかさま、さかさ、さかしま、-だお(れ)	倒産|とうさん|(corporate) bankruptcy|N3
-792	了	2	2	complete; finish	*リョウ		完了|かんりょう|completion|N3
-793	庁	5	2	government office	*チョウ、テイ	やくしょ	官庁|かんちょう|government office|N2
-794	博	12	1	Dr.; command; esteem; win acclaim	*ハク、バク		博物館|はくぶつかん|museum|N3
-795	城	9	2	castle	*ジョウ、セイ	*しろ	城下|じょうか|land near the castle|N1
-796	患	11	2	afflicted; disease; suffer from; be ill	*カン	*わずら(う)	患者|かんじゃ|patient|N3
-797	締	15	1	tighten; tie; shut; lock	*テイ	*し(まる)、し(まり)、し(める)、-し(め)、-じ(め)	締結|ていけつ|conclusion|
-798	等	12	3	etc.; and so forth; class (first); quality	*トウ	*ひと(しい)、など、-ら	上等|じょうとう|first class|N3
-799	救	11	1	salvation; save; help; rescue	*キュウ	*すく(う)	救助|きゅうじょ|relief|N3
-800	執	11	1	tenacious; take hold; grasp; take to heart	*シュウ、シツ	*と(る)	執着|しゅうちゃく|attachment|N1
-801	層	14	2	stratum; social class; layer; story	*ソウ		一層|いっそう|much more|N3
-802	版	8	2	printing block; printing plate; edition; impression	*ハン		版画|はんが|art print|N1
-803	老	6	3	old man; old age; grow old	*ロウ	お(いる)、ふ(ける)	老人|ろうじん|the aged|N3
-804	令	5	2	orders; laws; command; decree	*レイ		命令|めいれい|order|N3
-805	角	7	2	angle; corner; square; horn	*カク	*かど、つの	四角|しかく|square|N3
-806	絡	12	2	entwine; coil around; get caught in	*ラク	*から(む)、から(まる)	連絡|れんらく|communication|N4
-807	損	13	2	damage; loss; disadvantage; hurt	*ソン	*そこ(なう)、そこな(う)、そこ(ねる)	損害|そんがい|damage|N3
-808	房	8	1	tassel; tuft; fringe; bunch	*ボウ	*ふさ	冷房|れいぼう|cooling|N4
-809	募	12	2	recruit; campaign; gather (contributions); enlist	*ボ	*つの(る)	募集|ぼしゅう|recruitment|N2
-810	曲	6	3	bend; music; melody; composition	*キョク	*ま(がる)、ま(げる)、くま	作曲|さっきょく|composition (of music)|N3
-811	撤	15	1	remove; withdraw; disarm; dismantle	*テツ		
-812	裏	13	2	back; amidst; in; reverse	*リ	*うら	表裏|ひょうり|front and back|
-813	払	5	3	pay; clear out; prune; banish	*フツ、ヒツ、ホツ	*はら(う)、-はら(い)、-ばら(い)	
-814	削	9	1	plane; sharpen; whittle; pare	*サク	*けず(る)、はつ(る)、そ(ぐ)	削除|さくじょ|elimination|N2
-815	密	11	1	secrecy; density (pop); minuteness; carefulness	*ミツ	*ひそ(か)	秘密|ひみつ|secret|N3
-816	庭	10	3	courtyard; garden; yard	*テイ	*にわ	家庭|かてい|home|N5
-817	徒	10	3	on foot; junior; emptiness; vanity	*ト	いたずら、あだ	生徒|せいと|student|N5
-818	措	11	1	set aside; give up; suspend; discontinue	*ソ	お(く)	措置|そち|measure|N1
-819	仏	4	2	Buddha; the dead; France	*ブツ、フツ	*ほとけ	仏像|ぶつぞう|Buddhist image (statue)|N1
-820	績	17	2	exploits; achievements; unreeling cocoons	*セキ		成績|せいせき|grade (i.e.|N3
-821	築	16	2	fabricate; build; construct	*チク	*きず(く)	建築|けんちく|construction|N3
-822	貨	11	2	freight; goods; property	*カ	たから	通貨|つうか|currency|N3
-823	志	7	1	intention; plan; resolve; aspire	*シ	*こころざし、シリング、こころざ(す)	同志|どうし|same mind|N3
-824	混	11	2	mix; blend; confuse	*コン	*ま(じる)、ま(ざる)、ま(ぜる)、こ(む)、-ま(じり)	混乱|こんらん|chaos|N3
-825	載	13	1	ride; board; get on; place	*サイ	*の(せる)、の(る)	掲載|けいさい|appearance (e.g.|N1
-826	昇	8	2	rise up	*ショウ	*のぼ(る)	上昇|じょうしょう|rising|N1
-827	池	6	2	pond; cistern; pool; reservoir	*チ	*いけ	電池|でんち|battery|N2
-828	陣	10	1	camp; battle array; ranks; position	*ジン		陣営|じんえい|camp (supporters of a doctrine, party, etc.)|
-829	我	7	1	ego; I; selfish; our	*ガ	*われ、わ、わ(が-)、わが-	我慢|がまん|patience|N3
-830	勤	12	3	diligence; become employed; serve	*キン、ゴン	*つと(める)、つと(まる)、いそ(しむ)、-づと(め)	通勤|つうきん|commuting to work|N3
-831	為	9	1	do; change; make; benefit	*イ	*ため、な(る)、な(す)、す(る)、たり、つく(る)、なり	所為|せい|cause|N3
-832	血	6	2	blood	*ケツ	*ち	血液|けつえき|blood|N3
-833	遅	12	3	slow; late; back; later	*チ	*おそ(い)、おく(れる)、おく(らす)	遅刻|ちこく|lateness|N3
-834	抑	7	1	repress; well; now; in the first place	*ヨク	*おさ(える)	抑制|よくせい|control|N1
-835	幕	13	1	curtain; bunting; act of play	*マク、バク	*とばり	開幕|かいまく|raising the curtain|
-836	居	8	3	reside; to be; exist; live with	*キョ、コ	*い(る)、お(る)、-い	住居|じゅうきょ|dwelling|N2
-837	染	9	1	dye; color; paint; stain	*セン	*し(みる)、そ(める)、そ(まる)、し(み)	汚染|おせん|pollution|N3
-838	温	12	2	warm	*オン	*あたた(か)、あたた(かい)、あたた(まる)、あたた(める)、ぬく	気温|きおん|temperature (weather - not used for things)|N3
-839	雑	14	3	miscellaneous	*ザツ、ゾウ	まじ(える)、まじ(る)	複雑|ふくざつ|complexity|N4
-840	招	8	3	beckon; invite; summon; engage	*ショウ	*まね(く)	招待|しょうたい|invitation|
-841	奈	8	1	Nara; what?	*ナ、ナイ、ダイ	いかん、からなし	奈良|なら|Nara (city, prefecture)|
-842	季	8	2	seasons	*キ		季節|きせつ|season (in reference to weather)|N4
-843	困	7	3	quandary; become distressed; annoyed	*コン	*こま(る)	困難|こんなん|difficulty|N3
-844	星	9	2	star; spot; dot; mark	*セイ、ショウ	*ほし、-ぼし	衛星|えいせい|satellite|N3
-845	傷	13	1	wound; hurt; injure; impair	*ショウ	*きず、いた(む)、いた(める)	負傷|ふしょう|injury|N1
-846	永	5	2	eternity; long; lengthy	*エイ	なが(い)	永遠|えいえん|eternity|N3
-847	択	7	1	choose; select; elect; prefer	*タク	*えら(ぶ)	選択|せんたく|selection|N3
-848	秀	7	1	excel; excellence; beauty; surpass	*シュウ	*ひい(でる)	優秀|ゆうしゅう|superiority|N3
-849	著	11	2	renowned; publish; write; remarkable	*チョ、チャク	*いちじる(しい)、あらわ(す)	著者|ちょしゃ|author|N3
-850	徴	14	1	indications; sign; omen; symptom	*チョウ、チ	しるし	特徴|とくちょう|characteristic(s)|N3
-851	誌	14	2	document; records	*シ		雑誌|ざっし|magazine|N5
-852	庫	10	2	warehouse; storehouse	*コ、ク	*くら	冷蔵庫|れいぞうこ|refrigerator|N5
-853	弾	12	1	bullet; twang; flip; snap	*ダン、タン	*ひ(く)、はず(む)、たま、はじ(く)、はじ(ける)、ただ(す)、はじ(きゆみ)、-ひ(き)	爆弾|ばくだん|bomb|N1
-854	償	17	1	reparation; make up for; recompense; redeem	*ショウ	*つぐな(う)	補償|ほしょう|compensation|N3
-855	刊	5	2	publish; carve; engrave	*カン		刊行|かんこう|publication|N3
-856	像	14	2	statue; picture; image; figure	*ゾウ		想像|そうぞう|imagination|N3
-857	功	5	1	achievement; merits; success; honor	*コウ、ク	いさお	成功|せいこう|success|N3
-858	拠	8	1	foothold; based on; follow; therefore	*キョ、コ	*よ(る)	根拠|こんきょ|basis|N1
-859	香	9	2	incense; smell; perfume	*コウ、キョウ	*かお(り)、か、かお(る)	香水|こうすい|perfume|N2
-860	欠	4	3	lack; gap; fail	*ケツ、ケン	*か(ける)、か(く)	不可欠|ふかけつ|indispensable|N1
-861	更	7	3	grow late; night watch; sit up late; of course	*コウ	*さら、さら(に)、ふ(ける)、ふ(かす)	変更|へんこう|change|N3
-862	秘	10	1	secret; conceal	*ヒ	*ひ(める)、ひそ(か)、かく(す)	秘密|ひみつ|secret|N3
-863	拒	8	1	repel; refuse; reject; decline	*キョ、ゴ	*こば(む)	拒否|きょひ|denial|N1
-864	刑	6	1	punish; penalty; sentence; punishment	*ケイ		刑事|けいじ|criminal case|N3
-865	坂	7	2	slope; incline; hill	*ハン	*さか	
-866	刻	8	3	engrave; cut fine; chop; hash	*コク	*きざ(む)、きざ(み)	深刻|しんこく|serious|N3
-867	底	8	2	bottom; sole; depth; bottom price	*テイ	*そこ	徹底|てってい|thoroughness|N3
-868	賛	15	3	approve; praise; title or inscription on picture; assist	*サン	たす(ける)、たた(える)	賛成|さんせい|approval|N3
-869	塚	12	1	hillock; mound	*チョウ	*つか、-づか	
-870	致	10	1	doth; do; send; forward	*チ	*いた(す)	一致|いっち|agreement|N3
-871	抱	8	3	embrace; hug; hold in arms	*ホウ	*だ(く)、いだ(く)、かか(える)	介抱|かいほう|nursing|N1
-872	繰	19	1	winding; reel; spin; turn (pages)	*ソウ	*く(る)	
-873	服	8	4	clothing; admit; obey; discharge	*フク		洋服|ようふく|Western-style clothes|N5
-874	犯	5	3	crime; sin; offense	*ハン、ボン	*おか(す)	犯罪|はんざい|crime|N3
-875	尾	7	1	tail; end; counter for fish; lower slope of mountain	*ビ	*お	末尾|まつび|end (e.g. of report, document, paragraph, etc.)|
-876	描	11	1	sketch; compose; write; draw	*ビョウ	*か(く)、えが(く)	描写|びょうしゃ|depiction|N1
-877	布	5	2	linen; cloth; spread; distribute	*フ、ホ	*ぬの、し(く)、きれ	財布|さいふ|wallet|N5
-878	恐	10	3	fear; dread; awe	*キョウ	*おそ(れる)、おそ(る)、おそ(ろしい)、こわ(い)、こわ(がる)	恐怖|きょうふ|fear|N3
-879	寺	6	2	Buddhist temple	*ジ	*てら	寺院|じいん|temple|N2
-880	鈴	13	1	small bell; buzzer	*リン、レイ	*すず	風鈴|ふうりん|wind chime|
-881	盤	15	1	tray; shallow bowl; platter; tub	*バン		基盤|きばん|foundation|N2
-882	息	10	3	breath; respiration; son; interest (on money)	*ソク	*いき	休息|きゅうそく|rest|N3
-883	宇	6	2	eaves; roof; house; heaven	*ウ		宇宙|うちゅう|universe|N3
-884	項	12	1	paragraph; nape of neck; clause; item	*コウ	うなじ	項目|こうもく|item|N2
-885	喪	12	1	miss; mourning	*ソウ	*も	喪失|そうしつ|loss|
-886	伴	7	1	consort; accompany; bring with; companion	*ハン、バン	*ともな(う)	同伴|どうはん|accompanying|
-887	遠	13	3	distant; far	*エン、オン	*とお(い)	永遠|えいえん|eternity|N3
-888	養	15	1	foster; bring up; rear; develop	*ヨウ、リョウ	*やしな(う)	栄養|えいよう|nutrition|N3
-889	懸	20	1	state of suspension; hang; depend; consult	*ケン、ケ	*か(ける)、か(かる)	懸命|けんめい|eagerness|N2
-890	戻	7	3	re-; return; revert; resume	*レイ	*もど(す)、もど(る)	
-891	街	12	1	boulevard; street; town	*ガイ、カイ	*まち	街頭|がいとう|in the street|N1
-892	巨	5	2	gigantic; big; large; great	*キョ		巨大|きょだい|huge|N3
-893	震	15	2	quake; shake; tremble; quiver	*シン	*ふる(う)、ふる(える)、ふる(わせる)、ふる(わす)	地震|じしん|earthquake|N4
-894	願	19	3	petition; request; vow; wish	*ガン	*ねが(う)、-ねがい	念願|ねんがん|one's heart's desire|N1
-895	絵	12	3	picture; drawing; painting; sketch	*エ、カイ		絵画|かいが|picture|N3
-896	希	7	2	hope; beg; request; pray	*キ、ケ	*まれ、こいねが(う)	希望|きぼう|hope|N3
-897	越	12	3	surpass; cross over; move to; exceed	*エツ、オツ	*こ(す)、こ(える)、-ご(し)、-ご(え)	優越|ゆうえつ|supremacy|N1
-898	契	9	1	pledge; promise; vow	*ケイ	ちぎ(る)	契約|けいやく|contract|N3
-899	掲	11	1	put up (a notice); put up; hoist; display	*ケイ	*かか(げる)	掲示|けいじ|notice|N3
-900	躍	21	1	leap; dance; skip	*ヤク	*おど(る)	活躍|かつやく|activity|N3
-901	棄	13	1	abandon; throw away; discard; resign	*キ	す(てる)	棄権|きけん|abstain from voting|N1
-902	欲	11	3	longing; covetousness; greed; passion	*ヨク	*ほ(しい)、ほっ(する)	食欲|しょくよく|appetite (for food)|N3
-903	痛	12	3	pain; hurt; damage; bruise	*ツウ	*いた(い)、いた(む)、いた(ましい)、いた(める)	苦痛|くつう|pain|N3
-904	触	13	2	contact; touch; feel; hit	*ショク	*さわ(る)、ふ(れる)、さわ	接触|せっしょく|touch|N1
-905	邸	8	1	residence; mansion	*テイ	*やしき	邸宅|ていたく|mansion|N1
-906	依	8	2	reliant; depend on; consequently; therefore	*イ、エ	*よ(る)	依然|いぜん|still|N3
-907	籍	20	2	enroll; domiciliary register; membership	*セキ		国籍|こくせき|nationality|N3
-908	汚	6	2	dirty; pollute; disgrace; rape	*オ	*よご(す)、けが(す)、けが(れる)、けが(らわしい)、よご(れる)、きたな(い)	汚染|おせん|pollution|N3
-909	縮	17	1	shrink; contract; shrivel; wrinkle	*シュク	*ちぢ(む)、ちぢ(まる)、ちぢ(める)、ちぢ(れる)、ちぢ(らす)	縮小|しゅくしょう|reduction|N2
-910	還	16	1	send back; return	*カン	*かえ(る)	返還|へんかん|return|N1
-911	枚	8	2	sheet of...; counter for flat thin objects or sheets	*マイ、バイ		枚数|まいすう|the number of flat things|N2
-912	属	12	1	belong; genus; subordinate official; affiliated	*ゾク、ショク	さかん、つく、やから	金属|きんぞく|metal|N3
-913	笑	10	3	laugh	*ショウ	*わら(う)、え(む)	微笑|びしょう|smile|N1
-914	互	4	3	mutually; reciprocally; together	*ゴ	*たが(い)、かたみ(に)	相互|そうご|mutual|N2
-915	複	14	2	duplicate; double; compound; multiple	*フク		複雑|ふくざつ|complexity|N4
-916	慮	15	1	prudence; thought; concern; consider	*リョ	*おもんぱく(る)、おもんぱか(る)	考慮|こうりょ|consideration|N3
-917	郵	11	2	mail; stagecoach stop	*ユウ		郵便局|ゆうびんきょく|post office|N5
-918	束	7	3	bundle; sheaf; ream; tie in bundles	*ソク	*たば、たば(ねる)、つか、つか(ねる)	約束|やくそく|arrangement|N4
-919	仲	6	2	go-between; relationship	*チュウ	*なか	仲介|ちゅうかい|agency|
-920	栄	9	2	flourish; prosperity; honor; glory	*エイ、ヨウ	*さか(える)、は(え)、は(える)、え、-ば(え)	栄養|えいよう|nutrition|N3
-921	札	5	2	tag; paper money; counter for bonds; placard	*サツ	*ふだ	改札|かいさつ|examination of tickets|N2
-922	枠	8	1	frame; framework; spindle; spool		*わく	
-923	似	7	3	becoming; resemble; counterfeit; imitate	ジ	*に(る)、ひ(る)	類似|るいじ|analogous|N1
-924	夕	3	4	evening	*セキ	*ゆう	今夕|こんせき|this evening|
-925	恵	10	1	favor; blessing; grace; kindness	*エ、ケイ	*めぐ(む)、めぐ(み)	知恵|ちえ|wisdom|N3
-926	板	8	2	plank; board; plate; stage	*ハン、バン	*いた	黒板|こくばん|blackboard|N3
-927	列	6	3	file; row; rank; tier	*レツ、レ		行列|ぎょうれつ|line|N2
-928	露	21	1	dew; tears; expose; Russia	*ロ、ロウ	*つゆ	露骨|ろこつ|blunt|N1
-929	沖	7	1	open sea; offing; rise high into sky	*チュウ	*おき、おきつ、ちゅう(する)、わく	
-930	探	11	3	grope; search; look for	*タン	*さが(す)、さぐ(る)	探検|たんけん|exploration|N1
-931	逃	9	3	escape; flee; shirk; evade	*トウ	*に(げる)、に(がす)、のが(す)、のが(れる)	逃走|とうそう|flight|N1
-932	借	10	4	borrow; rent	*シャク	*か(りる)	拝借|はいしゃく|(humble) (polite) borrowing|N1
-933	緩	15	1	slacken; loosen; relax; lessen	*カン	*ゆる(い)、ゆる(やか)、ゆる(む)、ゆる(める)	緩和|かんわ|relief|N1
-934	節	13	1	node; season; period; occasion	*セツ、セチ	*ふし、のっと、-ぶし	季節|きせつ|season (in reference to weather)|N4
-935	需	14	1	demand; request; need	*ジュ		需要|じゅよう|demand|N3
-936	骨	10	2	skeleton; bone; remains; frame	*コツ	*ほね	露骨|ろこつ|blunt|N1
-937	射	10	1	shoot; shine into; onto; archery	*シャ	*い(る)、さ(す)、う(つ)	注射|ちゅうしゃ|injection|N4
-938	傾	13	2	lean; incline; tilt; trend	*ケイ	*かたむ(く)、かたむ(ける)、かたぶ(く)、かた(げる)、かし(げる)	傾向|けいこう|tendency|N3
-939	届	8	2	deliver; reach; arrive; report	カイ	*とど(ける)、とど(く)、-とど(け)	
-940	曜	18	4	weekday	*ヨウ		火曜日|かようび|Tuesday|N5
-941	遊	12	3	play	*ユウ、ユ	*あそ(ぶ)、あそ(ばす)	遊園地|ゆうえんち|amusement park|N2
-942	迷	9	3	astray; be perplexed; in doubt; lost	*メイ	*まよ(う)	迷惑|めいわく|trouble|N3
-943	夢	13	3	dream; vision; illusion	*ム、ボウ	*ゆめ、ゆめ(みる)、くら(い)	夢中|むちゅう|crush|N3
-944	巻	9	2	scroll; volume; book; part	*カン、ケン	*ま(く)、まき、ま(き)	巻末|かんまつ|end of a book|
-945	購	17	1	subscription; buy	*コウ		購入|こうにゅう|purchase|N1
-946	揮	12	1	brandish; wave; wag; swing	*キ	ふる(う)	指揮|しき|command|N3
-947	君	7	3	mister; you; ruler; male name suffix	*クン	*きみ、-ぎみ	諸君|しょくん|Gentlemen!|N1
-948	燃	16	2	burn; blaze; glow	*ネン	*も(える)、も(やす)、も(す)	燃料|ねんりょう|fuel|N1
-949	充	6	1	allot; fill	*ジュウ	*あ(てる)、み(たす)	拡充|かくじゅう|expansion|N2
-950	雨	8	5	rain	*ウ	*あめ、あま-、-さめ	梅雨|ばいう|rainy season|N3
-951	閉	11	3	closed; shut	*ヘイ	*し(める)、と(じる)、と(ざす)、し(まる)、た(てる)	閉会|へいかい|closure|N2
-952	緒	14	3	thong; beginning; inception; end	*ショ、チョ	*お、いとぐち	一緒|いっしょ|together|N5
-953	跡	13	2	tracks; mark; print; impression	*セキ	*あと	遺跡|いせき|historic ruins|N1
-954	包	5	2	wrap; pack up; cover; conceal	*ホウ	*つつ(む)、くる(む)	包装|ほうそう|packing|N3
-955	駐	15	2	stop-over; reside in; resident	*チュウ		駐車場|ちゅうしゃじょう|parking lot|N4
-956	貢	10	1	tribute; support; finance	*コウ、ク	*みつ(ぐ)	貢献|こうけん|contribution|N3
-957	鹿	11	1	deer	*ロク	*か、しか	
-958	弱	10	2	weak; frail	*ジャク	*よわ(い)、よわ(る)、よわ(まる)、よわ(める)	弱点|じゃくてん|weak point|N2
-959	却	7	1	instead; on the contrary; rather; step back	*キャク	*かえ(って)、しりぞ(く)、しりぞ(ける)	棄却|ききゃく|rejection|
-960	端	14	1	edge; origin; end; point	*タン	*はし、は、はた、はな、-ばた	途端|とたん|just (now|N3
-961	賃	13	1	fare; fee; hire; rent	*チン		家賃|やちん|rent|N3
-962	折	7	3	fold; break; fracture; bend	*セツ、シャク	*お(る)、おり、お(り)、お(れる)	骨折|こっせつ|bone fracture|N3
-963	紹	11	2	introduce; inherit; help	*ショウ		紹介|しょうかい|an introduction|N4
-964	獲	16	1	seize; get; find; earn	*カク	*え(る)	獲得|かくとく|acquisition|N1
-965	郡	10	1	county; district	*グン	*こおり	郡部|ぐんぶ|rural districts|
-966	併	8	1	join; get together; unite; collective	*ヘイ	*あわ(せる)	併用|へいよう|combined use|
-967	草	9	3	grass; weeds; herbs; pasture	*ソウ	*くさ、-ぐさ	草原|そうげん|grassy field|
-968	徹	15	1	penetrate; clear; pierce; strike home	*テツ		徹夜|てつや|staying up all night|N3
-969	飲	12	4	drink; smoke; take	*イン、オン	*の(む)、-の(み)	飲食店|いんしょくてん|restaurant|
-970	貴	12	1	precious; value; prize; esteem	*キ	*とうと(い)、たっと(い)、たっと(ぶ)、とうと(ぶ)	貴重|きちょう|precious|N3
-971	埼	11		cape; spit; promontory	*キ	*さい、さき、みさき	
-972	衝	15	1	collide; brunt; highway; opposition (astronomy)	*ショウ	*つ(く)	衝突|しょうとつ|collision|N3
-973	焦	12	1	char; hurry; impatient; irritate	*ショウ	*こ(げる)、こ(がす)、こ(がれる)、あせ(る)、じ(れる)、じ(らす)	焦点|しょうてん|focus|N2
-974	奪	14	1	rob; take by force; snatch away; dispossess	*ダツ	*うば(う)	略奪|りゃくだつ|pillage|N1
-975	雇	12	2	employ; hire	*コ	*やと(う)	雇用|こよう|employment|
-976	災	7	1	disaster; calamity; woe; curse	*サイ	*わざわ(い)	火災|かさい|conflagration|N3
-977	浦	10	1	bay; creek; inlet; gulf	*ホ	*うら	
-978	暮	14	3	evening; twilight; season's end; livelihood	*ボ	*く(れる)、く(らす)	歳暮|せいぼ|year-end gift|
-979	替	12	2	exchange; spare; substitute; per-	*タイ	*か(える)、か(え-)、か(わる)	交替|こうたい|change|N2
-980	析	8	1	chop; divide; tear; analyze	*セキ		分析|ぶんせき|analysis|N3
-981	預	13	2	deposit; custody; leave with; entrust to	*ヨ	*あず(ける)、あず(かる)	預金|よきん|deposit|N1
-982	焼	12	2	bake; burning	*ショウ	*や(く)、や(き)、や(き-)、や(ける)	燃焼|ねんしょう|burning|N1
-983	簡	18	2	simplicity; brevity	*カン、ケン	えら(ぶ)、ふだ	簡単|かんたん|simple|N4
-984	譲	20	1	defer; turnover; transfer; convey	*ジョウ	*ゆず(る)	譲歩|じょうほ|concession|N1
-985	称	10	1	appellation; praise; admire; name	*ショウ	*とな(える)、たた(える)、あ(げる)、かな(う)、はか(り)、はか(る)、ほめ(る)	名称|めいしょう|name|N1
-986	肉	6	4	meat	*ニク	しし	牛肉|ぎゅうにく|beef|N5
-987	納	10	1	settlement; obtain; reap; pay	*ノウ、ナッ、ナ、ナン、トウ	*おさ(める)、おさ(まる)	納得|なっとく|consent|N3
-988	樹	16	1	timber; trees; wood; establish	*ジュ	*き	樹木|じゅもく|trees and shrubs|N1
-989	挑	9	1	challenge; contend for; make love to	*チョウ	*いど(む)	挑戦|ちょうせん|challenge|N3
-990	章	11	2	badge; chapter; composition; poem	*ショウ		文章|ぶんしょう|sentence|N5
-991	臓	19	2	entrails; viscera; bowels	*ゾウ	はらわた	心臓|しんぞう|heart|N3
-992	律	9	2	rhythm; law; regulation; gauge	*リツ、リチ、レツ		法律|ほうりつ|law|N4
-993	誘	14	1	entice; lead; tempt; invite	*ユウ	*さそ(う)、いざな(う)	誘導|ゆうどう|guidance|N1
-994	紛	10	1	distract; be mistaken for; go astray; divert	*フン	*まぎ(れる)、まぎ(らす)、まぎ(らわす)、まぎ(らわしい)、-まぎ(れ)	紛争|ふんそう|dispute|N1
-995	貸	12	4	lend	*タイ	*か(す)、か(し-)、かし-	賃貸|ちんたい|leasing (out)|
-996	至	6	1	climax; arrive; proceed; reach	*シ	*いた(る)	至急|しきゅう|urgent|N3
-997	宗	8	1	religion; sect; denomination; main point	*シュウ、ソウ	むね	宗教|しゅうきょう|religion|N3
-998	促	9	1	stimulate; urge; press; demand	*ソク	*うなが(す)	催促|さいそく|demand|N2
-999	慎	13	1	humility; be careful; discreet; prudent	*シン	*つつし(む)、つつ(ましい)、つつし、つつし(み)	慎重|しんちょう|careful|N3
-1000	控	11	1	withdraw; draw in; hold back; refrain from	*コウ	*ひか(える)、ひか(え)	控除|こうじょ|subsidy|N1
+1	日	4	5	day; sun; Japan; counter for days	*ニチ、ジツ	*ひ、-び、-か	毎日|まいにち|every day|N5	72|日
+2	一	1	5	one	*イチ、イツ	*ひと(つ)、ひと-	一番|いちばん|best (most)|N5	1|一
+3	国	8	5	country	*コク	*くに	外国|がいこく|foreign country|N5	31|囗
+4	会	6	4	meeting; meet; party; association	*カイ、エ	*あ(う)、あ(わせる)、あつ(まる)	会社|かいしゃ|company|N5	9|人
+5	人	2	5	person	*ニン、ジン	*ひと、-り、-と	外国人|がいこくじん|foreigner|N5	9|人
+6	年	6	5	year; counter for years	*ネン	*とし	来年|らいねん|next year|N5	51|干
+7	大	3	5	large; big	*タイ、ダイ	*おお(きい)、おお-、-おお(いに)	大変|たいへん|very|N5	37|大
+8	十	2	5	ten	*ジュウ、ジッ、ジュッ	*とお、と、そ	十分|じゅうぶん|enough|N4	24|十
+9	二	2	5	two	*ニ、ジ	*ふた、ふた(つ)、ふたたび	二階|にかい|second floor|	7|二
+10	本	5	5	book; present; main; origin	*ホン	*もと	本当|ほんとう|real|N5	75|木
+11	中	4	5	in; inside; middle; mean	*チュウ	*なか、うち、あた(る)	途中|とちゅう|on the way|N4	2|丨
+12	長	8	5	long; leader; superior; senior	*チョウ	*なが(い)、おさ	社長|しゃちょう|president of a company|N4	168|長
+13	出	5	5	exit; leave; go out; come out	*シュツ、スイ	*で(る)、だ(す)、い(でる)、い(だす)、-で	出場|しゅつじょう|participation|N3	17|凵
+14	三	3	5	three	*サン、ゾウ	*み、み(つ)、みっ(つ)	再三|さいさん|again and again|N2	1|一
+15	同	6	4	same; agree; equal	*ドウ	*おな(じ)	同時|どうじ|simultaneous(ly)|N3	30|口
+16	時	10	5	time; hour	*ジ	*とき、-どき	時間|じかん|time|N5	72|日
+17	政	9	3	politics; government	*セイ、ショウ	まつりごと、まん	政治|せいじ|politics|N4	66|攵
+18	事	8	4	matter; thing; fact; business	*ジ、ズ	*こと、つか(う)、つか(える)	事務所|じむしょ|office|N4	6|亅
+19	自	6	4	oneself	*ジ、シ	みずか(ら)、おの(ずから)、おの(ずと)	自分|じぶん|myself|N5	132|自
+20	行	6	5	going; journey; carry out; conduct	*コウ、ギョウ、アン	*い(く)、ゆ(く)、おこな(う)、おこ(なう)、-ゆ(き)、-ゆき、-い(き)、-いき	銀行|ぎんこう|bank|N5	144|行
+21	社	7	4	company; firm; office; association	*シャ	*やしろ	会社|かいしゃ|company|N5	113|礻
+22	見	7	5	see; hopes; chances; idea	*ケン	*み(る)、み(える)、み(せる)	意見|いけん|opinion|N4	147|見
+23	月	4	5	month; moon	*ゲツ、ガツ	*つき	今月|こんげつ|this month|N5	74|月
+24	分	4		part; minute of time; segment; share	*ブン、フン、ブ	*わ(ける)、わ(け)、わ(かれる)、わ(かる)、わ(かつ)	自分|じぶん|myself|N5	18|刀
+25	議	20	3	deliberation; consultation; debate; consideration	*ギ		会議|かいぎ|business meeting|N4	149|言
+26	後	9	5	behind; back; later	*ゴ、コウ	*うし(ろ)、のち、うしろ、あと、おく(れる)	午後|ごご|afternoon|N5	60|彳
+27	前	9	5	in front; before	*ゼン	*まえ	午前|ごぜん|morning|N5	18|刂
+28	民	5	3	people; nation; subjects	*ミン	*たみ	市民|しみん|citizen|N4	83|氏
+29	生	5	5	life; genuine; birth	*セイ、ショウ	*い(きる)、い(かす)、い(ける)、う(まれる)、うま(れる)、う(まれ)、うまれ、う(む)、お(う)、は(える)、は(やす)、き、なま、な(る)、な(す)、む(す)、-う	学生|がくせい|student|N5	100|生
+30	連	10	3	take along; lead; join; connect	*レン	*つ(れる)、つら(なる)、つら(ねる)、-づ(れ)	連絡|れんらく|communication|N4	162|辶
+31	五	4	5	five	*ゴ	*いつ、いつ(つ)	五十音|ごじゅうおん|the Japanese syllabary|N2	7|二
+32	発	9	4	departure; discharge; publish; emit	*ハツ、ホツ	た(つ)、あば(く)、おこ(る)、つか(わす)、はな(つ)	発音|はつおん|pronunciation|N4	105|癶
+33	間	12	5	interval; space	*カン、ケン	*あいだ、ま、あい	時間|じかん|time|N5	169|門
+34	対	7	3	vis-a-vis; opposite; even; equal	*タイ、ツイ	あいて、こた(える)、そろ(い)、つれあ(い)、なら(ぶ)、むか(う)	反対|はんたい|oppose|N4	41|寸
+35	上	3	5	above; up	*ジョウ、ショウ、シャン	*うえ、かみ、あ(げる)、あ(がる)、あ(がり)、のぼ(る)、のぼ(り)、のぼ(せる)、のぼ(す)、たてまつ(る)、うわ-	屋上|おくじょう|rooftop|N4	1|一
+36	部	11	3	section; bureau; dept; class	*ブ	-べ	全部|ぜんぶ|all|N5	163|阝
+37	東	8	5	east	*トウ	*ひがし	東洋|とうよう|Orient|N3	75|木
+38	者	8	4	someone; person	*シャ	*もの	医者|いしゃ|doctor|N5	125|耂
+39	党	10	2	party; faction; clique	*トウ	なかま、むら	野党|やとう|opposition party|N3	10|儿
+40	地	6	4	ground; earth	*チ、ジ		地図|ちず|a map|N5	32|土
+41	合	6	3	fit; suit; join; 0.1	*ゴウ、ガッ、カッ	*あ(う)、あ(い)、あ(わす)、あ(わせる)、あい-、-あい	都合|つごう|circumstances|N4	30|口
+42	市	5	3	market; city; town	*シ	*いち	市民|しみん|citizen|N4	50|巾
+43	業	13	4	business; vocation; arts; performance	*ギョウ、ゴウ	わざ	授業|じゅぎょう|a class (of school)|N5	75|木
+44	内	4	3	inside; within; between; among	*ナイ、ダイ	*うち	以内|いない|within|N4	13|冂
+45	相	9	3	inter-; mutual; together; each other	*ソウ、ショウ	*あい-	相当|そうとう|considerably|N3	109|目
+46	方	4	4	direction; person; alternative	*ホウ	*かた、-がた	両方|りょうほう|both sides|N4	70|方
+47	四	5	5	four	*シ	*よん、よ、よ(つ)、よっ(つ)	四季|しき|four seasons|N3	31|囗
+48	定	8	3	determine; fix; establish; decide	*テイ、ジョウ	*さだ(める)、さだ(まる)、さだ(か)	予定|よてい|plans|N4	40|宀
+49	今	4	5	now	*コン、キン	*いま	今月|こんげつ|this month|N5	9|人
+50	回	6	3	-times; round; game; revolve	*カイ、エ	*まわ(る)、まわ(す)、まわ(し-)、もとお(る)、か(える)、-まわ(り)、-まわ(し)	今回|こんかい|now|N3	31|囗
+51	新	13	4	new	*シン	*あたら(しい)、あら(た)、あら-、にい-	新聞|しんぶん|newspaper|N5	69|斤
+52	場	12	4	location; place	*ジョウ、チョウ	*ば	工場|こうじょう|factory|N4	32|土
+53	金	8	5	gold	*キン、コン、ゴン	*かね、かな-、-がね	金曜日|きんようび|Friday|N5	167|金
+54	員	10	4	employee; member; number; the one in charge	*イン		公務員|こうむいん|government worker|N4	30|口
+55	九	2	5	nine	*ク、キュウ	*ここの、ここの(つ)	九月|くがつ|September|	5|乙
+56	入	2	5	enter; insert	*ニュウ、ジュ	*はい(る)、い(る)、い(れる)、-い(り)、-い(れ)	輸入|ゆにゅう|import|N4	11|入
+57	選	15	3	elect; select; choose; prefer	*セン	*えら(ぶ)、え(る)、よ(る)	選手|せんしゅ|player selected for a team (usually athletic)|N3	162|辶
+58	立	5	4	stand up; rise; set up; erect	*リツ、リュウ、リットル	*た(つ)、た(ち-)、た(てる)、た(て-)、たて-、-た(て)、-だ(て)、-だ(てる)	独立|どくりつ|independence (e.g.|N3	117|立
+59	開	12	4	open; unfold; unseal	*カイ	*あ(く)、ひら(く)、ひら(き)、ひら(ける)、あ(ける)、-びら(き)	開始|かいし|start|N3	169|門
+60	手	4	4	hand	*シュ、ズ	*て、た-	運転手|うんてんしゅ|driver (by occupation)|N4	64|手
+61	米	6	3	rice; USA; metre	*ベイ、マイ、メエトル	*こめ、よね	欧米|おうべい|Europe and America|N2	119|米
+62	力	2	4	power; strength; strong; strain	*リョク、リキ、リイ	*ちから	協力|きょうりょく|cooperation|N3	19|力
+63	学	8	5	study; learning; science	*ガク	*まな(ぶ)	学生|がくせい|student|N5	39|子
+64	問	11	4	question; ask; problem	*モン	*と(う)、と(い)、とん	問題|もんだい|a problem|N5	30|口
+65	高	10	5	tall; high; expensive	*コウ	*たか(い)、たか、たか(まる)、たか(める)、-だか	高校生|こうこうせい|high school student|N4	189|高
+66	代	5	4	substitute; change; convert; replace	*ダイ、タイ	*か(わる)、かわ(る)、かわ(り)、か(わり)、か(える)、よ、しろ、-がわ(り)、-が(わり)	時代|じだい|age|N4	9|亻
+67	明	8	4	bright; light	*メイ、ミョウ、ミン	*あ(かり)、あか(るい)、あか(るむ)、あか(らむ)、あき(らか)、あ(ける)、あ(く)、あ(くる)、あ(かす)、-あ(け)	説明|せつめい|explanation|N4	72|日
+68	実	8	3	reality; truth; seed; fruit	*ジツ、シツ	*み、みの(る)、まこと、みの、みち(る)	事実|じじつ|fact|N3	40|宀
+69	円	4	5	circle; yen; round	*エン	*まる(い)、まる、まど、まど(か)、まろ(やか)	円周|えんしゅう|circumference|N2	13|冂
+70	関	14	3	connection; barrier; gateway; involve	*カン	*かか(わる)、せき、からくり、かんぬき、-ぜき	玄関|げんかん|entrance (to a house or a building)|N5	169|門
+71	決	7	3	decide; fix; agree upon; appoint	*ケツ	*き(める)、き(まる)、さ(く)、-ぎ(め)	解決|かいけつ|settlement|N3	85|氵
+72	子	3	5	child; sign of the rat; 11PM-1AM; first sign of Chinese zodiac	*シ、ス、ツ	*こ、ね	帽子|ぼうし|hat|N5	39|子
+73	動	11	4	move; motion; change; confusion	*ドウ	*うご(く)、うご(かす)	自動車|じどうしゃ|automobile|N5	19|力
+74	京	8	4	capital; 10**16	*キョウ、ケイ、キン	*みやこ	上京|じょうきょう|proceeding to the capital (Tokyo)|N3	8|亠
+75	全	6	3	whole; entire; all; complete	*ゼン	*すべ(て)、まった(く)	全部|ぜんぶ|all|N5	11|入
+76	目	5	4	eye; class; look; insight	*モク、ボク	*め、ま-	目的|もくてき|purpose|N3	109|目
+77	表	8	3	surface; table; chart; diagram	*ヒョウ	*あらわ(す)、おもて、あらわ(れる)、あら(わす)	代表|だいひょう|representative|N3	145|衣
+78	戦	13	3	war; battle; match	*セン	*たたか(う)、いくさ、おのの(く)、そよ(ぐ)、わなな(く)	戦争|せんそう|war|N4	62|戈
+79	経	11	3	sutra; longitude; pass thru; expire	*ケイ、キョウ、キン	*た(つ)、へ(る)、たていと、はか(る)、のり	経済|けいざい|economics|N4	120|糸
+80	通	10	4	traffic; pass through; avenue; commute	*ツウ、ツ	*とお(る)、とお(り)、とお(す)、とお(し)、かよ(う)、-どお(り)、-どお(し)	交通|こうつう|traffic|N4	162|辶
+81	外	5	5	outside	*ガイ、ゲ	*そと、ほか、はず(す)、はず(れる)、と-	外国|がいこく|foreign country|N5	36|夕
+82	最	12	3	utmost; most; extreme	*サイ、シュ	*もっと(も)、つま	最後|さいご|last|N4	73|曰
+83	言	7	4	say; word	*ゲン、ゴン	*い(う)、こと	言語|げんご|language|N3	149|言
+84	氏	4	1	family name; surname; clan	*シ	*うじ	氏名|しめい|full name|N2	83|氏
+85	現	11	3	present; existing; actual	*ゲン	*あらわ(れる)、あらわ(す)、うつつ、うつ(つ)	現実|げんじつ|reality|N3	96|王
+86	理	11	4	logic; arrangement; reason; justice	*リ	*ことわり	料理|りょうり|cooking|N5	96|王
+87	調	15	3	tune; tone; meter; key (music)	*チョウ	*しら(べる)、しら(べ)、ととの(う)、ととの(える)	調査|ちょうさ|survey|N3	149|言
+88	体	7	4	body; substance; object; reality	*タイ、テイ	*からだ、かたち	大体|だいたい|approximately|N4	9|亻
+89	化	4	3	change; take the form of; influence; enchant	*カ、ケ	*ば(ける)、ば(かす)、ふ(ける)、け(する)	文化|ぶんか|culture|N4	21|匕
+90	田	5	4	rice field; rice paddy	*デン	*た	水田|すいでん|(water-filled) paddy field|N1	102|田
+91	当	6	3	hit; right; appropriate; himself	*トウ	*あ(たる)、あ(たり)、あ(てる)、あ(て)、まさ(に)、まさ(にべし)	本当|ほんとう|real|N5	58|彐
+92	八	2	5	eight	*ハチ、ハツ	*や、や(つ)、やっ(つ)、よう	八月|はちがつ|August|	12|八
+93	六	4	5	six	*ロク、リク	*む、む(つ)、むっ(つ)、むい	六月|ろくがつ|June|	12|八
+94	約	9	3	promise; approximately; shrink	*ヤク	つづ(まる)、つづ(める)、つづま(やか)	約束|やくそく|arrangement|N4	120|糸
+95	主	5	4	lord; chief; master; main thing	*シュ、ス、シュウ	*おも、ぬし、あるじ	主要|しゅよう|chief|N3	3|丶
+96	題	18	4	topic; subject	*ダイ		問題|もんだい|a problem|N5	181|頁
+97	下	3	5	below; down; descend; give	*カ、ゲ	*した、しも、もと、さ(げる)、さ(がる)、くだ(る)、くだ(り)、くだ(す)、くだ(さる)、お(ろす)、お(りる)	地下鉄|ちかてつ|underground train|N5	1|一
+98	首	9	3	neck; counter for songs and poems	*シュ	*くび	首相|しゅしょう|Prime Minister|N3	185|首
+99	意	13	4	idea; mind; heart; taste	*イ		意味|いみ|meaning|N5	61|心
+100	法	8	3	method; law; rule; principle	*ホウ、ハッ、ホッ、フラン	のり	法律|ほうりつ|law|N4	85|氵
+101	不	4	4	negative; non-; bad; ugly	*フ、ブ		不便|ふべん|inconvenience|N4	1|一
+102	来	7	5	come; due; next; cause	*ライ、タイ	*く(る)、きた(る)、きた(す)、き(たす)、き(たる)、き、こ	来年|らいねん|next year|N5	75|木
+103	作	7	4	make; production; prepare; build	*サク、サ	*つく(る)、つく(り)、-づく(り)	作文|さくぶん|essay|N5	9|亻
+104	性	8	3	sex; gender; nature	*セイ、ショウ	さが	女性|じょせい|woman|N4	61|忄
+105	的	8		bull's eye; mark; target; object	*テキ	*まと	目的|もくてき|purpose|N3	106|白
+106	要	9	3	need; main point; essence; pivot	*ヨウ	*い(る)、かなめ	必要|ひつよう|necessary|N4	146|襾
+107	用	5	4	utilize; business; service; use	*ヨウ	*もち(いる)	利用|りよう|use|N4	101|用
+108	制	8	3	system; law; rule	*セイ		制度|せいど|system|N3	18|刂
+109	治	8	3	reign; be at peace; calm down; subdue	*ジ、チ	*なお(る)、おさ(める)、おさ(まる)、なお(す)	政治|せいじ|politics|N4	85|氵
+110	度	9	4	degrees; occurrence; time; counter for occurrences	*ド、ト、タク	*たび、-た(い)	丁度|ちょうど|just|N5	53|广
+111	務	11	3	task; duties	*ム	*つと(める)	事務所|じむしょ|office|N4	19|力
+112	強	11	4	strong	*キョウ、ゴウ	*つよ(い)、つよ(まる)、つよ(める)、し(いる)、こわ(い)	勉強|べんきょう|study|N5	57|弓
+113	気	6	5	spirit; mind; air; atmosphere	*キ、ケ	*いき、き	電気|でんき|electricity|N5	84|气
+114	小	3	5	little; small	*ショウ	*ちい(さい)、こ-、お-、さ-	小学校|しょうがっこう|elementary school|N4	42|小
+115	七	2	5	seven	*シチ	*なな、なな(つ)、なの	七月|しちがつ|July|	1|一
+116	成	6	3	turn into; become; get; grow	*セイ、ジョウ	*な(る)、な(す)	成長|せいちょう|growth|N3	62|戈
+117	期	12	3	period; time; date; term	*キ、ゴ		期間|きかん|period|N3	74|月
+118	公	4	4	public; prince; official; governmental	*コウ、ク	おおやけ	公園|こうえん|a park|N5	12|八
+119	持	9	4	hold; have	*ジ	*も(つ)、も(てる)、-も(ち)	維持|いじ|maintenance|N3	64|扌
+120	野	11	4	plains; field; rustic; civilian life	*ヤ、ショ	*の	野菜|やさい|vegetable|N5	166|里
+121	協	8	2	co-; cooperation	*キョウ		協議|きょうぎ|conference|N3	24|十
+122	取	8	3	take; fetch; take up	*シュ	*と(る)、と(り)、と(り-)、とり、-ど(り)	取材|しゅざい|coverage|N1	29|又
+123	都	11	3	metropolis; capital; all; everything	*ト、ツ	*みやこ	都合|つごう|circumstances|N4	163|阝
+124	和	8	3	harmony; Japanese style; peace; soften	*ワ、オ、カ	*なご(む)、やわ(らぐ)、やわ(らげる)、なご(やか)、あ(える)	平和|へいわ|peace|N3	30|口
+125	統	12	1	overall; relationship; ruling; governing	*トウ	*す(べる)	大統領|だいとうりょう|president|N3	120|糸
+126	以	5	4	by means of; because; in view of; compared with	*イ	もっ(て)	以内|いない|within|N4	9|人
+127	機	16	3	loom; mechanism; machine; airplane	*キ	*はた	飛行機|ひこうき|airplane|N5	75|木
+128	平	5	3	even; flat; peace	*ヘイ、ビョウ、ヒョウ	*たい(ら)、たい(らげる)、ひら	平和|へいわ|peace|N3	51|干
+129	総	14	2	general; whole; all; full	*ソウ	す(べて)、すべ(て)、ふさ	総会|そうかい|general meeting|N1	120|糸
+130	加	5	3	add; addition; increase; join	*カ	*くわ(える)、くわ(わる)	参加|さんか|participation|N3	19|力
+131	山	3	5	mountain	*サン、セン	*やま	沢山|たくさん|many|N5	46|山
+132	思	9	4	think	*シ	*おも(う)、おもえら(く)、おぼ(す)	思想|しそう|thought|N3	61|心
+133	家	10	4	house; home; family; professional	*カ、ケ	*いえ、や、うち	家族|かぞく|family|N5	40|宀
+134	話	13	5	tale; talk	*ワ	*はな(す)、はなし	電話|でんわ|a telephone|N5	149|言
+135	世	5	4	generation; world; society; public	*セ、セイ、ソウ	*よ	世界|せかい|world|N4	1|一
+136	受	8	3	accept; undergo; answer (phone); take	*ジュ	*う(ける)、う(かる)、-う(け)	享受|きょうじゅ|enjoyment|N3	29|又
+137	区	4	2	ward; district	*ク、オウ、コウ		区別|くべつ|distinction|N3	23|匸
+138	領	14	2	jurisdiction; dominion; territory; fief	*リョウ	えり	大統領|だいとうりょう|president|N3	181|頁
+139	多	6	4	many; frequent; much	*タ	*おお(い)、まさ(に)、まさ(る)	多分|たぶん|perhaps|N5	36|夕
+140	県	9	2	prefecture	*ケン	か(ける)	県庁|けんちょう|prefectural office|N2	109|目
+141	続	13	3	continue; series; sequel	*ゾク、ショク、コウ、キョウ	*つづ(く)、つづ(ける)、つぐ(ない)	連続|れんぞく|consecutive|N3	120|糸
+142	進	11	3	advance; proceed; progress; promote	*シン	*すす(む)、すす(める)	進学|しんがく|going on to university|N3	162|辶
+143	正	5	4	correct; justice; righteous; 10**40	*セイ、ショウ	*ただ(しい)、ただ(す)、まさ、まさ(に)	正月|しょうがつ|New Year|N4	77|止
+144	安	6	4	relax; cheap; low; quiet	*アン	*やす(い)、やす(まる)、やす、やす(らか)	安全|あんぜん|safety|N4	40|宀
+145	設	11	2	establishment; provision; prepare	*セツ	*もう(ける)	建設|けんせつ|construction|N3	149|言
+146	保	9	1	protect; guarantee; keep; preserve	*ホ、ホウ	*たも(つ)	保護|ほご|care|N3	9|亻
+147	改	7	2	reformation; change; modify; mend	*カイ	*あらた(める)、あらた(まる)	改善|かいぜん|betterment|N3	66|攵
+148	数	13	3	number; strength; fate; law	*スウ、ス、サク、ソク、シュ	*かぞ(える)、かず、しばしば、せ(める)、わずらわ(しい)	数学|すうがく|mathematics|N4	66|攵
+149	記	10	3	scribe; account; narrative	*キ	*しる(す)	日記|にっき|diary|N4	149|言
+150	院	10	4	Inst.; institution; temple; mansion	*イン		病院|びょういん|hospital|N5	170|阝
+151	女	3	5	woman; female	*ジョ、ニョ、ニョウ	*おんな、め	女性|じょせい|woman|N4	38|女
+152	初	7	3	first time; beginning	*ショ	*はじ(め)、はじ(めて)、はつ、うい-、-そ(める)、-ぞ(め)	最初|さいしょ|beginning|N4	18|刀
+153	北	5	5	north	*ホク	*きた	北部|ほくぶ|northern part|	21|匕
+154	午	4	5	noon; sign of the horse; 11AM-1PM; seventh sign of Chinese zodiac	*ゴ	うま	午後|ごご|afternoon|N5	24|十
+155	指	9	3	finger; point to; indicate; put into	*シ	*ゆび、さ(す)、-さ(し)	指導|しどう|leadership|N3	64|扌
+156	権	15	3	authority; power; rights	*ケン、ゴン	おもり、かり、はか(る)	権利|けんり|right|N3	75|木
+157	心	4	4	heart; mind; spirit	*シン	*こころ、-ごころ	安心|あんしん|peace of mind|N4	61|心
+158	界	9	4	world; boundary	*カイ		世界|せかい|world|N4	102|田
+159	支	4	3	branch; support; sustain	*シ	*ささ(える)、つか(える)、か(う)	支店|してん|branch store (office)|N3	65|支
+160	第	11	1	No.; residence	*ダイ、テイ		次第|しだい|order|N3	118|竹
+161	産	11	3	products; bear; give birth; yield	*サン	*う(む)、う(まれる)、む(す)、うぶ-	産業|さんぎょう|industry|N4	100|生
+162	結	12	1	tie; bind; contract; join	*ケツ、ケチ	*むす(ぶ)、ゆ(う)、ゆ(わえる)	結論|けつろん|conclusion|N3	120|糸
+163	百	6	5	hundred	*ヒャク、ビャク	*もも	数百|すうひゃく|several hundred|	106|白
+164	派	9	1	faction; group; party; clique	*ハ		派手|はで|showy|N3	85|氵
+165	点	9	3	spot; point; mark; speck	*テン	*つ(ける)、つ(く)、た(てる)、さ(す)、とぼ(す)、とも(す)、ぼち	交差点|こうさてん|intersection|N5	86|灬
+166	教	11	4	teach; faith; doctrine	*キョウ	*おし(える)、おそ(わる)	教室|きょうしつ|classroom|N5	66|攵
+167	報	12	3	report; news; reward; retribution	*ホウ	*むく(いる)	報告|ほうこく|report|N3	32|土
+168	済	11	3	settle (debt, etc.); relieve (burden); finish; come to an end	*サイ、セイ	*す(む)、す(まない)、す(ます)、すく(う)、な(す)、わたし、わた(る)、-ず(み)、-ずみ	返済|へんさい|repayment|N1	85|氵
+169	書	10	5	write	*ショ	*か(く)、-が(き)、-がき	図書館|としょかん|library|N5	73|曰
+170	府	8	2	borough; urban prefecture; govt office; representative body	*フ		政府|せいふ|government|N3	53|广
+171	活	9	3	lively; resuscitation; being helped; living	*カツ	*い(きる)、い(かす)、い(ける)	活動|かつどう|action|N3	85|氵
+172	原	10	3	meadow; original; primitive; field	*ゲン	*はら	原因|げんいん|cause|N4	27|厂
+173	先	6	5	before; ahead; previous; future	*セン	*さき、ま(ず)	先月|せんげつ|last month|N5	10|儿
+174	共	6	3	together; both; neither; all	*キョウ	*とも、とも(に)、-ども	共同|きょうどう|cooperation|N3	12|八
+175	得	11	3	gain; get; find; earn	*トク	*え(る)、う(る)	得意|とくい|pride|N3	60|彳
+176	解	13	3	unravel; notes; key; explanation	*カイ、ゲ	*と(く)、と(かす)、と(ける)、ほど(く)、ほぐ(す)、わか(る)、さと(る)	解決|かいけつ|settlement|N3	148|角
+177	名	6	5	name; noted; distinguished; reputation	*メイ、ミョウ	*な	有名|ゆうめい|famous|N5	30|口
+178	交	6	3	mingle; mixing; association; coming & going	*コウ	*まじ(わる)、まじ(える)、ま(じる)、まじ(る)、ま(ざる)、ま(ぜる)、か(わす)、かわ(す)、こもごも、-か(う)	交差点|こうさてん|intersection|N5	8|亠
+179	資	13	3	assets; resources; capital; funds	*シ		資本|しほん|funds|N3	154|貝
+180	予	4	3	beforehand; previous; myself; I	*ヨ、シャ	*あらかじ(め)	予定|よてい|plans|N4	6|亅
+181	川	3	5	stream; river	*セン	*かわ	河川|かせん|rivers|N1	47|巛
+182	向	6	3	yonder; facing; beyond; confront	*コウ	*む(く)、む(い)、む(ける)、む(かう)、む(かい)、む(こう)、む(こう-)、むこ、むか(い)、-む(き)、-む(け)	方向|ほうこう|direction|N3	30|口
+183	際	14	3	occasion; side; edge; verge	*サイ	*きわ、-ぎわ	国際|こくさい|international|N4	170|阝
+184	査	9	2	investigate	*サ		調査|ちょうさ|survey|N3	75|木
+185	勝	12	3	victory; win; prevail; excel	*ショウ	*か(つ)、まさ(る)、すぐ(れる)、かつ、-が(ち)	優勝|ゆうしょう|overall victory|N3	19|力
+186	面	9	3	mask; face; features; surface	*メン、ベン	*おも、おもて、つら	場面|ばめん|scene|N3	176|面
+187	委	8	2	committee; entrust to; leave to; devote	*イ	ゆだ(ねる)	委員|いいん|committee member|N3	38|女
+188	告	7	3	revelation; tell; inform; announce	*コク	*つ(げる)	報告|ほうこく|report|N3	30|口
+189	軍	9	2	army; force; troops; war	*グン	いくさ	軍隊|ぐんたい|army|N3	159|車
+190	文	4	4	sentence; literature; style; art	*ブン、モン	ふみ、あや	文章|ぶんしょう|sentence|N5	67|文
+191	反	4	3	anti-	*ハン、ホン、タン、ホ	そ(る)、そ(らす)、かえ(す)、かえ(る)	反対|はんたい|oppose|N4	29|又
+192	元	4	4	beginning; former time; origin	*ゲン、ガン	*もと	元気|げんき|health(y)|N5	10|儿
+193	重	9	4	heavy; important; esteem; respect	*ジュウ、チョウ	*おも(い)、え、おも(り)、おも(なう)、かさ(ねる)、かさ(なる)、おも	重要|じゅうよう|important|N3	166|里
+194	近	7	4	near; early; akin; tantamount	*キン、コン	*ちか(い)	最近|さいきん|recently|N4	162|辶
+195	千	3	5	thousand	*セン	*ち	千秋楽|せんしゅうらく|final day of a performance|	24|十
+196	考	6	4	consider; think over	*コウ	*かんが(える)、かんが(え)	参考|さんこう|reference|N3	125|耂
+197	判	7	3	judgement; judgment; signature; stamp	*ハン、バン	わか(る)	判断|はんだん|judgment|N3	18|刂
+198	認	14	3	acknowledge; witness; discern; recognize	*ニン	*みと(める)、したた(める)	承認|しょうにん|recognition|N3	149|言
+199	画	8	4	brush-stroke; picture	*ガ、カク、エ、カイ	えが(く)、かく(する)、かぎ(る)、はかりごと、はか(る)	映画|えいが|movie|N5	102|田
+200	海	9	4	sea; ocean	*カイ	*うみ	海岸|かいがん|coast|N4	85|氵
+201	参	8	3	nonplussed; three (in documents); going; coming	*サン、シン	*まい(る)、まじわる、みつ、まい-	参加|さんか|participation|N3	28|厶
+202	売	7	4	sell	*バイ	*う(る)、う(れる)	販売|はんばい|sale|N3	33|士
+203	利	7	3	profit; advantage; benefit	*リ	*き(く)	便利|べんり|convenient|N5	18|刂
+204	組	11	3	association; braid; plait; construct	*ソ	*くみ、く(む)、-ぐみ	組織|そしき|organization|N3	120|糸
+205	知	8	4	know; wisdom	*チ	*し(る)、し(らせる)	知事|ちじ|prefectural governor|N3	111|矢
+206	案	10	1	plan; suggestion; draft; ponder	*アン	つくえ	提案|ていあん|proposal|N3	75|木
+207	道	12	4	road-way; street; district; journey	*ドウ、トウ	*みち、いう	柔道|じゅうどう|judo|N4	162|辶
+208	信	9	3	faith; truth; fidelity; trust	*シン		通信|つうしん|correspondence|N3	9|亻
+209	策	12	1	scheme; plan; policy; step	*サク		対策|たいさく|counter-plan|N2	118|竹
+210	集	12	4	gather; meet; congregate; swarm	*シュウ	*あつ(まる)、あつ(める)、つど(う)	集団|しゅうだん|group|N3	172|隹
+211	在	6	3	exist; outskirts; suburbs; located in	*ザイ	あ(る)	現在|げんざい|now (same as 今 (いま))|N3	32|土
+212	件	6	3	affair; case; matter; item	*ケン	くだん	事件|じけん|event|N3	9|亻
+213	団	6	2	group; association	*ダン、トン	かたまり、まる(い)	布団|ふとん|futon|N4	31|囗
+214	別	7	4	separate; branch off; diverge; fork	*ベツ	*わか(れる)、わ(ける)	特別|とくべつ|special|N4	18|刂
+215	物	8	4	thing; object; matter	*ブツ、モツ	*もの	動物|どうぶつ|animal|N5	93|牛
+216	側	11	3	side; lean; oppose; regret	*ソク	*がわ、かわ、そば	側面|そくめん|side|N1	9|亻
+217	任	6	3	responsibility; duty; term; entrust to	*ニン	*まか(せる)、まか(す)	責任|せきにん|duty|N3	9|亻
+218	引	4	3	pull; tug; jerk; admit	*イン	*ひ(く)、ひ(ける)	引退|いんたい|retirement|N3	57|弓
+219	使	8	4	use; send on a mission; order; messenger	*シ	*つか(う)、つか(い)、-づか(い)	大使館|たいしかん|embassy|N5	9|亻
+220	求	7	3	request; want; wish for; require	*キュウ、グ	*もと(める)	要求|ようきゅう|request|N3	85|水
+221	所	8	3	place; extent	*ショ	*ところ、どころ、とこ	場所|ばしょ|place|N4	63|戸
+222	次	6	3	next; order; sequence	*ジ、シ	*つぎ、つ(ぐ)	次第|しだい|order|N3	76|欠
+223	水	4	5	water	*スイ	*みず	水曜日|すいようび|Wednesday|N5	85|水
+224	半	5	5	half; middle; odd number; semi-	*ハン	*なか(ば)	半分|はんぶん|half|N5	24|十
+225	品	9	4	goods; refinement; dignity; article	*ヒン、ホン	*しな	食料品|しょくりょうひん|foodstuff|N4	30|口
+226	昨	9	3	yesterday; previous	*サク		一昨年|いっさくねん|year before last|N2	72|日
+227	論	15	3	argument; discourse	*ロン	あげつら(う)	議論|ぎろん|argument|N3	149|言
+228	計	9	4	plot; plan; scheme; measure	*ケイ	*はか(る)、はか(らう)	合計|ごうけい|sum total|N3	149|言
+229	死	6	4	death; die	*シ	*し(ぬ)、し(に-)	死亡|しぼう|death|N3	78|歹
+230	官	8	3	bureaucrat; the government; organ	*カン		警官|けいかん|police officer|N5	40|宀
+231	増	14	3	increase; add; augment; gain	*ゾウ	*ふ(える)、ま(す)、ま(し)、ふ(やす)	増加|ぞうか|increase|N3	32|土
+232	係	9	3	person in charge; connection; duty; concern oneself	*ケイ	*かか(る)、かかり、かか(わる)、-がかり	関係|かんけい|relation(ship)|N4	9|亻
+233	感	13	3	emotion; feeling; sensation	*カン		感覚|かんかく|sense|N3	61|心
+234	特	10	4	special	*トク		特別|とくべつ|special|N4	93|牛
+235	情	11	3	feelings; emotion; passion; sympathy	*ジョウ、セイ	*なさ(け)	事情|じじょう|circumstances|N3	61|忄
+236	投	7	3	throw; discard; abandon; launch into	*トウ	*な(げる)、-な(げ)	投票|とうひょう|voting|N3	64|扌
+237	示	5	3	show; indicate; point out; express	*ジ、シ	*しめ(す)	掲示|けいじ|notice|N3	113|示
+238	変	9	3	unusual; change; strange	*ヘン	*か(わる)、か(わり)、か(える)	大変|たいへん|very|N5	34|夂
+239	打	5	3	strike; hit; knock; pound	*ダ、ダース	*う(つ)、う(ち-)、ぶ(つ)	打撃|だげき|blow|N1	64|扌
+240	男	7	5	male	*ダン、ナン	*おとこ、お	男性|だんせい|man|N4	102|田
+241	基	11	1	fundamentals; radical (chem); counter for machines; foundation	*キ	*もと、もとい	基本|きほん|basic|N3	32|土
+242	私	7	4	private; I; me	*シ	*わたし、わたくし	私用|しよう|personal use|N3	115|禾
+243	各	6	2	each; every; either	*カク	おのおの	各自|かくじ|individual|N2	30|口
+244	始	8	4	commence; begin	*シ	*はじ(める)、はじ(まる)	開始|かいし|start|N3	38|女
+245	島	10	2	island	*トウ	*しま	半島|はんとう|peninsula|N2	46|山
+246	直	8	3	straightaway; honesty; frankness; fix	*チョク、ジキ、ジカ	*なお(す)、ただ(ちに)、なお(る)、なお(き)、す(ぐ)	直接|ちょくせつ|direct|N3	109|目
+247	両	6	3	both; old Japanese coin; counter for carriages (e.g., in a train); two	*リョウ	てる、ふたつ	両親|りょうしん|parents (lit.|N5	1|一
+248	朝	12	4	morning; dynasty; regime; epoch	*チョウ	*あさ	早朝|そうちょう|early morning|	74|月
+249	革	9	2	leather; skin; reform; become serious	*カク	*かわ	改革|かいかく|reform|N1	177|革
+250	価	8	1	value; price	*カ、ケ	*あたい	価格|かかく|price|N3	9|亻
+251	式	6	3	style; ceremony; rite; function	*シキ		正式|せいしき|official|N3	56|弋
+252	確	15	3	assurance; firm; tight; hard	*カク、コウ	*たし(か)、たし(かめる)	確実|かくじつ|certainty|N3	112|石
+253	村	7	2	village; town	*ソン	*むら	農村|のうそん|agricultural community|N2	75|木
+254	提	12	1	propose; take along; carry in hand	*テイ、チョウ、ダイ	さ(げる)	提案|ていあん|proposal|N3	64|扌
+255	運	12	4	carry; luck; destiny; fate	*ウン	*はこ(ぶ)	運転手|うんてんしゅ|driver (by occupation)|N4	162|辶
+256	終	11	4	end; finish	*シュウ	*おわ(る)、お(わる)、お(える)、つい、つい(に)	最終|さいしゅう|last|N3	120|糸
+257	挙	10	1	raise; plan; project; behavior	*キョ	*あ(げる)、あ(がる)、こぞ(る)	選挙|せんきょ|election|N3	64|手
+258	果	8	3	fruit; reward; carry out; achieve	*カ	は(たす)、はた(す)、は(てる)、は(て)	結果|けっか|result|N3	75|木
+259	西	6	5	west; Spain	*セイ、サイ、ス	*にし	西洋|せいよう|the West|N4	146|襾
+260	勢	13	2	forces; energy; military strength	*セイ、ゼイ	*いきお(い)、はずみ	大勢|おおぜい|great number of people|N5	19|力
+261	減	12	2	dwindle; decrease; reduce; decline	*ゲン	*へ(る)、へ(らす)	減少|げんしょう|decrease|N3	85|氵
+262	台	5	4	pedestal; a stand; counter for machines and vehicles	*ダイ、タイ	うてな、われ、つかさ	台所|だいどころ|kitchen|N5	30|口
+263	広	5	4	wide; broad; spacious	*コウ	*ひろ(い)、ひろ(まる)、ひろ(める)、ひろ(がる)、ひろ(げる)	広告|こうこく|advertisement|N3	53|广
+264	容	10	3	contain; form; looks	*ヨウ	い(れる)	内容|ないよう|subject|N3	40|宀
+265	必	5	3	invariably; certain; inevitable	*ヒツ	*かなら(ず)	必要|ひつよう|necessary|N4	61|心
+266	応	7	1	apply; answer; yes; OK	*オウ、ヨウ、-ノウ	あた(る)、まさに、こた(える)	応援|おうえん|aid|N3	61|心
+267	演	14	3	performance; act; play; render	*エン		公演|こうえん|public performance|N3	85|氵
+268	電	13	5	electricity	*デン		電話|でんわ|a telephone|N5	173|雨
+269	歳	13	3	year-end; age; occasion; opportunity	*サイ、セイ	とし、とせ、よわい	歳月|さいげつ|time|	77|止
+270	住	7	4	dwell; reside; live; inhabit	*ジュウ、ヂュウ、チュウ	*す(む)、す(まう)、-ず(まい)	住所|じゅうしょ|address|N4	9|亻
+271	争	6	3	contend; dispute; argue	*ソウ	*あらそ(う)、いか(でか)	戦争|せんそう|war|N4	6|亅
+272	談	15	3	discuss; talk	*ダン		冗談|じょうだん|a joke|N3	149|言
+273	能	10	3	ability; talent; skill; capacity	*ノウ	よ(く)、あた(う)	機能|きのう|function|N3	130|月
+274	無	12		nothingness; none; ain't; nothing	*ム、ブ	*な(い)	無理|むり|unreasonable|N4	86|灬
+275	再	6	2	again; twice; second time	*サ、サイ	*ふたた(び)	再来月|さらいげつ|the month after next|N4	13|冂
+276	位	7	3	rank; grade; throne; crown	*イ	*くらい、ぐらい	地位|ちい|(social) position|N3	9|亻
+277	置	13	3	placement; put; set; deposit	*チ	*お(く)、-お(き)	装置|そうち|equipment|N3	122|罒
+278	企	6	1	undertake; scheme; design; attempt	*キ	*くわだ(てる)、たくら(む)	企業|きぎょう|industry|N3	9|人
+279	真	10	4	true; reality; Buddhist sect	*シン	*ま、まこと	写真|しゃしん|a picture|N5	109|目
+280	流	10	3	current; a sink; flow; forfeit	*リュウ、ル	*なが(れる)、なが(れ)、なが(す)	流行|りゅうこう|fashionable|N3	85|氵
+281	格	10	3	status; rank; capacity; character	*カク、コウ、キャク、ゴウ		価格|かかく|price|N3	75|木
+282	有	6	4	possess; have; exist; happen	*ユウ、ウ	*あ(る)	有名|ゆうめい|famous|N5	74|月
+283	疑	14	3	doubt; distrust; be suspicious; question	*ギ	*うたが(う)	疑問|ぎもん|question|N3	103|疋
+284	口	3	4	mouth	*コウ、ク	*くち	人口|じんこう|population|N4	30|口
+285	過	12	3	overdo; exceed; go beyond; error	*カ	*す(ぎる)、す(ごす)、あやま(ち)、あやま(つ)、よぎ(る)、よ(ぎる)	過去|かこ|past|N3	162|辶
+286	局	7	3	bureau; board; office; affair	*キョク	つぼね	郵便局|ゆうびんきょく|post office|N5	44|尸
+287	少	4	4	few; little	*ショウ	*すこ(し)、すく(ない)	少年|しょうねん|boys|N3	42|小
+288	放	8	3	set free; release; fire; shoot	*ホウ	*はな(す)、はな(つ)、はな(れる)、こ(く)、ほう(る)、-っぱな(し)	開放|かいほう|open|N2	66|攵
+289	税	12	2	tax; duty	*ゼイ		税金|ぜいきん|tax|N3	115|禾
+290	検	12	1	examination; investigate	*ケン	しら(べる)	検査|けんさ|inspection|N3	75|木
+291	藤	18	1	wisteria	*トウ、ドウ	*ふじ		140|艹
+292	町	7	4	town; village; block; street	*チョウ	*まち	市町村|しちょうそん|cities, towns and villages|	102|田
+293	常	11	3	usual; ordinary; normal; common	*ジョウ	*つね、とこ-	非常|ひじょう|emergency|N3	50|巾
+294	校	10	5	exam; school; printing; proof	*コウ、キョウ		学校|がっこう|a school|N5	75|木
+295	料	10	4	fee; materials	*リョウ		料理|りょうり|cooking|N5	68|斗
+296	沢	7	1	swamp; marsh; brilliance; grace	*タク	*さわ、うるお(い)、うるお(す)、つや	沢山|たくさん|many|N5	85|氵
+297	裁	12	1	tailor; judge; decision; cut out (pattern)	*サイ	*さば(く)、た(つ)	裁判|さいばん|trial|N3	145|衣
+298	状	7	3	status quo; conditions; circumstances; form	*ジョウ		状態|じょうたい|condition|N3	94|犬
+299	工	3	4	craft; construction	*コウ、ク、グ		工場|こうじょう|factory|N4	48|工
+300	建	9	4	build	*ケン、コン	*た(てる)、た(て)、た(つ)、-だ(て)	建設|けんせつ|construction|N3	54|廴
+301	語	14	5	word; speech; language	*ゴ	*かた(る)、かた(らう)	英語|えいご|English (language)|N5	149|言
+302	球	11	3	ball; sphere	*キュウ	*たま	地球|ちきゅう|the earth|N3	96|王
+303	営	12	2	camp; perform; build; conduct (business)	*エイ	*いとな(む)、いとな(み)	経営|けいえい|management|N3	30|口
+304	空	8	4	empty; sky; void; vacant	*クウ	*そら、あ(く)、あ(き)、あ(ける)、から、す(く)、す(かす)、むな(しい)	空港|くうこう|airport|N4	116|穴
+305	職	18	3	post; employment; work	*ショク、ソク		職業|しょくぎょう|occupation|N3	128|耳
+306	証	12	1	evidence; proof; certificate	*ショウ	*あかし	保証|ほしょう|guarantee|N3	149|言
+307	土	3	5	soil; earth; ground; Turkey	*ド、ト	*つち	土曜日|どようび|Saturday|N5	32|土
+308	与	3	3	bestow; participate in; give; award	*ヨ	*あた(える)、あずか(る)、くみ(する)、ともに	給与|きゅうよ|salary|N2	1|一
+309	急	9	4	hurry; emergency; sudden; steep	*キュウ	*いそ(ぐ)、いそ(ぎ)、せ(く)	特急|とっきゅう|limited express (train faster than an express)|N4	61|心
+310	止	4	4	stop; halt	*シ	*と(まる)、と(める)、とど(める)、とど(め)、とど(まる)、や(める)、や(む)、よ(す)、-ど(まり)、-ど(め)、-さ(す)、-さ(し)	禁止|きんし|prohibition|N3	77|止
+311	送	9	4	escort; send	*ソウ	*おく(る)	輸送|ゆそう|transport|N2	162|辶
+312	援	12	1	abet; help; save	*エン		援助|えんじょ|assistance|N3	64|扌
+313	供	8	3	submit; offer; present; serve (meal)	*キョウ、ク、クウ、グ	*とも、そな(える)、-ども	供給|きょうきゅう|supply|N3	9|亻
+314	可	5		can; passable; approval	*カ、コク	-べ(き)、-べ(し)	可能|かのう|possible|N3	30|口
+315	役	7	3	duty; war; campaign; drafted labor	*ヤク、エキ		役割|やくわり|assigning (allotment of) parts|N3	60|彳
+316	構	14	3	posture; stance; appearance; build	*コウ	*かま(える)、かま(う)	結構|けっこう|splendid|N5	75|木
+317	木	4	5	tree; wood	*モク、ボク	*き、こ-	木曜日|もくようび|Thursday|N5	75|木
+318	割	12	3	proportion; comparatively; divide; cut	*カツ	*わり、わ(る)、わ(り)、わ(れる)、さ(く)	分割|ぶんかつ|partition|	18|刂
+319	聞	14	5	hear; ask; listen	*ブン、モン	*き(く)、き(こえる)	新聞|しんぶん|newspaper|N5	128|耳
+320	身	7		somebody; person; one's station in life	*シン	*み	自身|じしん|oneself|N3	158|身
+321	費	12	3	expense; cost; spend; consume	*ヒ	*つい(やす)、つい(える)	費用|ひよう|cost|N3	154|貝
+322	付	5	3	adhere; attach; refer to; append	*フ	*つ(ける)、つ(け)、つ(け-)、つ(く)、つ(き)、-づ(ける)、-づ(け)、-づけ、-づ(く)、-つき、-づ(き)、-づき	寄付|きふ|contribution|N3	9|亻
+323	施	9	1	give; bestow; perform; alms	*シ、セ	*ほどこ(す)	実施|じっし|enforcement|N3	70|方
+324	切	4	4	cut; cutoff; be sharp	*セツ、サイ	*き(る)、き(り)、き(れる)、き(れ)、-ぎ(り)、-ぎ(れ)	大切|たいせつ|important|N5	18|刀
+325	由	5	3	wherefore; a reason	*ユウ、ユ、ユイ	*よし、よ(る)	自由|じゆう|freedom|N4	102|田
+326	説	14	3	opinion; theory; explanation; rumor	*セツ、ゼイ	*と(く)	説明|せつめい|explanation|N4	149|言
+327	転	11	4	revolve; turn around; change	*テン	*ころ(がる)、ころ(げる)、ころ(がす)、ころ(ぶ)、まろ(ぶ)、うたた、うつ(る)、くる(めく)	自転車|じてんしゃ|bicycle|N5	159|車
+328	食	9	5	eat; food	*ショク、ジキ	*た(べる)、く(う)、く(らう)、は(む)	食堂|しょくどう|cafeteria|N5	184|食
+329	比	4	2	compare; race; ratio; Philippines	*ヒ	*くら(べる)	比較|ひかく|comparison|N3	81|比
+330	難	18	3	difficult; impossible; trouble; accident	*ナン	*むずか(しい)、かた(い)、むづか(しい)、むつか(しい)、-がた(い)、-にく(い)	困難|こんなん|difficulty|N3	172|隹
+331	防	7	2	ward off; defend; protect; resist	*ボウ	*ふせ(ぐ)	予防|よぼう|prevention|N3	170|阝
+332	補	12	2	supplement; supply; make good; offset	*ホ	*おぎな(う)	候補|こうほ|candidacy|N3	145|衤
+333	車	7	5	car	*シャ	*くるま	自動車|じどうしゃ|automobile|N5	159|車
+334	優	17	3	tenderness; excel; surpass; actor	*ユウ、ウ	*やさ(しい)、すぐ(れる)、まさ(る)	優勝|ゆうしょう|overall victory|N3	9|亻
+335	夫	4	3	husband; man	*フウ、フ、ブ	*おっと、それ	大丈夫|だいじょうぶ|It's ok (all right)|N5	37|大
+336	研	9	4	polish; study of; sharpen	*ケン	*と(ぐ)	研究|けんきゅう|study|N4	112|石
+337	収	4	3	income; obtain; reap; pay	*シュウ	*おさ(める)、おさ(まる)	収入|しゅうにゅう|income|N3	29|又
+338	断	11	3	severance; decline; refuse; apologize	*ダン	*ことわ(る)、た(つ)、さだ(める)	判断|はんだん|judgment|N3	69|斤
+339	井	4	1	well; well crib; town; community	*ショウ、セイ	*い	油井|ゆせい|oil well|	7|二
+340	何	7	5	what	*カ	*なに、なん		9|亻
+341	南	9	5	south	*ナン、ナ	*みなみ	南北|なんぼく|south and north|N2	24|十
+342	石	5	3	stone	*セキ、シャク、コク	*いし	石油|せきゆ|oil|N3	112|石
+343	足	7	4	leg; foot; be sufficient; counter for pairs of footwear	*ソク	*あし、た(りる)、た(る)、た(す)	不足|ふそく|insufficiency|N3	157|足
+344	違	13	3	difference; differ	*イ	*ちが(う)、ちが(い)、ちが(える)、たが(う)、たが(える)	違反|いはん|violation (of law)|N3	162|辶
+345	消	10	3	extinguish; blow out; turn off; neutralize	*ショウ	*き(える)、け(す)	消費|しょうひ|consumption|N3	85|氵
+346	境	14	2	boundary; border; region	*キョウ、ケイ	*さかい	環境|かんきょう|environment|N3	32|土
+347	神	9	3	gods; mind; soul	*シン、ジン	*かみ、かん-、こう-	神社|じんじゃ|Shinto shrine|N4	113|礻
+348	番	12	3	turn; number in a series	*バン	つが(い)	番号|ばんごう|number|N5	102|田
+349	規	11	3	standard; measure	*キ		規則|きそく|rule|N4	147|見
+350	術	11	3	art; technique; skill; means	*ジュツ	すべ	技術|ぎじゅつ|technique|N4	144|行
+351	護	20	1	safeguard; protect	*ゴ	まも(る)	看護婦|かんごふ|(female) nurse|N4	149|言
+352	展	10	1	unfold; expand	*テン		展覧会|てんらんかい|exhibition|N4	44|尸
+353	態	14	1	attitude; condition; figure; appearance	*タイ	*わざ(と)	状態|じょうたい|condition|N3	61|心
+354	導	15	2	guidance; leading; conduct; usher	*ドウ	*みちび(く)	指導|しどう|leadership|N3	41|寸
+355	鮮	17	1	fresh; vivid; clear; brilliant	*セン	*あざ(やか)	新鮮|しんせん|fresh|N3	195|魚
+356	備	12	3	equip; provision; preparation	*ビ	*そな(える)、そな(わる)、つぶさ(に)	設備|せつび|equipment|N3	9|亻
+357	宅	6	3	home; house; residence; our house	*タク		住宅|じゅうたく|resident|N3	40|宀
+358	害	10	3	harm; injury	*ガイ		被害|ひがい|damage|N3	40|宀
+359	配	10	3	distribute; spouse; exile; rationing	*ハイ	*くば(る)	支配|しはい|rule|N3	164|酉
+360	副	11	2	vice-; assistant; aide; duplicate	*フク		副詞|ふくし|adverb|N2	18|刂
+361	算	14	2	calculate; divining; number; abacus	*サン	*そろ	予算|よさん|estimate|N3	118|竹
+362	視	11	1	inspection; regard as; see; look at	*シ	み(る)	視点|してん|opinion|N3	147|見
+363	条	7	1	article; clause; counter for articles, clauses, paragraphs, etc.; twig	*ジョウ、チョウ、デキ	えだ、すじ	条件|じょうけん|conditions|N3	75|木
+364	幹	13	1	tree trunk; main part; talent; capability	*カン	*みき	新幹線|しんかんせん|Shinkansen|N2	51|干
+365	独	9	1	single; alone; spontaneously; Germany	*ドク、トク	*ひと(り)	独立|どくりつ|independence (e.g.|N3	94|犭
+366	警	19	3	admonish; commandment	*ケイ	いまし(める)	警官|けいかん|police officer|N5	149|言
+367	宮	10	1	Shinto shrine; constellations; palace; princess	*キュウ、グウ、ク、クウ	*みや	宮殿|きゅうでん|palace|N1	40|宀
+368	究	7	4	research; study	*キュウ、ク	*きわ(める)	研究|けんきゅう|study|N4	116|穴
+369	育	8	3	bring up; grow up; raise; rear	*イク	*そだ(つ)、そだ(ち)、そだ(てる)、はぐく(む)	教育|きょういく|education|N4	130|月
+370	席	10	3	seat; mat; occasion; place	*セキ	むしろ	座席|ざせき|seat|N3	50|巾
+371	輸	16	2	transport; send; be inferior	*ユ、シュ		輸入|ゆにゅう|import|N4	159|車
+372	訪	11	3	call on; visit; look up; offer sympathy	*ホウ	*たず(ねる)、おとず(れる)、と(う)	訪問|ほうもん|call|N3	149|言
+373	楽	13	4	music; comfort; ease	*ラク、ガク、ゴウ	*たの(しい)、たの(しむ)、この(む)	音楽|おんがく|Music|N5	75|木
+374	起	10	4	rouse; wake up; get up	*キ	*お(きる)、お(こる)、お(こす)、おこ(す)、た(つ)	起源|きげん|origin|N3	156|走
+375	万	3	5	ten thousand; 10,000	*マン、バン	よろず	万年筆|まんねんひつ|fountain pen|N5	1|一
+376	着	12	4	don; arrive; wear; counter for suits of clothing	*チャク、ジャク	*き(る)、き(せる)、つ(く)、つ(ける)	到着|とうちゃく|arrival|N3	109|目
+377	乗	9	3	ride; power; multiplication; record	*ジョウ、ショウ	*の(る)、の(せる)、-の(り)	乗客|じょうきゃく|passenger|N3	4|丿
+378	店	8	4	store; shop	*テン	*みせ、たな	喫茶店|きっさてん|café|N5	53|广
+379	述	8	2	mention; state; speak; relate	*ジュツ	*の(べる)	述語|じゅつご|predicate|N2	162|辶
+380	残	10	3	remainder; leftover; balance	*ザン、サン	*のこ(る)、のこ(す)、そこな(う)、のこ(り)	残念|ざんねん|regret|N4	78|歹
+381	想	13	3	idea; thought; conception; think	*ソウ、ソ	おも(う)	予想|よそう|expectation|N3	61|心
+382	線	15	2	line; track	*セン	すじ	地平線|ちへいせん|horizon|N3	120|糸
+383	率	11	1	ratio; rate; proportion; %	*リツ、ソツ、シュツ	*ひき(いる)	確率|かくりつ|probability|N2	95|玄
+384	病	10	4	ill; sick	*ビョウ、ヘイ	*や(む)、やまい、-や(み)	病院|びょういん|hospital|N5	104|疒
+385	農	13	2	agriculture; farmers	*ノウ		農業|のうぎょう|agriculture|N3	161|辰
+386	州	6	2	state; province	*シュウ、ス	す	欧州|おうしゅう|Europe|	47|巛
+387	武	8	2	warrior; military; chivalry; arms	*ブ、ム	*たけ、たけ(し)	武器|ぶき|weapon|N3	77|止
+388	声	7	3	voice	*セイ、ショウ	*こえ、こわ-	声明|せいめい|declaration|N3	33|士
+389	質	15	4	substance; quality; matter; temperament	*シツ、シチ、チ	たち、ただ(す)、もと、わりふ	質問|しつもん|question|N5	154|貝
+390	念	8	3	wish; sense; idea; thought	*ネン		残念|ざんねん|regret|N4	61|心
+391	待	9	4	wait; depend on	*タイ	*ま(つ)、-ま(ち)	期待|きたい|expectation|N3	60|彳
+392	試	13	4	test; try; attempt; experiment	*シ	*こころ(みる)、ため(す)	試合|しあい|match|N4	149|言
+393	族	11	4	tribe; family	*ゾク		家族|かぞく|family|N5	70|方
+394	象	12	2	elephant; pattern after; imitate; image	*ショウ、ゾウ	かたど(る)	対象|たいしょう|target|N3	152|豕
+395	銀	14	4	silver	*ギン	しろがね	銀行|ぎんこう|bank|N5	167|金
+396	域	11	2	range; region; limits; stage	*イキ		地域|ちいき|area|N3	32|土
+397	助	7	3	help; rescue; assist	*ジョ	*たす(ける)、たす(かる)、す(ける)、すけ	援助|えんじょ|assistance|N3	19|力
+398	労	7	3	labor; thank for; reward for; toil	*ロウ	*いたわ(る)、ろう(する)、いた(ずき)、ねぎら、つか(れる)、ねぎら(う)	労働|ろうどう|labor|N3	19|力
+399	例	8	3	example; custom; usage; precedent	*レイ	*たと(える)	例外|れいがい|exception|N3	9|亻
+400	衛	16	1	defense; protection	*エイ、エ		衛星|えいせい|satellite|N3	144|行
+401	然	12	3	sort of thing; so; if so; in that case	*ゼン、ネン	*しか、しか(り)、しか(し)、さ	全然|ぜんぜん|not at all|N4	86|灬
+402	早	6	4	early; fast	*ソウ、サッ	*はや(い)、はや、はや(まる)、はや(める)、さ-	早速|さっそく|at once|N2	72|日
+403	張	11	1	counter for bows & stringed instruments; stretch; spread; put up (tent)	*チョウ	*は(る)、-は(り)、-ば(り)	主張|しゅちょう|claim|N3	57|弓
+404	映	9	4	reflect; reflection; projection	*エイ	*うつ(る)、うつ(す)、は(える)、-ば(え)	映画|えいが|movie|N5	72|日
+405	限	9	3	limit; restrict; to best of ability	*ゲン	*かぎ(る)、かぎ(り)	期限|きげん|deadline|N3	170|阝
+406	親	16	4	parent; intimacy; relative; familiarity	*シン	*おや、した(しい)、した(しむ)	両親|りょうしん|parents (lit.|N5	147|見
+407	額	18	2	forehead; tablet; plaque; framed picture	*ガク	*ひたい	金額|きんがく|amount of money|N3	181|頁
+408	監	15	1	oversee; official; govt office; rule	*カン		監督|かんとく|supervision|N3	108|皿
+409	環	17	1	ring; circle; loop	*カン	わ	環境|かんきょう|environment|N3	96|王
+410	験	18	4	verification; effect; testing	*ケン、ゲン	*ため(す)、あかし、しるし、ためし	試験|しけん|an exam|N4	187|馬
+411	追	9	3	chase; drive away; follow; pursue	*ツイ	*お(う)	追加|ついか|addition|N2	162|辶
+412	審	15	1	hearing; judge; trial	*シン	つまび(らか)、つぶさ(に)	審判|しんぱん|umpire|N3	40|宀
+413	商	11	3	make a deal; selling; dealing in; merchant	*ショウ	*あきな(う)	商品|しょうひん|commodity|N3	30|口
+414	葉	12	3	leaf; plane; lobe; needle	*ヨウ	*は	紅葉|こうよう|fall colors (of leaves)|N2	140|艹
+415	義	13	1	righteousness; justice; morality; honor	*ギ		講義|こうぎ|a lecture|N4	123|羊
+416	伝	6	3	transmit; go along; walk along; follow	*デン、テン	*つた(わる)、つた(える)、つた(う)、つだ(う)、つて、-づた(い)	伝統|でんとう|tradition|N3	9|亻
+417	働	13	3	work; (kokuji)	*ドウ	*はたら(く)	労働|ろうどう|labor|N3	9|亻
+418	形	7	3	shape; form; style	*ケイ、ギョウ	*かた、かたち、なり、-がた	人形|にんぎょう|doll|N4	59|彡
+419	景	12	3	scenery; view	*ケイ		景気|けいき|condition|N3	72|日
+420	落	12	3	fall; drop; come down; village	*ラク	*お(ちる)、お(ち)、お(とす)	落第|らくだい|failure|N2	140|艹
+421	欧	8	2	Europe	*オウ	うた(う)、は(く)	欧米|おうべい|Europe and America|N2	76|欠
+422	担	8	2	shouldering; carry; raise; bear	*タン	*にな(う)、かつ(ぐ)	担当|たんとう|(in) charge|N3	64|扌
+423	好	6	3	fond; pleasing; like something	*コウ	*す(く)、この(む)、よ(い)、い(い)	格好|かっこう|appearance|N4	38|女
+424	退	9	3	retreat; withdraw; retire; resign	*タイ	*しりぞ(く)、しりぞ(ける)、ひ(く)、の(く)、の(ける)、ど(く)	引退|いんたい|retirement|N3	162|辶
+425	準	13	2	semi-; correspond to; proportionate to; conform	*ジュン	じゅん(じる)、じゅん(ずる)、なぞら(える)、のり、ひと(しい)、みずもり	水準|すいじゅん|level|N3	85|氵
+426	賞	15	2	prize; reward; praise	*ショウ	ほ(める)	賞品|しょうひん|prize|N3	154|貝
+427	訴	12	1	accusation; sue; complain of pain; appeal to	*ソ	*うった(える)	訴訟|そしょう|litigation|N1	149|言
+428	辺	5	2	environs; boundary; border; vicinity	*ヘン	*あた(り)、ほと(り)、-べ	周辺|しゅうへん|circumference|N2	162|辶
+429	造	10	2	create; make; structure; physique	*ゾウ	*つく(る)、つく(り)、-づく(り)	製造|せいぞう|manufacture|N3	162|辶
+430	英	8	4	England; English; hero; outstanding	*エイ	はなぶさ	英語|えいご|English (language)|N5	140|艹
+431	被	10	2	incur; cover; veil; brood over	*ヒ	*かぶ(る)、こうむ(る)、おお(う)、かぶ(せる)	被害|ひがい|damage|N3	145|衤
+432	株	10	1	stocks; stump; shares; stock	*シュ	*かぶ		75|木
+433	頭	16	3	head; counter for large animals	*トウ、ズ、ト	*あたま、かしら、かぶり、-がしら	頭痛|ずつう|headache|N3	181|頁
+434	技	7	2	skill; art; craft; ability	*ギ	*わざ	技術|ぎじゅつ|technique|N4	64|扌
+435	低	7	2	lower; short; humble	*テイ	*ひく(い)、ひく(める)、ひく(まる)	最低|さいてい|least|N3	9|亻
+436	毎	6	5	every	*マイ	*ごと、-ごと(に)	毎日|まいにち|every day|N5	80|毋
+437	医	7	4	doctor; medicine	*イ	い(やす)、い(する)、くすし	医者|いしゃ|doctor|N5	23|匸
+438	復	12	2	restore; return to; revert; resume	*フク	また	復習|ふくしゅう|review (of lessons)|N4	60|彳
+439	仕	5	4	attend; doing; official; serve	*シ、ジ	*つか(える)	仕事|しごと|work|N5	9|亻
+440	去	5	4	gone; past; quit; leave	*キョ、コ	*さ(る)	去年|きょねん|last year|N5	28|厶
+441	姿	9	1	figure; form; shape	*シ	*すがた	姿勢|しせい|attitude|N2	38|女
+442	味	8	4	flavor; taste	*ミ	*あじ、あじ(わう)	意味|いみ|meaning|N5	30|口
+443	負	9	3	defeat; negative; -; minus	*フ	*ま(ける)、ま(かす)、お(う)	負担|ふたん|burden|N1	154|貝
+444	閣	14	1	tower; tall building; palace	*カク		内閣|ないかく|cabinet|N1	169|門
+445	韓	18		Korea	*カン	から、いげた	日韓|にっかん|Japan and South Korea|	178|韋
+446	渡	12	3	transit; ford; ferry; cross	*ト	*わた(る)、わた(す)	過渡期|かとき|transition period|	85|氵
+447	失	5	3	lose; error; fault; disadvantage	*シツ	*うしな(う)、う(せる)	失礼|しつれい|discourtesy|N4	37|大
+448	移	11	2	shift; move; change; drift	*イ	*うつ(る)、うつ(す)	移動|いどう|migration|N3	115|禾
+449	差	10	3	distinction; difference; variation; discrepancy	*サ	*さ(す)、さ(し)	交差点|こうさてん|intersection|N5	48|工
+450	衆	12	1	masses; great numbers; multitude; populace	*シュウ、シュ	おお(い)	公衆|こうしゅう|the public|N2	143|血
+451	個	10	2	individual; counter for articles	*コ、カ		個人|こじん|individual|N3	9|亻
+452	門	8	2	gate; counter for cannons	*モン	かど、と	専門|せんもん|major|N4	169|門
+453	写	5	4	copy; be photographed; describe	*シャ、ジャ	*うつ(す)、うつ(る)、うつ(し)、うつ-	写真|しゃしん|a picture|N5	14|冖
+454	評	12	1	evaluate; criticism; comment	*ヒョウ		評価|ひょうか|assessment|N3	149|言
+455	課	15	2	chapter; lesson; section; department	*カ		課長|かちょう|section manager|N4	149|言
+456	末	5	3	end; close; tip; powder	*マツ、バツ	*すえ、うら、うれ	粗末|そまつ|humble|N3	75|木
+457	守	6	3	guard; protect; defend; obey	*ス、シュ	*まも(る)、まも(り)、もり、かみ	留守|るす|absence|N4	40|宀
+458	若	8	3	young; if; perhaps; possibly	*ジャク、ニャク、ニャ	*わか(い)、も(しくわ)、も(し)、も(しくは)、ごと(し)、わか-	老若|ろうじゃく|young and old|	140|艹
+459	脳	11	2	brain; memory	*ノウ、ドウ	のうずる	頭脳|ずのう|head|N2	130|月
+460	極	12	2	extreme; pole; extremely; very	*キョク、ゴク	*きわ(める)、きわ(まる)、きわ(まり)、きわ(み)、き(める)、き(まる)、-ぎ(め)	積極的|せっきょくてき|positive|N3	75|木
+461	種	14	3	species; kind; class; variety	*シュ	*たね、-ぐさ	人種|じんしゅ|race (of people)|N3	115|禾
+462	美	9	3	beauty; beautiful	*ビ、ミ	*うつく(しい)	美術館|びじゅつかん|art gallery|N4	123|羊
+463	岡	8		mount; hill; knoll	コウ	*おか		46|山
+464	影	15	1	shadow; silhouette; phantom	*エイ	*かげ	影響|えいきょう|influence|N3	59|彡
+465	命	8	3	fate; command; decree; destiny	*メイ、ミョウ	*いのち	生命|せいめい|life|N3	30|口
+466	含	7	2	contain; include; hold in the mouth; bear in mind	*ガン	*ふく(む)、ふく(める)	含有|がんゆう|containing (an ingredient, mineral, etc.)|	30|口
+467	福	13	3	blessing; fortune; luck; wealth	*フク		幸福|こうふく|happiness|N3	113|礻
+468	蔵	15	2	storehouse; hide; own; have	*ゾウ、ソウ	*くら、おさ(める)、かく(れる)	冷蔵庫|れいぞうこ|refrigerator|N5	140|艹
+469	量	12	2	quantity; measure; weight; amount	*リョウ	*はか(る)	重量|じゅうりょう|heavyweight|N2	166|里
+470	望	11	3	ambition; full moon; hope; desire	*ボウ、モウ	*のぞ(む)、もち	希望|きぼう|hope|N3	74|月
+471	松	8	1	pine tree	*ショウ	*まつ	松風|しょうふう|(sound of) wind blowing through pine trees|	75|木
+472	非	8	3	un-; mistake; negative; injustice	*ヒ	あら(ず)	是非|ぜひ|certainly|N4	175|非
+473	撃	15	1	beat; attack; defeat; conquer	*ゲキ	*う(つ)	攻撃|こうげき|attack|N3	64|手
+474	佐	7	1	assistant; help	*サ		補佐|ほさ|aid|	9|亻
+475	核	10	1	nucleus; core; kernel	*カク		結核|けっかく|tuberculosis|N1	75|木
+476	観	18	3	outlook; look; appearance; condition	*カン	*み(る)、しめ(す)	観光|かんこう|sightseeing|N3	147|見
+477	察	14	3	guess; presume; surmise; judge	*サツ		警察|けいさつ|police|N4	40|宀
+478	整	16	1	organize; arranging; tune; tone	*セイ	*ととの(える)、ととの(う)	整理|せいり|sorting|N3	66|攵
+479	段	9	3	grade; steps; stairs	*ダン、タン		階段|かいだん|stairs|N5	79|殳
+480	横	15	3	sideways; side; horizontal; width	*オウ	*よこ	横断|おうだん|crossing|N3	75|木
+481	融	16	1	dissolve; melt	*ユウ	と(ける)、と(かす)	金融|きんゆう|finance|N3	142|虫
+482	型	9	2	mould; type; model	*ケイ	*かた、-がた	典型|てんけい|type|N3	32|土
+483	白	5	5	white	*ハク、ビャク	*しろ、しろ(い)、しら-	明白|めいはく|obvious|N1	106|白
+484	深	11	3	deep; heighten; intensify; strengthen	*シン	*ふか(い)、ふか(まる)、ふか(める)、-ぶか(い)、み-	深刻|しんこく|serious|N3	85|氵
+485	字	6	4	character; letter; word; section of village	*ジ	あざ、あざな、-な	漢字|かんじ|kanji|N5	39|子
+486	答	12	4	solution; answer	*トウ	*こた(える)、こた(え)	答案|とうあん|examination paper|N3	118|竹
+487	夜	8	4	night; evening	*ヤ	*よ、よる	今夜|こんや|this evening|N4	36|夕
+488	製	14	1	made in...; manufacture	*セイ		製造|せいぞう|manufacture|N3	145|衣
+489	票	11	1	ballot; label; ticket; sign	*ヒョウ		投票|とうひょう|voting|N3	113|示
+490	況	8	2	condition; situation	*キョウ	まし(て)、いわ(んや)、おもむき	状況|じょうきょう|state of affairs|N3	85|氵
+491	音	9	4	sound; noise	*オン、イン、-ノン	*おと、ね	音楽|おんがく|Music|N5	180|音
+492	申	5	3	have the honor to; sign of the monkey; 3-5PM; ninth sign of Chinese zodiac	*シン	*もう(す)、もう(し-)、さる	申告|しんこく|report|N3	102|田
+493	様	14	3	Esq.; way; manner; situation	*ヨウ、ショウ	*さま、さん	同様|どうよう|identical|N3	75|木
+494	財	10	3	property; money; wealth; assets	*サイ、ザイ、ゾク	たから	財布|さいふ|wallet|N5	154|貝
+495	港	12	3	harbor	*コウ	*みなと	空港|くうこう|airport|N4	85|氵
+496	識	19	3	discriminating; know; write	*シキ	し(る)、しる(す)	意識|いしき|consciousness|N3	149|言
+497	注	8	4	pour; irrigate; shed (tears); flow into	*チュウ	*そそ(ぐ)、さ(す)、つ(ぐ)	注意|ちゅうい|caution|N4	85|氵
+498	呼	8	3	call; call out to; invite	*コ	*よ(ぶ)	呼吸|こきゅう|breath|N3	30|口
+499	渉	11	1	ford; go cross; transit; ferry	*ショウ	*わた(る)	交渉|こうしょう|negotiation|N1	85|氵
+500	達	12	3	accomplished; reach; arrive; attain	*タツ、ダ	*-たち	配達|はいたつ|delivery|N3	162|辶
+501	良	7	3	good; pleasing; skilled	*リョウ	*よ(い)、い(い)	不良|ふりょう|badness|N1	138|艮
+502	響	20	1	echo; sound; resound; ring	*キョウ	*ひび(く)	影響|えいきょう|influence|N3	180|音
+503	阪	7		heights; slope	*ハン	*さか	阪神|はんしん|Osaka-Kobe|	170|阝
+504	帰	10	4	homecoming; arrive at; lead to; result in	*キ	*かえ(る)、かえ(す)、おく(る)、とつ(ぐ)	帰宅|きたく|returning home|N3	50|巾
+505	針	10	2	needle; pin; staple; stinger	*シン	*はり	方針|ほうしん|objective|N2	167|金
+506	専	9	2	specialty; exclusive; mainly; solely	*セン	*もっぱ(ら)	専門|せんもん|major|N4	41|寸
+507	推	11	1	conjecture; infer; guess; suppose	*スイ	*お(す)	推薦|すいせん|recommendation|N3	64|扌
+508	谷	7	2	valley	*コク	*たに、きわ(まる)		150|谷
+509	古	5	4	old	*コ	*ふる(い)、ふる-、-ふる(す)	中古|ちゅうこ|used|N3	30|口
+510	候	10	3	climate; season; weather; wait for	*コウ	そうろう	候補|こうほ|candidacy|N3	9|亻
+511	史	5	2	history; chronicle	*シ		歴史|れきし|history|N4	30|口
+512	天	4	5	heavens; sky; imperial	*テン	*あま-、あまつ、あめ	天気|てんき|weather|N5	37|大
+513	階	12	2	storey; stair; counter for storeys of a building	*カイ	きざはし	階段|かいだん|stairs|N5	170|阝
+514	程	12	3	extent; degree; law; formula	*テイ	*ほど	程度|ていど|degree|N3	115|禾
+515	満	12	3	full; fullness; enough; satisfy	*マン、バン	*み(ちる)、み(つ)、み(たす)	不満|ふまん|dissatisfaction|N3	85|氵
+516	敗	11	3	failure; defeat; reversal	*ハイ	*やぶ(れる)	勝敗|しょうはい|victory or defeat|N2	66|攵
+517	管	14	2	pipe; tube; wind instrument; drunken talk	*カン	*くだ	管理|かんり|control|N3	118|竹
+518	値	10	3	price; cost; value	*チ	*ね、あたい	価値|かち|value|N3	9|亻
+519	歌	14	4	song; sing	*カ	*うた、うた(う)	歌手|かしゅ|singer|N3	76|欠
+520	買	12	4	buy	*バイ	*か(う)	売買|ばいばい|trade|N2	154|貝
+521	突	8	3	stab; protruding; thrust; pierce	*トツ、カ	*つ(く)	衝突|しょうとつ|collision|N3	116|穴
+522	兵	7	2	soldier; private; troops; army	*ヘイ、ヒョウ	つわもの	兵隊|へいたい|soldier|N2	12|八
+523	接	11	2	touch; contact; adjoin; piece together	*セツ、ショウ	*つ(ぐ)	直接|ちょくせつ|direct|N3	64|扌
+524	請	15	1	solicit; invite; ask	*セイ、シン、ショウ	*う(ける)、こ(う)	請求|せいきゅう|claim|N3	149|言
+525	器	15	1	utensil; vessel; receptacle; implement	*キ	*うつわ	武器|ぶき|weapon|N3	30|口
+526	士	3	1	gentleman; scholar; samurai	*シ	*さむらい	同士|どうし|one another|N3	33|士
+527	光	6	3	ray; light	*コウ	*ひかり、ひか(る)	観光|かんこう|sightseeing|N3	10|儿
+528	討	10	1	chastise; attack; defeat; destroy	*トウ	う(つ)	検討|けんとう|consideration|N3	149|言
+529	路	13	3	path; route; road; distance	*ロ、ル	*-じ、みち	道路|どうろ|road|N3	157|足
+530	悪	11	4	bad; vice; rascal; false	*アク、オ	*わる(い)、あ(し)、にく(い)、ああ、いずくに、いずくんぞ、にく(む)、わる-	悪魔|あくま|devil|N3	61|心
+531	科	9	3	department; course; section	*カ		科学|かがく|science|N4	115|禾
+532	攻	7	1	aggression; attack; criticize; polish	*コウ	*せ(める)	攻撃|こうげき|attack|N3	66|攵
+533	崎	11	1	promontory; cape; spit	*キ	*さき、さい、みさき		46|山
+534	督	13	1	coach; command; urge; lead	*トク		監督|かんとく|supervision|N3	109|目
+535	授	11	1	impart; instruct; grant; confer	*ジュ	*さず(ける)、さず(かる)	授業|じゅぎょう|a class (of school)|N5	64|扌
+536	催	13	1	sponsor; hold (a meeting); give (a dinner)	*サイ	*もよお(す)、もよう(す)	催促|さいそく|demand|N2	9|亻
+537	細	11	2	dainty; get thin; taper; slender	*サイ	*ほそ(い)、ほそ(る)、こま(か)、こま(かい)	細胞|さいぼう|cell|N1	120|糸
+538	効	8	2	merit; efficacy; efficiency; benefit	*コウ	*き(く)、ききめ、なら(う)	効果|こうか|effect|N3	19|力
+539	図	7	4	map; drawing; plan; extraordinary	*ズ、ト	*え、はか(る)	地図|ちず|a map|N5	31|囗
+540	週	11	4	week	*シュウ		今週|こんしゅう|this week|N5	162|辶
+541	積	16	3	volume; product (x*y); acreage; contents	*セキ	*つ(む)、つ(もる)、つ(もり)、-づ(み)	面積|めんせき|area|N2	115|禾
+542	丸	3	2	round; full (month); perfection; -ship	*ガン	*まる、まる(める)、まる(い)	弾丸|だんがん|bullet|	3|丶
+543	他	5	3	other; another; the others	*タ	*ほか	他人|たにん|unrelated person|N3	9|亻
+544	及	3	1	reach out; exert; exercise; cause	*キュウ	*およ(ぶ)、およ(び)、および、およ(ぼす)	普及|ふきゅう|diffusion|N2	29|又
+545	湾	12	2	gulf; bay; inlet	*ワン	いりえ	台湾|たいわん|Taiwan|	85|氵
+546	録	16	2	record	*ロク	しる(す)、と(る)	記録|きろく|record|N3	167|金
+547	処	5	3	dispose; manage; deal with; sentence	*ショ	*ところ、お(る)、-こ	処理|しょり|processing|N3	16|几
+548	省	9	2	government ministry; conserve; omit	*ショウ、セイ	*はぶ(く)、かえり(みる)	省略|しょうりゃく|omission|N3	109|目
+549	旧	5	2	old times; old things; old friend; former	*キュウ	ふる(い)、もと	復旧|ふっきゅう|restoration|N1	72|日
+550	室	9	4	room; apartment; chamber; greenhouse	*シツ	むろ	教室|きょうしつ|classroom|N5	40|宀
+551	憲	16	1	constitution; law	*ケン		憲法|けんぽう|constitution|N3	61|心
+552	太	4	3	plump; thick; big around	*タイ、タ	*ふと(い)、ふと(る)	太陽|たいよう|sun|N3	37|大
+553	橋	16	2	bridge	*キョウ	*はし	鉄橋|てっきょう|iron bridge|N2	75|木
+554	歩	8	4	walk; counter for steps	*ホ、ブ、フ	*ある(く)、あゆ(む)	歩道|ほどう|walkway|N3	77|止
+555	離	19	1	detach; separation; disjoin; digress	*リ	*はな(れる)、はな(す)	離婚|りこん|divorce|N3	172|隹
+556	岸	8	2	beach	*ガン	*きし	海岸|かいがん|coast|N4	46|山
+557	客	9	3	guest; visitor; customer; client	*キャク、カク		観客|かんきゃく|audience|N3	40|宀
+558	風	9	4	wind; air; style; manner	*フウ、フ	*かぜ、かざ-	台風|たいふう|typhoon|N4	182|風
+559	紙	10	4	paper	*シ	*かみ	表紙|ひょうし|front cover|N2	120|糸
+560	激	16	1	violent; get excited; enraged; chafe	*ゲキ	*はげ(しい)	急激|きゅうげき|sudden|N3	85|氵
+561	否	7	3	negate; no; noes; refuse	*ヒ	*いな、いや	否定|ひてい|negation|N3	30|口
+562	周	8	2	circumference; circuit; lap	*シュウ	*まわ(り)	周囲|しゅうい|surroundings|N3	30|口
+563	師	10	3	expert; teacher; master; model	*シ	いくさ	医師|いし|doctor|N3	50|巾
+564	摘	14	1	pinch; pick; pluck; trim	*テキ	*つ(む)	指摘|してき|pointing out|N1	64|扌
+565	材	7	2	lumber; log; timber; wood	*ザイ		材料|ざいりょう|ingredients|N3	75|木
+566	登	12	3	ascend; climb up	*トウ、ト、ドウ、ショウ、チョウ	*のぼ(る)、あ(がる)	登山|とざん|mountain-climbing|N3	105|癶
+567	系	7	1	lineage; system	*ケイ		体系|たいけい|system|N2	120|糸
+568	批	7	1	criticism; strike	*ヒ		批判|ひはん|criticism|N3	64|扌
+569	郎	9	1	son; counter for sons	*ロウ、リョウ	おとこ	新郎|しんろう|bridegroom|	163|阝
+570	母	5	5	mother	*ボ	*はは、も	祖母|そぼ|grandmother|N4	80|毋
+571	易	8	3	easy; ready to; simple; fortune-telling	*イ、エキ	*やさ(しい)、やす(い)	貿易|ぼうえき|trade|N4	72|日
+572	健	11	1	healthy; health; strength; persistence	*ケン	すこ(やか)	健康|けんこう|health(y)|N3	9|亻
+573	黒	11	4	black	*コク	*くろ、くろ(ずむ)、くろ(い)	黒板|こくばん|blackboard|N3	203|黒
+574	火	4	5	fire	*カ	*ひ、-び、ほ-	火曜日|かようび|Tuesday|N5	86|火
+575	戸	4	2	door; counter for houses	*コ	*と	戸籍|こせき|census|N1	63|戸
+576	速	10	3	quick; fast	*ソク	*はや(い)、はや(める)、すみ(やか)、はや-	急速|きゅうそく|rapid (e.g.|N3	162|辶
+577	存	6	3	exist; suppose; be aware of; believe	*ソン、ゾン	ながら(える)、あ(る)、たも(つ)、と(う)	存在|そんざい|existence|N3	39|子
+578	花	7	4	flower	*カ、ケ	*はな	花瓶|かびん|(flower) vase|N5	140|艹
+579	春	9	4	springtime; spring (season)	*シュン	*はる	青春|せいしゅん|youth|N1	72|日
+580	飛	9	3	fly; skip (pages); scatter	*ヒ	*と(ぶ)、と(ばす)	飛行機|ひこうき|airplane|N5	183|飛
+581	殺	10	3	kill; murder; butcher; slice off	*サツ、サイ、セツ	*ころ(す)、そ(ぐ)、あや(める)、-ごろ(し)	自殺|じさつ|suicide|N3	79|殳
+582	央	5	2	center; middle	*オウ		中央|ちゅうおう|central|N3	37|大
+583	券	8	2	ticket	*ケン		定期券|ていきけん|commuter pass|N2	18|刀
+584	赤	7	4	red	*セキ、シャク	*あか、あか(い)、あか(らむ)、あか(らめる)	赤道|せきどう|equator|N2	155|赤
+585	号	5	3	nickname; number; item; title	*ゴウ	さけ(ぶ)、よびな	番号|ばんごう|number|N5	30|口
+586	単	9	3	simple; one; single; merely	*タン	ひとえ	簡単|かんたん|simple|N4	24|十
+587	盟	13	1	alliance; oath	*メイ		同盟|どうめい|alliance|N1	108|皿
+588	座	10	3	squat; seat; cushion; gathering	*ザ	*すわ(る)	座席|ざせき|seat|N3	53|广
+589	青	8	4	blue; green	*セイ、ショウ	*あお、あお(い)	青年|せいねん|youth|N3	174|青
+590	破	10	3	rend; rip; tear; break	*ハ	*やぶ(る)、やぶ(れる)、わ(れる)	破産|はさん|(personal) bankruptcy|N3	112|石
+591	編	15	2	compilation; knit; plait; braid	*ヘン	*あ(む)、-あ(み)	編集|へんしゅう|editing|N2	120|糸
+592	捜	10	2	search; look for; locate	*ソウ、シュ、シュウ	*さが(す)	捜査|そうさ|search (esp. in criminal investigations|N3	64|扌
+593	竹	6	2	bamboo	チク	*たけ	爆竹|ばくちく|firecracker|	118|竹
+594	除	10	3	exclude; division (x/3); remove; abolish	*ジョ、ジ	*のぞ(く)、-よ(け)	掃除|そうじ|cleaning|N5	170|阝
+595	完	7	3	perfect; completion; end	*カン		完成|かんせい|complete|N3	40|宀
+596	降	10	3	descend; precipitate; fall; surrender	*コウ、ゴ	*お(りる)、お(ろす)、ふ(る)、ふ(り)、くだ(る)、くだ(す)	降伏|こうふく|capitulation|N3	170|阝
+597	超	12	2	transcend; super-; ultra-	*チョウ	*こ(える)、こ(す)	超過|ちょうか|excess|N2	156|走
+598	責	11	3	blame; condemn; censure	*セキ	*せ(める)	責任|せきにん|duty|N3	154|貝
+599	並	8	2	row; and; besides; as well as	*ヘイ、ホウ	*なら(べる)、な(み)、なみ、なら(ぶ)、なら(びに)	並行|へいこう|(going) side by side|N2	1|一
+600	療	17	2	heal; cure	*リョウ		医療|いりょう|medical care|N3	104|疒
+601	従	10	1	accompany; obey; submit to; comply	*ジュウ、ショウ、ジュ	*したが(う)、したが(える)、より	従来|じゅうらい|up to now|N1	60|彳
+602	右	5	5	right	*ユウ、ウ	*みぎ	左右|さゆう|left and right|N3	30|口
+603	修	10	1	discipline; conduct oneself well; study; master	*シュウ、シュ	*おさ(める)、おさ(まる)	修正|しゅうせい|amendment|N3	9|亻
+604	捕	10	3	catch; capture	*ホ	*つか(まえる)、と(らえる)、と(らわれる)、と(る)、とら(える)、とら(われる)、つか(まる)	逮捕|たいほ|arrest|N3	64|扌
+605	隊	12	1	regiment; party; company; squad	*タイ		軍隊|ぐんたい|army|N3	170|阝
+606	危	6	3	dangerous; fear; uneasy	*キ	*あぶ(ない)、あや(うい)、あや(ぶむ)	危険|きけん|danger|N4	26|卩
+607	採	11	2	pick; take; fetch; take up	*サイ	*と(る)	採集|さいしゅう|collecting|N3	64|扌
+608	織	18	1	weave; fabric	*シキ、ショク	*お(る)、お(り)、おり	組織|そしき|organization|N3	120|糸
+609	森	12	2	forest; woods	*シン	*もり	森林|しんりん|forest|N2	75|木
+610	競	20	2	emulate; compete with; bid; sell at auction	*キョウ、ケイ	*きそ(う)、せ(る)、くら(べる)	競争|きょうそう|competition|N4	117|立
+611	拡	8	1	broaden; extend; expand; enlarge	*カク、コウ	*ひろ(がる)、ひろ(げる)、ひろ(める)	拡大|かくだい|magnification|N3	64|扌
+612	故	9	1	happenstance; especially; intentionally; reason	*コ	*ゆえ、ふる(い)、もと	事故|じこ|accident|N4	66|攵
+613	館	16	4	building; mansion; large building; palace	*カン	やかた、たて	大使館|たいしかん|embassy|N5	184|食
+614	振	10	1	shake; wave; wag; swing	*シン	*ふ(る)、ふ(れる)、ふ(るう)	振興|しんこう|promotion|N3	64|扌
+615	給	12	3	salary; wage; gift; allow	*キュウ	*たま(う)、たも(う)、-たま(え)	供給|きょうきゅう|supply|N3	120|糸
+616	屋	9	4	roof; house; shop; dealer	*オク	*や	屋上|おくじょう|rooftop|N4	44|尸
+617	介	4	2	jammed in; shellfish; mediate; concern oneself with	*カイ		紹介|しょうかい|an introduction|N4	9|人
+618	読	14	5	read	*ドク、トウ、トク	*よ(む)、-よ(み)	読書|どくしょ|reading|N3	149|言
+619	弁	5	1	valve; petal; braid; speech	*ベン、ヘン	かんむり、わきま(える)、わ(ける)、はなびら、あらそ(う)	弁当|べんとう|box lunch|N3	55|廾
+620	根	10	2	root; radical; head (pimple)	*コン	*ね	根拠|こんきょ|basis|N1	75|木
+621	色	6	4	color	*ショク、シキ	*いろ	特色|とくしょく|characteristic|N2	139|色
+622	友	4	5	friend	*ユウ	*とも	友人|ゆうじん|friend (formal)|N3	29|又
+623	苦	8	3	suffering; trial; worry; hardship	*ク	*くる(しい)、くる(しむ)、くる(しめる)、にが(い)、にが(る)、-ぐる(しい)	苦労|くろう|hardship|N3	140|艹
+624	就	12	1	concerning; settle; take position; depart	*シュウ、ジュ	*つ(く)、つ(ける)	就職|しゅうしょく|finding employment|N3	43|尢
+625	迎	7	3	welcome; meet; greet	*ゲイ	*むか(える)	歓迎|かんげい|welcome|N3	162|辶
+626	走	7	4	run	*ソウ	*はし(る)	逃走|とうそう|flight|N1	156|走
+627	販	11	2	marketing; sell; trade	*ハン		販売|はんばい|sale|N3	154|貝
+628	園	13	3	park; garden; yard; farm	*エン	その	公園|こうえん|a park|N5	31|囗
+629	具	8	3	tool; utensil; means; possess	*グ	そな(える)、つぶさ(に)	道具|どうぐ|tool|N4	12|八
+630	左	5	5	left	*サ、シャ	*ひだり	左右|さゆう|left and right|N3	48|工
+631	異	11	1	uncommon; different; queerness; strangeness	*イ	*こと、こと(なる)、け	異常|いじょう|strangeness|N3	102|田
+632	歴	14	2	curriculum; continuation; passage of time	*レキ、レッキ		歴史|れきし|history|N4	77|止
+633	辞	13	3	resign; word; term; expression	*ジ	*や(める)、いな(む)	辞書|じしょ|dictionary|N5	160|辛
+634	将	10	2	leader; commander; general; admiral	*ショウ、ソウ	まさ(に)、はた、まさ、ひきい(る)、もって	将来|しょうらい|(in the) future|N4	41|寸
+635	秋	9	4	autumn	シュウ	*あき、とき	秋分|しゅうぶん|autumnal equinox|	115|禾
+636	因	6	3	cause; factor; be associated with; depend on	*イン	*よ(る)、ちな(む)	原因|げんいん|cause|N4	31|囗
+637	献	13	1	offering; counter for drinks; present; offer	*ケン、コン	*たてまつ(る)	貢献|こうけん|contribution|N3	94|犬
+638	厳	17	1	stern; strictness; severity; rigidity	*ゲン、ゴン	*きび(しい)、おごそ(か)、いか(めしい)、いつくし	厳重|げんじゅう|strict|N2	27|厂
+639	馬	10	3	horse	*バ、メ、マ、ボ、モ	*うま、ま	馬鹿|ばか|fool|N3	187|馬
+640	愛	13	3	love; affection; favourite	*アイ	*まな、いと(しい)、かな(しい)、め(でる)、お(しむ)	愛情|あいじょう|love|N3	61|心
+641	幅	12	2	hanging scroll; width	*フク	*はば	増幅|ぞうふく|amplification|	50|巾
+642	休	6	5	rest; day off; retire; sleep	*キュウ	*やす(む)、やす(まる)、やす(める)	休暇|きゅうか|vacation|N3	9|亻
+643	維	14	1	fiber; tie; rope	*イ		維持|いじ|maintenance|N3	120|糸
+644	富	12	3	wealth; enrich; abundant	*フ、フウ	*と(む)、とみ	豊富|ほうふ|abundance|N3	40|宀
+645	浜	10	1	seacoast; beach; seashore	*ヒン	*はま	海浜|かいひん|seashore|	85|氵
+646	父	4	5	father	*フ	*ちち	祖父|そふ|grandfather|N4	88|父
+647	遺	15	1	bequeath; leave behind; reserve	*イ、ユイ	*のこ(す)	遺跡|いせき|historic ruins|N1	162|辶
+648	彼	8	3	he; that; the	*ヒ	*かれ、かの、か(の)	彼岸|ひがん|equinoctial week (when Buddhist services are held)|	60|彳
+649	般	10	2	carrier; carry; all; general	*ハン		諸般|しょはん|various|	137|舟
+650	未	5	3	un-; not yet; hitherto; still	*ミ、ビ	*ま(だ)、いま(だ)、ひつじ	未来|みらい|future (life tense)|N3	75|木
+651	塁	12	1	bases; fort; rampart; walls	*ルイ、ライ、スイ	とりで	本塁打|ほんるいだ|home run|	32|土
+652	貿	12	2	trade; exchange	*ボウ		貿易|ぼうえき|trade|N4	154|貝
+653	講	17	2	lecture; club; association	*コウ		講義|こうぎ|a lecture|N4	149|言
+654	邦	7	1	home country; country; Japan	*ホウ	*くに	邦人|ほうじん|Japanese national (esp. abroad)|	163|阝
+655	舞	15	3	dance; flit; circle; wheel	*ブ	*まい、ま(う)	舞台|ぶたい|stage (theater)|N3	136|舛
+656	林	8	2	grove; forest	*リン	*はやし	森林|しんりん|forest|N2	75|木
+657	装	12	2	attire; dress; pretend; disguise	*ソウ、ショウ	*よそお(う)、よそお(い)	装置|そうち|equipment|N3	145|衣
+658	諸	15	2	various; many; several; together	*ショ	*もろ	諸君|しょくん|Gentlemen!|N1	149|言
+659	夏	10	4	summer	*カ、ゲ、ガ	*なつ	夏季|かき|summer season|	35|夊
+660	素	10	1	elementary; principle; naked; uncovered	*ソ、ス	もと	要素|ようそ|element|N3	120|糸
+661	亡	3	3	deceased; the late; dying; perish	*ボウ、モウ	*な(い)、な(き-)、ほろ(びる)、ほろ(ぶ)、ほろ(ぼす)	死亡|しぼう|death|N3	8|亠
+662	劇	15	2	drama; play	*ゲキ		劇場|げきじょう|theater|N3	18|刂
+663	河	8	2	river	*カ	*かわ	河川|かせん|rivers|N1	85|氵
+664	遣	13	1	dispatch; despatch; send; give	*ケン	*つか(う)、つか(わす)、や(る)、-つか(い)、-づか(い)	派遣|はけん|dispatch|N1	162|辶
+665	航	10	2	navigate; sail; cruise; fly	*コウ		航空|こうくう|aviation|N3	137|舟
+666	抗	7	1	confront; resist; defy; oppose	*コウ	*あらが(う)	抵抗|ていこう|resistance|N3	64|扌
+667	冷	7	3	cool; cold (beer, person); chill	*レイ	*つめ(たい)、ひ(える)、ひ(や)、ひ(ややか)、ひ(やす)、ひ(やかす)、さ(める)、さ(ます)	冷蔵庫|れいぞうこ|refrigerator|N5	15|冫
+668	模	14	1	imitation; copy; mock	*モ、ボ		模様|もよう|pattern|N3	75|木
+669	雄	12	1	masculine; male; hero; leader	*ユウ	*おす、おん、お-	英雄|えいゆう|hero|N1	172|隹
+670	適	14	3	suitable; occasional; rare; qualified	*テキ	かな(う)	適当|てきとう|fitness|N4	162|辶
+671	婦	11	3	lady; woman; wife; bride	*フ	よめ	看護婦|かんごふ|(female) nurse|N4	38|女
+672	鉄	13	2	iron	*テツ	くろがね	地下鉄|ちかてつ|underground train|N5	167|金
+673	寄	11	3	draw near; stop in; bring near; gather	*キ	*よ(る)、よ(せる)、-よ(り)	寄付|きふ|contribution|N3	40|宀
+674	益	10	1	benefit; gain; profit; advantage	*エキ、ヤク	ま(す)	利益|りえき|profits|N3	108|皿
+675	込	5	3	crowded; mixture; in bulk; included		*こ(む)、こ(み)、こ(める)		162|辶
+676	顔	18	3	face; expression	*ガン	*かお	顔面|がんめん|face (of person)|	181|頁
+677	緊	15	1	tense; solid; hard; reliable	*キン	し(める)、し(まる)	緊張|きんちょう|tension|N3	120|糸
+678	類	18	3	sort; kind; variety; class	*ルイ	*たぐ(い)	人類|じんるい|mankind|N3	181|頁
+679	児	7	2	newborn babe; child; young of animals	*ジ、ニ、ゲイ	*こ、-っこ	児童|じどう|children|N3	10|儿
+680	余	7	3	too much; myself; surplus; other	*ヨ	*あま(る)、あま(り)、あま(す)、あんま(り)	余裕|よゆう|excess|N3	9|人
+681	禁	13	2	prohibition; ban; forbid	*キン		禁止|きんし|prohibition|N3	113|示
+682	印	6	2	stamp; seal; mark; imprint	*イン	*しるし、しる(す)、-じるし	印象|いんしょう|impression|N3	26|卩
+683	逆	9	2	inverted; reverse; opposite; wicked	*ギャク、ゲキ	*さか、さか(さ)、さか(らう)	逆転|ぎゃくてん|(sudden) change|N1	162|辶
+684	王	4	3	king; rule; magnate	*オウ、-ノウ		女王|じょおう|queen|N3	96|王
+685	返	7	3	return; answer; fade; repay	*ヘン	*かえ(す)、かえ(る)	返事|へんじ|reply|N4	162|辶
+686	標	15	1	signpost; seal; mark; stamp	*ヒョウ	*しるし、しるべ	目標|もくひょう|mark|N3	75|木
+687	換	12	2	interchange; period; change; convert	*カン	*か(える)、か(わる)	交換|こうかん|exchange|N3	64|扌
+688	久	3	2	long time; old story	*キュウ、ク	*ひさ(しい)	永久|えいきゅう|eternity|N3	4|丿
+689	短	12	2	short; brevity; fault; defect	*タン	*みじか(い)	短期|たんき|short term|N2	111|矢
+690	油	8	2	oil; fat	*ユ、ユウ	*あぶら	醤油|しょうゆ|soy sauce|N5	85|氵
+691	妻	8	3	wife; spouse	*サイ	*つま	夫妻|ふさい|man and wife|N2	38|女
+692	暴	15	2	outburst; rave; fret; force	*ボウ、バク	*あば(く)、あば(れる)	乱暴|らんぼう|rude|N2	72|日
+693	輪	15	2	wheel; ring; circle; link	*リン	*わ	車輪|しゃりん|(car) wheel|N2	159|車
+694	占	5	2	fortune-telling; divining; forecasting; occupy	*セン	*うらな(う)、し(める)	占領|せんりょう|occupation|N1	25|卜
+695	宣	9	1	proclaim; say; announce	*セン	*のたま(う)	宣伝|せんでん|advertisement|N3	40|宀
+696	背	9	3	stature; height; back; behind	*ハイ	*せ、せい、そむ(く)、そむ(ける)	背景|はいけい|background|N1	130|月
+697	昭	9	1	shining; bright	*ショウ		昭和|しょうわ|Shōwa era (1926.12.25-1989.1.7)|	72|日
+698	廃	12	1	abolish; obsolete; cessation; discarding	*ハイ	*すた(れる)、すた(る)	荒廃|こうはい|ruin|N3	53|广
+699	植	12	2	plant	*ショク	*う(える)、う(わる)	植物|しょくぶつ|plant|N3	75|木
+700	熱	15	3	heat; temperature; fever; mania	*ネツ	*あつ(い)	加熱|かねつ|heating|N2	86|灬
+701	宿	11	3	inn; lodging; relay station; dwell	*シュク	*やど、やど(る)、やど(す)	宿題|しゅくだい|homework|N5	40|宀
+702	薬	16	3	medicine; chemical; enamel; gunpowder	*ヤク	*くすり	薬品|やくひん|medicine(s)|N2	140|艹
+703	伊	6	1	Italy; that one	*イ	かれ		9|亻
+704	江	6	1	creek; inlet; bay	*コウ	*え	江上|こうじょう|(on the) bank of a large river|	85|氵
+705	清	11	2	pure; purify; cleanse; exorcise	*セイ、ショウ、シン	*きよ(い)、きよ(まる)、きよ(める)	清潔|せいけつ|clean|N3	85|氵
+706	習	11	4	learn	*シュウ、ジュ	*なら(う)、なら(い)	練習|れんしゅう|(to) practice|N5	124|羽
+707	険	11	3	precipitous; inaccessible place; impregnable position; steep place	*ケン	*けわ(しい)	危険|きけん|danger|N4	170|阝
+708	頼	16	3	trust; request	*ライ	*たの(む)、たの(もしい)、たよ(る)	信頼|しんらい|reliance|N3	181|頁
+709	僚	14	1	colleague; official; companion	*リョウ		官僚|かんりょう|bureaucrat|N3	9|亻
+710	覚	12	3	memorize; learn; remember; awake	*カク	*おぼ(える)、さ(ます)、さ(める)、さと(る)	感覚|かんかく|sense|N3	147|見
+711	吉	6	1	good luck; joy; congratulations	*キツ、キチ	*よし	不吉|ふきつ|ominous|N1	30|口
+712	盛	11	1	boom; prosper; copulate	*セイ、ジョウ	*も(る)、さか(る)、さか(ん)	盛大|せいだい|grand|N1	108|皿
+713	船	11	3	ship; boat	*セン	*ふね、ふな-	造船|ぞうせん|shipbuilding|N2	137|舟
+714	倍	10	2	double; twice; times; fold	*バイ		倍率|ばいりつ|diameter|N1	9|亻
+715	均	7	2	level; average	*キン	なら(す)	平均|へいきん|equilibrium|N3	32|土
+716	億	15	2	hundred million; 10**8	*オク		数億年|すうおくねん|several hundred million years|	9|亻
+717	途	10	3	route; way; road	*ト	みち	途中|とちゅう|on the way|N4	162|辶
+718	圧	5	2	pressure; push; overwhelm; oppress	*アツ、エン、オウ	お(す)、へ(す)、おさ(える)、お(さえる)	気圧|きあつ|atmospheric pressure|N2	32|土
+719	芸	7	2	technique; art; craft; performance	*ゲイ、ウン	う(える)、のり、わざ	芸術|げいじゅつ|(fine) art|N3	140|艹
+720	許	11	3	permit; approve	*キョ	*ゆる(す)、もと	許可|きょか|permission|N3	149|言
+721	皇	9	1	emperor	*コウ、オウ		皇居|こうきょ|Imperial Palace|N1	106|白
+722	臨	18	1	look to; face; meet; confront	*リン	*のぞ(む)	臨時|りんじ|temporary|N2	131|臣
+723	踏	15	1	step; trample; carry through; appraise	*トウ	*ふ(む)、ふ(まえる)	舞踏|ぶとう|dance (esp. Western style)|	157|足
+724	駅	14	4	station	*エキ		駅前|えきまえ|in front of a station|	187|馬
+725	署	13	2	signature; govt office; police station	*ショ		署名|しょめい|signature|N3	122|罒
+726	抜	7	3	slip out; extract; pull out; pilfer	*バツ、ハツ、ハイ	*ぬ(く)、ぬ(き)、ぬ(ける)、ぬ(かす)、ぬ(かる)	海抜|かいばつ|height above sea level|N1	64|扌
+727	壊	16	1	demolition; break; destroy	*カイ、エ	*こわ(す)、こわ(れる)、やぶ(る)	崩壊|ほうかい|collapse|N1	32|土
+728	債	13	1	bond; loan; debt	*サイ		負債|ふさい|debt|N1	9|亻
+729	便	9	3	convenience; facility; excrement; feces	*ベン、ビン	*たよ(り)	便利|べんり|convenient|N5	9|亻
+730	伸	7	2	expand; stretch; extend; lengthen	*シン	*の(びる)、の(ばす)、の(べる)、の(す)	追伸|ついしん|postscript|	9|亻
+731	留	10	3	detain; fasten; halt; stop	*ル、リュウ	*と(める)、と(まる)、とど(める)、とど(まる)、るうぶる	留学生|りゅうがくせい|international student|N5	102|田
+732	罪	13	3	guilt; sin; crime; fault	*ザイ	*つみ	犯罪|はんざい|crime|N3	122|罒
+733	停	11	2	halt; stopping	*テイ	と(める)、と(まる)	停電|ていでん|failure of electricity|N3	9|亻
+734	興	16	1	entertain; revive; retrieve; interest	*キョウ、コウ	おこ(る)、おこ(す)	興味|きょうみ|interest (in something)|N4	134|臼
+735	爆	19	2	bomb; burst open; pop; split	*バク	*は(ぜる)	爆発|ばくはつ|explosion|N3	86|火
+736	陸	11	2	land; six	*リク、ロク	おか	大陸|たいりく|continent|N3	170|阝
+737	玉	5	2	jewel; ball	*ギョク	*たま、-だま	玉音|ぎょくおん|the Emperor's voice|	96|玉
+738	源	13	1	source; origin	*ゲン	*みなもと	資源|しげん|resources|N3	85|氵
+739	儀	15	1	ceremony; rule; affair; case	*ギ		礼儀|れいぎ|manners|N3	9|亻
+740	波	8	2	waves; billows; Poland	*ハ	*なみ	波乱|はらん|disturbance|	85|氵
+741	創	12	1	genesis; wound; injury; hurt	*ソウ、ショウ	つく(る)、はじ(める)、きず、けず(しける)	創造|そうぞう|creation|N3	18|刂
+742	障	14	1	hinder; hurt; harm	*ショウ	*さわ(る)	障害|しょうがい|obstacle|N3	170|阝
+743	継	13	1	inherit; succeed; continue; patch	*ケイ	*つ(ぐ)、まま-	継続|けいぞく|continuation|N2	120|糸
+744	筋	12	1	muscle; sinew; tendon; fiber	*キン	*すじ	筋肉|きんにく|muscle|N3	118|竹
+745	狙	8		aim at; sight; shadow; stalk	*ソ、ショ	*ねら(う)、ねら(い)	狙撃|そげき|shooting|	94|犭
+746	帯	10	2	sash; belt; obi; zone	*タイ	*おび、お(びる)	熱帯|ねったい|tropics|N3	50|巾
+747	延	8	2	prolong; stretching	*エン	*の(ばす)、の(びる)、の(べる)、の(べ)	延期|えんき|postponement|N3	54|廴
+748	羽	6	2	feathers; counter for birds, rabbits	*ウ	*はね、は、わ	羽化|うか|emergence (of insects)|	124|羽
+749	努	7	3	toil; diligent; as much as possible	*ド	*つと(める)	努力|どりょく|great effort|N3	19|力
+750	固	8	2	harden; set; clot; curdle	*コ	*かた(める)、かた(まる)、かた(まり)、かた(い)	固定|こてい|fixation|N1	31|囗
+751	闘	18	1	fight; war	*トウ	*たたか(う)、あらそ(う)	戦闘|せんとう|battle|N1	169|門
+752	精	14	3	refined; ghost; fairy; energy	*セイ、ショウ	しら(げる)、くわ(しい)	精神|せいしん|mind|N3	119|米
+753	則	9	2	rule; law; follow; based on	*ソク	*のっと(る)、のり、すなわち	規則|きそく|rule|N4	18|刂
+754	葬	12	1	interment; bury; shelve	*ソウ	*ほうむ(る)	葬式|そうしき|funeral|N2	140|艹
+755	乱	7	2	riot; war; disorder; disturb	*ラン、ロン	*みだ(れる)、みだ(る)、みだ(す)、みだ、おさ(める)、わた(る)	混乱|こんらん|chaos|N3	5|乙
+756	避	16	1	evade; avoid; avert; ward off	*ヒ	*さ(ける)、よ(ける)	避難|ひなん|taking refuge|N1	162|辶
+757	普	12	2	universal; wide(ly); generally; Prussia	*フ	あまね(く)、あまねし	普通|ふつう|common|N4	72|日
+758	散	12	3	scatter; disperse; spend; squander	*サン	*ち(る)、ち(らす)、ち(らかす)、ち(らかる)、ち(らばる)、ばら、ばら(ける)	散歩|さんぽ|walk|N5	66|攵
+759	司	5	1	director; official; govt office; rule	*シ	*つかさど(る)	上司|じょうし|one's superior|N3	30|口
+760	康	11	1	ease; peace	*コウ		健康|けんこう|health(y)|N3	53|广
+761	測	12	2	fathom; plan; scheme; measure	*ソク	*はか(る)	予測|よそく|prediction|N3	85|氵
+762	豊	13	2	bountiful; excellent; rich	*ホウ、ブ	*ゆた(か)、とよ	豊富|ほうふ|abundance|N3	151|豆
+763	洋	9	4	ocean; sea; foreign; Western style	*ヨウ		洋服|ようふく|Western-style clothes|N5	85|氵
+764	静	14	3	quiet	*セイ、ジョウ	*しず(か)、しず(まる)、しず(める)、しず-	冷静|れいせい|calm|N3	174|青
+765	善	12	1	virtuous; good; goodness	*ゼン	よ(い)、い(い)、よ(く)、よし(とする)	改善|かいぜん|betterment|N3	30|口
+766	逮	11	1	apprehend; chase	*タイ		逮捕|たいほ|arrest|N3	162|辶
+767	婚	11	3	marriage	*コン		結婚|けっこん|marriage (get married)|N5	38|女
+768	厚	9	2	thick; heavy; rich; kind	*コウ	*あつ(い)、あか	厚生|こうせい|welfare|	27|厂
+769	喜	12	3	rejoice; take pleasure in	*キ	*よろこ(ぶ)、よろこ(ばす)	喜劇|きげき|comedy|N1	30|口
+770	齢	17	2	age	*レイ	*よわい、とし	年齢|ねんれい|age|N3	211|歯
+771	囲	7	2	surround; besiege; store; paling	*イ	*かこ(む)、かこ(う)、かこ(い)	周囲|しゅうい|surroundings|N3	31|囗
+772	卒	8	2	graduate; soldier; private; die	*ソツ、シュツ	そっ(する)、お(える)、お(わる)、ついに、にわか	卒業|そつぎょう|graduation|N4	24|十
+773	迫	8	1	urge; force; imminent; spur on	*ハク	*せま(る)	脅迫|きょうはく|threat|N1	162|辶
+774	略	11	2	abbreviation; omission; outline; shorten	*リャク	ほぼ、はぶ(く)、おか(す)、おさ(める)、はかりごと、はか(る)	省略|しょうりゃく|omission|N3	102|田
+775	承	8	2	acquiesce; hear; listen to; be informed	*ショウ、ジョウ	*うけたまわ(る)、う(ける)	承認|しょうにん|recognition|N3	64|手
+776	浮	10	3	floating; float; rise to surface	*フ	*う(く)、う(かれる)、う(かぶ)、う(かべる)	浮力|ふりょく|buoyancy|N1	85|氵
+777	惑	12	1	beguile; delusion; perplexity	*ワク	*まど(う)	迷惑|めいわく|trouble|N3	61|心
+778	崩	11	1	crumble; die; demolish; level	*ホウ	*くず(れる)、くず(す)、-くず(れ)	崩壊|ほうかい|collapse|N1	46|山
+779	順	12	2	obey; order; turn; right	*ジュン		順調|じゅんちょう|doing well|N3	181|頁
+780	紀	9	1	chronicle; account; narrative; history	*キ		世紀|せいき|century|N3	120|糸
+781	聴	17	1	listen; headstrong; naughty; careful inquiry	*チョウ、テイ	*き(く)、ゆる(す)	聴覚|ちょうかく|the sense of hearing|N1	128|耳
+782	脱	11	1	undress; removing; escape from; get rid of	*ダツ	*ぬ(ぐ)、ぬ(げる)	脱税|だつぜい|tax evasion|	130|月
+783	旅	10	4	trip; travel	*リョ	*たび	旅行|りょこう|travel|N5	70|方
+784	絶	12	3	discontinue; sever; cut off; abstain	*ゼツ	*た(える)、た(やす)、た(つ)	絶滅|ぜつめつ|destruction|N3	120|糸
+785	級	9	1	class; rank; grade	*キュウ		高級|こうきゅう|high class|N2	120|糸
+786	幸	8	3	happiness; blessing; fortune	*コウ	*しあわ(せ)、さいわ(い)、さち	不幸|ふこう|unhappiness|N3	51|干
+787	岩	8	2	boulder; rock; cliff	*ガン	*いわ	溶岩|ようがん|lava|N2	46|山
+788	練	14	2	practice; gloss; train; drill	*レン	*ね(る)、ね(り)	練習|れんしゅう|(to) practice|N5	120|糸
+789	押	8	3	push; stop; check; subdue	*オウ	*お(す)、お(し-)、お(っ-)、お(さえる)、おさ(える)	押収|おうしゅう|seizure|	64|扌
+790	軽	12	2	lightly; trifling; unimportant	*ケイ、キョウ、キン	*かる(い)、かろ(やか)、かろ(んじる)	軽快|けいかい|lively|N1	159|車
+791	倒	10	3	overthrow; fall; collapse; drop	*トウ	*たお(れる)、たお(す)、さかさま、さかさ、さかしま、-だお(れ)	倒産|とうさん|(corporate) bankruptcy|N3	9|亻
+792	了	2	2	complete; finish	*リョウ		完了|かんりょう|completion|N3	6|亅
+793	庁	5	2	government office	*チョウ、テイ	やくしょ	官庁|かんちょう|government office|N2	53|广
+794	博	12	1	Dr.; command; esteem; win acclaim	*ハク、バク		博物館|はくぶつかん|museum|N3	24|十
+795	城	9	2	castle	*ジョウ、セイ	*しろ	城下|じょうか|land near the castle|N1	32|土
+796	患	11	2	afflicted; disease; suffer from; be ill	*カン	*わずら(う)	患者|かんじゃ|patient|N3	61|心
+797	締	15	1	tighten; tie; shut; lock	*テイ	*し(まる)、し(まり)、し(める)、-し(め)、-じ(め)	締結|ていけつ|conclusion|	120|糸
+798	等	12	3	etc.; and so forth; class (first); quality	*トウ	*ひと(しい)、など、-ら	上等|じょうとう|first class|N3	118|竹
+799	救	11	1	salvation; save; help; rescue	*キュウ	*すく(う)	救助|きゅうじょ|relief|N3	66|攵
+800	執	11	1	tenacious; take hold; grasp; take to heart	*シュウ、シツ	*と(る)	執着|しゅうちゃく|attachment|N1	32|土
+801	層	14	2	stratum; social class; layer; story	*ソウ		一層|いっそう|much more|N3	44|尸
+802	版	8	2	printing block; printing plate; edition; impression	*ハン		版画|はんが|art print|N1	91|片
+803	老	6	3	old man; old age; grow old	*ロウ	お(いる)、ふ(ける)	老人|ろうじん|the aged|N3	125|老
+804	令	5	2	orders; laws; command; decree	*レイ		命令|めいれい|order|N3	9|人
+805	角	7	2	angle; corner; square; horn	*カク	*かど、つの	四角|しかく|square|N3	148|角
+806	絡	12	2	entwine; coil around; get caught in	*ラク	*から(む)、から(まる)	連絡|れんらく|communication|N4	120|糸
+807	損	13	2	damage; loss; disadvantage; hurt	*ソン	*そこ(なう)、そこな(う)、そこ(ねる)	損害|そんがい|damage|N3	64|扌
+808	房	8	1	tassel; tuft; fringe; bunch	*ボウ	*ふさ	冷房|れいぼう|cooling|N4	63|戸
+809	募	12	2	recruit; campaign; gather (contributions); enlist	*ボ	*つの(る)	募集|ぼしゅう|recruitment|N2	19|力
+810	曲	6	3	bend; music; melody; composition	*キョク	*ま(がる)、ま(げる)、くま	作曲|さっきょく|composition (of music)|N3	73|曰
+811	撤	15	1	remove; withdraw; disarm; dismantle	*テツ			64|扌
+812	裏	13	2	back; amidst; in; reverse	*リ	*うら	表裏|ひょうり|front and back|	145|衣
+813	払	5	3	pay; clear out; prune; banish	*フツ、ヒツ、ホツ	*はら(う)、-はら(い)、-ばら(い)		64|扌
+814	削	9	1	plane; sharpen; whittle; pare	*サク	*けず(る)、はつ(る)、そ(ぐ)	削除|さくじょ|elimination|N2	18|刂
+815	密	11	1	secrecy; density (pop); minuteness; carefulness	*ミツ	*ひそ(か)	秘密|ひみつ|secret|N3	40|宀
+816	庭	10	3	courtyard; garden; yard	*テイ	*にわ	家庭|かてい|home|N5	53|广
+817	徒	10	3	on foot; junior; emptiness; vanity	*ト	いたずら、あだ	生徒|せいと|student|N5	60|彳
+818	措	11	1	set aside; give up; suspend; discontinue	*ソ	お(く)	措置|そち|measure|N1	64|扌
+819	仏	4	2	Buddha; the dead; France	*ブツ、フツ	*ほとけ	仏像|ぶつぞう|Buddhist image (statue)|N1	9|亻
+820	績	17	2	exploits; achievements; unreeling cocoons	*セキ		成績|せいせき|grade (i.e.|N3	120|糸
+821	築	16	2	fabricate; build; construct	*チク	*きず(く)	建築|けんちく|construction|N3	118|竹
+822	貨	11	2	freight; goods; property	*カ	たから	通貨|つうか|currency|N3	154|貝
+823	志	7	1	intention; plan; resolve; aspire	*シ	*こころざし、シリング、こころざ(す)	同志|どうし|same mind|N3	61|心
+824	混	11	2	mix; blend; confuse	*コン	*ま(じる)、ま(ざる)、ま(ぜる)、こ(む)、-ま(じり)	混乱|こんらん|chaos|N3	85|氵
+825	載	13	1	ride; board; get on; place	*サイ	*の(せる)、の(る)	掲載|けいさい|appearance (e.g.|N1	159|車
+826	昇	8	2	rise up	*ショウ	*のぼ(る)	上昇|じょうしょう|rising|N1	72|日
+827	池	6	2	pond; cistern; pool; reservoir	*チ	*いけ	電池|でんち|battery|N2	85|氵
+828	陣	10	1	camp; battle array; ranks; position	*ジン		陣営|じんえい|camp (supporters of a doctrine, party, etc.)|	170|阝
+829	我	7	1	ego; I; selfish; our	*ガ	*われ、わ、わ(が-)、わが-	我慢|がまん|patience|N3	62|戈
+830	勤	12	3	diligence; become employed; serve	*キン、ゴン	*つと(める)、つと(まる)、いそ(しむ)、-づと(め)	通勤|つうきん|commuting to work|N3	19|力
+831	為	9	1	do; change; make; benefit	*イ	*ため、な(る)、な(す)、す(る)、たり、つく(る)、なり	所為|せい|cause|N3	86|灬
+832	血	6	2	blood	*ケツ	*ち	血液|けつえき|blood|N3	143|血
+833	遅	12	3	slow; late; back; later	*チ	*おそ(い)、おく(れる)、おく(らす)	遅刻|ちこく|lateness|N3	162|辶
+834	抑	7	1	repress; well; now; in the first place	*ヨク	*おさ(える)	抑制|よくせい|control|N1	64|扌
+835	幕	13	1	curtain; bunting; act of play	*マク、バク	*とばり	開幕|かいまく|raising the curtain|	50|巾
+836	居	8	3	reside; to be; exist; live with	*キョ、コ	*い(る)、お(る)、-い	住居|じゅうきょ|dwelling|N2	44|尸
+837	染	9	1	dye; color; paint; stain	*セン	*し(みる)、そ(める)、そ(まる)、し(み)	汚染|おせん|pollution|N3	75|木
+838	温	12	2	warm	*オン	*あたた(か)、あたた(かい)、あたた(まる)、あたた(める)、ぬく	気温|きおん|temperature (weather - not used for things)|N3	85|氵
+839	雑	14	3	miscellaneous	*ザツ、ゾウ	まじ(える)、まじ(る)	複雑|ふくざつ|complexity|N4	172|隹
+840	招	8	3	beckon; invite; summon; engage	*ショウ	*まね(く)	招待|しょうたい|invitation|	64|扌
+841	奈	8	1	Nara; what?	*ナ、ナイ、ダイ	いかん、からなし	奈良|なら|Nara (city, prefecture)|	37|大
+842	季	8	2	seasons	*キ		季節|きせつ|season (in reference to weather)|N4	39|子
+843	困	7	3	quandary; become distressed; annoyed	*コン	*こま(る)	困難|こんなん|difficulty|N3	31|囗
+844	星	9	2	star; spot; dot; mark	*セイ、ショウ	*ほし、-ぼし	衛星|えいせい|satellite|N3	72|日
+845	傷	13	1	wound; hurt; injure; impair	*ショウ	*きず、いた(む)、いた(める)	負傷|ふしょう|injury|N1	9|亻
+846	永	5	2	eternity; long; lengthy	*エイ	なが(い)	永遠|えいえん|eternity|N3	85|水
+847	択	7	1	choose; select; elect; prefer	*タク	*えら(ぶ)	選択|せんたく|selection|N3	64|扌
+848	秀	7	1	excel; excellence; beauty; surpass	*シュウ	*ひい(でる)	優秀|ゆうしゅう|superiority|N3	115|禾
+849	著	11	2	renowned; publish; write; remarkable	*チョ、チャク	*いちじる(しい)、あらわ(す)	著者|ちょしゃ|author|N3	140|艹
+850	徴	14	1	indications; sign; omen; symptom	*チョウ、チ	しるし	特徴|とくちょう|characteristic(s)|N3	60|彳
+851	誌	14	2	document; records	*シ		雑誌|ざっし|magazine|N5	149|言
+852	庫	10	2	warehouse; storehouse	*コ、ク	*くら	冷蔵庫|れいぞうこ|refrigerator|N5	53|广
+853	弾	12	1	bullet; twang; flip; snap	*ダン、タン	*ひ(く)、はず(む)、たま、はじ(く)、はじ(ける)、ただ(す)、はじ(きゆみ)、-ひ(き)	爆弾|ばくだん|bomb|N1	57|弓
+854	償	17	1	reparation; make up for; recompense; redeem	*ショウ	*つぐな(う)	補償|ほしょう|compensation|N3	9|亻
+855	刊	5	2	publish; carve; engrave	*カン		刊行|かんこう|publication|N3	18|刂
+856	像	14	2	statue; picture; image; figure	*ゾウ		想像|そうぞう|imagination|N3	9|亻
+857	功	5	1	achievement; merits; success; honor	*コウ、ク	いさお	成功|せいこう|success|N3	19|力
+858	拠	8	1	foothold; based on; follow; therefore	*キョ、コ	*よ(る)	根拠|こんきょ|basis|N1	64|扌
+859	香	9	2	incense; smell; perfume	*コウ、キョウ	*かお(り)、か、かお(る)	香水|こうすい|perfume|N2	186|香
+860	欠	4	3	lack; gap; fail	*ケツ、ケン	*か(ける)、か(く)	不可欠|ふかけつ|indispensable|N1	76|欠
+861	更	7	3	grow late; night watch; sit up late; of course	*コウ	*さら、さら(に)、ふ(ける)、ふ(かす)	変更|へんこう|change|N3	73|曰
+862	秘	10	1	secret; conceal	*ヒ	*ひ(める)、ひそ(か)、かく(す)	秘密|ひみつ|secret|N3	115|禾
+863	拒	8	1	repel; refuse; reject; decline	*キョ、ゴ	*こば(む)	拒否|きょひ|denial|N1	64|扌
+864	刑	6	1	punish; penalty; sentence; punishment	*ケイ		刑事|けいじ|criminal case|N3	18|刂
+865	坂	7	2	slope; incline; hill	*ハン	*さか		32|土
+866	刻	8	3	engrave; cut fine; chop; hash	*コク	*きざ(む)、きざ(み)	深刻|しんこく|serious|N3	18|刂
+867	底	8	2	bottom; sole; depth; bottom price	*テイ	*そこ	徹底|てってい|thoroughness|N3	53|广
+868	賛	15	3	approve; praise; title or inscription on picture; assist	*サン	たす(ける)、たた(える)	賛成|さんせい|approval|N3	154|貝
+869	塚	12	1	hillock; mound	*チョウ	*つか、-づか		32|土
+870	致	10	1	doth; do; send; forward	*チ	*いた(す)	一致|いっち|agreement|N3	133|至
+871	抱	8	3	embrace; hug; hold in arms	*ホウ	*だ(く)、いだ(く)、かか(える)	介抱|かいほう|nursing|N1	64|扌
+872	繰	19	1	winding; reel; spin; turn (pages)	*ソウ	*く(る)		120|糸
+873	服	8	4	clothing; admit; obey; discharge	*フク		洋服|ようふく|Western-style clothes|N5	74|月
+874	犯	5	3	crime; sin; offense	*ハン、ボン	*おか(す)	犯罪|はんざい|crime|N3	94|犭
+875	尾	7	1	tail; end; counter for fish; lower slope of mountain	*ビ	*お	末尾|まつび|end (e.g. of report, document, paragraph, etc.)|	44|尸
+876	描	11	1	sketch; compose; write; draw	*ビョウ	*か(く)、えが(く)	描写|びょうしゃ|depiction|N1	64|扌
+877	布	5	2	linen; cloth; spread; distribute	*フ、ホ	*ぬの、し(く)、きれ	財布|さいふ|wallet|N5	50|巾
+878	恐	10	3	fear; dread; awe	*キョウ	*おそ(れる)、おそ(る)、おそ(ろしい)、こわ(い)、こわ(がる)	恐怖|きょうふ|fear|N3	61|心
+879	寺	6	2	Buddhist temple	*ジ	*てら	寺院|じいん|temple|N2	41|寸
+880	鈴	13	1	small bell; buzzer	*リン、レイ	*すず	風鈴|ふうりん|wind chime|	167|金
+881	盤	15	1	tray; shallow bowl; platter; tub	*バン		基盤|きばん|foundation|N2	108|皿
+882	息	10	3	breath; respiration; son; interest (on money)	*ソク	*いき	休息|きゅうそく|rest|N3	61|心
+883	宇	6	2	eaves; roof; house; heaven	*ウ		宇宙|うちゅう|universe|N3	40|宀
+884	項	12	1	paragraph; nape of neck; clause; item	*コウ	うなじ	項目|こうもく|item|N2	181|頁
+885	喪	12	1	miss; mourning	*ソウ	*も	喪失|そうしつ|loss|	30|口
+886	伴	7	1	consort; accompany; bring with; companion	*ハン、バン	*ともな(う)	同伴|どうはん|accompanying|	9|亻
+887	遠	13	3	distant; far	*エン、オン	*とお(い)	永遠|えいえん|eternity|N3	162|辶
+888	養	15	1	foster; bring up; rear; develop	*ヨウ、リョウ	*やしな(う)	栄養|えいよう|nutrition|N3	184|食
+889	懸	20	1	state of suspension; hang; depend; consult	*ケン、ケ	*か(ける)、か(かる)	懸命|けんめい|eagerness|N2	61|心
+890	戻	7	3	re-; return; revert; resume	*レイ	*もど(す)、もど(る)		63|戸
+891	街	12	1	boulevard; street; town	*ガイ、カイ	*まち	街頭|がいとう|in the street|N1	144|行
+892	巨	5	2	gigantic; big; large; great	*キョ		巨大|きょだい|huge|N3	48|工
+893	震	15	2	quake; shake; tremble; quiver	*シン	*ふる(う)、ふる(える)、ふる(わせる)、ふる(わす)	地震|じしん|earthquake|N4	173|雨
+894	願	19	3	petition; request; vow; wish	*ガン	*ねが(う)、-ねがい	念願|ねんがん|one's heart's desire|N1	181|頁
+895	絵	12	3	picture; drawing; painting; sketch	*エ、カイ		絵画|かいが|picture|N3	120|糸
+896	希	7	2	hope; beg; request; pray	*キ、ケ	*まれ、こいねが(う)	希望|きぼう|hope|N3	50|巾
+897	越	12	3	surpass; cross over; move to; exceed	*エツ、オツ	*こ(す)、こ(える)、-ご(し)、-ご(え)	優越|ゆうえつ|supremacy|N1	156|走
+898	契	9	1	pledge; promise; vow	*ケイ	ちぎ(る)	契約|けいやく|contract|N3	37|大
+899	掲	11	1	put up (a notice); put up; hoist; display	*ケイ	*かか(げる)	掲示|けいじ|notice|N3	64|扌
+900	躍	21	1	leap; dance; skip	*ヤク	*おど(る)	活躍|かつやく|activity|N3	157|足
+901	棄	13	1	abandon; throw away; discard; resign	*キ	す(てる)	棄権|きけん|abstain from voting|N1	75|木
+902	欲	11	3	longing; covetousness; greed; passion	*ヨク	*ほ(しい)、ほっ(する)	食欲|しょくよく|appetite (for food)|N3	76|欠
+903	痛	12	3	pain; hurt; damage; bruise	*ツウ	*いた(い)、いた(む)、いた(ましい)、いた(める)	苦痛|くつう|pain|N3	104|疒
+904	触	13	2	contact; touch; feel; hit	*ショク	*さわ(る)、ふ(れる)、さわ	接触|せっしょく|touch|N1	148|角
+905	邸	8	1	residence; mansion	*テイ	*やしき	邸宅|ていたく|mansion|N1	163|阝
+906	依	8	2	reliant; depend on; consequently; therefore	*イ、エ	*よ(る)	依然|いぜん|still|N3	9|亻
+907	籍	20	2	enroll; domiciliary register; membership	*セキ		国籍|こくせき|nationality|N3	118|竹
+908	汚	6	2	dirty; pollute; disgrace; rape	*オ	*よご(す)、けが(す)、けが(れる)、けが(らわしい)、よご(れる)、きたな(い)	汚染|おせん|pollution|N3	85|氵
+909	縮	17	1	shrink; contract; shrivel; wrinkle	*シュク	*ちぢ(む)、ちぢ(まる)、ちぢ(める)、ちぢ(れる)、ちぢ(らす)	縮小|しゅくしょう|reduction|N2	120|糸
+910	還	16	1	send back; return	*カン	*かえ(る)	返還|へんかん|return|N1	162|辶
+911	枚	8	2	sheet of...; counter for flat thin objects or sheets	*マイ、バイ		枚数|まいすう|the number of flat things|N2	75|木
+912	属	12	1	belong; genus; subordinate official; affiliated	*ゾク、ショク	さかん、つく、やから	金属|きんぞく|metal|N3	44|尸
+913	笑	10	3	laugh	*ショウ	*わら(う)、え(む)	微笑|びしょう|smile|N1	118|竹
+914	互	4	3	mutually; reciprocally; together	*ゴ	*たが(い)、かたみ(に)	相互|そうご|mutual|N2	7|二
+915	複	14	2	duplicate; double; compound; multiple	*フク		複雑|ふくざつ|complexity|N4	145|衤
+916	慮	15	1	prudence; thought; concern; consider	*リョ	*おもんぱく(る)、おもんぱか(る)	考慮|こうりょ|consideration|N3	61|心
+917	郵	11	2	mail; stagecoach stop	*ユウ		郵便局|ゆうびんきょく|post office|N5	163|阝
+918	束	7	3	bundle; sheaf; ream; tie in bundles	*ソク	*たば、たば(ねる)、つか、つか(ねる)	約束|やくそく|arrangement|N4	75|木
+919	仲	6	2	go-between; relationship	*チュウ	*なか	仲介|ちゅうかい|agency|	9|亻
+920	栄	9	2	flourish; prosperity; honor; glory	*エイ、ヨウ	*さか(える)、は(え)、は(える)、え、-ば(え)	栄養|えいよう|nutrition|N3	75|木
+921	札	5	2	tag; paper money; counter for bonds; placard	*サツ	*ふだ	改札|かいさつ|examination of tickets|N2	75|木
+922	枠	8	1	frame; framework; spindle; spool		*わく		75|木
+923	似	7	3	becoming; resemble; counterfeit; imitate	ジ	*に(る)、ひ(る)	類似|るいじ|analogous|N1	9|亻
+924	夕	3	4	evening	*セキ	*ゆう	今夕|こんせき|this evening|	36|夕
+925	恵	10	1	favor; blessing; grace; kindness	*エ、ケイ	*めぐ(む)、めぐ(み)	知恵|ちえ|wisdom|N3	61|心
+926	板	8	2	plank; board; plate; stage	*ハン、バン	*いた	黒板|こくばん|blackboard|N3	75|木
+927	列	6	3	file; row; rank; tier	*レツ、レ		行列|ぎょうれつ|line|N2	18|刂
+928	露	21	1	dew; tears; expose; Russia	*ロ、ロウ	*つゆ	露骨|ろこつ|blunt|N1	173|雨
+929	沖	7	1	open sea; offing; rise high into sky	*チュウ	*おき、おきつ、ちゅう(する)、わく		85|氵
+930	探	11	3	grope; search; look for	*タン	*さが(す)、さぐ(る)	探検|たんけん|exploration|N1	64|扌
+931	逃	9	3	escape; flee; shirk; evade	*トウ	*に(げる)、に(がす)、のが(す)、のが(れる)	逃走|とうそう|flight|N1	162|辶
+932	借	10	4	borrow; rent	*シャク	*か(りる)	拝借|はいしゃく|(humble) (polite) borrowing|N1	9|亻
+933	緩	15	1	slacken; loosen; relax; lessen	*カン	*ゆる(い)、ゆる(やか)、ゆる(む)、ゆる(める)	緩和|かんわ|relief|N1	120|糸
+934	節	13	1	node; season; period; occasion	*セツ、セチ	*ふし、のっと、-ぶし	季節|きせつ|season (in reference to weather)|N4	118|竹
+935	需	14	1	demand; request; need	*ジュ		需要|じゅよう|demand|N3	173|雨
+936	骨	10	2	skeleton; bone; remains; frame	*コツ	*ほね	露骨|ろこつ|blunt|N1	188|骨
+937	射	10	1	shoot; shine into; onto; archery	*シャ	*い(る)、さ(す)、う(つ)	注射|ちゅうしゃ|injection|N4	41|寸
+938	傾	13	2	lean; incline; tilt; trend	*ケイ	*かたむ(く)、かたむ(ける)、かたぶ(く)、かた(げる)、かし(げる)	傾向|けいこう|tendency|N3	9|亻
+939	届	8	2	deliver; reach; arrive; report	カイ	*とど(ける)、とど(く)、-とど(け)		44|尸
+940	曜	18	4	weekday	*ヨウ		火曜日|かようび|Tuesday|N5	72|日
+941	遊	12	3	play	*ユウ、ユ	*あそ(ぶ)、あそ(ばす)	遊園地|ゆうえんち|amusement park|N2	162|辶
+942	迷	9	3	astray; be perplexed; in doubt; lost	*メイ	*まよ(う)	迷惑|めいわく|trouble|N3	162|辶
+943	夢	13	3	dream; vision; illusion	*ム、ボウ	*ゆめ、ゆめ(みる)、くら(い)	夢中|むちゅう|crush|N3	36|夕
+944	巻	9	2	scroll; volume; book; part	*カン、ケン	*ま(く)、まき、ま(き)	巻末|かんまつ|end of a book|	49|己
+945	購	17	1	subscription; buy	*コウ		購入|こうにゅう|purchase|N1	154|貝
+946	揮	12	1	brandish; wave; wag; swing	*キ	ふる(う)	指揮|しき|command|N3	64|扌
+947	君	7	3	mister; you; ruler; male name suffix	*クン	*きみ、-ぎみ	諸君|しょくん|Gentlemen!|N1	30|口
+948	燃	16	2	burn; blaze; glow	*ネン	*も(える)、も(やす)、も(す)	燃料|ねんりょう|fuel|N1	86|灬
+949	充	6	1	allot; fill	*ジュウ	*あ(てる)、み(たす)	拡充|かくじゅう|expansion|N2	10|儿
+950	雨	8	5	rain	*ウ	*あめ、あま-、-さめ	梅雨|ばいう|rainy season|N3	173|雨
+951	閉	11	3	closed; shut	*ヘイ	*し(める)、と(じる)、と(ざす)、し(まる)、た(てる)	閉会|へいかい|closure|N2	169|門
+952	緒	14	3	thong; beginning; inception; end	*ショ、チョ	*お、いとぐち	一緒|いっしょ|together|N5	120|糸
+953	跡	13	2	tracks; mark; print; impression	*セキ	*あと	遺跡|いせき|historic ruins|N1	157|足
+954	包	5	2	wrap; pack up; cover; conceal	*ホウ	*つつ(む)、くる(む)	包装|ほうそう|packing|N3	20|勹
+955	駐	15	2	stop-over; reside in; resident	*チュウ		駐車場|ちゅうしゃじょう|parking lot|N4	187|馬
+956	貢	10	1	tribute; support; finance	*コウ、ク	*みつ(ぐ)	貢献|こうけん|contribution|N3	154|貝
+957	鹿	11	1	deer	*ロク	*か、しか		198|鹿
+958	弱	10	2	weak; frail	*ジャク	*よわ(い)、よわ(る)、よわ(まる)、よわ(める)	弱点|じゃくてん|weak point|N2	57|弓
+959	却	7	1	instead; on the contrary; rather; step back	*キャク	*かえ(って)、しりぞ(く)、しりぞ(ける)	棄却|ききゃく|rejection|	26|卩
+960	端	14	1	edge; origin; end; point	*タン	*はし、は、はた、はな、-ばた	途端|とたん|just (now|N3	117|立
+961	賃	13	1	fare; fee; hire; rent	*チン		家賃|やちん|rent|N3	154|貝
+962	折	7	3	fold; break; fracture; bend	*セツ、シャク	*お(る)、おり、お(り)、お(れる)	骨折|こっせつ|bone fracture|N3	64|扌
+963	紹	11	2	introduce; inherit; help	*ショウ		紹介|しょうかい|an introduction|N4	120|糸
+964	獲	16	1	seize; get; find; earn	*カク	*え(る)	獲得|かくとく|acquisition|N1	94|犭
+965	郡	10	1	county; district	*グン	*こおり	郡部|ぐんぶ|rural districts|	163|阝
+966	併	8	1	join; get together; unite; collective	*ヘイ	*あわ(せる)	併用|へいよう|combined use|	9|亻
+967	草	9	3	grass; weeds; herbs; pasture	*ソウ	*くさ、-ぐさ	草原|そうげん|grassy field|	140|艹
+968	徹	15	1	penetrate; clear; pierce; strike home	*テツ		徹夜|てつや|staying up all night|N3	60|彳
+969	飲	12	4	drink; smoke; take	*イン、オン	*の(む)、-の(み)	飲食店|いんしょくてん|restaurant|	184|食
+970	貴	12	1	precious; value; prize; esteem	*キ	*とうと(い)、たっと(い)、たっと(ぶ)、とうと(ぶ)	貴重|きちょう|precious|N3	154|貝
+971	埼	11		cape; spit; promontory	*キ	*さい、さき、みさき		32|土
+972	衝	15	1	collide; brunt; highway; opposition (astronomy)	*ショウ	*つ(く)	衝突|しょうとつ|collision|N3	144|行
+973	焦	12	1	char; hurry; impatient; irritate	*ショウ	*こ(げる)、こ(がす)、こ(がれる)、あせ(る)、じ(れる)、じ(らす)	焦点|しょうてん|focus|N2	86|灬
+974	奪	14	1	rob; take by force; snatch away; dispossess	*ダツ	*うば(う)	略奪|りゃくだつ|pillage|N1	37|大
+975	雇	12	2	employ; hire	*コ	*やと(う)	雇用|こよう|employment|	172|隹
+976	災	7	1	disaster; calamity; woe; curse	*サイ	*わざわ(い)	火災|かさい|conflagration|N3	86|火
+977	浦	10	1	bay; creek; inlet; gulf	*ホ	*うら		85|氵
+978	暮	14	3	evening; twilight; season's end; livelihood	*ボ	*く(れる)、く(らす)	歳暮|せいぼ|year-end gift|	72|日
+979	替	12	2	exchange; spare; substitute; per-	*タイ	*か(える)、か(え-)、か(わる)	交替|こうたい|change|N2	73|曰
+980	析	8	1	chop; divide; tear; analyze	*セキ		分析|ぶんせき|analysis|N3	75|木
+981	預	13	2	deposit; custody; leave with; entrust to	*ヨ	*あず(ける)、あず(かる)	預金|よきん|deposit|N1	181|頁
+982	焼	12	2	bake; burning	*ショウ	*や(く)、や(き)、や(き-)、や(ける)	燃焼|ねんしょう|burning|N1	86|火
+983	簡	18	2	simplicity; brevity	*カン、ケン	えら(ぶ)、ふだ	簡単|かんたん|simple|N4	118|竹
+984	譲	20	1	defer; turnover; transfer; convey	*ジョウ	*ゆず(る)	譲歩|じょうほ|concession|N1	149|言
+985	称	10	1	appellation; praise; admire; name	*ショウ	*とな(える)、たた(える)、あ(げる)、かな(う)、はか(り)、はか(る)、ほめ(る)	名称|めいしょう|name|N1	115|禾
+986	肉	6	4	meat	*ニク	しし	牛肉|ぎゅうにく|beef|N5	130|肉
+987	納	10	1	settlement; obtain; reap; pay	*ノウ、ナッ、ナ、ナン、トウ	*おさ(める)、おさ(まる)	納得|なっとく|consent|N3	120|糸
+988	樹	16	1	timber; trees; wood; establish	*ジュ	*き	樹木|じゅもく|trees and shrubs|N1	75|木
+989	挑	9	1	challenge; contend for; make love to	*チョウ	*いど(む)	挑戦|ちょうせん|challenge|N3	64|扌
+990	章	11	2	badge; chapter; composition; poem	*ショウ		文章|ぶんしょう|sentence|N5	117|立
+991	臓	19	2	entrails; viscera; bowels	*ゾウ	はらわた	心臓|しんぞう|heart|N3	130|月
+992	律	9	2	rhythm; law; regulation; gauge	*リツ、リチ、レツ		法律|ほうりつ|law|N4	60|彳
+993	誘	14	1	entice; lead; tempt; invite	*ユウ	*さそ(う)、いざな(う)	誘導|ゆうどう|guidance|N1	149|言
+994	紛	10	1	distract; be mistaken for; go astray; divert	*フン	*まぎ(れる)、まぎ(らす)、まぎ(らわす)、まぎ(らわしい)、-まぎ(れ)	紛争|ふんそう|dispute|N1	120|糸
+995	貸	12	4	lend	*タイ	*か(す)、か(し-)、かし-	賃貸|ちんたい|leasing (out)|	154|貝
+996	至	6	1	climax; arrive; proceed; reach	*シ	*いた(る)	至急|しきゅう|urgent|N3	133|至
+997	宗	8	1	religion; sect; denomination; main point	*シュウ、ソウ	むね	宗教|しゅうきょう|religion|N3	40|宀
+998	促	9	1	stimulate; urge; press; demand	*ソク	*うなが(す)	催促|さいそく|demand|N2	9|亻
+999	慎	13	1	humility; be careful; discreet; prudent	*シン	*つつし(む)、つつ(ましい)、つつし、つつし(み)	慎重|しんちょう|careful|N3	61|忄
+1000	控	11	1	withdraw; draw in; hold back; refrain from	*コウ	*ひか(える)、ひか(え)	控除|こうじょ|subsidy|N1	64|扌
