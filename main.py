@@ -430,8 +430,12 @@ def radical_line(row):
         sys.exit(1)
     if rad["form"] == row["kanji"]:
         return ""
-    text = " · ".join(x for x in (f"{rad['form']} {rad['name']}".strip(), rad["meaning"]) if x)
-    return _NOTE.format(html.escape(f"Radical: {text}"))
+    return _NOTE.format(html.escape(f"Radical: {radical_text(rad)}"))
+
+
+def radical_text(rad):
+    """A radicals() row as "氵 さんずい · water"."""
+    return " · ".join(x for x in (f"{rad['form']} {rad['name']}".strip(), rad["meaning"]) if x)
 
 
 def kanji_back(row, headline=None, notes=()):
@@ -519,14 +523,24 @@ def seed_kanji(dry_run=False, update=True):
 
 VERB_GROUPS = {"godan": "Godan (group 1)", "ichidan": "Ichidan (group 2)",
                "irregular": "Irregular (group 3)"}
-# Before ます, a godan verb's final u-row kana becomes its i-row partner.
+# Before ます, a godan verb's final u-row kana becomes its i-row partner;
+# before ない, its a-row partner (う → わ).
 _GODAN_STEM = dict(zip("うくぐすつぬぶむる", "いきぎしちにびみり"))
+_GODAN_NAI = dict(zip("うくぐすつぬぶむる", "わかがさたなばまら"))
+# The godan た-form ending, by the dictionary form's last kana (the te-form
+# song): 書く → 書いた, 飲む → 飲んだ, 待つ → 待った. て-forms swap た/だ for て/で.
+_GODAN_TA = {"う": "った", "つ": "った", "る": "った", "む": "んだ", "ぶ": "んだ",
+             "ぬ": "んだ", "く": "いた", "ぐ": "いだ", "す": "した"}
+# Irregular endings: (dictionary form, ます-stem, ない-stem, た-form). 来る is
+# written in kanji, so its changing reading (きます, こない) doesn't show.
+_IRREGULAR = [("する", "し", "し", "した"), ("来る", "来", "来", "来た"),
+              ("くる", "き", "こ", "きた")]
 
 
 def load_verbs(path=VERB_FILE):
     """Rows of VERB_FILE as dicts, in file order. Exits on a row whose
-    ます-form can't be built (unknown group, wrong ending, or an irregular
-    verb with no masu column)."""
+    forms can't be built (unknown group, wrong ending, or an irregular verb
+    that isn't a する/来る verb)."""
     rows = []
     try:
         with open(path, encoding="utf-8") as f:
@@ -535,44 +549,99 @@ def load_verbs(path=VERB_FILE):
                     continue
                 # Trailing blank columns may have lost their tabs to an editor.
                 cols = line.rstrip("\n").split("\t")
-                section, no, word, kana, meaning, group, masu, note = \
-                    (cols + [""] * 8)[:8]
-                ok =(masu or (group == "godan" and word[-1] in _GODAN_STEM)
-                      or (group == "ichidan" and word.endswith("る")))
-                if group not in VERB_GROUPS or not ok:
-                    print(f"{path}:{lineno}: can't build the ます-form of {word} "
+                section, no, word, kana, meaning, group, masu, note, rads = \
+                    (cols + [""] * 9)[:9]
+                row = {"section": section, "no": no, "word": word,
+                       "kana": kana, "meaning": meaning, "group": group,
+                       "masu": masu, "note": note,
+                       "radicals": [r.split(":", 1) for r in rads.split()]}
+                try:
+                    conjugations(row)
+                except (KeyError, ValueError, StopIteration):
+                    print(f"{path}:{lineno}: can't build the forms of {word} "
                           f"({group or 'no group'})", file=sys.stderr)
                     sys.exit(1)
-                rows.append({"section": section, "no": no, "word": word,
-                             "kana": kana, "meaning": meaning, "group": group,
-                             "masu": masu, "note": note})
+                rows.append(row)
     except OSError as e:
         print(f"Could not read the verb list: {e}", file=sys.stderr)
         sys.exit(1)
     return rows
 
 
+def conjugations(row):
+    """The verb's ます, ない, た and て forms, as a dict in that order.
+    Raises KeyError/ValueError/StopIteration if the group and ending don't
+    fit. Exceptions: 行く (and verbs ending in it, 連れていく) → 行った/行って;
+    ある → ない. A masu column in the file overrides the ます-form."""
+    word, group = row["word"], row["group"]
+    if group == "godan":
+        last, base = word[-1], word[:-1]
+        masu = base + _GODAN_STEM[last] + "ます"
+        nai = "ない" if word == "ある" else base + _GODAN_NAI[last] + "ない"
+        ta = base + ("った" if word.endswith(("行く", "いく")) else _GODAN_TA[last])
+    elif group == "ichidan":
+        if not word.endswith("る"):
+            raise ValueError(word)
+        masu, nai, ta = word[:-1] + "ます", word[:-1] + "ない", word[:-1] + "た"
+    elif group == "irregular":
+        dic, stem, nai_stem, ta_form = next(e for e in _IRREGULAR if word.endswith(e[0]))
+        base = word[:-len(dic)]
+        masu, nai, ta = base + stem + "ます", base + nai_stem + "ない", base + ta_form
+    else:
+        raise KeyError(group)
+    te = ta[:-1] + ("て" if ta[-1] == "た" else "で")
+    return {"ます": row["masu"] or masu, "ない": nai, "た": ta, "て": te}
+
+
 def masu_form(row):
-    """The polite ます-form: godan 書く → 書きます, ichidan 食べる → 食べます.
-    A masu column in the file (irregular verbs) overrides the rule."""
-    word = row["word"]
-    if row["masu"]:
-        return row["masu"]
-    if row["group"] == "godan":
-        return word[:-1] + _GODAN_STEM[word[-1]] + "ます"
-    return word[:-1] + "ます"
+    """The polite ます-form: godan 書く → 書きます, ichidan 食べる → 食べます."""
+    return conjugations(row)["ます"]
+
+
+def conjugation_lines(row):
+    """Two lines: ます and ない forms, then た and て, each after a faded label."""
+    forms = list(conjugations(row).items())
+    label = '<span style="opacity:0.65">{}</span> {}'
+    return "".join(
+        _LINE.format("　".join(label.format(html.escape(k), html.escape(v))
+                              for k, v in pair))
+        for pair in (forms[:2], forms[2:]))
+
+
+def verb_radicals_line(row):
+    """The faded radical (部首) line for a verb's kanji: "Radical: 扌 てへん ·
+    hand", or with several "Radicals: 手: 手 て · hand ／ 伝: 亻 にんべん ·
+    person". Unlike on kanji cards, a kanji that is its own radical (行) is
+    still shown. "" for a kana-only verb."""
+    items = []
+    for kanji, key in row["radicals"]:
+        rad = radicals().get(key)
+        if rad is None:
+            print(f"Verb {row['word']}: radical {key} is not in "
+                  f"{os.path.basename(RADICAL_FILE)} (run tools/add_radicals.py --write)",
+                  file=sys.stderr)
+            sys.exit(1)
+        items.append((kanji, radical_text(rad)))
+    if not items:
+        return ""
+    if len(items) == 1:
+        return _NOTE.format(html.escape(f"Radical: {items[0][1]}"))
+    text = " ／ ".join(f"{k}: {t}" for k, t in items)
+    return _NOTE.format(html.escape(f"Radicals: {text}"))
 
 
 def verb_back(row):
-    """Back layout: meaning, reading (unless the word is all kana), then the
-    file's note and the group in small, faded text. Conjugations (masu_form)
-    aren't shown until the reviewer book teaches them."""
+    """Back layout: meaning, reading (unless the word is all kana), the
+    ます/ない/た/て forms, then the file's note, the radicals and the group
+    in small, faded text."""
     esc = html.escape
     parts = [_HEADLINE.format(esc(row["meaning"]))]
     if row["kana"] != row["word"]:
         parts.append(_LINE.format(esc(row["kana"])))
+    parts.append(conjugation_lines(row))
     if row["note"]:
         parts.append(_NOTE.format(esc(row["note"])))
+    parts.append(verb_radicals_line(row))
     facts = [VERB_GROUPS[row["group"]]]
     if row["group"] == "godan":
         facts.append(f"ends in {row['word'][-1]}")

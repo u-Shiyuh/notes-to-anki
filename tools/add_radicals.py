@@ -1,5 +1,9 @@
-"""Set the radical (部首) column of kanji_top1000.tsv and kanji_extra.tsv,
-and add any radical they use that radicals.tsv lacks.
+"""Set the radical (部首) column of kanji_top1000.tsv and kanji_extra.tsv
+and the radicals column of verbs.tsv, and add any radical they use that
+radicals.tsv lacks.
+
+verbs.tsv's 9th column lists every kanji in the verb as `kanji:no|form`,
+space-separated (手伝う -> `手:64|手 伝:9|亻`); kanji-less verbs get none.
 
 Each kanji gets its classical (Kangxi) radical from KANJIDIC2, written as
 `number|form` in column 9, e.g. 海 -> `85|氵`. The form is the shape the
@@ -41,6 +45,8 @@ ROOT = Path(__file__).resolve().parent.parent
 KANJI_FILES = [ROOT / "kanji_top1000.tsv", ROOT / "kanji_extra.tsv"]
 RADICAL_FILE = ROOT / "radicals.tsv"
 RADICAL_COLUMN = 8  # 0-based: the 9th column
+VERB_FILE = ROOT / "verbs.tsv"
+VERB_RADICAL_COLUMN = 8  # 0-based: the 9th column
 
 _TAG = JMDICT_TAG.replace("+", "%2B")
 _BASE = f"https://github.com/scriptin/jmdict-simplified/releases/download/{_TAG}/"
@@ -157,9 +163,35 @@ def main(argv):
         if write and changed:
             path.write_text("\n".join(lines), encoding="utf-8")
 
+    # Verb kanji: their forms need a radicals.tsv row too, but they don't
+    # count toward the kanji column (which counts the 1,017 kanji).
+    verb_used = collections.Counter()
+    lines = VERB_FILE.read_text(encoding="utf-8").split("\n")
+    changed = 0
+    for i, line in enumerate(lines):
+        if not line or line.startswith("#"):
+            continue
+        cols = line.split("\t")
+        value = []
+        for k in cols[2]:
+            if k in numbers:
+                no, form = radical_of(k, numbers, parts)
+                verb_used[(no, form)] += 1
+                value.append(f"{k}:{no}|{form}")
+        value = " ".join(value)
+        cols += [""] * (VERB_RADICAL_COLUMN + 1 - len(cols))
+        if cols[VERB_RADICAL_COLUMN] != value:
+            print(f"{VERB_FILE.name}: {cols[2]} {cols[VERB_RADICAL_COLUMN] or '-'} -> {value}")
+            cols[VERB_RADICAL_COLUMN] = value
+            lines[i] = "\t".join(cols)
+            changed += 1
+    print(f"{VERB_FILE.name}: {changed} line(s) to change")
+    if write and changed:
+        VERB_FILE.write_text("\n".join(lines), encoding="utf-8")
+
     existing = read_radical_rows()
     have = set(existing)
-    new = sorted(k for k in used if k not in have)
+    new = sorted(k for k in set(used) | set(verb_used) if k not in have)
     for no, form in new:
         print(f"radicals.tsv: add {no} {form} ({unicode_meaning(no)}, {used[(no, form)]} kanji)")
     print(f"radicals.tsv: {len(new)} row(s) to add; {len(used)} forms used")

@@ -2,92 +2,94 @@
 #   them to Nihongo::Verbs in this order, so Anki introduces them that way.
 # Columns: section, no (the book's number), word (as the book prints it),
 #   kana, meaning, group (godan / ichidan / irregular), masu (blank = built
-#   from the group; required for irregular verbs), note (faded on the card).
+#   from the group; required for irregular verbs), note (faded on the card),
+#   radicals (部首 of each kanji as kanji:no|form, set by tools/add_radicals.py
+#   from KANJIDIC2/KRADFILE, (c) EDRDG, CC BY-SA 4.0; names in radicals.tsv).
 # Section 1: godan (group 1) verbs.
-1	1	行く	いく	to go	godan		te-form is 行って (irregular)
-1	2	書く	かく	to write	godan
-1	3	描く	えがく	to draw	godan		also read かく, like 書く
-1	4	歩く	あるく	to walk	godan
-1	5	泳ぐ	およぐ	to swim	godan
-1	6	聞く	きく	to hear; to listen	godan
-1	7	急ぐ	いそぐ	to hurry	godan
-1	8	泣く	なく	to cry	godan
-1	9	磨く	みがく	to polish; to brush	godan
-1	10	引く	ひく	to pull	godan
-1	11	着く	つく	to arrive	godan		same sound as つく (to turn on, #59)
-1	12	咲く	さく	to bloom	godan
-1	13	吹く	ふく	to blow	godan
-1	14	乾く	かわく	to get dry	godan		intransitive; transitive: 乾かす
-1	15	驚く	おどろく	to be surprised	godan
-1	16	話す	はなす	to speak	godan
-1	17	消す	けす	to turn off; to erase	godan		transitive; intransitive: 消える
-1	18	返す	かえす	to return (something)	godan		transitive; intransitive: 返る
-1	19	貸す	かす	to lend	godan
-1	20	探す	さがす	to search	godan
-1	21	起こす	おこす	to wake someone up	godan		transitive; intransitive: 起きる
-1	22	出す	だす	to take out	godan		transitive; intransitive: 出る
-1	23	直す	なおす	to fix	godan		transitive; intransitive: 直る
-1	24	落とす	おとす	to drop	godan		transitive; intransitive: 落ちる
-1	25	壊す	こわす	to break (something)	godan		transitive; intransitive: 壊れる
-1	26	引っ越す	ひっこす	to move (house)	godan
-1	27	言う	いう	to say	godan
-1	28	会う	あう	to meet	godan
-1	29	買う	かう	to buy	godan
-1	30	吸う	すう	to smoke	godan		also: to inhale, to suck
-1	31	使う	つかう	to use	godan
-1	32	手伝う	てつだう	to help	godan
-1	33	笑う	わらう	to laugh	godan
-1	34	付き合う	つきあう	to date	godan
-1	35	間に合う	まにあう	to be in time for	godan
-1	36	通う	かよう	to commute	godan
-1	37	飲む	のむ	to drink	godan
-1	38	読む	よむ	to read	godan
-1	39	住む	すむ	to live (reside)	godan
-1	40	楽しむ	たのしむ	to enjoy	godan
-1	41	包む	つつむ	to wrap	godan
-1	42	盗む	ぬすむ	to steal	godan
-1	43	待つ	まつ	to wait	godan
-1	44	持つ	もつ	to hold; to possess	godan
-1	45	立つ	たつ	to stand	godan
-1	46	勝つ	かつ	to win	godan
-1	47	遊ぶ	あそぶ	to play	godan
-1	48	呼ぶ	よぶ	to call	godan
-1	49	選ぶ	えらぶ	to choose	godan
-1	50	並ぶ	ならぶ	to line up	godan
-1	51	飛ぶ	とぶ	to fly; to jump	godan
-1	52	運ぶ	はこぶ	to carry	godan
-1	53	死ぬ	しぬ	to die	godan
-1	54	習う	ならう	to learn	godan
-1	55	連れていく	つれていく	to take (someone)	godan		te-form is 連れていって (irregular, like 行く)
-1	56	脱ぐ	ぬぐ	to take off (clothes)	godan
-1	57	開く	あく	to open	godan		intransitive (the door opens); transitive: 開ける · also read ひらく
-1	58	頼む	たのむ	to request; to ask	godan
+1	1	行く	いく	to go	godan		te-form is 行って (irregular)	行:144|行
+1	2	書く	かく	to write	godan			書:73|曰
+1	3	描く	えがく	to draw	godan		also read かく, like 書く	描:64|扌
+1	4	歩く	あるく	to walk	godan			歩:77|止
+1	5	泳ぐ	およぐ	to swim	godan			泳:85|氵
+1	6	聞く	きく	to hear; to listen	godan			聞:128|耳
+1	7	急ぐ	いそぐ	to hurry	godan			急:61|心
+1	8	泣く	なく	to cry	godan			泣:85|氵
+1	9	磨く	みがく	to polish; to brush	godan			磨:112|石
+1	10	引く	ひく	to pull	godan			引:57|弓
+1	11	着く	つく	to arrive	godan		same sound as つく (to turn on, #59)	着:109|目
+1	12	咲く	さく	to bloom	godan			咲:30|口
+1	13	吹く	ふく	to blow	godan			吹:30|口
+1	14	乾く	かわく	to get dry	godan		intransitive; transitive: 乾かす	乾:5|乙
+1	15	驚く	おどろく	to be surprised	godan			驚:187|馬
+1	16	話す	はなす	to speak	godan			話:149|言
+1	17	消す	けす	to turn off; to erase	godan		transitive; intransitive: 消える	消:85|氵
+1	18	返す	かえす	to return (something)	godan		transitive; intransitive: 返る	返:162|辶
+1	19	貸す	かす	to lend	godan			貸:154|貝
+1	20	探す	さがす	to search	godan			探:64|扌
+1	21	起こす	おこす	to wake someone up	godan		transitive; intransitive: 起きる	起:156|走
+1	22	出す	だす	to take out	godan		transitive; intransitive: 出る	出:17|凵
+1	23	直す	なおす	to fix	godan		transitive; intransitive: 直る	直:109|目
+1	24	落とす	おとす	to drop	godan		transitive; intransitive: 落ちる	落:140|艹
+1	25	壊す	こわす	to break (something)	godan		transitive; intransitive: 壊れる	壊:32|土
+1	26	引っ越す	ひっこす	to move (house)	godan			引:57|弓 越:156|走
+1	27	言う	いう	to say	godan			言:149|言
+1	28	会う	あう	to meet	godan			会:9|人
+1	29	買う	かう	to buy	godan			買:154|貝
+1	30	吸う	すう	to smoke	godan		also: to inhale, to suck	吸:30|口
+1	31	使う	つかう	to use	godan			使:9|亻
+1	32	手伝う	てつだう	to help	godan			手:64|手 伝:9|亻
+1	33	笑う	わらう	to laugh	godan			笑:118|竹
+1	34	付き合う	つきあう	to date	godan			付:9|亻 合:30|口
+1	35	間に合う	まにあう	to be in time for	godan			間:169|門 合:30|口
+1	36	通う	かよう	to commute	godan			通:162|辶
+1	37	飲む	のむ	to drink	godan			飲:184|食
+1	38	読む	よむ	to read	godan			読:149|言
+1	39	住む	すむ	to live (reside)	godan			住:9|亻
+1	40	楽しむ	たのしむ	to enjoy	godan			楽:75|木
+1	41	包む	つつむ	to wrap	godan			包:20|勹
+1	42	盗む	ぬすむ	to steal	godan			盗:108|皿
+1	43	待つ	まつ	to wait	godan			待:60|彳
+1	44	持つ	もつ	to hold; to possess	godan			持:64|扌
+1	45	立つ	たつ	to stand	godan			立:117|立
+1	46	勝つ	かつ	to win	godan			勝:19|力
+1	47	遊ぶ	あそぶ	to play	godan			遊:162|辶
+1	48	呼ぶ	よぶ	to call	godan			呼:30|口
+1	49	選ぶ	えらぶ	to choose	godan			選:162|辶
+1	50	並ぶ	ならぶ	to line up	godan			並:1|一
+1	51	飛ぶ	とぶ	to fly; to jump	godan			飛:183|飛
+1	52	運ぶ	はこぶ	to carry	godan			運:162|辶
+1	53	死ぬ	しぬ	to die	godan			死:78|歹
+1	54	習う	ならう	to learn	godan			習:124|羽
+1	55	連れていく	つれていく	to take (someone)	godan		te-form is 連れていって (irregular, like 行く)	連:162|辶
+1	56	脱ぐ	ぬぐ	to take off (clothes)	godan			脱:130|月
+1	57	開く	あく	to open	godan		intransitive (the door opens); transitive: 開ける · also read ひらく	開:169|門
+1	58	頼む	たのむ	to request; to ask	godan			頼:181|頁
 1	59	つく	つく	to turn on	godan		intransitive (the light comes on); transitive: つける · usually written 点く
-1	60	置く	おく	to put	godan
-1	61	動く	うごく	to move	godan		intransitive; transitive: 動かす
-1	62	働く	はたらく	to work	godan
+1	60	置く	おく	to put	godan			置:122|罒
+1	61	動く	うごく	to move	godan		intransitive; transitive: 動かす	動:19|力
+1	62	働く	はたらく	to work	godan			働:9|亻
 1	63	ある	ある	to exist (inanimate)	godan		negative is ない (irregular)
 1	64	やる	やる	to do	godan
-1	65	売る	うる	to sell	godan
-1	66	撮る	とる	to take (a photo)	godan		same sound as 取る (to take)
-1	67	取る	とる	to take	godan		same sound as 撮る (to take a photo)
-1	68	走る	はしる	to run	godan		ends in -iru/-eru but is godan
-1	69	乗る	のる	to ride	godan
-1	70	入る	はいる	to enter	godan		ends in -iru/-eru but is godan
-1	71	知る	しる	to know	godan		ends in -iru/-eru but is godan · "I know" is 知っています
-1	72	切る	きる	to cut	godan		ends in -iru/-eru but is godan · not 着る (to wear, ichidan)
-1	73	作る	つくる	to make	godan
-1	74	始まる	はじまる	to begin	godan		intransitive; transitive: 始める
-1	75	終わる	おわる	to finish	godan		intransitive; transitive: 終える
-1	76	泊まる	とまる	to stay (overnight)	godan
-1	77	登る	のぼる	to climb	godan
-1	78	怒る	おこる	to get angry	godan
-1	79	送る	おくる	to send	godan
-1	80	謝る	あやまる	to apologize	godan
-1	81	助かる	たすかる	to be saved	godan		intransitive; transitive: 助ける · 助かりました = that really helped
-1	82	閉まる	しまる	to close (intr.)	godan		intransitive; transitive: 閉める
-1	83	貼る	はる	to stick; to paste	godan
-1	84	曲がる	まがる	to turn (corner)	godan
-1	85	決まる	きまる	to be decided	godan		intransitive; transitive: 決める
-1	86	触る	さわる	to touch	godan
-1	87	塗る	ぬる	to paint; to spread	godan
+1	65	売る	うる	to sell	godan			売:33|士
+1	66	撮る	とる	to take (a photo)	godan		same sound as 取る (to take)	撮:64|扌
+1	67	取る	とる	to take	godan		same sound as 撮る (to take a photo)	取:29|又
+1	68	走る	はしる	to run	godan		ends in -iru/-eru but is godan	走:156|走
+1	69	乗る	のる	to ride	godan			乗:4|丿
+1	70	入る	はいる	to enter	godan		ends in -iru/-eru but is godan	入:11|入
+1	71	知る	しる	to know	godan		ends in -iru/-eru but is godan · "I know" is 知っています	知:111|矢
+1	72	切る	きる	to cut	godan		ends in -iru/-eru but is godan · not 着る (to wear, ichidan)	切:18|刀
+1	73	作る	つくる	to make	godan			作:9|亻
+1	74	始まる	はじまる	to begin	godan		intransitive; transitive: 始める	始:38|女
+1	75	終わる	おわる	to finish	godan		intransitive; transitive: 終える	終:120|糸
+1	76	泊まる	とまる	to stay (overnight)	godan			泊:85|氵
+1	77	登る	のぼる	to climb	godan			登:105|癶
+1	78	怒る	おこる	to get angry	godan			怒:61|心
+1	79	送る	おくる	to send	godan			送:162|辶
+1	80	謝る	あやまる	to apologize	godan			謝:149|言
+1	81	助かる	たすかる	to be saved	godan		intransitive; transitive: 助ける · 助かりました = that really helped	助:19|力
+1	82	閉まる	しまる	to close (intr.)	godan		intransitive; transitive: 閉める	閉:169|門
+1	83	貼る	はる	to stick; to paste	godan			貼:154|貝
+1	84	曲がる	まがる	to turn (corner)	godan			曲:73|曰
+1	85	決まる	きまる	to be decided	godan		intransitive; transitive: 決める	決:85|氵
+1	86	触る	さわる	to touch	godan			触:148|角
+1	87	塗る	ぬる	to paint; to spread	godan			塗:32|土
