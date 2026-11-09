@@ -93,3 +93,68 @@
 1	85	決まる	きまる	to be decided	godan		intransitive; transitive: 決める	決:85|氵
 1	86	触る	さわる	to touch	godan			触:148|角
 1	87	塗る	ぬる	to paint; to spread	godan			塗:32|土
+# Section 2: ichidan (group 2) verbs; 減る is godan but the book lists it here.
+2	1	食べる	たべる	to eat	ichidan			食:184|食
+2	2	起きる	おきる	to wake up; to occur	ichidan		intransitive; transitive: 起こす (to wake someone)	起:156|走
+2	3	寝る	ねる	to sleep	ichidan			寝:40|宀
+2	4	見る	みる	to see; to look	ichidan			見:147|見
+2	5	いる	いる	to be; to exist (people, animals)	ichidan		the book's gloss: to need; to be · 要る (to need) is a different verb, godan: 要ります, 要らない	
+2	6	出かける	でかける	to go out	ichidan			出:17|凵
+2	7	開ける	あける	to open (something)	ichidan		transitive (open the door); intransitive: 開く	開:169|門
+2	8	閉める	しめる	to close (something)	ichidan		transitive; intransitive: 閉まる	閉:169|門
+2	9	降りる	おりる	to get off	ichidan			降:170|阝
+2	10	借りる	かりる	to borrow	ichidan			借:9|亻
+2	11	教える	おしえる	to teach; to tell	ichidan			教:66|攵
+2	12	つける	つける	to turn on; to attach	ichidan		transitive (turn on the light); intransitive: つく · usually written 点ける	
+2	13	覚える	おぼえる	to remember	ichidan			覚:147|見
+2	14	忘れる	わすれる	to forget	ichidan			忘:61|心
+2	15	かける	かける	to make (a phone call); to wear (glasses)	ichidan		the book's #15 and #16 · usually written 掛ける	
+2	17	着る	きる	to wear	ichidan			着:109|目
+2	18	始める	はじめる	to begin (something)	ichidan		transitive; intransitive: 始まる	始:38|女
+2	19	出る	でる	to exit; to appear	ichidan		intransitive; transitive: 出す	出:17|凵
+2	20	決める	きめる	to decide	ichidan		transitive; intransitive: 決まる	決:85|氵
+2	21	疲れる	つかれる	to get tired	ichidan			疲:104|疒
+2	22	やめる	やめる	to quit; to stop	ichidan			
+2	23	別れる	わかれる	to break up	ichidan			別:18|刂
+2	24	諦める	あきらめる	to give up	ichidan			諦:149|言
+2	25	あげる	あげる	to give	ichidan			
+2	26	くれる	くれる	to give (to me/us)	ichidan			
+2	27	できる	できる	can do; to be able	ichidan			
+2	28	気をつける	きをつける	to be careful	ichidan			気:84|气
+2	29	調べる	しらべる	to check; investigate	ichidan			調:149|言
+2	30	捨てる	すてる	to throw away	ichidan			捨:64|扌
+2	31	見える	みえる	to be visible; can see	ichidan			見:147|見
+2	32	集める	あつめる	to collect	ichidan			集:172|隹
+2	33	入れる	いれる	to put in	ichidan			入:11|入
+2	34	見せる	みせる	to show	ichidan			見:147|見
+2	35	答える	こたえる	to answer	ichidan			答:118|竹
+2	36	浴びる	あびる	to take (a shower)	ichidan			浴:85|氵
+2	37	生まれる	うまれる	to be born	ichidan			生:100|生
+2	38	並べる	ならべる	to line up (something)	ichidan			並:1|一
+2	39	慣れる	なれる	to get used to	ichidan			慣:61|忄
+2	40	足りる	たりる	to be enough	ichidan			足:157|足
+2	41	伝える	つたえる	to tell; to convey	ichidan			伝:9|亻
+2	42	待たせる	またせる	to keep someone waiting	ichidan			待:60|彳
+2	43	晴れる	はれる	to clear up (weather)	ichidan			晴:72|日
+2	44	いじめる	いじめる	to bully	ichidan			
+2	45	着替える	きがえる	to change clothes	ichidan			着:109|目 替:73|曰
+2	46	ためる	ためる	to save (money)	ichidan			
+2	47	間違える	まちがえる	to make a mistake	ichidan			間:169|門 違:162|辶
+2	48	見つける	みつける	to find	ichidan			見:147|見
+2	49	育てる	そだてる	to raise; to bring up	ichidan			育:130|月
+2	50	助ける	たすける	to help; to rescue	ichidan		transitive; intransitive: 助かる	助:19|力
+2	51	負ける	まける	to lose	ichidan			負:154|貝
+2	52	受ける	うける	to receive	ichidan			受:29|又
+2	53	比べる	くらべる	to compare	ichidan			比:81|比
+2	54	建てる	たてる	to build	ichidan			建:54|廴
+2	55	逃げる	にげる	to run away	ichidan			逃:162|辶
+2	56	濡れる	ぬれる	to get wet	ichidan			濡:85|氵
+2	57	植える	うえる	to plant	ichidan			植:75|木
+2	58	投げる	なげる	to throw	ichidan			投:64|扌
+2	59	知らせる	しらせる	to inform	ichidan			知:111|矢
+2	60	増える	ふえる	to increase	ichidan			増:32|土
+2	61	減る	へる	to decrease	godan		looks ichidan but is godan: 減ります, 減らない · the book lists it here	減:85|氵
+2	62	届ける	とどける	to deliver	ichidan			届:44|尸
+2	63	捕まえる	つかまえる	to catch	ichidan			捕:64|扌
+2	64	続ける	つづける	to continue	ichidan			続:120|糸
+2	65	考える	かんがえる	to think; to consider	ichidan			考:125|耂
