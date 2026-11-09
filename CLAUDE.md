@@ -159,8 +159,8 @@ Confirm the user wants a fix before changing behaviour.
 2. **Front fallback can adopt a hand-made card.** A hand-made `Basic` card in a ledger deck whose Front equals a ledger `Item` gets matched once, overwritten and linked. Cards outside `Nihongo` are safe.
 3. **Notion result cap.** `/data_sources/{id}/query` stops at 10,000 results per query. The ledger is about 400 rows.
 4. **Core Kanji is a snapshot.** Kanji that already had a ledger card when the seed ran are skipped (110 on 2026-10-27). If such a ledger row is later deleted and pruned, the next `--seed-kanji` adds that kanji back as a fresh Core Kanji card.
-6. **Cards in a filtered deck count as misplaced.** `getDecks` reports a card in a Custom Study Session under the filtered deck, so an updating seed plans a `changeDeck` that would pull it out of the session (seen 2026-11-09 with 貸す, 使う). Use `--no-update` while a session is open, or empty the session first.
 5. **`addNotes` errors are counted, not itemised.** Adds are pre-checked, so this is rare; if `addNotes` itself errors, the run reports one failed request and "Added 0".
+6. **Cards in a filtered deck count as misplaced.** `getDecks` reports a card in a Custom Study Session under the filtered deck, so an updating seed plans a `changeDeck` that would pull it out of the session (seen 2026-11-09 with 貸す, 使う). Use `--no-update` while a session is open, or empty the session first.
 
 ## Conventions
 
