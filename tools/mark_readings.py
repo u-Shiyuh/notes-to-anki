@@ -20,6 +20,14 @@ Rule (WaniKani order, via kanji-data's wk_readings_on / wk_readings_kun):
 A reading already bold that matches the choice is kept, so the file only
 changes where the choice changes.
 
+Readings you're learning are bold too (added 2026-11-09): when a line has a
+bold reading, any other reading on it that an N5/N4 word in words.tsv or a
+verb in verbs.tsv uses (the word is the kanji alone or the kanji plus kana,
+e.g. 後 あと, 始まる はじまる) is also marked `*` and moved right after the
+main one. The main reading stays first; main.py's kanji_card_covers only
+counts that one, so words like 後 あと keep their own Words card. Of
+duplicates (お(こす) and おこ(す)), only the first is marked.
+
 WaniKani is proprietary: its reading order reaches this repo only through
 kanji-data (MIT). Retained for now (user, 2026-11-06); replace it if a better
 openly licensed alternative turns up, and before any paid use.
@@ -44,6 +52,8 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 from check_data import fetch as _fetch, SOURCES, CACHE  # noqa: E402
 
 ROOT = Path(__file__).resolve().parent.parent
+sys.path.insert(0, str(ROOT))
+import main as seed  # noqa: E402
 FILES = [ROOT / "kanji_top1000.tsv", ROOT / "kanji_extra.tsv"]
 
 KANJI_DATA_COMMIT = "00fd7079c3890f430759536f91aa5e854ec0ca4f"
@@ -137,11 +147,49 @@ def choose(readings, wk, counts, on):
     return next((r for r in plain if stem(r) == hira(pick)), None)
 
 
-def remark(cell, chosen):
-    """Move the * to `chosen` and put it first; other readings keep their order."""
+def learned_words():
+    """{kanji: [(word, kana, okurigana)]} for the N5/N4 words in words.tsv and
+    the verbs in verbs.tsv that are one kanji, optionally followed by kana."""
+    out = collections.defaultdict(list)
+    rows = [r for r in seed.load_words() if r["level"] in ("n5", "n4")]
+    rows += seed.load_verbs()
+    for r in rows:
+        word, okuri = r["word"][:1], r["word"][1:]
+        if not okuri or re.fullmatch(r"[ぁ-ゖ]+", okuri):
+            for kana in r["kana"].split(";"):
+                out[word].append((r["word"], kana.strip(), okuri))
+    return out
+
+
+def reads_as(reading, kana, okuri):
+    """True if `reading` (い(く), ニチ) spells the word: same kana, and the
+    word's own okurigana ends the reading's (答 こたえ matches こた(え))."""
+    m = re.fullmatch(r"([^()\-]+)(?:\((.*)\))?", reading.replace(".", ""))
+    if not m:  # prefix/suffix forms (-がた, た(ち-))
+        return False
+    base, ok = m.group(1), m.group(2) or ""
+    return hira(base + ok) == hira(kana) and ok.endswith(okuri)
+
+
+def extras_for(readings, primary, words):
+    """Readings besides `primary` that a learned word uses: {reading: word}."""
+    out = {}
+    plain = [r.lstrip("*") for r in readings]
+    for word, kana, okuri in words:
+        hit = next((r for r in plain if reads_as(r, kana, okuri)), None)
+        if hit and hit != primary and hit not in out:
+            out[hit] = f"{word} {kana}"
+    return out
+
+
+def remark(cell, chosen, extras=()):
+    """Mark `chosen` and `extras` with *, chosen first, then the extras in
+    their current order, then the rest in their current order."""
     rs = [r.lstrip("*") for r in cell.split("、")]
     rs.remove(chosen)
-    return "、".join(["*" + chosen] + rs)
+    marked = [r for r in rs if r in extras]
+    rest = [r for r in rs if r not in extras]
+    return "、".join(["*" + chosen] + ["*" + r for r in marked] + rest)
 
 
 def main(argv):
@@ -157,6 +205,7 @@ def main(argv):
                 c = line.split("\t")
                 on_lines[c[1]] = [r.lstrip("*") for r in c[5].split("、") if r]
     counts = word_counts(on_lines)
+    learned = learned_words()
 
     changes = []
     for path, lines in tables.items():
@@ -172,13 +221,24 @@ def main(argv):
                 wk = (kdata.get(k) or {}).get(key) or []
                 chosen = choose(readings, wk, counts[k], on)
                 current = next((r.lstrip("*") for r in readings if r.startswith("*")), None)
+                label = f"{path.name}: {k} {'on' if on else 'kun'}"
                 if chosen and chosen != current:
                     why = (f"{counts[k][chosen]} common words vs {counts[k].get(current, 0)}"
                            if on and not [x for x in wk if not x.startswith("!")]
                            else "WaniKani's first taught reading")
-                    changes.append(f"{path.name}: {k} {'on' if on else 'kun'}: "
-                                   f"{current} -> {chosen} ({why})")
-                    c[col] = remark(c[col], chosen)
+                    changes.append(f"{label}: {current} -> {chosen} ({why})")
+                primary = chosen or current
+                if not primary:
+                    continue
+                extras = extras_for(readings, primary, learned.get(k, []))
+                old = [r.lstrip("*") for r in readings[1:] if r.startswith("*")]
+                for r, word in extras.items():
+                    if r not in old:
+                        changes.append(f"{label}: also bold {r} (used by {word})")
+                for r in old:
+                    if r not in extras:
+                        changes.append(f"{label}: no longer bold {r}")
+                c[col] = remark(c[col], primary, extras)
             lines[i] = "\t".join(c)
     for ch in changes:
         print(ch)

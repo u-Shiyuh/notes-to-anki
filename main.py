@@ -376,15 +376,19 @@ def kanji_key(front):
 
 
 def kanji_readings(label, readings):
-    """One "On:"/"Kun:" line. The most common reading (marked * in
-    KANJI_FILE, always first) is bold; the rest are faded. With no common
+    """One "On:"/"Kun:" line. The readings marked * in KANJI_FILE are bold:
+    the most common one (always first), then any other reading a learned
+    word or verb uses (後 あと). The rest are faded. With no common
     reading, the readings are all rare, so all are faded, even a lone one
     (万's よろず)."""
     esc = html.escape
     items = readings.split("、")
+    bold = []
+    while items and items[0].startswith("*"):
+        bold.append(items.pop(0).lstrip("*"))
     line, sep = f"{label}: ", ""
-    if items[0].startswith("*"):
-        line += f"<b>{esc(items.pop(0).lstrip('*'))}</b>"
+    if bold:
+        line += f"<b>{esc('、'.join(bold))}</b>"
         sep = "、"
     if items:
         line += f'<span style="opacity:0.65">{sep}{esc("、".join(items))}</span>'
@@ -715,13 +719,14 @@ def _hiragana(text):
 
 def kanji_card_covers(row):
     """True if the word is a single kanji whose Core Kanji card already
-    teaches it: the word's reading is one of the card's bold (*) readings."""
+    teaches it: the word's reading is the card's main bold reading (the
+    first *) on the On or Kun line. Other bold readings mark words learned
+    on their own card (後 あと), so they don't count."""
     k = core_kanji().get(row["word"])
     if not k:
         return False
-    bold = {_hiragana(re.sub(r"[*\-.()]", "", r))
-            for line in (k["on"], k["kun"]) for r in line.split("、")
-            if r.startswith("*")}
+    bold = {_hiragana(re.sub(r"[*\-.()]", "", line.split("、")[0]))
+            for line in (k["on"], k["kun"]) if line.startswith("*")}
     return _hiragana(row["kana"]) in bold
 
 

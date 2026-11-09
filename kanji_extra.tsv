@@ -9,6 +9,8 @@
 # Meanings are capped at 4; kun'yomi okurigana is shown as き(く).
 # A leading * marks the most common on/kun reading (the one WaniKani
 #   lists first among the kanji's readings); it is moved to the front of its list.
+#   Other readings an N5/N4 word or verb in words.tsv/verbs.tsv uses are also
+#   marked * and follow it (後 *うし(ろ)、*あと; since 2026-11-09).
 # Columns: rank, kanji, strokes, jlpt (N level, blank if none),
 #   meanings (; separated), on'yomi (、 separated), kun'yomi (、 separated),
 #   example (word|kana|gloss|JLPT level of the word, blank if none),
