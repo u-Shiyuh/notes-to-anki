@@ -10,6 +10,8 @@ Checks:
              - a verb (by JMdict) whose type doesn't say so;
              - a levelled row (n5/n4) that isn't in that JLPT list.
   verbs.tsv  - the row's `group` (godan/ichidan/irregular) agrees with JMdict.
+               A する-verb (勉強する, 世話をする) is looked up by its noun,
+               which must be a JMdict noun that takes する (vs).
   numbers.tsv - a number + counter (3本, 何階, 4月) whose JMdict entry (written
                in kanji, 三本) doesn't list the row's reading. Clock times,
                prices and phrases are compositional and aren't in JMdict.
@@ -209,11 +211,33 @@ GROUP_OF = [(re.compile(r"^v5"), "godan"), (re.compile(r"^v1"), "ichidan"),
             (re.compile(r"^(vk|vs-i|vs-s|vz)"), "irregular")]
 
 
+SURU = re.compile(r"(を)?する$")
+
+
+def suru_noun(word, kana):
+    """(noun, noun kana) of a する-verb like 勉強する or 世話をする, else None.
+    する itself isn't one."""
+    m = SURU.search(word)
+    if not m or m.start() == 0:
+        return None
+    return word[:m.start()], SURU.sub("", kana)
+
+
 def check_verbs(index):
     flags = []
     for n, r in read_tsv(ROOT / "verbs.tsv", VERB_COLUMNS):
-        entry = best_entry(index, r["word"], r["kana"], r["meaning"])
         where = f"verbs.tsv:{n} {r['word']} ({r['kana']})"
+        noun = suru_noun(r["word"], r["kana"])
+        if noun:
+            entry = best_entry(index, noun[0], noun[1], r["meaning"])
+            if entry is None:
+                flags.append(f"{where}: {noun[0]} not found in JMdict")
+            elif not {"vs", "vs-s", "vs-i"} & pos_codes(entry):
+                flags.append(f"{where}: JMdict doesn't list {noun[0]} as taking する")
+            elif r["group"] != "irregular":
+                flags.append(f"{where}: group '{r['group']}', but する-verbs are irregular")
+            continue
+        entry = best_entry(index, r["word"], r["kana"], r["meaning"])
         if entry is None:
             flags.append(f"{where}: not found in JMdict")
             continue
@@ -253,7 +277,9 @@ def number_forms(front):
 def lookup_keys():
     """The JMdict lookups the checks make."""
     keys = {clean(r["word"]) for _, r in read_tsv(ROOT / "words.tsv", WORD_COLUMNS)}
-    keys |= {clean(r["word"]) for _, r in read_tsv(ROOT / "verbs.tsv", VERB_COLUMNS)}
+    for _, r in read_tsv(ROOT / "verbs.tsv", VERB_COLUMNS):
+        noun = suru_noun(r["word"], r["kana"])
+        keys.add(clean(noun[0] if noun else r["word"]))
     keys |= {f for _, r in read_tsv(ROOT / "numbers.tsv", NUMBER_COLUMNS)
              for f in number_forms(r["front"])}
     return sorted(keys)

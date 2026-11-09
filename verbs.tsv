@@ -158,3 +158,45 @@
 2	63	捕まえる	つかまえる	to catch	ichidan			捕:64|扌
 2	64	続ける	つづける	to continue	ichidan			続:120|糸
 2	65	考える	かんがえる	to think; to consider	ichidan			考:125|耂
+# Section 3: irregular (group 3) verbs: する and 来る (no 1-2), then する-verbs (the book's compound list, no c1-c39).
+3	1	する	する	to do	irregular		irregular · noun + する makes a verb: 勉強する, 料理する	
+3	2	来る	くる	to come	irregular		irregular · the kanji's reading changes: 来ます (きます), 来ない (こない), 来た (きた), 来て (きて)	来:75|木
+3	c1	勉強する	べんきょうする	to study	irregular			勉:19|力 強:57|弓
+3	c2	結婚する	けっこんする	to get married	irregular			結:120|糸 婚:38|女
+3	c3	運転する	うんてんする	to drive	irregular			運:162|辶 転:159|車
+3	c4	掃除する	そうじする	to clean	irregular			掃:64|扌 除:170|阝
+3	c5	洗濯する	せんたくする	to do the laundry	irregular			洗:85|氵 濯:85|氵
+3	c6	料理する	りょうりする	to cook	irregular			料:68|斗 理:96|王
+3	c7	運動する	うんどうする	to exercise	irregular			運:162|辶 動:19|力
+3	c8	散歩する	さんぽする	to take a walk	irregular			散:66|攵 歩:77|止
+3	c9	練習する	れんしゅうする	to practice	irregular			練:120|糸 習:124|羽
+3	c10	けんかする	けんかする	to fight	irregular		usually written in kana · kanji 喧嘩	
+3	c11	紹介する	しょうかいする	to introduce	irregular			紹:120|糸 介:9|人
+3	c12	遅刻する	ちこくする	to be late	irregular			遅:162|辶 刻:18|刂
+3	c13	留学する	りゅうがくする	to study abroad	irregular			留:102|田 学:39|子
+3	c14	緊張する	きんちょうする	to get nervous	irregular			緊:120|糸 張:57|弓
+3	c15	心配する	しんぱいする	to worry	irregular			心:61|心 配:164|酉
+3	c16	相談する	そうだんする	to consult	irregular			相:109|目 談:149|言
+3	c17	卒業する	そつぎょうする	to graduate	irregular			卒:24|十 業:75|木
+3	c18	予約する	よやくする	to reserve; to book	irregular			予:6|亅 約:120|糸
+3	c19	案内する	あんないする	to guide	irregular			案:75|木 内:13|冂
+3	c20	説明する	せつめいする	to explain	irregular			説:149|言 明:72|日
+3	c21	旅行する	りょこうする	to travel	irregular			旅:70|方 行:144|行
+3	c22	買い物する	かいものする	to shop	irregular			買:154|貝 物:93|牛
+3	c23	経験する	けいけんする	to experience	irregular			経:120|糸 験:187|馬
+3	c24	約束する	やくそくする	to promise	irregular			約:120|糸 束:75|木
+3	c25	準備する	じゅんびする	to prepare	irregular			準:85|氵 備:9|亻
+3	c26	出発する	しゅっぱつする	to depart	irregular			出:17|凵 発:105|癶
+3	c27	放送する	ほうそうする	to broadcast	irregular			放:66|攵 送:162|辶
+3	c28	計画する	けいかくする	to plan	irregular			計:149|言 画:102|田
+3	c29	世話をする	せわをする	to take care of (someone)	irregular		also 世話する	世:1|一 話:149|言
+3	c30	失敗する	しっぱいする	to fail	irregular			失:37|大 敗:66|攵
+3	c31	競争する	きょうそうする	to compete	irregular			競:117|立 争:6|亅
+3	c32	安心する	あんしんする	to feel relieved	irregular			安:40|宀 心:61|心
+3	c33	連絡する	れんらくする	to contact	irregular			連:162|辶 絡:120|糸
+3	c34	賛成する	さんせいする	to agree	irregular			賛:154|貝 成:62|戈
+3	c35	反対する	はんたいする	to oppose	irregular			反:29|又 対:41|寸
+3	c36	お願いする	おねがいする	to request	irregular		humble · お願いします = please (asking a favour)	願:181|頁
+3	c37	我慢する	がまんする	to endure	irregular			我:62|戈 慢:61|忄
+3	c38	交換する	こうかんする	to exchange	irregular			交:8|亠 換:64|扌
+3	c39	注文する	ちゅうもんする	to order	irregular			注:85|氵 文:67|文
