@@ -49,7 +49,7 @@
 21	社	7	4	company; firm; office; association	*シャ	*やしろ	会社|かいしゃ|company|N5	113|礻
 22	見	7	5	see; hopes; chances; idea	*ケン	*み(る)、*み(える)、*み(せる)	意見|いけん|opinion|N4	147|見
 23	月	4	5	month; moon	*ゲツ、ガツ	*つき	今月|こんげつ|this month|N5	74|月
-24	分	4		part; minute of time; segment; share	*ブン、フン、ブ	*わ(ける)、わ(け)、わ(かれる)、わ(かる)、わ(かつ)	自分|じぶん|myself|N5	18|刀
+24	分	4		part; minute of time; segment; share	*ブン、フン、ブ	*わ(ける)、*わ(かる)、わ(け)、わ(かれる)、わ(かつ)	自分|じぶん|myself|N5	18|刀
 25	議	20	3	deliberation; consultation; debate; consideration	*ギ		会議|かいぎ|business meeting|N4	149|言
 26	後	9	5	behind; back; later	*ゴ、コウ	*うし(ろ)、*あと、のち、おく(れる)	午後|ごご|afternoon|N5	60|彳
 27	前	9	5	in front; before	*ゼン	*まえ	午前|ごぜん|morning|N5	18|刂
@@ -60,7 +60,7 @@
 32	発	9	4	departure; discharge; publish; emit	*ハツ、ホツ	た(つ)、あば(く)、おこ(る)、つか(わす)、はな(つ)	発音|はつおん|pronunciation|N4	105|癶
 33	間	12	5	interval; space	*カン、ケン	*あいだ、ま、あい	時間|じかん|time|N5	169|門
 34	対	7	3	vis-a-vis; opposite; even; equal	*タイ、ツイ	あいて、こた(える)、そろ(い)、つれあ(い)、なら(ぶ)、むか(う)	反対|はんたい|oppose|N4	41|寸
-35	上	3	5	above; up	*ジョウ、ショウ、シャン	*うえ、かみ、あ(げる)、あ(がる)、あ(がり)、のぼ(る)、のぼ(り)、のぼ(せる)、のぼ(す)、たてまつ(る)、うわ-	屋上|おくじょう|rooftop|N4	1|一
+35	上	3	5	above; up	*ジョウ、ショウ、シャン	*うえ、*あ(げる)、かみ、あ(がる)、あ(がり)、のぼ(る)、のぼ(り)、のぼ(せる)、のぼ(す)、たてまつ(る)、うわ-	屋上|おくじょう|rooftop|N4	1|一
 36	部	11	3	section; bureau; dept; class	*ブ	-べ	全部|ぜんぶ|all|N5	163|阝
 37	東	8	5	east	*トウ	*ひがし	東洋|とうよう|Orient|N3	75|木
 38	者	8	4	someone; person	*シャ	*もの	医者|いしゃ|doctor|N5	125|耂
@@ -471,7 +471,7 @@
 443	負	9	3	defeat; negative; -; minus	*フ	*ま(ける)、ま(かす)、お(う)	負担|ふたん|burden|N1	154|貝
 444	閣	14	1	tower; tall building; palace	*カク		内閣|ないかく|cabinet|N1	169|門
 445	韓	18		Korea	*カン	から、いげた	日韓|にっかん|Japan and South Korea|	178|韋
-446	渡	12	3	transit; ford; ferry; cross	*ト	*わた(る)、わた(す)	過渡期|かとき|transition period|	85|氵
+446	渡	12	3	transit; ford; ferry; cross	*ト	*わた(る)、*わた(す)	過渡期|かとき|transition period|	85|氵
 447	失	5	3	lose; error; fault; disadvantage	*シツ	*うしな(う)、う(せる)	失礼|しつれい|discourtesy|N4	37|大
 448	移	11	2	shift; move; change; drift	*イ	*うつ(る)、うつ(す)	移動|いどう|migration|N3	115|禾
 449	差	10	3	distinction; difference; variation; discrepancy	*サ	*さ(す)、さ(し)	交差点|こうさてん|intersection|N5	48|工
@@ -544,7 +544,7 @@
 516	敗	11	3	failure; defeat; reversal	*ハイ	*やぶ(れる)	勝敗|しょうはい|victory or defeat|N2	66|攵
 517	管	14	2	pipe; tube; wind instrument; drunken talk	*カン	*くだ	管理|かんり|control|N3	118|竹
 518	値	10	3	price; cost; value	*チ	*ね、あたい	価値|かち|value|N3	9|亻
-519	歌	14	4	song; sing	*カ	*うた、うた(う)	歌手|かしゅ|singer|N3	76|欠
+519	歌	14	4	song; sing	*カ	*うた、*うた(う)	歌手|かしゅ|singer|N3	76|欠
 520	買	12	4	buy	*バイ	*か(う)	売買|ばいばい|trade|N2	154|貝
 521	突	8	3	stab; protruding; thrust; pierce	*トツ、カ	*つ(く)	衝突|しょうとつ|collision|N3	116|穴
 522	兵	7	2	soldier; private; troops; army	*ヘイ、ヒョウ	つわもの	兵隊|へいたい|soldier|N2	12|八
@@ -621,7 +621,7 @@
 593	竹	6	2	bamboo	チク	*たけ	爆竹|ばくちく|firecracker|	118|竹
 594	除	10	3	exclude; division (x/3); remove; abolish	*ジョ、ジ	*のぞ(く)、-よ(け)	掃除|そうじ|cleaning|N5	170|阝
 595	完	7	3	perfect; completion; end	*カン		完成|かんせい|complete|N3	40|宀
-596	降	10	3	descend; precipitate; fall; surrender	*コウ、ゴ	*お(りる)、お(ろす)、ふ(る)、ふ(り)、くだ(る)、くだ(す)	降伏|こうふく|capitulation|N3	170|阝
+596	降	10	3	descend; precipitate; fall; surrender	*コウ、ゴ	*お(りる)、*ふ(る)、お(ろす)、ふ(り)、くだ(る)、くだ(す)	降伏|こうふく|capitulation|N3	170|阝
 597	超	12	2	transcend; super-; ultra-	*チョウ	*こ(える)、こ(す)	超過|ちょうか|excess|N2	156|走
 598	責	11	3	blame; condemn; censure	*セキ	*せ(める)	責任|せきにん|duty|N3	154|貝
 599	並	8	2	row; and; besides; as well as	*ヘイ、ホウ	*なら(べる)、*なら(ぶ)、な(み)、なみ、なら(びに)	並行|へいこう|(going) side by side|N2	1|一
@@ -822,7 +822,7 @@
 794	博	12	1	Dr.; command; esteem; win acclaim	*ハク、バク		博物館|はくぶつかん|museum|N3	24|十
 795	城	9	2	castle	*ジョウ、セイ	*しろ	城下|じょうか|land near the castle|N1	32|土
 796	患	11	2	afflicted; disease; suffer from; be ill	*カン	*わずら(う)	患者|かんじゃ|patient|N3	61|心
-797	締	15	1	tighten; tie; shut; lock	*テイ	*し(まる)、し(まり)、し(める)、-し(め)、-じ(め)	締結|ていけつ|conclusion|	120|糸
+797	締	15	1	tighten; tie; shut; lock	*テイ	*し(まる)、*し(める)、し(まり)、-し(め)、-じ(め)	締結|ていけつ|conclusion|	120|糸
 798	等	12	3	etc.; and so forth; class (first); quality	*トウ	*ひと(しい)、など、-ら	上等|じょうとう|first class|N3	118|竹
 799	救	11	1	salvation; save; help; rescue	*キュウ	*すく(う)	救助|きゅうじょ|relief|N3	66|攵
 800	執	11	1	tenacious; take hold; grasp; take to heart	*シュウ、シツ	*と(る)	執着|しゅうちゃく|attachment|N1	32|土

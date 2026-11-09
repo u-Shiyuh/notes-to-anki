@@ -200,3 +200,32 @@
 3	c37	我慢する	がまんする	to endure	irregular			我:62|戈 慢:61|忄
 3	c38	交換する	こうかんする	to exchange	irregular			交:8|亠 換:64|扌
 3	c39	注文する	ちゅうもんする	to order	irregular			注:85|氵 文:67|文
+# Extra (not from the reviewer book; added 2026-11-09): JLPT N5 verbs that sections 1-3 don't have,
+#   taken from sources/n5.csv (open-anki-jlpt-decks, MIT, on Jonathan Waller's CC BY JLPT lists).
+#   Meanings are rewritten short; groups checked against JMdict. Spelling variants of verbs
+#   already here (在る/有る, 終る, 曲る, 掛ける) are left out. Most useful first.
+extra	1	分かる	わかる	to understand	godan		takes が: 日本語が分かる	分:18|刀
+extra	2	なる	なる	to become	godan			
+extra	3	帰る	かえる	to go home; to return	godan		looks ichidan but is godan: 帰ります, 帰らない	帰:50|巾
+extra	4	休む	やすむ	to rest; to take time off	godan			休:9|亻
+extra	5	座る	すわる	to sit	godan			座:53|广
+extra	6	違う	ちがう	to be different; to be wrong	godan		違います = that's not right	違:162|辶
+extra	7	洗う	あらう	to wash	godan			洗:85|氵
+extra	8	歌う	うたう	to sing	godan			歌:76|欠
+extra	9	降る	ふる	to fall (rain, snow)	godan		雨が降る · same kanji as 降りる (to get off)	降:170|阝
+extra	10	消える	きえる	to go out (light); to disappear	ichidan		intransitive; transitive: 消す	消:85|氵
+extra	11	困る	こまる	to be in trouble; to have difficulty	godan			困:31|囗
+extra	12	押す	おす	to push; to press	godan			押:64|扌
+extra	13	渡る	わたる	to cross (a street, bridge)	godan		intransitive; transitive: 渡す	渡:85|氵
+extra	14	渡す	わたす	to hand over	godan		transitive; intransitive: 渡る	渡:85|氵
+extra	15	止まる	とまる	to stop; to come to a halt	godan		intransitive; transitive: 止める · same sound as 泊まる (to stay)	止:77|止
+extra	16	上げる	あげる	to raise; to lift	ichidan		transitive; intransitive: 上がる · あげる (to give) is the same verb, usually written in kana	上:1|一
+extra	17	要る	いる	to need	godan		looks ichidan but is godan: 要ります, 要らない · not いる (to be)	要:146|襾
+extra	18	無くす	なくす	to lose (something)	godan			無:86|灬
+extra	19	弾く	ひく	to play (piano, guitar)	godan		same sound as 引く (to pull)	弾:57|弓
+extra	20	かぶる	かぶる	to put on (a hat)	godan			
+extra	21	曇る	くもる	to become cloudy	godan			曇:72|日
+extra	22	差す	さす	to put up (an umbrella)	godan		傘を差す	差:48|工
+extra	23	締める	しめる	to tie; to fasten	ichidan		same sound as 閉める (to close)	締:120|糸
+extra	24	勤める	つとめる	to work for (a company)	ichidan		会社に勤める	勤:19|力
+extra	25	鳴く	なく	to make a sound (animal); to sing (bird)	godan		same sound as 泣く (to cry)	鳴:196|鳥
