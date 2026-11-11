@@ -72,6 +72,10 @@ USAGE
    python3 main.py --seed-numbers             # add numbers, counters, times, dates (numbers.tsv)
    python3 main.py --seed-numbers --dry-run   # preview the numbers seed only
 
+   python3 main.py --order-words              # tag new Words whose kanji you've studied
+                                              # and open them to reposition first
+   python3 main.py --order-words --dry-run    # just report the counts
+
 Safe to re-run any time. Each mode only looks at its own notes: the kana
 seed at Nihongo::Kana::*, the kanji seed at its own (unlinked) notes in
 Nihongo::Core Kanji, the verb seed at Nihongo::Verbs, the word seed at
@@ -862,6 +866,63 @@ def seed_numbers(dry_run=False, update=True):
 
 
 # ---------------------------------------------------------------------------
+# Word order: words whose kanji you've studied first
+# ---------------------------------------------------------------------------
+
+READY_TAG = "kanji_ready"
+READY_QUERY = f'"deck:{WORD_DECK}" is:new tag:{READY_TAG}'
+_KANJI_CHAR = re.compile(r"[一-鿿]")
+
+
+def order_words(dry_run=False):
+    """Tag the new Words cards whose kanji all have a studied Core Kanji card
+    (kana-only words count as ready) with READY_TAG, untag the rest, and open
+    them in Anki's browser sorted by queue position. AnkiConnect can't change
+    a card's queue position ("protected state"), so the user then runs Anki's
+    own Cards > Reposition on them (start 0, step 1, shift existing cards):
+    native, and review history is untouched. (Added 2026-11-11: 71% of the
+    studied words used a kanji not yet studied.)"""
+    if not anki_available():
+        print("Anki isn't reachable; open Anki and run again.", file=sys.stderr)
+        sys.exit(1)
+    known = {kanji_key(_field(n, "Front")) for n in anki_request(
+        "notesInfo", notes=anki_request(
+            "findNotes", query=f'"deck:{KANJI_DECK}" -is:new') or [])}
+    cards = anki_request("cardsInfo", cards=anki_request(
+        "findCards", query=f'"deck:{WORD_DECK}" is:new') or []) or []
+    cards.sort(key=lambda c: c["due"])
+    ready, waiting = [], []
+    for c in cards:
+        word = _field(c, "Front")
+        missing = {k for k in _KANJI_CHAR.findall(word) if k not in known}
+        (waiting if missing else ready).append(c)
+    tagged = set(anki_request("findNotes", query=f'"deck:{WORD_DECK}" tag:{READY_TAG}') or [])
+    want = {c["note"] for c in ready}
+    add, remove = sorted(want - tagged), sorted(tagged - want)
+
+    print(f"{len(known)} kanji studied. New Words: {len(ready)} ready "
+          f"(kanji all studied, or kana only), {len(waiting)} waiting on a kanji.")
+    print("Next ready:", " ".join(_field(c, "Front") for c in ready[:15]))
+    print(f"Tag {READY_TAG}: add {len(add)}, remove {len(remove)}.")
+    if dry_run:
+        return
+    calls = []
+    if add:
+        calls.append(("addTags", {"notes": add, "tags": READY_TAG}))
+    if remove:
+        calls.append(("removeTags", {"notes": remove, "tags": READY_TAG}))
+    if anki_multi(calls):
+        sys.exit(1)
+    anki_request("guiBrowse", query=READY_QUERY,
+                 reorderCards={"order": "ascending", "columnId": "cardDue"})
+    print("Opened them in Anki's browser. To move them to the front of the queue:\n"
+          "  Edit > Select All (Cmd/Ctrl+A), then Cards > Reposition "
+          "(Cmd/Ctrl+Shift+S):\n"
+          "  start position 0, step 1, randomize off, shift position of "
+          "existing cards on.")
+
+
+# ---------------------------------------------------------------------------
 # Notion ledger sync
 # ---------------------------------------------------------------------------
 
@@ -1451,6 +1512,11 @@ def main():
              "(numbers.tsv) into Nihongo::Numbers & Time, in study order",
     )
     parser.add_argument(
+        "--order-words", action="store_true",
+        help="Tag the new Words cards whose kanji you've studied (kanji_ready) "
+             "and open them in Anki's browser to reposition to the front",
+    )
+    parser.add_argument(
         "--no-update", dest="update", action="store_false",
         help="Only add new notes; leave existing notes untouched even if "
              "their content has changed (updating is ON by default)",
@@ -1464,10 +1530,10 @@ def main():
     args = parser.parse_args()
 
     seeds = (args.seed_kana + args.seed_kanji + args.seed_verbs + args.seed_words
-             + args.seed_numbers)
+             + args.seed_numbers + args.order_words)
     if seeds > 1:
-        parser.error("--seed-kana, --seed-kanji, --seed-verbs, --seed-words and "
-                     "--seed-numbers are separate runs")
+        parser.error("--seed-kana, --seed-kanji, --seed-verbs, --seed-words, "
+                     "--seed-numbers and --order-words are separate runs")
     if not seeds and not NOTION_SYNC_ENABLED:
         print("The Notion ledger sync is disabled: Notion is outdated and Anki "
               "is the source of truth (see NOTION_SYNC_ENABLED in main.py).\n"
@@ -1494,6 +1560,9 @@ def main():
         return
     if args.seed_numbers:
         seed_numbers(dry_run=args.dry_run, update=args.update)
+        return
+    if args.order_words:
+        order_words(dry_run=args.dry_run)
         return
 
     sync_ledger(dry_run=args.dry_run, update=args.update, prune=args.prune)

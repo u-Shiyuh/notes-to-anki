@@ -157,6 +157,7 @@ python main.py --seed-words --dry-run   # preview the word seed
 
 python main.py --seed-numbers           # add the number/time expressions in numbers.tsv
 python main.py --seed-numbers --dry-run # preview the numbers seed
+python main.py --order-words            # put Words whose kanji you've studied first (then Reposition in Anki)
 ```
 
 By default, cards already in Anki are brought in line with their source: the text is rewritten when it changed (for example after you fix a meaning in Notion), the card moves deck when you change its `Type`, and old `lesson<N>` / type tags are swapped for the current ones. Pass `--no-update` to only add new cards.
