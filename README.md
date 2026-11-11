@@ -157,8 +157,19 @@ python main.py --seed-words --dry-run   # preview the word seed
 
 python main.py --seed-numbers           # add the number/time expressions in numbers.tsv
 python main.py --seed-numbers --dry-run # preview the numbers seed
-python main.py --order-words            # put Words whose kanji you've studied first (then Reposition in Anki)
+python main.py --order                  # kanji met in studied words first, then words whose kanji you've studied
 ```
+
+`--order` moves cards through a small helper add-on in `anki_addon/notes_to_anki_helper/` (AnkiConnect can't reposition cards). Install it once by linking it into Anki's add-ons folder, then restart Anki:
+
+```bash
+# macOS
+ln -s "$PWD/anki_addon/notes_to_anki_helper" ~/Library/Application\ Support/Anki2/addons21/notes_to_anki_helper
+# Windows (PowerShell, as admin)
+New-Item -ItemType SymbolicLink -Path "$env:APPDATA\Anki2\addons21\notes_to_anki_helper" -Target "$PWD\anki_addon\notes_to_anki_helper"
+```
+
+Without it, `--order` opens the cards in Anki's browser for a manual Cards > Reposition.
 
 By default, cards already in Anki are brought in line with their source: the text is rewritten when it changed (for example after you fix a meaning in Notion), the card moves deck when you change its `Type`, and old `lesson<N>` / type tags are swapped for the current ones. Pass `--no-update` to only add new cards.
 

@@ -72,9 +72,9 @@ USAGE
    python3 main.py --seed-numbers             # add numbers, counters, times, dates (numbers.tsv)
    python3 main.py --seed-numbers --dry-run   # preview the numbers seed only
 
-   python3 main.py --order-words              # tag new Words whose kanji you've studied
-                                              # and open them to reposition first
-   python3 main.py --order-words --dry-run    # just report the counts
+   python3 main.py --order                    # kanji met in studied words first, then
+                                              # words whose kanji are studied first
+   python3 main.py --order --dry-run          # just report what would move
 
 Safe to re-run any time. Each mode only looks at its own notes: the kana
 seed at Nihongo::Kana::*, the kanji seed at its own (unlinked) notes in
@@ -866,60 +866,110 @@ def seed_numbers(dry_run=False, update=True):
 
 
 # ---------------------------------------------------------------------------
-# Word order: words whose kanji you've studied first
+# Study order: words whose kanji you've studied, kanji you've met in words
 # ---------------------------------------------------------------------------
 
-READY_TAG = "kanji_ready"
-READY_QUERY = f'"deck:{WORD_DECK}" is:new tag:{READY_TAG}'
-_KANJI_CHAR = re.compile(r"[一-鿿]")
+READY_TAG = "kanji_ready"       # new Words card whose kanji are all studied
+SEEN_TAG = "word_seen"          # new Core Kanji card met in a studied word
+_KANJI_CHAR = re.compile(r"[\u4e00-\u9fff]")
+HELPER_URL = os.getenv("NOTES_TO_ANKI_HELPER_URL", "http://127.0.0.1:8766")
+STUDIED_WORD_DECKS = (WORD_DECK, VERB_DECK, NUMBER_DECK)
 
 
-def order_words(dry_run=False):
-    """Tag the new Words cards whose kanji all have a studied Core Kanji card
-    (kana-only words count as ready) with READY_TAG, untag the rest, and open
-    them in Anki's browser sorted by queue position. AnkiConnect can't change
-    a card's queue position ("protected state"), so the user then runs Anki's
-    own Cards > Reposition on them (start 0, step 1, shift existing cards):
-    native, and review history is untouched. (Added 2026-11-11: 71% of the
-    studied words used a kanji not yet studied.)"""
-    if not anki_available():
-        print("Anki isn't reachable; open Anki and run again.", file=sys.stderr)
-        sys.exit(1)
-    known = {kanji_key(_field(n, "Front")) for n in anki_request(
-        "notesInfo", notes=anki_request(
-            "findNotes", query=f'"deck:{KANJI_DECK}" -is:new') or [])}
+def helper_request(action, **params):
+    """Call the notes-to-anki helper add-on (anki_addon/). Returns its result,
+    or None if the add-on isn't installed or Anki is closed."""
+    body = json.dumps({"action": action, "params": params}).encode("utf-8")
+    req = urllib.request.Request(HELPER_URL, data=body, method="POST")
+    try:
+        with urllib.request.urlopen(req, timeout=90) as resp:
+            reply = json.loads(resp.read().decode("utf-8"))
+    except (urllib.error.URLError, OSError, ValueError):
+        return None
+    if reply.get("error"):
+        print(f"Helper add-on error on {action}: {reply['error']}", file=sys.stderr)
+        return None
+    return reply.get("result")
+
+
+def _new_cards(deck):
     cards = anki_request("cardsInfo", cards=anki_request(
-        "findCards", query=f'"deck:{WORD_DECK}" is:new') or []) or []
-    cards.sort(key=lambda c: c["due"])
-    ready, waiting = [], []
-    for c in cards:
-        word = _field(c, "Front")
-        missing = {k for k in _KANJI_CHAR.findall(word) if k not in known}
-        (waiting if missing else ready).append(c)
-    tagged = set(anki_request("findNotes", query=f'"deck:{WORD_DECK}" tag:{READY_TAG}') or [])
-    want = {c["note"] for c in ready}
-    add, remove = sorted(want - tagged), sorted(tagged - want)
+        "findCards", query=f'"deck:{deck}" is:new') or []) or []
+    return sorted(cards, key=lambda c: c["due"])
 
-    print(f"{len(known)} kanji studied. New Words: {len(ready)} ready "
-          f"(kanji all studied, or kana only), {len(waiting)} waiting on a kanji.")
-    print("Next ready:", " ".join(_field(c, "Front") for c in ready[:15]))
-    print(f"Tag {READY_TAG}: add {len(add)}, remove {len(remove)}.")
+
+def _front_load(deck, tag, cards, ready, dry_run):
+    """Tag the `ready` new cards of `deck` with `tag` (untagging the rest) and
+    move them to the front of its new queue, keeping their relative order.
+    The move goes through the helper add-on (Anki's own Reposition: no review
+    log entries, undoable); without it, the browser opens for a manual one."""
+    want = {c["note"] for c in ready}
+    tagged = set(anki_request("findNotes", query=f'"deck:{deck}" tag:{tag}') or [])
+    add, remove = sorted(want - tagged), sorted(tagged - want)
+    in_front = all(c in ready for c in cards[:len(ready)])
+    print(f"Tag {tag}: add {len(add)}, remove {len(remove)}. "
+          f"{'Already at the front.' if in_front else 'Not at the front yet.'}")
     if dry_run:
         return
     calls = []
     if add:
-        calls.append(("addTags", {"notes": add, "tags": READY_TAG}))
+        calls.append(("addTags", {"notes": add, "tags": tag}))
     if remove:
-        calls.append(("removeTags", {"notes": remove, "tags": READY_TAG}))
+        calls.append(("removeTags", {"notes": remove, "tags": tag}))
     if anki_multi(calls):
         sys.exit(1)
-    anki_request("guiBrowse", query=READY_QUERY,
+    if in_front or not ready:
+        return
+    moved = helper_request("repositionNewCards", cards=[c["cardId"] for c in ready],
+                           start=0, step=1, shift=True)
+    if moved is not None:
+        print(f"Moved {moved.get('moved', len(ready))} card(s) to the front of {deck}.")
+        return
+    anki_request("guiBrowse", query=f'"deck:{deck}" is:new tag:{tag}',
                  reorderCards={"order": "ascending", "columnId": "cardDue"})
-    print("Opened them in Anki's browser. To move them to the front of the queue:\n"
-          "  Edit > Select All (Cmd/Ctrl+A), then Cards > Reposition "
-          "(Cmd/Ctrl+Shift+S):\n"
-          "  start position 0, step 1, randomize off, shift position of "
-          "existing cards on.")
+    print("The helper add-on isn't running (see README), so they're open in Anki's\n"
+          "browser instead: Select All, then Cards > Reposition: start 0, step 1,\n"
+          "randomize off, shift existing cards on.")
+
+
+def _require_anki():
+    if not anki_available():
+        print("Anki isn't reachable; open Anki and run again.", file=sys.stderr)
+        sys.exit(1)
+
+
+def order_words(dry_run=False):
+    """Put the new Words cards whose kanji all have a studied Core Kanji card
+    (kana-only words count as ready) first. (Added 2026-11-11: 71% of the
+    studied words used a kanji not yet studied.)"""
+    _require_anki()
+    known = {kanji_key(_field(n, "Front")) for n in anki_request(
+        "notesInfo", notes=anki_request(
+            "findNotes", query=f'"deck:{KANJI_DECK}" -is:new') or [])}
+    cards = _new_cards(WORD_DECK)
+    ready = [c for c in cards
+             if all(k in known for k in _KANJI_CHAR.findall(_field(c, "Front")))]
+    print(f"Words: {len(known)} kanji studied; {len(ready)} new words ready "
+          f"(kanji all studied, or kana only), {len(cards) - len(ready)} waiting.")
+    print("  Next:", " ".join(_field(c, "Front") for c in ready[:12]))
+    _front_load(WORD_DECK, READY_TAG, cards, ready, dry_run)
+
+
+def order_kanji(dry_run=False):
+    """Put the new Core Kanji cards whose kanji appear in a studied Words,
+    Verbs or Numbers & Time card first, so a kanji met in a word is learned
+    next. (Added 2026-11-11.)"""
+    _require_anki()
+    seen = set()
+    for deck in STUDIED_WORD_DECKS:
+        for n in anki_request("notesInfo", notes=anki_request(
+                "findNotes", query=f'"deck:{deck}" -is:new') or []) or []:
+            seen.update(_KANJI_CHAR.findall(_field(n, "Front")))
+    cards = _new_cards(KANJI_DECK)
+    ready = [c for c in cards if kanji_key(_field(c, "Front")) in seen]
+    print(f"Core Kanji: {len(ready)} new kanji already met in studied words.")
+    print("  Next:", " ".join(kanji_key(_field(c, "Front")) for c in ready[:20]))
+    _front_load(KANJI_DECK, SEEN_TAG, cards, ready, dry_run)
 
 
 # ---------------------------------------------------------------------------
@@ -1512,9 +1562,9 @@ def main():
              "(numbers.tsv) into Nihongo::Numbers & Time, in study order",
     )
     parser.add_argument(
-        "--order-words", action="store_true",
-        help="Tag the new Words cards whose kanji you've studied (kanji_ready) "
-             "and open them in Anki's browser to reposition to the front",
+        "--order", action="store_true",
+        help="Move new Core Kanji cards met in studied words, then new Words "
+             "whose kanji are all studied, to the front of their queues",
     )
     parser.add_argument(
         "--no-update", dest="update", action="store_false",
@@ -1530,10 +1580,10 @@ def main():
     args = parser.parse_args()
 
     seeds = (args.seed_kana + args.seed_kanji + args.seed_verbs + args.seed_words
-             + args.seed_numbers + args.order_words)
+             + args.seed_numbers + args.order)
     if seeds > 1:
         parser.error("--seed-kana, --seed-kanji, --seed-verbs, --seed-words, "
-                     "--seed-numbers and --order-words are separate runs")
+                     "--seed-numbers and --order are separate runs")
     if not seeds and not NOTION_SYNC_ENABLED:
         print("The Notion ledger sync is disabled: Notion is outdated and Anki "
               "is the source of truth (see NOTION_SYNC_ENABLED in main.py).\n"
@@ -1561,7 +1611,8 @@ def main():
     if args.seed_numbers:
         seed_numbers(dry_run=args.dry_run, update=args.update)
         return
-    if args.order_words:
+    if args.order:
+        order_kanji(dry_run=args.dry_run)
         order_words(dry_run=args.dry_run)
         return
 
