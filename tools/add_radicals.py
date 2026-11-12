@@ -79,10 +79,10 @@ VARIANTS = {
     170: [("阝", {"阡"})],
 }
 # Main forms where Unicode's Kangxi character isn't the one Japanese uses.
-# Unicode's Kangxi radicals are traditional forms (戶 靑 黑 齒); Japanese
-# writes 戸 青 黒 歯.
+# Unicode's Kangxi radicals are traditional forms (戶 靑 黑 齒 黃); Japanese
+# writes 戸 青 黒 歯 黄.
 MAIN_FORMS = {63: "戸", 66: "攴", 125: "老", 130: "肉", 140: "艸", 162: "辵", 163: "邑",
-              170: "阜", 174: "青", 203: "黒", 211: "歯"}
+              170: "阜", 174: "青", 201: "黄", 203: "黒", 211: "歯"}
 
 
 def load_json_zip(name):

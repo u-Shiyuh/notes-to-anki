@@ -1,5 +1,8 @@
 # Kanji outside kanji_top1000.tsv, in the same columns and format: every
-#   JLPT N5/N4 kanji the top 1,000 misses, plus ledger kanji outside it.
+#   JLPT N5/N4 kanji the top 1,000 misses, plus ledger kanji outside it,
+#   plus (2026-11-12) every kanji a word in words.tsv, verbs.tsv or
+#   numbers.tsv uses that had no row (猫 机 雪 傘 ...: 180 kanji), added by
+#   tools/add_kanji_extra.py. Rows are sorted by rank, kanji with no rank last.
 # --seed-kanji adds these after the top 1,000 (skipping ones with a ledger
 #   card), and ledger cards for them get the Core Kanji layout.
 # Readings, meanings, strokes and rank (KANJIDIC newspaper frequency, via kanji-data),
@@ -26,20 +29,200 @@
 #   https://www.edrdg.org/wiki/index.php/JMdict-EDICT_Dictionary_Project
 #   Which kanji carries which reading: JmdictFurigana (CC BY-SA 4.0),
 #   https://github.com/Doublevil/JmdictFurigana (2.3.1+2026-10-25).
+1001	贈	18	2	presents; send; give to; award to	*ゾウ、ソウ	*おく(る)	寄贈|きぞう|donation|N1	154|貝
+1006	酒	10	3	sake; alcohol	*シュ	*さけ、さか-	飲酒|いんしゅ|drinking alcohol|	164|酉
+1009	薄	16	2	dilute; thin; weak (tea); pampas grass	*ハク	*うす(い)、うす(める)、うす(まる)、うす(らぐ)、うす(ら-)、うす(れる)、すすき、うす-、-うす	薄弱|はくじゃく|feebleness|N1	140|艹
 1010	堂	11	4	public chamber; hall	*ドウ		食堂|しょくどう|cafeteria|N5	32|土
+1014	悲	12	3	grieve; sad; deplore; regret	*ヒ	*かな(しい)、かな(しむ)	悲劇|ひげき|tragedy|N3	61|心
+1017	携	13	1	portable; carry (in hand); armed with; bring along	*ケイ	*たずさ(える)、たずさ(わる)	携帯|けいたい|carrying something|N3	64|扌
+1018	奥	12	2	heart; interior	*オウ	*おく、おく(まる)、くま		37|大
+1022	晴	12	3	clear up	*セイ	*は(れる)、*は(れ)、は(れ-)、は(らす)、-ば(れ)	快晴|かいせい|good weather|N2	72|日
+1023	撮	15	1	snapshot; take pictures	*サツ	*と(る)、つま(む)、-ど(り)	撮影|さつえい|photographing|N2	64|扌
+1024	誕	15	1	nativity; be born; declension; lie	*タン		誕生日|たんじょうび|birthday|N5	149|言
+1028	謝	17	1	apologize; thank; refuse	*シャ	*あやま(る)	感謝|かんしゃ|thanks|N3	149|言
+1034	寝	13	3	lie down; sleep; rest; bed	*シン	*ね(る)、ね(かす)、い(ぬ)、みたまや、や(める)	寝台|しんだい|bed|N2	40|宀
+1037	壁	16	1	wall; lining (stomach); fence	*ヘキ	*かべ	外壁|がいへき|outer wall|	32|土
+1039	仮	6	1	sham; temporary; interim; assumed (name)	*カ、ケ	*かり、かり-	片仮名|かたかな|katakana|N5	9|亻
+1040	暗	13	3	darkness; disappear; shade; informal	*アン	*くら(い)、くら(む)、くれ(る)	暗記|あんき|memorization|N3	72|日
 1043	鳥	11	4	bird; chicken	*チョウ	*とり	白鳥|はくちょう|swan (Cygnus spp.)|	196|鳥
+1045	是	9	1	just so; this; right; justice	*ゼ、シ	これ、この、ここ	是非|ぜひ|certainly|N4	72|日
 1046	飯	12	4	meal; boiled rice	*ハン	*めし	夕飯|ゆうはん|dinner|N5	184|食
+1050	訳	11	1	translate; reason; circumstance; case	*ヤク	*わけ	翻訳|ほんやく|translation|N4	149|言
+1051	盗	11	3	steal; rob; pilfer	*トウ	*ぬす(む)、ぬす(み)	強盗|ごうとう|robbery|N3	108|皿
+1054	吸	6	3	suck; imbibe; inhale; sip	*キュウ	*す(う)	吸収|きゅうしゅう|absorption|N3	30|口
+1055	典	8	1	code; ceremony; law; rule	*テン、デン		辞典|じてん|encyclopedia|N4	12|八
+1060	看	9	1	watch over; see	*カン	み(る)	看護婦|かんごふ|(female) nurse|N4	109|目
 1066	勉	10	4	exertion; endeavour; encourage; strive	*ベン	つと(める)	勉強|べんきょう|study|N5	19|力
+1076	片	4	2	one-sided; leaf; sheet; right-side kata radical (no. 91)	*ヘン	*かた、かた-	破片|はへん|fragment|N2	91|片
+1083	隣	16	1	neighboring	*リン	*となり、とな(る)	近隣|きんりん|neighbourhood|	170|阝
+1087	御	12	3	honorable; manipulate; govern	*ゴ、ギョ	*お-、おん-、み-	朝御飯|あさごはん|breakfast|N5	60|彳
 1090	冬	5	4	winter	*トウ	*ふゆ	冬眠|とうみん|hibernation|N1	15|冫
+1106	歯	12	3	tooth; cog	*シ	*は、よわ(い)、よわい(する)	歯科|しか|dentistry|N1	77|止
 1115	昼	9	4	daytime; noon	*チュウ	*ひる	昼食|ちゅうしょく|lunch (same as 昼ご飯 (ひるごはん))|N3	72|日
 1116	茶	9	4	tea	*チャ、サ		紅茶|こうちゃ|black tea|N5	140|艹
+1124	祭	11	2	ritual; offer prayers; celebrate; deify	*サイ	*まつり、まつ(る)	祭日|さいじつ|national holiday|N2	113|示
+1125	袋	11	2	sack; bag; pouch	*タイ、ダイ	*ふくろ		145|衣
+1129	忘	7	3	forget	*ボウ	*わす(れる)	忘却|ぼうきゃく|lapse of memory|	61|心
+1131	雪	11	3	snow	*セツ	*ゆき	降雪|こうせつ|snowfall|	173|雨
+1132	筆	12	2	writing brush; writing; painting brush; handwriting	*ヒツ	*ふで	鉛筆|えんぴつ|pencil|N5	118|竹
+1133	吹	7	3	blow; breathe; puff; emit	*スイ	*ふ(く)	吹奏|すいそう|playing wind instruments|N1	30|口
+1136	浴	10	2	bathe; be favored with; bask in	*ヨク	*あ(びる)、あ(びせる)	海水浴|かいすいよく|sea bathing|N2	85|氵
+1141	驚	22	1	wonder; be surprised; frightened; amazed	*キョウ	*おどろ(く)、おどろ(かす)	驚異|きょうい|wonder|N1	187|馬
+1143	封	9	2	seal; closing	*フウ、ホウ		封筒|ふうとう|envelope|N5	41|寸
+1144	胸	10	2	bosom; breast; chest; heart	*キョウ	*むね、むな-	胸像|きょうぞう|bust (sculpture)|	130|月
+1145	娘	10	3	daughter; girl	ジョウ	*むすめ、こ		38|女
+1146	砂	9	2	sand	*サ、シャ	*すな	砂糖|さとう|sugar|N5	112|石
+1148	塩	13	2	salt	*エン	*しお	食塩|しょくえん|table salt|N2	32|土
+1153	趣	15	1	purport; gist; elegance; interest	*シュ	*おもむき、おもむ(く)	趣味|しゅみ|hobby|N4	156|走
 1161	弟	7	4	younger brother; faithful service to elders	*ダイ、テイ、デ	*おとうと	兄弟|きょうだい|siblings (humble)|N5	57|弓
+1163	腕	12	2	arm; ability; talent	*ワン	*うで	手腕|しゅわん|ability|	130|月
+1168	洗	9	3	wash; inquire into; probe	*セン	*あら(う)	洗濯|せんたく|washing|N5	85|氵
+1170	舎	8	1	cottage; inn; hut; house	*シャ、セキ	やど(る)	校舎|こうしゃ|school building|N3	9|人
+1175	床	7	2	bed; counter for beds; floor; padding	*ショウ	*ゆか、とこ	起床|きしょう|rising|N2	53|广
+1177	慣	14	3	accustomed; get used to; become experienced	*カン	*な(れる)、な(らす)	習慣|しゅうかん|custom (in reference to culture)|N4	61|忄
+1179	毛	4	2	fur; hair; feather; down	*モウ	*け	毛布|もうふ|blanket|N3	82|毛
+1180	緑	14	2	green	*リョク、ロク	*みどり	新緑|しんりょく|fresh verdure|	120|糸
+1182	抵	8	1	resist; reach; touch	*テイ		大抵|たいてい|generally|N4	64|扌
+1184	祝	9	2	celebrate; congratulate	*シュク、シュウ	*いわ(う)	祝日|しゅくじつ|national holiday|N2	113|礻
+1185	礼	5	3	salute; bow; ceremony; thanks	*レイ、ライ		失礼|しつれい|discourtesy|N4	113|礻
+1186	窓	11	3	window; pane	*ソウ、ス	*まど、てんまど、けむだし	車窓|しゃそう|train window|	116|穴
+1187	柔	9	2	tender; weakness; gentleness; softness	*ジュウ、ニュウ	*やわ(らか)、*やわ(らかい)、やわ、やわ(ら)	柔道|じゅうどう|judo|N4	75|木
+1197	昔	8	3	once upon a time; antiquity; old times	セキ、シャク	*むかし	今昔|こんじゃく|past and present|	72|日
 1202	牛	4	4	cow	*ギュウ	*うし	牛肉|ぎゅうにく|beef|N5	93|牛
+1207	嫌	13	1	dislike; detest; hate	*ケン、ゲン	*いや、*きら(い)、きら(う)	機嫌|きげん|humor|N3	38|女
 1208	魚	11	4	fish	*ギョ	*さかな、うお、-ざかな	金魚|きんぎょ|goldfish|N2	195|魚
+1215	肩	8	2	shoulder	*ケン	*かた		130|月
+1217	零	13	2	zero; spill; overflow; nothing	*レイ	*こぼ(す)、ぜろ、こぼ(れる)	零|れい|zero|N5	173|雨
 1219	兄	5	4	elder brother; big brother	*キョウ、ケイ	*あに	兄弟|きょうだい|siblings (humble)|N5	10|儿
+1221	怒	9	3	angry; be offended	*ド、ヌ	*おこ(る)、いか(る)	怒鳴る|どなる|to shout|N2	61|心
+1223	泳	8	3	swim	*エイ	*およ(ぐ)	水泳|すいえい|swimming|N4	85|氵
+1226	祖	9	3	ancestor; pioneer; founder	*ソ		祖母|そぼ|grandmother|N4	113|礻
+1230	荷	10	2	baggage; shoulder-pole load; bear (a burden); shoulder (a gun)	*カ	*に	集荷|しゅうか|collection of cargo (esp. produce, etc.)|	140|艹
+1233	泊	8	2	overnight stay; put up at; ride at anchor	*ハク	*と(まる)、と(める)	宿泊|しゅくはく|lodging|N3	85|氵
+1235	杯	8	3	counter for cupfuls; wine glass; glass; toast	*ハイ	さかずき	一杯|いっぱい|full|N4	75|木
+1236	僕	14	1	me; I (male); servant; manservant	*ボク	しもべ	僕|ぼく|I (used by men towards those of equal or lower status)|N4	9|亻
+1240	黄	11	2	yellow	*オウ、コウ	*き、こ-	黄金|おうごん|gold|N1	201|黄
+1248	甘	5	2	sweet; coax; pamper; be content	*カン	*あま(い)、あま(える)、あま(やかす)、うま(い)	甘言|かんげん|sweet words|	99|甘
+1253	浅	9	2	shallow; superficial; frivolous; wretched	*セン	*あさ(い)	浅見|せんけん|shallow view|	85|氵
+1255	掃	11	2	sweep; brush	*ソウ、シュ	*は(く)	清掃|せいそう|cleaning|N2	64|扌
+1256	雲	12	2	cloud	*ウン	*くも、-ぐも	暗雲|あんうん|dark clouds|	173|雨
+1263	疲	10	3	exhausted; tire; weary	*ヒ	*つか(れる)、つか(らす)、-づか(れ)	疲労|ひろう|fatigue|N1	104|疒
+1266	捨	11	2	discard; throw away; abandon; resign	*シャ	*す(てる)	四捨五入|ししゃごにゅう|rounding up (fractions)|N2	64|扌
+1267	皆	9	3	all; everything	*カイ	*みな、みんな	皆無|かいむ|nonexistent|	106|白
+1279	鳴	14	3	chirp; cry; bark; sound	*メイ	*な(く)、な(る)、な(らす)	共鳴|きょうめい|resonance|N1	196|鳥
+1286	腹	13	3	abdomen; belly; stomach	*フク	*はら	山腹|さんぷく|hillside|N1	130|月
+1289	乳	8	2	milk; breasts	*ニュウ	*ちち、ち	牛乳|ぎゅうにゅう|milk|N5	5|乙
+1290	煙	13	3	smoke	*エン	*けむ(る)、けむり、けむ(い)	禁煙|きんえん|No Smoking|N3	86|火
+1299	紅	9	2	crimson; deep red	*コウ、ク	*べに、くれない、あか(い)	紅茶|こうちゃ|black tea|N5	120|糸
+1304	郊	9	2	outskirts; suburbs; rural area	*コウ		郊外|こうがい|suburb|N4	163|阝
+1306	腰	13	2	loins; hips; waist; low wainscoting	*ヨウ	*こし	腰痛|ようつう|lower back pain|	130|月
+1308	踊	14	2	jump; dance; leap; skip	*ヨウ	*おど(る)	舞踊|ぶよう|dancing|	157|足
+1312	丁	2	1	street; ward; town; counter for guns, tools, leaves or cakes of something	*チョウ、テイ、チン、トウ、チ	ひのと	丁度|ちょうど|just|N5	1|一
+1313	冊	5	2	tome; counter for books; volume	*サツ、サク	ふみ	一冊|いっさつ|one copy (of a book, magazine, etc.)|	13|冂
+1315	眠	10	3	sleep; die; sleepy	*ミン	*ねむ(る)、*ねむ(い)	睡眠|すいみん|sleep|N3	109|目
+1325	怖	8	3	dreadful; be frightened; fearful	*フ、ホ	*こわ(い)、こわ(がる)、お(じる)、おそ(れる)	恐怖|きょうふ|fear|N3	61|忄
 1326	犬	4	4	dog	*ケン	*いぬ、いぬ-	愛犬|あいけん|pet dog|	94|犬
+1327	菜	11	2	vegetable; side dish; greens	*サイ	*な	野菜|やさい|vegetable|N5	140|艹
 1328	耳	6	3	ear	*ジ	*みみ	耳鼻科|じびか|otolaryngology|N1	128|耳
+1330	珍	9	2	rare; curious; strange	*チン	*めずら(しい)、たから	珍重|ちんちょう|prizing|	96|王
+1342	卵	7	2	egg; ovum; spawn; roe	*ラン	*たまご	鶏卵|けいらん|hen's egg|	26|卩
+1344	湖	12	2	lake	*コ	*みずうみ	湖水|こすい|lake|	85|氵
+1346	狭	9	1	cramped; narrow; contract; tight	*キョウ、コウ	*せま(い)、せば(める)、せば(まる)、さ	偏狭|へんきょう|narrow-mindedness|	94|犭
+1347	喫	12	2	consume; eat; drink; smoke	*キツ	*の(む)	喫茶店|きっさてん|café|N5	30|口
+1351	虫	6	2	insect; bug; temper	*チュウ、キ	*むし	昆虫|こんちゅう|insect|N1	142|虫
+1356	湯	12	2	hot water; bath; hot spring	*トウ	*ゆ	熱湯|ねっとう|boiling water|N1	85|氵
+1357	箱	15	3	box; chest; case; bin	ソウ	*はこ		118|竹
+1365	輩	15	1	comrade; fellow; people; companions	*ハイ	やから、やかい、ともがら、-ばら	先輩|せんぱい|senior members of a group|N4	159|車
+1368	慢	14	1	ridicule; laziness	*マン		自慢|じまん|pride|N3	61|忄
+1371	暖	13	1	warmth	*ダン、ノン	*あたた(か)、*あたた(かい)、あたた(まる)、あたた(める)	暖房|だんぼう|heating|N4	72|日
+1375	丈	3		length; ten shaku; measure; Mr.	*ジョウ	*たけ、だけ	丈夫|じょうぶ|strong|N5	1|一
+1380	泣	8	1	cry; weep; moan	*キュウ	*な(く)	号泣|ごうきゅう|crying loudly|	85|氵
+1384	匹	4	2	equal; head; counter for small animals; roll of cloth	ヒツ	*ひき	匹敵|ひってき|comparing with|N1	23|匸
+1386	暇	13	1	spare time; rest; leisure; time	*カ	*ひま、いとま	休暇|きゅうか|vacation|N3	72|日
+1393	陰	11	1	shade; yin; negative; sex organs	*イン	*かげ、かげ(る)	陰気|いんき|gloom|N1	170|阝
+1396	随	12	1	follow; though; notwithstanding; while	*ズイ	*したが(う)、まにま(に)	随分|ずいぶん|extremely|N4	170|阝
+1401	枝	8	2	bough; branch; twig; limb	*シ	*えだ	爪楊枝|つまようじ|toothpick|	75|木
+1408	漫	14	1	cartoon; involuntarily; unrestrained; in spite of oneself	*マン	みだり(に)、そぞ(ろ)	漫画|まんが|comic (book)|N4	85|氵
+1409	玄	5	1	mysterious; occultness; black; deep	*ゲン	*くろ、くろ(い)	玄関|げんかん|entrance (to a house or a building)|N5	95|玄
+1414	塗	13	2	paint; plaster; daub; smear	*ト	*ぬ(る)、ぬ(り)、まみ(れる)	塗装|とそう|coating|	32|土
+1416	軒	10	2	flats; counter for houses; eaves	*ケン	*のき	一軒|いっけん|one house|	159|車
+1424	晩	12	3	nightfall; night	*バン		今晩|こんばん|tonight|N5	72|日
+1442	暑	12	1	sultry; hot; summer heat	*ショ	*あつ(い)	残暑|ざんしょ|late summer heat|	72|日
+1443	拝	8	2	worship; adore; pray to	*ハイ	*おが(む)、おろが(む)	拝啓|はいけい|-- a formal greeting used at the beginning of a letter --|N1	64|扌
 1446	妹	8	4	younger sister	*マイ	*いもうと	姉妹|しまい|sisters|N3	38|女
+1453	乾	11	2	drought; dry; desiccate; drink up	*カン、ケン	*かわ(く)、かわ(かす)、ほ(す)、ひ(る)、いぬい	乾燥|かんそう|dry|N3	5|乙
+1455	棒	12	2	rod; stick; cane; pole	*ボウ		泥棒|どろぼう|thief|N4	75|木
 1456	寒	12	3	cold	*カン	*さむ(い)	寒帯|かんたい|frigid zone|N2	40|宀
+1465	翻	18	1	flip; turn over; wave; flutter	*ホン、ハン	*ひるがえ(る)、ひるがえ(す)	翻訳|ほんやく|translation|N4	124|羽
+1471	糖	16	1	sugar	*トウ		砂糖|さとう|sugar|N5	119|米
 1473	姉	8	4	elder sister	*シ	*あね、はは	姉妹|しまい|sisters|N3	38|女
+1474	髪	14	3	hair of the head	*ハツ	*かみ	金髪|きんぱつ|blond hair|	190|髟
+1475	忙	6	3	busy; occupied; restless	*ボウ、モウ	*いそが(しい)、せわ(しい)、おそ(れる)、うれえるさま	多忙|たぼう|busy|N1	61|忄
 1487	漢	13	4	sino-; China	*カン		漢字|かんじ|kanji|N5	85|氵
+1488	糸	6	2	thread	*シ	*いと	蚕糸|さんし|silk thread|	120|糸
+1495	綿	14	2	cotton	*メン	*わた	綿|めん|cotton|N3	120|糸
+1506	鏡	19	1	mirror; speculum; barrel-head; round rice-cake offering	*キョウ、ケイ	*かがみ	顕微鏡|けんびきょう|microscope|N2	167|金
+1510	覧	17	1	perusal; see	*ラン	み(る)	展覧会|てんらんかい|exhibition|N4	147|見
+1514	魔	21	1	witch; demon; evil spirit	*マ		邪魔|じゃま|hindrance|N4	194|鬼
+1516	紫	12	1	purple; violet	*シ	*むらさき	紫外線|しがいせん|ultraviolet rays|	120|糸
+1527	眼	11	1	eyeball	*ガン、ゲン	*め、まなこ	眼科|がんか|ophthalmology|N1	109|目
+1528	瓶	11	2	bottle; vial; jar; jug	*ビン	*かめ	花瓶|かびん|(flower) vase|N5	98|瓦
+1534	咲	9	2	blossom; bloom	*ショウ	*さ(く)、-ざき		30|口
+1561	靴	13	3	shoes	*カ	*くつ		177|革
+1575	恥	10	3	shame; dishonor	*チ	*は(じる)、*は(ずかしい)、はじ、は(じらう)	無恥|むち|shameless|	61|心
+1589	泥	8	2	mud; mire; adhere to; be attached to	*デイ、ナイ、デ、ニ	*どろ、なず(む)	泥酔|でいすい|being dead drunk|	85|氵
+1594	棚	12	1	shelf; ledge; rack; mount	*ホウ	*たな、-だな		75|木
+1598	廊	12	1	corridor; hall; tower	*ロウ		廊下|ろうか|corridor|N5	53|广
+1599	寂	11	1	loneliness; quietly; mellow; mature	*ジャク、セキ	*さび、*さび(しい)、さび(れる)、さみ(しい)	静寂|せいじゃく|silence|	40|宀
+1601	隅	12	2	corner; nook	*グウ	*すみ	一隅|いちぐう|corner|	170|阝
+1605	灯	6	2	lamp; a light; light; counter for lights	*トウ	*あかり、ひ、ともしび、とも(す)、ほ-	電灯|でんとう|electric light|N4	86|火
+1607	辛	7	2	spicy; bitter; hot; acrid	*シン	*から(い)、つら(い)、かのと、-づら(い)	香辛料|こうしんりょう|spices|N1	160|辛
+1608	磨	16	2	grind; polish; scour; improve	*マ	*みが(く)、す(る)	研磨|けんま|grinding|	112|石
+1612	邪	8	1	wicked; injustice; wrong	*ジャ	*よこし(ま)	邪魔|じゃま|hindrance|N4	163|阝
+1631	筒	12	2	cylinder; pipe; tube; gun barrel	*トウ	*つつ	封筒|ふうとう|envelope|N5	118|竹
+1632	鼻	14	2	nose; snout	*ビ	*はな	耳鼻科|じびか|otolaryngology|N1	209|鼻
+1665	畳	12	2	tatami mat; counter for tatami mats; fold; shut up	*ジョウ、チョウ	*たたみ、たた(む)、かさ(なる)	四畳半|よじょうはん|four and a half tatami mats|	102|田
+1671	机	6	2	desk; table	*キ	*つくえ	机上|きじょう|on the desk|	75|木
+1694	傘	12	1	umbrella	*サン	*かさ	傘下|さんか|affiliated with|	9|人
+1697	寧	14	1	rather; preferably; peaceful; quiet	*ネイ	*むし(ろ)	丁寧|ていねい|polite|N4	40|宀
+1698	濯	17	2	laundry; wash; pour on; rinse	*タク	*すす(ぐ)、ゆす(ぐ)	洗濯|せんたく|washing|N5	85|氵
+1702	猫	11	3	cat	ビョウ	*ねこ		94|犭
+1710	鉛	13	1	lead	*エン	*なまり	鉛筆|えんぴつ|pencil|N5	167|金
+1717	灰	6	2	ashes; puckery juice; cremate	*カイ	*はい	石灰|せっかい|lime|	86|火
+1719	菓	11	2	candy; cakes; fruit	*カ		お菓子|おかし|confections|N5	140|艹
+1742	帽	12	2	cap; headgear	*ボウ、モウ	ずきん、おお(う)	帽子|ぼうし|hat|N5	50|巾
+1758	麗	19	1	lovely; beautiful; graceful; resplendent	*レイ	*うるわ(しい)、うら(らか)	綺麗|きれい|pretty|N5	198|鹿
+1783	涼	11	2	refreshing; nice and cool	*リョウ	*すず(しい)、すず(む)、すず(やか)、うす(い)、ひや(す)、まことに	清涼|せいりょう|cool|	85|氵
+1786	舟	6	2	boat; ship	*シュウ	*ふね、ふな-、-ぶね	舟艇|しゅうてい|boat|	137|舟
+1798	符	11	2	token; sign; mark; tally	*フ		切符|きっぷ|a ticket|N5	118|竹
+1812	皿	5	2	dish; a helping; plate	ベイ	*さら		108|皿
+1832	坊	7		boy; priest's residence; priest	*ボウ、ボッ		寝坊|ねぼう|sleeping in late|N4	32|土
+1864	豚	11	1	pork; pig	*トン	*ぶた	養豚|ようとん|pig-keeping|	152|豕
+1899	曇	16	2	cloudy weather; cloud up	ドン	*くも(る)		72|日
+1901	鶏	19	1	chicken	*ケイ	*とり、にわとり	鶏卵|けいらん|hen's egg|	196|鳥
+1916	絹	13	1	silk	*ケン	*きぬ	絹布|けんぷ|silk|	120|糸
+1933	誰	15		who; someone; somebody	スイ	*だれ、たれ、た		149|言
+2015	頃	11		time; about; toward	ケイ、キョウ	*ころ、ごろ、しばら(く)		181|頁
+2020	汽	7	1	vapor; steam	*キ		汽車|きしゃ|train (steam)|N4	85|氵
+2029	鍵	17		key	*ケン	*かぎ	鍵盤|けんばん|keyboard (of a piano, typewriter, etc.)|	167|金
+2055	呂	7	1	spine; backbone	*ロ、リョ	*せぼね	お風呂|おふろ|a bath|N5	30|口
+2059	嬢	16	1	lass; girl; Miss; daughter	*ジョウ	*むすめ	お嬢さん|おじょうさん|(someone's) daughter (polite)|N4	38|女
+2156	箸	15		chopsticks	*チャク、チョ	*はし		118|竹
+2213	匂	4		fragrant; stink; glow; insinuate		にお(う)、にお(い)、にお(わせる)		20|勹
+2235	嘘	14		lie; falsehood	キョ、コ	うそ、ふ(く)		30|口
+2245	椅	12		chair	*イ		椅子|いす|chair|N5	75|木
+2258	挨	10		approach; draw near; push open	アイ	ひら(く)	挨拶|あいさつ|greeting|	64|扌
+2260	濡	17		get wet; damp; make love	ジュ、ニュ	ぬれ(る)、ぬら(す)、うるお(い)、うるお(う)、うるお(す)		85|氵
+2274	嬉	15	1	glad; pleased; rejoice	キ	うれ(しい)、たの(しむ)		38|女
+2313	凄	10		uncanny; weird; threatening; horrible	セイ、サイ	さむ(い)、すご(い)、すさ(まじい)		15|冫
+2320	膝	15		knee; lap	シツ	ひざ		130|月
+2390	喉	12		throat; voice	コウ	のど		30|口
+2413	綺	14	1	figured cloth; beautiful	*キ	あや	綺麗|きれい|pretty|N5	120|糸
+2444	貼	12		stick; paste; apply	*チョウ、テン	*は(る)、つ(く)	貼付|ちょうふ|pasting|	154|貝
+2457	諦	16		truth; clarity; abandon; give up	テイ、タイ	あきら(める)、つまびらか、まこと		149|言
+2485	醤	17		a kind of miso	*ショウ	ひしお	醤油|しょうゆ|soy sauce|N5	164|酉
+	碗	13		porcelain bowl; tea cup	ワン	こばち	茶碗|ちゃわん|rice bowl|N5	112|石
+	鹸	19		saltiness	ケン、カン、セン	あ(く)	石鹸|せっけん|soap|N5	197|鹵
+	飴	13		rice jelly; candy	イ、シ	あめ、やしな(う)		184|食
+	拶	9		be imminent; draw close	サツ	せま(る)	挨拶|あいさつ|greeting|	64|扌
+	噌	14		boisterous	*ソ、ソウ、ショウ	かまびす(しい)	味噌|みそ|miso|N4	30|口

@@ -73,7 +73,8 @@ USAGE
    python3 main.py --seed-numbers --dry-run   # preview the numbers seed only
 
    python3 main.py --order                    # kanji met in studied words first, then
-                                              # words whose kanji are studied first
+                                              # the kanji the next words need; words
+                                              # whose kanji are studied first
    python3 main.py --order --dry-run          # just report what would move
 
 Safe to re-run any time. Each mode only looks at its own notes: the kana
@@ -871,6 +872,8 @@ def seed_numbers(dry_run=False, update=True):
 
 READY_TAG = "kanji_ready"       # new Words card whose kanji are all studied
 SEEN_TAG = "word_seen"          # new Core Kanji card met in a studied word
+NEXT_TAG = "word_next"          # new Core Kanji card the next new words need
+NEXT_KANJI = 50                 # how many of those (5 days at 10 new a day)
 _KANJI_CHAR = re.compile(r"[\u4e00-\u9fff]")
 HELPER_URL = os.getenv("NOTES_TO_ANKI_HELPER_URL", "http://127.0.0.1:8766")
 STUDIED_WORD_DECKS = (WORD_DECK, VERB_DECK, NUMBER_DECK)
@@ -898,34 +901,44 @@ def _new_cards(deck):
     return sorted(cards, key=lambda c: c["due"])
 
 
-def _front_load(deck, tag, cards, ready, dry_run):
-    """Tag the `ready` new cards of `deck` with `tag` (untagging the rest) and
-    move them to the front of its new queue, keeping their relative order.
-    The move goes through the helper add-on (Anki's own Reposition: no review
-    log entries, undoable); without it, the browser opens for a manual one."""
-    want = {c["note"] for c in ready}
-    tagged = set(anki_request("findNotes", query=f'"deck:{deck}" tag:{tag}') or [])
-    add, remove = sorted(want - tagged), sorted(tagged - want)
-    in_front = all(c in ready for c in cards[:len(ready)])
-    print(f"Tag {tag}: add {len(add)}, remove {len(remove)}. "
-          f"{'Already at the front.' if in_front else 'Not at the front yet.'}")
+def _front_load(deck, groups, cards, dry_run):
+    """Move groups of new cards to the front of `deck`'s new queue, in the
+    order given; `groups` is [(tag, cards)], highest priority first. Each
+    group is tagged with its tag (cards that left it are untagged) and keeps
+    its cards' existing relative order. The move goes through the helper
+    add-on (Anki's own Reposition: no review log entries, undoable); without
+    it, the browser opens for a manual one."""
+    order = [c["cardId"] for _, group in groups for c in group]
+    in_front = [c["cardId"] for c in cards[:len(order)]] == order
+    calls = []
+    for tag, group in groups:
+        want = {c["note"] for c in group}
+        tagged = set(anki_request("findNotes", query=f'"deck:{deck}" tag:{tag}') or [])
+        add, remove = sorted(want - tagged), sorted(tagged - want)
+        print(f"Tag {tag}: add {len(add)}, remove {len(remove)}.")
+        if add:
+            calls.append(("addTags", {"notes": add, "tags": tag}))
+        if remove:
+            calls.append(("removeTags", {"notes": remove, "tags": tag}))
+    print("Already at the front." if in_front else "Not at the front yet.")
     if dry_run:
         return
-    calls = []
-    if add:
-        calls.append(("addTags", {"notes": add, "tags": tag}))
-    if remove:
-        calls.append(("removeTags", {"notes": remove, "tags": tag}))
     if anki_multi(calls):
         sys.exit(1)
-    if in_front or not ready:
+    if in_front or not order:
         return
-    moved = helper_request("repositionNewCards", cards=[c["cardId"] for c in ready],
-                           start=0, step=1, shift=True)
-    if moved is not None:
-        print(f"Moved {moved.get('moved', len(ready))} card(s) to the front of {deck}.")
+    # Each call puts its group first, so the last group goes first.
+    for tag, group in reversed(groups):
+        if not group:
+            continue
+        if helper_request("repositionNewCards", cards=[c["cardId"] for c in group],
+                          start=0, step=1, shift=True) is None:
+            break
+    else:
+        print(f"Moved {len(order)} card(s) to the front of {deck}.")
         return
-    anki_request("guiBrowse", query=f'"deck:{deck}" is:new tag:{tag}',
+    tags = " OR ".join(f"tag:{tag}" for tag, _ in groups)
+    anki_request("guiBrowse", query=f'"deck:{deck}" is:new ({tags})',
                  reorderCards={"order": "ascending", "columnId": "cardDue"})
     print("The helper add-on isn't running (see README), so they're open in Anki's\n"
           "browser instead: Select All, then Cards > Reposition: start 0, step 1,\n"
@@ -952,13 +965,16 @@ def order_words(dry_run=False):
     print(f"Words: {len(known)} kanji studied; {len(ready)} new words ready "
           f"(kanji all studied, or kana only), {len(cards) - len(ready)} waiting.")
     print("  Next:", " ".join(_field(c, "Front") for c in ready[:12]))
-    _front_load(WORD_DECK, READY_TAG, cards, ready, dry_run)
+    _front_load(WORD_DECK, [(READY_TAG, ready)], cards, dry_run)
 
 
 def order_kanji(dry_run=False):
-    """Put the new Core Kanji cards whose kanji appear in a studied Words,
-    Verbs or Numbers & Time card first, so a kanji met in a word is learned
-    next. (Added 2026-11-11.)"""
+    """Put first the new Core Kanji cards whose kanji appear in a studied
+    Words, Verbs or Numbers & Time card (tag word_seen; added 2026-11-11), so
+    a kanji met in a word is learned next; then the NEXT_KANJI kanji the
+    next new Words cards still need, in the order those words come up (tag
+    word_next; added 2026-11-12, so kanji outside the frequency top 1,000,
+    such as 猫 and 雪, don't wait behind it and hold their words back)."""
     _require_anki()
     seen = set()
     for deck in STUDIED_WORD_DECKS:
@@ -966,10 +982,21 @@ def order_kanji(dry_run=False):
                 "findNotes", query=f'"deck:{deck}" -is:new') or []) or []:
             seen.update(_KANJI_CHAR.findall(_field(n, "Front")))
     cards = _new_cards(KANJI_DECK)
+    by_kanji = {kanji_key(_field(c, "Front")): c for c in cards}
     ready = [c for c in cards if kanji_key(_field(c, "Front")) in seen]
-    print(f"Core Kanji: {len(ready)} new kanji already met in studied words.")
-    print("  Next:", " ".join(kanji_key(_field(c, "Front")) for c in ready[:20]))
-    _front_load(KANJI_DECK, SEEN_TAG, cards, ready, dry_run)
+    needed = []
+    for w in _new_cards(WORD_DECK):
+        for k in _KANJI_CHAR.findall(_field(w, "Front")):
+            if k in by_kanji and k not in seen and k not in needed:
+                needed.append(k)
+        if len(needed) >= NEXT_KANJI:
+            break
+    needed = set(needed[:NEXT_KANJI])
+    nxt = [c for c in cards if kanji_key(_field(c, "Front")) in needed]
+    print(f"Core Kanji: {len(ready)} new kanji already met in studied words, "
+          f"then {len(nxt)} the next new words need.")
+    print("  Next:", " ".join(kanji_key(_field(c, "Front")) for c in (ready + nxt)[:20]))
+    _front_load(KANJI_DECK, [(SEEN_TAG, ready), (NEXT_TAG, nxt)], cards, dry_run)
 
 
 # ---------------------------------------------------------------------------
