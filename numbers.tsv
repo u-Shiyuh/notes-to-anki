@@ -144,6 +144,7 @@ date	14日	じゅうよっか	the 14th	ends in 4 → よっか
 date	20日	はつか	the 20th; twenty days	special reading
 date	24日	にじゅうよっか	the 24th	ends in 4 → よっか
 date	何日	なんにち	what day (of the month)? / how many days?
+date	何曜日	なんようび	what day of the week?	何曜日ですか: what day is it? Dates show it in brackets: (水) = 水曜日
 month	1月	いちがつ	January	months are number + がつ
 month	4月	しがつ	April	not よんがつ
 month	7月	しちがつ	July	not なながつ
