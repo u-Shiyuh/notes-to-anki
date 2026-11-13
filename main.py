@@ -72,6 +72,9 @@ USAGE
    python3 main.py --seed-numbers             # add numbers, counters, times, dates (numbers.tsv)
    python3 main.py --seed-numbers --dry-run   # preview the numbers seed only
 
+   python3 main.py --seed-lookalikes          # add look-alike pairs of studied kanji
+   python3 main.py --seed-lookalikes --dry-run  # preview (needs Anki open)
+
    python3 main.py --order                    # kanji met in studied words first, then
                                               # the kanji the next words need; words
                                               # whose kanji are studied first
@@ -154,6 +157,7 @@ KANJI_DECK = f"{DECK_ROOT}::Core Kanji"
 VERB_DECK = f"{DECK_ROOT}::Verbs"
 WORD_DECK = f"{DECK_ROOT}::Words"
 NUMBER_DECK = f"{DECK_ROOT}::Numbers & Time"
+LOOKALIKE_DECK = f"{DECK_ROOT}::Kanji Look-alikes"
 VOCAB_DECK = f"{DECK_ROOT}::Vocab"
 _LINKED = "tag:" + LINK_TAG_PREFIX.replace("_", "\\_") + "*"
 KANA_SCOPE = f'"deck:{DECK_ROOT}::Kana"'
@@ -161,9 +165,10 @@ KANJI_SCOPE = f'"deck:{KANJI_DECK}" -{_LINKED}'
 VERB_SCOPE = f'"deck:{VERB_DECK}"'
 WORD_SCOPE = f'"deck:{WORD_DECK}"'
 NUMBER_SCOPE = f'"deck:{NUMBER_DECK}"'
+LOOKALIKE_SCOPE = f'"deck:{LOOKALIKE_DECK}"'
 VOCAB_SCOPE = f'"deck:{VOCAB_DECK}"'
 LEDGER_SCOPE = (f'"deck:{DECK_ROOT}" -"deck:{DECK_ROOT}::Kana" -{VERB_SCOPE} '
-                f'-{WORD_SCOPE} -{NUMBER_SCOPE} (-"deck:{KANJI_DECK}" OR {_LINKED})')
+                f'-{WORD_SCOPE} -{NUMBER_SCOPE} -{LOOKALIKE_SCOPE} (-"deck:{KANJI_DECK}" OR {_LINKED})')
 
 # Ledger rows go to Nihongo::<Type>, except these. The kanji seed skips
 # kanji that already have a ledger card, and a new ledger Kanji row takes
@@ -186,6 +191,8 @@ WORD_FILE = os.path.join(os.path.dirname(KANJI_FILE), "words.tsv")
 # words.tsv's topic column becomes a tag, e.g. topic_body (Custom Study by tag).
 TOPIC_TAG_PREFIX = "topic_"
 NUMBER_FILE = os.path.join(os.path.dirname(KANJI_FILE), "numbers.tsv")
+# Look-alike kanji pairs (tools/add_lookalikes.py); seeded once both are studied.
+LOOKALIKE_FILE = os.path.join(os.path.dirname(KANJI_FILE), "lookalikes.tsv")
 
 # Tags the script owns. On update, a note's tags matching these (or any tag
 # the current batch produces) are removed when no longer wanted; every
@@ -892,6 +899,133 @@ def seed_numbers(dry_run=False, update=True):
         return
 
     add_or_update_notes(notes, NUMBER_SCOPE, update=update)
+
+
+# ---------------------------------------------------------------------------
+# Kanji look-alikes seed: pairs of studied Core Kanji that look alike
+# ---------------------------------------------------------------------------
+
+def load_lookalikes(path=LOOKALIKE_FILE):
+    """Rows of LOOKALIKE_FILE as dicts, in file order. Exits on a kanji with
+    no Core Kanji row."""
+    rows = []
+    try:
+        with open(path, encoding="utf-8") as f:
+            for n, line in enumerate(f, 1):
+                if line.startswith("#") or not line.strip():
+                    continue
+                cols = line.rstrip("\n").split("\t")
+                a, b, same, a_only, b_only = (cols + [""] * 5)[:5]
+                if a not in core_kanji() or b not in core_kanji():
+                    print(f"{os.path.basename(path)}:{n}: {a} or {b} has no Core Kanji "
+                          "row (run tools/add_lookalikes.py --write)", file=sys.stderr)
+                    sys.exit(1)
+                rows.append({"a": a, "b": b, "same": same.split(),
+                             "a_only": a_only.split(), "b_only": b_only.split()})
+    except OSError as e:
+        print(f"Could not read the look-alike list: {e}", file=sys.stderr)
+        sys.exit(1)
+    return rows
+
+
+def studied_kanji():
+    """Kanji whose Core Kanji card has been studied (isn't new)."""
+    _require_anki()
+    cards = anki_request("findCards", query=f'"deck:{KANJI_DECK}" -is:new') or []
+    infos = anki_request("cardsInfo", cards=cards) or []
+    return {kanji_key(_field(c, "Front")) for c in infos}
+
+
+def main_readings(row):
+    """The bold (*) On and Kun readings of a Core Kanji row, as one line;
+    the first reading when none is bold."""
+    out = []
+    for label, line in (("On", row["on"]), ("Kun", row["kun"])):
+        bold = []
+        for r in line.split("、") if line else []:
+            if not r.startswith("*"):
+                break
+            bold.append(r.lstrip("*"))
+        if bold:
+            out.append(f"{label}: <b>{html.escape('、'.join(bold))}</b>")
+    if not out:
+        first = (row["on"] or row["kun"]).split("、")[0].lstrip("*")
+        out.append(html.escape(first))
+    return _LINE.format("　".join(out))
+
+
+_SINGLE_STROKES = {"一", "丨", "ノ", "丶", "亅", "乙", "⺄"}
+
+
+def _telling_parts(kanji, parts):
+    """The parts worth naming in "Differs": single strokes are dropped when
+    a bigger part is there too (年's 干 𠂉, not ノ 一), and a kanji isn't
+    named as its own part (日 vs 月 is just the kanji)."""
+    big = [p for p in parts if p not in _SINGLE_STROKES]
+    return [p for p in (big or parts) if p != kanji]
+
+
+def lookalike_back(row):
+    """Back layout: for each kanji, the kanji with its first two meanings,
+    its main readings and its radical (faded, shown even when the kanji is
+    its own radical); then a faded line with the parts both share and the
+    parts that tell them apart."""
+    esc = html.escape
+    parts = []
+    for k in (row["a"], row["b"]):
+        kr = core_kanji()[k]
+        parts.append(_LINE.format(f'<span style="font-size:1.6em"><b>{esc(k)}</b></span>'
+                                  f'　{esc(", ".join(kr["meanings"][:2]))}'))
+        parts.append(main_readings(kr))
+        parts.append(radicals_lines([(k, kr["radical"])], f"Look-alike {k}"))
+    facts = []
+    if row["same"]:
+        facts.append("Same: " + " ".join(row["same"]))
+    if not row["a_only"] and not row["b_only"]:
+        facts.append("Same parts, different arrangement")
+    else:
+        sides = [(k, _telling_parts(k, ps)) for k, ps in
+                 ((row["a"], row["a_only"]), (row["b"], row["b_only"]))]
+        sides = [(k, ps) for k, ps in sides if ps]
+        if len(sides) == 2:
+            facts.append("Differs: " + ", ".join(f"{k} has {' '.join(ps)}" for k, ps in sides))
+        elif sides:
+            facts.append(f"Differs: only {sides[0][0]} has {' '.join(sides[0][1])}")
+    if facts:
+        parts.append(_NOTE.format(esc(" · ".join(facts))))
+    return "".join(parts)
+
+
+def lookalike_note(row):
+    """Build an AnkiConnect note dict for one LOOKALIKE_FILE row."""
+    return {
+        "deckName": LOOKALIKE_DECK,
+        "modelName": NOTE_TYPE,
+        "fields": {"Front": f"{row['a']}・{row['b']}", "Back": lookalike_back(row)},
+        "tags": ["lookalike"],
+        "options": NOTE_OPTIONS,
+    }
+
+
+def seed_lookalikes(dry_run=False, update=True):
+    """Seed Nihongo::Kanji Look-alikes with the LOOKALIKE_FILE pairs whose
+    two kanji are both studied on Core Kanji (safe to re-run; each run adds
+    the pairs newly studied kanji complete). Needs Anki open, even with
+    --dry-run, to know which kanji are studied."""
+    studied = studied_kanji()
+    rows = load_lookalikes()
+    notes = [lookalike_note(r) for r in rows if r["a"] in studied and r["b"] in studied]
+
+    if dry_run:
+        print(f"Would ensure deck {LOOKALIKE_DECK} and seed {len(notes)} pairs "
+              f"(of {len(rows)}; the rest wait until both kanji are studied).")
+        for n in notes[:5]:
+            print(f"\n[{n['deckName']}] {n['fields']['Front']}")
+            print(preview_html(n["fields"]["Back"]))
+        preview_changes(notes, LOOKALIKE_SCOPE, update=update)
+        return
+
+    add_or_update_notes(notes, LOOKALIKE_SCOPE, update=update)
 
 
 # ---------------------------------------------------------------------------
@@ -1617,6 +1751,11 @@ def main():
              "(numbers.tsv) into Nihongo::Numbers & Time, in study order",
     )
     parser.add_argument(
+        "--seed-lookalikes", action="store_true",
+        help="Seed the look-alike kanji pairs (lookalikes.tsv) whose two "
+             "kanji are both studied into Nihongo::Kanji Look-alikes",
+    )
+    parser.add_argument(
         "--order", action="store_true",
         help="Move new Core Kanji cards met in studied words, then new Words "
              "whose kanji are all studied, to the front of their queues",
@@ -1635,15 +1774,15 @@ def main():
     args = parser.parse_args()
 
     seeds = (args.seed_kana + args.seed_kanji + args.seed_verbs + args.seed_words
-             + args.seed_numbers + args.order)
+             + args.seed_numbers + args.seed_lookalikes + args.order)
     if seeds > 1:
         parser.error("--seed-kana, --seed-kanji, --seed-verbs, --seed-words, "
-                     "--seed-numbers and --order are separate runs")
+                     "--seed-numbers, --seed-lookalikes and --order are separate runs")
     if not seeds and not NOTION_SYNC_ENABLED:
         print("The Notion ledger sync is disabled: Notion is outdated and Anki "
               "is the source of truth (see NOTION_SYNC_ENABLED in main.py).\n"
-              "Use --seed-kana, --seed-kanji, --seed-verbs, --seed-words or "
-              "--seed-numbers.",
+              "Use --seed-kana, --seed-kanji, --seed-verbs, --seed-words, "
+              "--seed-numbers or --seed-lookalikes.",
               file=sys.stderr)
         sys.exit(1)
     if args.prune and seeds:
@@ -1665,6 +1804,9 @@ def main():
         return
     if args.seed_numbers:
         seed_numbers(dry_run=args.dry_run, update=args.update)
+        return
+    if args.seed_lookalikes:
+        seed_lookalikes(dry_run=args.dry_run, update=args.update)
         return
     if args.order:
         order_kanji(dry_run=args.dry_run)

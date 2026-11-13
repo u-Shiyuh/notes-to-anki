@@ -157,6 +157,8 @@ python main.py --seed-words --dry-run   # preview the word seed
 
 python main.py --seed-numbers           # add the number/time expressions in numbers.tsv
 python main.py --seed-numbers --dry-run # preview the numbers seed
+python main.py --seed-lookalikes        # add look-alike kanji pairs (both kanji studied; lookalikes.tsv)
+python main.py --seed-lookalikes --dry-run  # preview (needs Anki open)
 python main.py --order                  # kanji met in studied words first, then words whose kanji you've studied
 ```
 
