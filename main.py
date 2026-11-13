@@ -617,26 +617,50 @@ def conjugation_lines(row):
         for pair in (forms[:2], forms[2:]))
 
 
-def verb_radicals_line(row):
-    """The faded radical (部首) line for a verb's kanji: "Radical: 扌 てへん ·
-    hand", or with several "Radicals: 手: 手 て · hand ／ 伝: 亻 にんべん ·
-    person". Unlike on kanji cards, a kanji that is its own radical (行) is
-    still shown. "" for a kana-only verb."""
-    items = []
-    for kanji, key in row["radicals"]:
+def radicals_lines(items, label):
+    """The faded radical (部首) line for (kanji, "no|form") pairs: "Radical:
+    扌 てへん · hand", or with several "Radicals: 手: 手 て · hand ／ 伝: 亻
+    にんべん · person". Unlike on kanji cards, a kanji that is its own
+    radical (行) is still shown. "" when there are no kanji. Exits on a
+    radical missing from RADICAL_FILE (`label` names the card)."""
+    texts = []
+    for kanji, key in items:
         rad = radicals().get(key)
         if rad is None:
-            print(f"Verb {row['word']}: radical {key} is not in "
+            print(f"{label}: radical {key} is not in "
                   f"{os.path.basename(RADICAL_FILE)} (run tools/add_radicals.py --write)",
                   file=sys.stderr)
             sys.exit(1)
-        items.append((kanji, radical_text(rad)))
-    if not items:
+        texts.append((kanji, radical_text(rad)))
+    if not texts:
         return ""
-    if len(items) == 1:
-        return _NOTE.format(html.escape(f"Radical: {items[0][1]}"))
-    text = " ／ ".join(f"{k}: {t}" for k, t in items)
+    if len(texts) == 1:
+        return _NOTE.format(html.escape(f"Radical: {texts[0][1]}"))
+    text = " ／ ".join(f"{k}: {t}" for k, t in texts)
     return _NOTE.format(html.escape(f"Radicals: {text}"))
+
+
+def verb_radicals_line(row):
+    """A verb's radical line, from VERB_FILE's own radicals column."""
+    return radicals_lines(row["radicals"], f"Verb {row['word']}")
+
+
+def text_radicals_line(text, label):
+    """The radical line for a Words or Numbers & Time card, each kanji's
+    radical taken from its Core Kanji row (every card word's kanji has one
+    since 2026-11-12; tools/add_kanji_extra.py adds rows for new ones).
+    A kanji used twice is listed once; 々 is skipped. Exits on a kanji
+    with no Core Kanji row or no radical."""
+    items = []
+    for k in dict.fromkeys(_KANJI_CHAR.findall(text)):
+        row = core_kanji().get(k)
+        if not row or not row["radical"]:
+            print(f"{label}: kanji {k} has no Core Kanji row with a radical "
+                  "(run tools/add_kanji_extra.py --write, then tools/add_radicals.py --write)",
+                  file=sys.stderr)
+            sys.exit(1)
+        items.append((k, row["radical"]))
+    return radicals_lines(items, label)
 
 
 def verb_back(row):
@@ -746,13 +770,15 @@ def seeded_words():
 
 def word_back(row):
     """Back layout: meaning, reading (unless the word is all kana), then the
-    file's note and the JLPT level and type in small, faded text."""
+    file's note, the radicals and the JLPT level and type in small, faded
+    text."""
     esc = html.escape
     parts = [_HEADLINE.format(esc(row["meaning"]))]
     if row["kana"] != row["word"]:
         parts.append(_LINE.format(esc(row["kana"])))
     if row["note"]:
         parts.append(_NOTE.format(esc(row["note"])))
+    parts.append(text_radicals_line(row["word"], f"Word {row['word']}"))
     facts = [row["level"].upper()] if row["level"] else []
     parts.append(_NOTE.format(esc(" · ".join(facts + [row["type"]]))))
     return "".join(parts)
@@ -830,11 +856,13 @@ def load_numbers(path=NUMBER_FILE):
 
 def number_back(row):
     """Back layout: the reading as the headline (reading it is the skill),
-    the meaning, then the note and the group in small, faded text."""
+    the meaning, then the note, the radicals and the group in small, faded
+    text."""
     esc = html.escape
     return "".join([_HEADLINE.format(esc(row["kana"])),
                     _LINE.format(esc(row["meaning"])),
                     _NOTE.format(esc(row["note"])) if row["note"] else "",
+                    text_radicals_line(row["front"], f"Number {row['front']}"),
                     _NOTE.format(esc(row["group"]))])
 
 
