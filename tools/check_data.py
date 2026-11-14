@@ -23,8 +23,8 @@ cover (a row added since the last refresh) makes the run download the full
 JMdict once into tools/cache/ (gitignored) and say to refresh.
 
 Usage:
-  python3 tools/check_data.py            # check both files
-  python3 tools/check_data.py words      # or just one (words/verbs/numbers)
+  python3 tools/check_data.py            # check everything (also references.tsv Fronts)
+  python3 tools/check_data.py words      # or just one (words/verbs/numbers/references)
   python3 tools/check_data.py --refresh  # rebuild sources/ from the pinned
                                          # sources, after editing a .tsv
 Exit status is 1 if anything was flagged, so it can gate a commit.
@@ -342,11 +342,24 @@ def check_numbers(index):
     return flags
 
 
+def check_references():
+    """Every Front listed in references.tsv must be a card Front, or its ref:: tag
+    lands nowhere (e.g. after a word is renamed in words.tsv)."""
+    sys.path.insert(0, str(ROOT))
+    import main
+    fronts = (set(main.core_kanji()) | {r["word"] for r in main.seeded_words()}
+              | {r["word"] for r in main.load_verbs()}
+              | {r["front"] for r in main.load_numbers()}
+              | {r["japanese"] for r in main.load_sentences()})
+    return [f"references.tsv: {front} ({', '.join(tags)}) matches no card Front"
+            for front, tags in main.references().items() if front not in fronts]
+
+
 def main(argv):
     if "--refresh" in argv:
         refresh()
         argv = [a for a in argv if a != "--refresh"]
-    which = argv or ["words", "verbs", "numbers"]
+    which = argv or ["words", "verbs", "numbers", "references"]
     index = load_jmdict()
     flags = []
     if "words" in which:
@@ -355,6 +368,8 @@ def main(argv):
         flags += check_verbs(index)
     if "numbers" in which:
         flags += check_numbers(index)
+    if "references" in which:
+        flags += check_references()
     for f in flags:
         print(f)
     print(f"{len(flags)} row(s) flagged.", file=sys.stderr)

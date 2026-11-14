@@ -1,0 +1,107 @@
+# Example sentences for Nihongo::Sentences (python main.py --seed-sentences).
+# From Tatoeba (https://tatoeba.org), CC BY 2.0 FR; the id column holds each
+# pair's Tatoeba sentence ids (Japanese_English), shown on the card for
+# attribution. Word indices via EDRDG's examples.utf. Rows are proposed by
+# tools/add_sentences.py (only sentences readable with studied cards) and
+# edited by hand; put "skip" in the note column to keep a row off the deck.
+id	japanese	english	words	grammar	note
+25377_188235	下を見ろ。	See below.	下 見る{見ろ}	を	
+239431_175036	元気でね。	Good luck.	元気	で ね	
+323962_79755	夜だった。	It was night.	夜	だ	
+249554_164952	私ですが。	Speaking.	私	です が	
+386704_155143	私は男だ。	I am a man.	私 男	は だ	
+320077_83639	聞いてよ。	You know what?	聞く{聞いて}	よ	
+17453_124722	電話です。	You are wanted on the phone.	電話	です	
+52081_228518	いま行くよ。	I'm coming.	今{いま} 行く	よ	
+24596_5059	何時ですか。	What time do you have?	何時	ですか	
+239441_175025	元気出して。	Cheer up!	元気 出す{出して}		
+237828_176635	兄がいます。	I have an older brother.	兄 いる{います}	が	
+293611_110076	彼は医者だ。	He is a doctor.	彼 医者	は だ	
+21267_184137	楽しんでね。	Have fun.	楽しむ{楽しんで}	ね	
+262358_152192	私も行った。	I also went.	私 行く{行った}	も	
+265462_149096	車で行こう。	Let's go by car.	車 行く{行こう}	で	
+66022_228664	いつ行こうか。	When shall we go?	何時{いつ} 行く{行こう}	か	
+1890869_2304979	ここにいるよ。	I'll be here.	ここ いる	に よ	
+61614_224278	ここは病院だ。	This is a hospital.	ここ 病院	は だ	
+45748_208499	その川は広い。	The river is wide.	その 川 広い	は	
+29927_192761	よく彼に会う。	I often see him.	よく 彼 会う	に	
+245318_169169	仕事どうなの？	How's your job?	仕事 どう	だ の	
+239426_175041	元気そうだね。	You're looking good!	元気 そう	だ ね	
+71127_236839	兄弟はいるか。	Do you have any brothers?	兄弟 いる	は か	
+294855_108833	彼は学生です。	He is a student.	彼 学生	は です	
+294390_109300	彼は家にいた。	He was at home.	彼 家 いる{いた}	は に	
+296209_107477	彼は後を見た。	He looked back.	彼 後 見る{見た}	は を	
+19660_182499	急ぎましょう。	Let's hurry up.	急ぐ{急ぎましょう}		
+265968_148547	手紙書いてね。	Write me sometime, OK?	手紙 書く{書いて}	ね	
+323120_80597	明日たちます。	I start tomorrow.	明日 立つ{たちます}		
+323278_80438	明日は休みだ。	Tomorrow is a holiday.	明日 休み	は だ	
+323399_80318	明日会社でね。	See you tomorrow in the office.	明日 会社	で ね	
+26480_189331	映画に行くの？	You're going to a movie?	映画 行く	に の	
+319120_84594	父は元気です。	My father is in good health.	父 元気	は です	
+251730_162784	私の父は歩く。	My father does walk.	私{私の} 父 歩く	は	
+259069_155469	私は先生です。	I am a teacher.	私 先生	は です	
+257876_156658	私は山にいく。	I go to the mountain.	私 山 行く{いく}	は に	
+262193_152357	私は立てない。	I can't stand up.	私 立つ{立てない}	は	
+20090_182969	起きる時間よ。	Time to get up.	起きる 時間	よ	
+67034_229674	あれは彼の家だ。	That is his house.	彼{あれ} 彼 家	は の だ	
+65918_228560	いま、行きます。	I am coming.	今{いま} 行く{行きます}		
+50895_213608	そこは東京です。	There is Tokyo.	そこ 東京	は です	
+1495900_2304848	トムに電話した？	Did you call Tom?	電話 下{した}	に	
+31942_194769	メアリーは元気？	How is Mary?	元気	は	
+428402_172923	今、何時ですか。	What time is it?	今 何時	ですか	
+243016_171459	今日、会わない？	How about meeting today?	今日 会う{会わない}		
+242826_171649	今日は休みです。	I am off today.	今日 休み	は です	
+24078_186941	家族は４人です。	We are a family of four.	家族 人	は です	
+403370_117484	彼の後ろにいる。	I'm behind him.	彼 後ろ いる	の に	
+292177_111506	彼はトニーです。	He is Tony.	彼	は です	
+296462_107223	彼は今いません。	He's out now.	彼 今 いる{いません}	は	
+296045_107639	彼は元気そうだ。	He looks well.	彼 元気 そう	は だ	
+300638_103055	彼は先生ですか。	Is he a teacher?	彼 先生	は ですか	
+299184_104507	彼は手が大きい。	He has big hands.	彼 手 大きい	は が	
+250680_163830	彼は私の兄です。	He is my brother.	彼 私{私の} 兄	は です	
+265983_148576	手紙は書かれた。	The letter was written.	手紙 書く{書かれた}	は	
+251921_162593	私の妹は有名だ。	My sister is famous.	私{私の} 妹 有名	は だ	
+519963_154185	私は彼に会った。	I saw him.	私 彼 会う{会った}	は に	
+262357_152193	私も元気ですよ。	I'm fine too.	私 元気	も です よ	
+373278_175172	見てみましょう。	Let's take a look.	見る{見て} 見る{みましょう}		
+25405_188264	音楽を聞こうよ。	Let's listen to some music.	音楽 聞く{聞こう}	を よ	
+67071_229710	高い建物ですね。	That is a high building, is it not?	高い 建物	です ね	
+54499_237476	ご家族はいますか。	Do you have a family?	五{ご} 家族 いる{います}	は か	
+41972_10901768	その本は私のです。	Those books are mine.	その 本 私{私の}	は です	
+1495832_2305869	トムは私の兄です。	Tom is my older brother.	私{私の} 兄	は です	
+24569_187432	何時に着きますか。	When do I get there?	何時 着く{着きます}	に か	
+24579_10291134	何時に起きてるの？	What time do you get up?	何時 起きる{起きてる}	に の	
+64158_125116	天気はどうですか。	How is the weather?	天気 どう	は ですか	
+21595_184467	学校に行く時間よ。	It's time to go to school.	学校 行く 時間	に よ	
+71116_233743	彼から手紙がきた？	You heard from him?	彼 手紙 北{きた}	から が	
+284474_119189	彼と私は兄弟です。	He and I are brothers.	彼 私 兄弟	と は です	
+296616_107070	彼は今日家にいる。	He is at home today.	彼 今日 家 いる	は に	
+294739_108952	彼は外国へ行った。	He went abroad.	彼 外国 行く{行った}	は へ	
+303843_99854	彼は妹がいません。	He doesn't have a sister.	彼 妹 いる{いません}	は が	
+294392_2301436	彼は家にいますか。	Is he at home?	彼 家 いる{います}	は に か	
+415439_104466	彼は手紙を書いた。	He wrote a letter.	彼 手紙 書く{書いた}	は を	
+297626_106060	彼は私に質問した。	He asked me a question.	彼 私 質問 下{した}	は に	
+298132_105556	彼は私を行かせた。	He made me go.	彼 私 行く{行かせた}	は を	
+304906_98793	彼も行くでしょう。	He will also go.	彼 行く	も でしょう	
+11058117_80414	明日は大切な日だ。	Tomorrow will be a big day.	明日 大切{大切な} 日	は だ	
+323315_80402	明日は母の日です。	Tomorrow is Mother's Day.	明日 母 日	は の です	
+319252_84462	父は部屋にいます。	My father is in his room.	父 部屋 いる{います}	は に	
+318828_84885	父は５人兄弟です。	My father has five brothers and sisters.	父 人 兄弟	は です	
+251657_162856	私の父は医者です。	My father is a doctor.	私{私の} 父 医者	は です	
+261944_152605	私は明日彼に会う。	I'll be seeing him tomorrow.	私 明日 彼 会う	は に	
+261745_152803	私は本を読まない。	I do not read books.	私 本 読む{読まない}	は を	
+261858_152691	私は毎日歩きます。	I walk every day.	私 毎日 歩く{歩きます}	は	
+256187_158343	私は英語が話せる。	I can speak English.	私 英語 話す{話せる}	は が	
+252577_161939	私は４人家族です。	I have four people in my family.	私 人 家族	は です	
+483613_189233	英語が話せないの？	Can't you speak English?	英語 話す{話せない}	が の	
+378270_182988	英語を話しますか。	Do you speak English?	英語 話す{話します}	を か	
+326572_77146	話を楽しんでいる。	We enjoy talking.	話 楽しむ{楽しんでいる}	を	
+67127_229765	あれが私の学校です。	That is my school.	彼{あれ} 私{私の} 学校	が です	
+67035_229673	あれは彼の車ですよ。	That is his car.	彼{あれ} 彼 車	は の です よ	
+63989_226646	お母さん、急いでよ！	Mom! Hurry!	お母さん 急ぐ{急いで}	よ	
+50394_213110	そのことを話してよ。	Tell me about it.	その 事{こと} 話す{話して}	を よ	
+378828_206571	その名前はケンです。	That name is Ken.	その 名前	は です	
+328849_74870	ねえ、そうでしょう。	That's right, isn't it?	そう	ね でしょう	
+52509_215211	ジョンは話が大きい。	John talks big.	話 大きい	は が	
+2235746_2311962	トムに聞いてみます。	I'll ask Tom.	聞く{聞いて} 見る{みます}	に	
+241547_172926	今、映画を見ようか。	Shall we watch the movie now?	今 映画 見る{見よう}	を か	

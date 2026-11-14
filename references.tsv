@@ -1,0 +1,10 @@
+# Where each card's word or kanji came up in the user's study sources (study/profile.md).
+# Every seed (kanji, words, verbs, numbers) tags a note whose Front is listed with
+# ref::<ref>, e.g. ref::cg::l01, so a lesson can be studied by tag (Custom Study, or the
+# browser's tag tree). The tags are script-owned: removing a front here removes its tag.
+# Columns: ref (<source>::<part>; cg = Complete Grammar, l01 = lesson 1), fronts
+#   (space-separated card Fronts, exactly as in words.tsv/verbs.tsv/numbers.tsv/kanji files;
+#   a one-kanji word its kanji card teaches is listed by the kanji).
+ref	fronts
+cg::l01	心 絵 竹 通り りんご 夫婦 音 夫 記念 禁煙 翻訳 白 城 雨 飴 箸 橋 神 紙 カキ 柿 時間 下駄 銀 文学 天ぷら 折り紙 切手 雑誌 三つ 切符 お父さん お兄さん お姉さん 先生 鳥 病院 社長 東京 お茶 中国 金魚 アメリカ ピザ ソファ バス ネクタイ テレビ ラジオ カメラ アイロン 生きる 生まれる 学生 来る 来年 来週 私立 大学 生 来 私
+cg::l02	富士山 ～さん ～ちゃん ～様 部長 社長 先生 申す 犬 机 町 貿易 会社 貿易会社 女 言葉 女言葉 ごみ 箱 ごみ箱 シャボン玉 食べ物 焼き肉 飼い猫 読み書き 立ち読み 酒 好き 嫌い 人間 酒好き 人間嫌い これ それ あれ どれ この その あの どの ここ そこ あそこ どこ こちら そちら あちら どちら 私 私たち 僕 僕たち あなた あなたたち 彼 彼ら 彼女 彼女ら ～たち 父 お父さん 母 お母さん 兄弟 ご兄弟 兄 お兄さん 姉 お姉さん 弟 弟さん 妹 妹さん 祖父 おじいさん 祖母 おばあさん おじ おじさん おば おばさん 主人 ご主人 夫 家内 妻 奥さん

@@ -1139,3 +1139,42 @@ n4	～目	～め	~th (ordinal)	suffix
 	胸	むね	chest	noun		body
 	膝	ひざ	knee	noun		body
 	腰	こし	lower back, hips	noun		body
+	りんご	りんご	apple	noun	usually kana; kanji 林檎	food
+	夫婦	ふうふ	married couple, husband and wife	noun		family
+	記念	きねん	commemoration, anniversary	noun (+する)	ki-ne-n, three beats; vs 禁煙 きんえん (no smoking), ki-n-e-n	
+	竹	たけ	bamboo	noun		nature
+	城	しろ	castle	noun	same sound as 白 (white); told apart by pitch	places
+	神	かみ	god, deity	noun	same sound as 紙 (paper); told apart by pitch	
+	銀	ぎん	silver	noun		color
+	柿	かき	persimmon	noun	same sound as カキ (oyster); told apart by pitch	food
+	カキ	かき	oyster	noun	kanji 牡蠣, usually written カキ; same sound as 柿 (persimmon)	food
+	下駄	げた	geta (wooden clogs)	noun		clothes
+	天ぷら	てんぷら	tempura	noun		food
+	折り紙	おりがみ	origami, folding paper	noun		hobbies
+	金魚	きんぎょ	goldfish	noun		animals
+	私立	しりつ	private (school etc.)	noun	私 read シ, as in 私 わたし; same sound as 市立 (municipal)	school
+	ピザ	ピザ	pizza	noun		food
+	ソファ	ソファ	sofa	noun		house
+	アイロン	アイロン	(clothes) iron	noun		house
+	富士山	ふじさん	Mount Fuji	noun	〜山 read さん in mountain names	nature
+	人間	にんげん	human being, person	noun		people
+	貿易会社	ぼうえきがいしゃ	trading company	noun	貿易 + 会社: かいしゃ voices to がいしゃ in a compound	work
+	女言葉	おんなことば	women's speech, feminine language	noun	女 + 言葉; no voicing here (ことば stays), voicing doesn't always happen	
+	ごみ箱	ごみばこ	trash can, wastebasket	noun	ごみ + 箱: はこ voices to ばこ	house
+	シャボン玉	しゃぼんだま	soap bubble	noun	シャボン (soap, from Portuguese) + 玉: たま voices to だま	hobbies
+	焼き肉	やきにく	grilled meat, yakiniku	noun	verb stem 焼き (焼く) + 肉; also written 焼肉	food
+	飼い猫	かいねこ	pet cat	noun	verb stem 飼い (飼う, to keep an animal) + 猫	animals
+	読み書き	よみかき	reading and writing	noun	two verb stems: 読み (読む) + 書き (書く)	school
+	立ち読み	たちよみ	reading in a store without buying	noun (+する)	two verb stems: 立ち (立つ) + 読み (読む)	shopping
+	酒好き	さけずき	lover of drink, (someone) who loves alcohol	noun	酒 + な-adjective 好き: すき voices to ずき	drink
+	人間嫌い	にんげんぎらい	misanthropy, misanthrope	noun	人間 + な-adjective 嫌い: きらい voices to ぎらい	people
+	私たち	わたしたち	we, us	pronoun	私 + 〜たち (plural for people)	
+	僕たち	ぼくたち	we, us (male, casual)	pronoun	僕 + 〜たち	
+	あなたたち	あなたたち	you (plural)	pronoun	あなた + 〜たち	
+	彼女ら	かのじょら	they (female)	pronoun	彼女 + 〜ら (plural, plainer than たち); 彼ら for a mixed or male group	
+	ご兄弟	ごきょうだい	(someone else's) siblings	noun	polite ご + 兄弟; own siblings: 兄弟	family
+	弟さん	おとうとさん	(someone else's) younger brother	noun	own: 弟	family
+	妹さん	いもうとさん	(someone else's) younger sister	noun	own: 妹	family
+	主人	しゅじん	(my) husband, head of household	noun	also 夫 おっと; someone else's: ご主人	family
+	おじ	おじ	(my) uncle	noun	kanji 伯父 (parent's older brother), 叔父 (younger); someone else's: おじさん; vs おじいさん (grandfather), long い	family
+	おば	おば	(my) aunt	noun	kanji 伯母 (parent's older sister), 叔母 (younger); someone else's: おばさん; vs おばあさん (grandmother), long あ	family

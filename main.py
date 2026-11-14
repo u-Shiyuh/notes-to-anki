@@ -75,6 +75,9 @@ USAGE
    python3 main.py --seed-lookalikes          # add look-alike pairs of studied kanji
    python3 main.py --seed-lookalikes --dry-run  # preview (needs Anki open)
 
+   python3 main.py --seed-sentences           # add Tatoeba sentences (sentences.tsv)
+   python3 main.py --seed-sentences --dry-run # preview the sentence seed only
+
    python3 main.py --order                    # kanji met in studied words first, then
                                               # the kanji the next words need; words
                                               # whose kanji are studied first;
@@ -160,6 +163,7 @@ VERB_DECK = f"{DECK_ROOT}::Verbs"
 WORD_DECK = f"{DECK_ROOT}::Words"
 NUMBER_DECK = f"{DECK_ROOT}::Numbers & Time"
 LOOKALIKE_DECK = f"{DECK_ROOT}::Kanji Look-alikes"
+SENTENCE_DECK = f"{DECK_ROOT}::Sentences"
 VOCAB_DECK = f"{DECK_ROOT}::Vocab"
 _LINKED = "tag:" + LINK_TAG_PREFIX.replace("_", "\\_") + "*"
 KANA_SCOPE = f'"deck:{DECK_ROOT}::Kana"'
@@ -168,9 +172,10 @@ VERB_SCOPE = f'"deck:{VERB_DECK}"'
 WORD_SCOPE = f'"deck:{WORD_DECK}"'
 NUMBER_SCOPE = f'"deck:{NUMBER_DECK}"'
 LOOKALIKE_SCOPE = f'"deck:{LOOKALIKE_DECK}"'
+SENTENCE_SCOPE = f'"deck:{SENTENCE_DECK}"'
 VOCAB_SCOPE = f'"deck:{VOCAB_DECK}"'
 LEDGER_SCOPE = (f'"deck:{DECK_ROOT}" -"deck:{DECK_ROOT}::Kana" -{VERB_SCOPE} '
-                f'-{WORD_SCOPE} -{NUMBER_SCOPE} -{LOOKALIKE_SCOPE} (-"deck:{KANJI_DECK}" OR {_LINKED})')
+                f'-{WORD_SCOPE} -{NUMBER_SCOPE} -{LOOKALIKE_SCOPE} -{SENTENCE_SCOPE} (-"deck:{KANJI_DECK}" OR {_LINKED})')
 
 # Ledger rows go to Nihongo::<Type>, except these. The kanji seed skips
 # kanji that already have a ledger card, and a new ledger Kanji row takes
@@ -195,6 +200,11 @@ TOPIC_TAG_PREFIX = "topic_"
 NUMBER_FILE = os.path.join(os.path.dirname(KANJI_FILE), "numbers.tsv")
 # Look-alike kanji pairs (tools/add_lookalikes.py); seeded once both are studied.
 LOOKALIKE_FILE = os.path.join(os.path.dirname(KANJI_FILE), "lookalikes.tsv")
+# Study-source references (study/profile.md): Fronts per lesson, tagged ref::<ref>.
+REFERENCE_FILE = os.path.join(os.path.dirname(KANJI_FILE), "references.tsv")
+REF_TAG_PREFIX = "ref::"
+# Tatoeba example sentences readable with studied cards (tools/add_sentences.py).
+SENTENCE_FILE = os.path.join(os.path.dirname(KANJI_FILE), "sentences.tsv")
 
 # Tags the script owns. On update, a note's tags matching these (or any tag
 # the current batch produces) are removed when no longer wanted; every
@@ -488,6 +498,41 @@ def kanji_topics():
             if r["topic"] and kanji_card_covers(r)}
 
 
+@functools.lru_cache(maxsize=None)
+def references():
+    """REFERENCE_FILE as {front: [ref tag, ...]}, tags in file order."""
+    refs = {}
+    if not os.path.exists(REFERENCE_FILE):
+        return refs
+    with open(REFERENCE_FILE, encoding="utf-8") as f:
+        for line in f:
+            if line.startswith("#") or not line.strip():
+                continue
+            ref, _, fronts = line.rstrip("\n").partition("\t")
+            if ref == "ref":
+                continue
+            for front in fronts.split():
+                tag = REF_TAG_PREFIX + ref.strip()
+                if tag not in refs.setdefault(front, []):
+                    refs[front].append(tag)
+    return refs
+
+
+def ref_tags(front, *sources):
+    """The ref:: tags of a card: the given sources (e.g. "jlpt::n5", skipping
+    blanks), then REFERENCE_FILE's lessons that mention its Front."""
+    tags = [REF_TAG_PREFIX + s for s in sources if s]
+    return tags + [t for t in references().get(front, []) if t not in tags]
+
+
+def verb_source(section):
+    """ref:: source of a verbs.tsv section: the reviewer book's numbered sections,
+    JLPT N5 for `extra`; other sections (cg) are covered by REFERENCE_FILE."""
+    if section.isdigit():
+        return f"verb_book::s{section}"
+    return "jlpt::n5" if section == "extra" else ""
+
+
 def kanji_note(row):
     """Build an AnkiConnect note dict for one Core Kanji row."""
     tags = ["kanji", "core_kanji"]
@@ -495,6 +540,7 @@ def kanji_note(row):
         tags.append(f"jlpt_n{row['jlpt']}")
     if row["kanji"] in kanji_topics():
         tags.append(TOPIC_TAG_PREFIX + kanji_topics()[row["kanji"]])
+    tags += ref_tags(row["kanji"], row["jlpt"] and f"jlpt::n{row['jlpt']}")
     return {
         "deckName": KANJI_DECK,
         "modelName": NOTE_TYPE,
@@ -698,7 +744,8 @@ def verb_note(row):
         "deckName": VERB_DECK,
         "modelName": NOTE_TYPE,
         "fields": {"Front": row["word"], "Back": verb_back(row)},
-        "tags": ["verb", row["group"], f"section{row['section']}"],
+        "tags": ["verb", row["group"], f"section{row['section']}"]
+                + ref_tags(row["word"], verb_source(row["section"])),
         "options": NOTE_OPTIONS,
     }
 
@@ -803,6 +850,7 @@ def word_note(row):
         tags.append("katakana")
     if row["topic"]:
         tags.append(TOPIC_TAG_PREFIX + row["topic"])
+    tags += ref_tags(row["word"], row["level"] and f"jlpt::{row['level']}")
     return {
         "deckName": WORD_DECK,
         "modelName": NOTE_TYPE,
@@ -882,7 +930,7 @@ def number_note(row):
         "deckName": NUMBER_DECK,
         "modelName": NOTE_TYPE,
         "fields": {"Front": row["front"], "Back": number_back(row)},
-        "tags": ["numbers", row["group"]],
+        "tags": ["numbers", row["group"]] + ref_tags(row["front"]),
         "options": NOTE_OPTIONS,
     }
 
@@ -902,6 +950,104 @@ def seed_numbers(dry_run=False, update=True):
         return
 
     add_or_update_notes(notes, NUMBER_SCOPE, update=update)
+
+
+# ---------------------------------------------------------------------------
+# Sentence seed: Tatoeba sentences made of studied words
+# ---------------------------------------------------------------------------
+
+def load_sentences(path=SENTENCE_FILE):
+    """Rows of SENTENCE_FILE as dicts, in file order. `words` is a list of
+    (front, surface) pairs; surface is "" when the sentence uses the front
+    as is."""
+    rows = []
+    try:
+        with open(path, encoding="utf-8") as f:
+            for n, line in enumerate(f, 1):
+                if line.startswith("#") or not line.strip():
+                    continue
+                cols = line.rstrip("\n").split("\t")
+                if cols[0] == "id":
+                    continue
+                sid, japanese, english, words, grammar, note = (cols + [""] * 6)[:6]
+                if not (sid and japanese and english):
+                    print(f"{os.path.basename(path)}:{n}: needs an id, the Japanese "
+                          "and the English", file=sys.stderr)
+                    sys.exit(1)
+                pairs = []
+                for w in words.split():
+                    front, _, surface = w.partition("{")
+                    pairs.append((front, surface.rstrip("}")))
+                rows.append({"id": sid, "japanese": japanese, "english": english,
+                             "words": pairs, "grammar": grammar.split(), "note": note})
+    except OSError as e:
+        print(f"Could not read the sentence list: {e}", file=sys.stderr)
+        sys.exit(1)
+    return rows
+
+
+@functools.cache
+def _word_glosses():
+    """Front -> (kana, meaning) from words.tsv and verbs.tsv; 勉強する also
+    gives 勉強."""
+    out = {}
+    for r in load_words() + load_verbs():
+        out.setdefault(r["word"], (r["kana"], r["meaning"]))
+        if r["word"].endswith("する") and len(r["word"]) > 2:
+            out.setdefault(r["word"][:-2], (r["kana"][:-2], r["meaning"]))
+    return out
+
+
+def sentence_word_line(front, surface):
+    """"行こう → 行く いく · to go" (the arrow only when the sentence changes
+    the word's form)."""
+    kana, meaning = _word_glosses().get(front, ("", ""))
+    head = f"{surface} → {front}" if surface and surface != front else front
+    reading = f" {kana}" if kana and kana != front else ""
+    return f"{head}{reading}" + (f" · {meaning}" if meaning else "")
+
+
+def sentence_back(row):
+    """Back layout: the English as the headline, one line per word (form
+    used, dictionary form, reading, meaning), then the note, the grammar
+    words and the Tatoeba attribution in small, faded text."""
+    esc = html.escape
+    parts = [_HEADLINE.format(esc(row["english"]))]
+    parts += [_LINE.format(esc(sentence_word_line(f, s))) for f, s in row["words"]]
+    if row["note"]:
+        parts.append(_NOTE.format(esc(row["note"])))
+    if row["grammar"]:
+        parts.append(_NOTE.format(esc("Grammar: " + " ".join(row["grammar"]))))
+    jpn_id = row["id"].split("_")[0]
+    parts.append(_NOTE.format(esc(f"Tatoeba #{jpn_id} · CC BY 2.0 FR")))
+    return "".join(parts)
+
+
+def sentence_note(row):
+    """Build an AnkiConnect note dict for one SENTENCE_FILE row."""
+    return {
+        "deckName": SENTENCE_DECK,
+        "modelName": NOTE_TYPE,
+        "fields": {"Front": row["japanese"], "Back": sentence_back(row)},
+        "tags": ["sentence"] + ref_tags(row["japanese"], "tatoeba"),
+        "options": NOTE_OPTIONS,
+    }
+
+
+def seed_sentences(dry_run=False, update=True):
+    """Seed Nihongo::Sentences from SENTENCE_FILE (safe to re-run), in file
+    order. tools/add_sentences.py appends the sentences newly readable."""
+    notes = [sentence_note(row) for row in load_sentences() if row["note"] != "skip"]
+
+    if dry_run:
+        print(f"Would ensure deck {SENTENCE_DECK} and seed {len(notes)} sentences.")
+        for n in notes[:5]:
+            print(f"\n[{n['deckName']}] {n['fields']['Front']}")
+            print(preview_html(n["fields"]["Back"]))
+        preview_changes(notes, SENTENCE_SCOPE, update=update)
+        return
+
+    add_or_update_notes(notes, SENTENCE_SCOPE, update=update)
 
 
 # ---------------------------------------------------------------------------
@@ -1747,6 +1893,7 @@ def plan_changes(notes, scope, update=True, prune=False, adopt=None, keep=()):
                   if t.lower() not in wanted
                   and (t.lower() in owned or _LESSON_TAG.fullmatch(t)
                        or t.lower().startswith(TOPIC_TAG_PREFIX)
+                       or t.lower().startswith(REF_TAG_PREFIX)
                        or t.lower().startswith(LINK_TAG_PREFIX))]
         if add or remove:
             plan["retag"].append((n, info, add, remove))
@@ -1970,6 +2117,11 @@ def main():
              "kanji are both studied into Nihongo::Kanji Look-alikes",
     )
     parser.add_argument(
+        "--seed-sentences", action="store_true",
+        help="Seed the Tatoeba example sentences (sentences.tsv) into "
+             "Nihongo::Sentences",
+    )
+    parser.add_argument(
         "--order", action="store_true",
         help="Move new Core Kanji cards met in studied words, then new Words "
              "whose kanji are all studied, to the front of their queues; "
@@ -1989,15 +2141,17 @@ def main():
     args = parser.parse_args()
 
     seeds = (args.seed_kana + args.seed_kanji + args.seed_verbs + args.seed_words
-             + args.seed_numbers + args.seed_lookalikes + args.order)
+             + args.seed_numbers + args.seed_lookalikes + args.seed_sentences
+             + args.order)
     if seeds > 1:
         parser.error("--seed-kana, --seed-kanji, --seed-verbs, --seed-words, "
-                     "--seed-numbers, --seed-lookalikes and --order are separate runs")
+                     "--seed-numbers, --seed-lookalikes, --seed-sentences and --order "
+                     "are separate runs")
     if not seeds and not NOTION_SYNC_ENABLED:
         print("The Notion ledger sync is disabled: Notion is outdated and Anki "
               "is the source of truth (see NOTION_SYNC_ENABLED in main.py).\n"
               "Use --seed-kana, --seed-kanji, --seed-verbs, --seed-words, "
-              "--seed-numbers or --seed-lookalikes.",
+              "--seed-numbers, --seed-lookalikes or --seed-sentences.",
               file=sys.stderr)
         sys.exit(1)
     if args.prune and seeds:
@@ -2022,6 +2176,9 @@ def main():
         return
     if args.seed_lookalikes:
         seed_lookalikes(dry_run=args.dry_run, update=args.update)
+        return
+    if args.seed_sentences:
+        seed_sentences(dry_run=args.dry_run, update=args.update)
         return
     if args.order:
         order_kanji(dry_run=args.dry_run)
