@@ -41,6 +41,8 @@ updates notes, the code map and known issues: `docs/internals.md`.
   cards with their own daily limits, so the home decks' limits stay fixed. `--order` moves new cards in
   and, once mature (21 days), back home (`fill_lanes`, `LANES`); studied cards never move in. Seeds count
   a card in its lane as in place. It's the same note, so it keeps its deck's format. Easy cards: press Easy.
+  **A new study deck must be added to `LANES`/`LANE_HOME_TAGS` and its seed's scope must use `deck_query`**,
+  or a lesson card moved to Lessons looks missing to its seed (duplicates).
 
 ## Rules
 

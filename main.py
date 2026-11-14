@@ -175,9 +175,12 @@ BASICS_DECK = f"{DECK_ROOT}::Kanji N5-N4"
 BASICS_LEVELS = ("5", "4")
 MATURE_DAYS = 21                # Anki's "mature": interval of 21 days or more
 # Home deck -> its lanes: a seed treats a card in one of them as in place.
+# Every study deck a lesson can mention belongs here (a future deck too), with
+# the tag its seed gives every note, so its lane cards stay in its seed's scope.
 LANES = {KANJI_DECK: (LESSON_DECK, BASICS_DECK), WORD_DECK: (LESSON_DECK,),
-         VERB_DECK: (LESSON_DECK,)}
-LANE_HOME_TAGS = {WORD_DECK: "word", VERB_DECK: "verb", KANJI_DECK: "core_kanji"}
+         VERB_DECK: (LESSON_DECK,), NUMBER_DECK: (LESSON_DECK,)}
+LANE_HOME_TAGS = {WORD_DECK: "word", VERB_DECK: "verb", KANJI_DECK: "core_kanji",
+                  NUMBER_DECK: "numbers"}
 
 
 def deck_query(deck):
@@ -194,7 +197,7 @@ KANA_SCOPE = f'"deck:{DECK_ROOT}::Kana"'
 KANJI_SCOPE = f'{deck_query(KANJI_DECK)} -{_LINKED}'
 VERB_SCOPE = deck_query(VERB_DECK)
 WORD_SCOPE = deck_query(WORD_DECK)
-NUMBER_SCOPE = f'"deck:{NUMBER_DECK}"'
+NUMBER_SCOPE = deck_query(NUMBER_DECK)
 LOOKALIKE_SCOPE = f'"deck:{LOOKALIKE_DECK}"'
 SENTENCE_SCOPE = f'"deck:{SENTENCE_DECK}"'
 VOCAB_SCOPE = f'"deck:{VOCAB_DECK}"'
