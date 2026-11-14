@@ -33,6 +33,9 @@ A new book gets a new short code there first. Standalone study uses `self::<YYYY
    - Words: append to `words.tsv` with a blank level, a topic (one of the existing ones), and a
      note explaining the lesson's point (rendaku, own/someone else's family, minimal pair). Follow
      the meaning style in `docs/tools.md` ("Consistency across decks").
+   - Cards that already exist get the lesson's point too, when it changes how the word is used
+     (それ vs その, own vs someone else's family, polite vs casual): put it in their `note`, with a
+     tiny example. A bare "that one" isn't enough (user, 2026-11-14).
    - Verbs: append to `verbs.tsv` under section `<code>` (e.g. `cg`), numbered in lesson order.
    - Skip names used only as reading practice (山田, ボストン). Prefer kana or katakana Fronts over
      rare kanji (カキ), so obscure kanji don't become cards.
