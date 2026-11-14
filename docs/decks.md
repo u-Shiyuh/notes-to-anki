@@ -28,17 +28,19 @@ Read the part for the deck or file you're about to change. Add new history here,
 
 User's request: new material from books, and the N5/N4 kanji stuck behind ~150 harder ones in Core
 Kanji's queue, should come up soon without raising the home decks' limits (the user studies deck by
-deck and wants Core Kanji's limit static). Two sibling decks, each a lane for its home decks (`LANES`):
-`Nihongo::Lessons` (new Words/Verbs cards whose Front is in `references.tsv`) and `Nihongo::Kanji N5-N4`
-(new Core Kanji cards whose kanji is JLPT N5/N4). `fill_lanes`, the first step of `--order`, moves them
-in, and moves cards there that are no longer new back home (rule chosen over "when mature" so a lane
-only ever holds new cards and its limit means "extra new cards per day"). Same note, history kept.
-The seeds' scopes include a home deck's cards in its lane (`deck_query`, matched by the `word`/`verb`/
-`core_kanji` tag) and don't plan a move for them. Lesson kanji stay in Core Kanji: once their word is
-studied, `order_kanji` puts them first as `word_seen`. Rejected: moving N5/N4 forward inside Core
-Kanji (many are too easy; the user prefers a separate deck and its own limit). Easy cards: press Easy.
-First run 2026-11-14: 89 cards to Lessons (85 words, 4 verbs), 91 kanji to Kanji N5-N4. Lane decks use
-the `Default` preset; the user said to leave limits alone for now.
+deck and wants Core Kanji's limit static). Two sibling decks act as lanes for the home decks (`LANES`):
+- `Nihongo::Lessons`: new Words, Verbs and Core Kanji cards whose Front is in `references.tsv`, plus new
+  Core Kanji cards for any kanji inside those Fronts (飼い猫 pulls 飼 and 猫). Lessons wins over N5-N4.
+- `Nihongo::Kanji N5-N4`: other new Core Kanji cards whose kanji is JLPT N5/N4.
+
+`fill_lanes`, the first step of `--order`, moves only new cards in (a studied kanji stays in Core Kanji,
+user's rule), leaves young studied cards where they are, and moves mature cards (interval >= 21 days,
+`MATURE_DAYS`, the user's choice over "after first study") back home. Same note, so the card keeps its
+home deck's format (radicals, conjugations) and history. The seeds' scopes include a home deck's cards in
+its lanes (`deck_query`, matched by the `word`/`verb`/`core_kanji` tag) and don't plan a move for them.
+Rejected: moving N5/N4 forward inside Core Kanji (many are too easy; the user prefers a separate deck with
+its own limit). Easy cards: press Easy. First run 2026-11-14: 139 cards to Lessons (85 words, 4 verbs, 50
+kanji), 82 kanji to Kanji N5-N4. Lane decks use the `Default` preset; limits left alone for now.
 
 ## Learner profile and source tags
 

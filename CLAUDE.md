@@ -19,7 +19,7 @@ progress. The user studies early N5, mostly through these decks plus textbooks.
 | Numbers & Time | `--seed-numbers` | `numbers.tsv` | real-world formats (3本, 午後2時) |
 | Sentences | `--seed-sentences` | `sentences.tsv` | Tatoeba, from `tools/add_sentences.py` |
 | Kanji Look-alikes | `--seed-lookalikes` | `lookalikes.tsv` | only pairs of studied kanji |
-| Lessons | `--order` | `references.tsv` | fast lane: new Words/Verbs cards a lesson mentioned |
+| Lessons | `--order` | `references.tsv` | fast lane: new cards a lesson mentioned, and their kanji |
 | Kanji N5-N4 | `--order` | kanji `jlpt` column | fast lane: new N5/N4 kanji |
 | (all new cards) | `--order` | — | lanes first, then study order; needs the helper add-on |
 
@@ -38,9 +38,9 @@ updates notes, the code map and known issues: `docs/internals.md`.
 - When the user reports a lesson or something they studied: use the **`log-lesson`** skill.
 - To push changes to Anki: use the **`sync`** skill.
 - **Fast lanes** (user's choice, 2026-11-14): `Nihongo::Lessons` and `Nihongo::Kanji N5-N4` hold new
-  cards with their own daily limits, so the home decks' limits stay fixed. `--order` moves cards in
-  and, once studied, back home (`fill_lanes`, `LANES`); seeds count a card in its lane as in place.
-  Lesson kanji stay in Core Kanji (they follow once the word is studied). Easy cards: press Easy.
+  cards with their own daily limits, so the home decks' limits stay fixed. `--order` moves new cards in
+  and, once mature (21 days), back home (`fill_lanes`, `LANES`); studied cards never move in. Seeds count
+  a card in its lane as in place. It's the same note, so it keeps its deck's format. Easy cards: press Easy.
 
 ## Rules
 

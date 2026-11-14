@@ -167,22 +167,26 @@ SENTENCE_DECK = f"{DECK_ROOT}::Sentences"
 VOCAB_DECK = f"{DECK_ROOT}::Vocab"
 # Fast lanes (2026-11-14, user's request): new cards wait here, with their own
 # daily limit, instead of deep in their home deck's queue; --order moves them
-# in and, once studied, back home (same note, history kept). LESSON_DECK: new
-# Words/Verbs cards references.tsv mentions; BASICS_DECK: new N5/N4 kanji.
+# in and, once mature, back home (same note, history kept). LESSON_DECK: new
+# Words/Verbs/Core Kanji cards a lesson in references.tsv mentions, and the
+# kanji of those words; BASICS_DECK: other new N5/N4 kanji.
 LESSON_DECK = f"{DECK_ROOT}::Lessons"
 BASICS_DECK = f"{DECK_ROOT}::Kanji N5-N4"
 BASICS_LEVELS = ("5", "4")
-# Home deck -> its lane: a seed treats a card there as in place.
-LANES = {KANJI_DECK: BASICS_DECK, WORD_DECK: LESSON_DECK, VERB_DECK: LESSON_DECK}
+MATURE_DAYS = 21                # Anki's "mature": interval of 21 days or more
+# Home deck -> its lanes: a seed treats a card in one of them as in place.
+LANES = {KANJI_DECK: (LESSON_DECK, BASICS_DECK), WORD_DECK: (LESSON_DECK,),
+         VERB_DECK: (LESSON_DECK,)}
 LANE_HOME_TAGS = {WORD_DECK: "word", VERB_DECK: "verb", KANJI_DECK: "core_kanji"}
 
 
 def deck_query(deck):
-    """Anki search for a home deck's cards, including those in its lane."""
-    lane = LANES.get(deck)
-    if not lane:
+    """Anki search for a home deck's cards, including those in its lanes."""
+    if deck not in LANES:
         return f'"deck:{deck}"'
-    return f'("deck:{deck}" OR ("deck:{lane}" tag:{LANE_HOME_TAGS[deck]}))'
+    tag = LANE_HOME_TAGS[deck]
+    lanes = " OR ".join(f'("deck:{lane}" tag:{tag})' for lane in LANES[deck])
+    return f'("deck:{deck}" OR {lanes})'
 
 
 _LINKED = "tag:" + LINK_TAG_PREFIX.replace("_", "\\_") + "*"
@@ -1430,34 +1434,50 @@ def unlock_words(word_cards):
 
 
 def fill_lanes(dry_run=False):
-    """Move cards between home decks and their fast lanes (LANES): new Words and
-    Verbs cards that references.tsv mentions go to LESSON_DECK, new N5/N4 Core
-    Kanji cards to BASICS_DECK; studied cards in a lane go back home. Runs first
-    in --order. Moving keeps the note and its review history."""
+    """Move cards between home decks and their fast lanes (LANES). A new card
+    goes to LESSON_DECK if a lesson mentions it (references.tsv; for Core Kanji
+    also a kanji inside a mentioned word), else a new N5/N4 kanji to
+    BASICS_DECK, else it stays home. A mature card (interval >= MATURE_DAYS)
+    goes home; a young one stays where it is. Runs first in --order. Moving
+    keeps the note, its format and its review history."""
     _require_anki()
     mentioned = set(references())
+    lesson_kanji = {k for f in mentioned for k in _KANJI_CHAR.findall(f)}
     jlpt = {k: r["jlpt"] for k, r in core_kanji().items()}
-    rules = [  # (home deck, lane, belongs in the lane?)
-        (WORD_DECK, LESSON_DECK, lambda f: f in mentioned),
-        (VERB_DECK, LESSON_DECK, lambda f: f in mentioned),
-        (KANJI_DECK, BASICS_DECK, lambda f: jlpt.get(kanji_key(f)) in BASICS_LEVELS),
-    ]
-    calls = [("createDeck", {"deck": d}) for d in sorted({lane for _, lane, _ in rules})]
-    moved = False
-    for home, lane, belongs in rules:
-        tag = LANE_HOME_TAGS[home]
-        new = _new_cards(home)
-        go = [c["cardId"] for c in new if belongs(_field(c, "Front"))]
-        back = anki_request("findCards", query=f'"deck:{lane}" tag:{tag} -is:new') or []
-        print(f"{lane}: {len(go)} new card(s) in from {home}, {len(back)} studied back home.")
-        if go:
-            print("  In:", " ".join(_field(c, "Front") for c in new
-                                    if c["cardId"] in set(go))[:200])
-            calls.append(("changeDeck", {"cards": go, "deck": lane}))
-        if back:
-            calls.append(("changeDeck", {"cards": back, "deck": home}))
-        moved = moved or bool(go or back)
-    if dry_run or not moved:
+
+    def target(home, card):
+        front = _field(card, "Front")
+        if card["interval"] >= MATURE_DAYS:
+            return home
+        if card["type"] != 0:            # studied but young: stays put
+            return card["deckName"]
+        if home == KANJI_DECK:
+            k = kanji_key(front)
+            if k in mentioned or k in lesson_kanji:
+                return LESSON_DECK
+            return BASICS_DECK if jlpt.get(k) in BASICS_LEVELS else home
+        return LESSON_DECK if front in mentioned else home
+
+    lanes = sorted({lane for ls in LANES.values() for lane in ls})
+    calls = [("createDeck", {"deck": d}) for d in lanes]
+    moves = {}
+    for home in LANES:
+        query = deck_query(home) + (f" -{_LINKED}" if home == KANJI_DECK else "")
+        cards = anki_request("cardsInfo", cards=anki_request(
+            "findCards", query=query) or []) or []
+        for c in cards:
+            dest = target(home, c)
+            if dest != c["deckName"]:
+                moves.setdefault((c["deckName"], dest), []).append(c)
+    for (src, dest), cs in sorted(moves.items()):
+        cs.sort(key=lambda c: c["due"])
+        print(f"{src} -> {dest}: {len(cs)} card(s)")
+        print("  " + " ".join(_field(c, "Front") for c in cs[:60])
+              + (" ..." if len(cs) > 60 else ""))
+        calls.append(("changeDeck", {"cards": [c["cardId"] for c in cs], "deck": dest}))
+    if not moves:
+        print("Fast lanes: nothing to move.")
+    if dry_run or not moves:
         return
     if anki_multi(calls):
         sys.exit(1)
@@ -1935,7 +1955,7 @@ def plan_changes(notes, scope, update=True, prune=False, adopt=None, keep=()):
             plan["update"].append((n, info))
             changed = True
 
-        home = (n["deckName"], LANES.get(n["deckName"]))
+        home = (n["deckName"],) + LANES.get(n["deckName"], ())
         stray = [c for c in info.get("cards", [])
                  if deck_of.get(c, n["deckName"]) not in home]
         if stray:
