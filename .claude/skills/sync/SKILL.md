@@ -47,3 +47,12 @@ Every card in Anki needs a TSV counterpart (the TSVs are the source of truth; th
 2026-11-14). If it reports a card no TSV row builds, fix the data (add the row, or merge the card
 into the one a seed builds, keeping whichever copy has reviews). Never leave it as an Anki-only card.
 Run it also before step 1 when something looks off.
+
+## 5. Progress (always)
+
+```bash
+python3 tools/progress.py
+```
+
+Read-only. Give the user the few lines that matter in plain words (N5 coverage, common words
+seen, retention, finish estimate), not the whole printout.
