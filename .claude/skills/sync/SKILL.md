@@ -35,3 +35,15 @@ conversation.
 
 Run the same commands without `--dry-run`, in the same order. Then rerun the dry runs: every seed
 should report `Would add 0 new notes` with nothing changed. Report any error lines.
+
+## 4. Drift check (always)
+
+```bash
+python3 tools/check_drift.py
+```
+
+It rebuilds every deck from the TSVs in memory and compares with Anki. It must print `No drift`.
+Every card in Anki needs a TSV counterpart (the TSVs are the source of truth; the user's rule,
+2026-11-14). If it reports a card no TSV row builds, fix the data (add the row, or merge the card
+into the one a seed builds, keeping whichever copy has reviews). Never leave it as an Anki-only card.
+Run it also before step 1 when something looks off.

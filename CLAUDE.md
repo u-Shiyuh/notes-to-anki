@@ -52,6 +52,8 @@ updates notes, the code map and known issues: `docs/internals.md`.
 - **Never read or print `.env`.** It holds the real Notion secret and is gitignored.
 - **The `.tsv` files are the source of truth.** They carry hand edits; tools check them or append,
   never overwrite one wholesale. After editing data, `python3 tools/check_data.py` must flag nothing.
+  Every Anki card must have a TSV counterpart (no Anki-only cards): after a sync,
+  `python3 tools/check_drift.py` must report no drift.
 - **Generator and checker scripts live in `tools/` and are committed**, with every source pinned
   (the original generators were lost by leaving them in a scratchpad). Downloads go in `tools/cache/`.
 - **Keep the attribution** headers in the data files, `README.md` and `sources/README.md` (JMdict,
