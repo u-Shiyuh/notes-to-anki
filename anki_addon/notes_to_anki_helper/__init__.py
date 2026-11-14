@@ -12,6 +12,9 @@ Request (POST, JSON):
   {"action": "repositionNewCards",
    "params": {"cards": [card ids in the wanted order], "start": 0,
               "step": 1, "shift": true}}
+  {"action": "setNewOrder", "params": {"cards": [card ids in the wanted order]}}
+    (version 2: gives the cards their own queue positions in the order
+    listed, so they swap places among themselves; other cards don't move)
 Reply: {"result": ..., "error": null | "message"}
 
 Install: symlink this folder into Anki's addons21 folder (README), restart Anki.
@@ -25,7 +28,7 @@ from aqt import mw
 from aqt.operations import CollectionOp
 
 PORT = 8766
-VERSION = 1
+VERSION = 2
 TIMEOUT = 60
 
 
@@ -57,6 +60,32 @@ def _reposition(params, done):
     CollectionOp(parent=mw, op=op).success(ok).failure(fail).run_in_background()
 
 
+def _set_order(params, done):
+    cids = [int(c) for c in params.get("cards", [])]
+    new = set(mw.col.find_cards("is:new"))
+    cids = [c for c in cids if c in new]
+
+    def op(col):
+        cards = [col.get_card(c) for c in cids]
+        for card, due in zip(cards, sorted(c.due for c in cards)):
+            card.due = due
+        return col.update_cards(cards)
+
+    def ok(changes):
+        done({"result": {"moved": len(cids)}, "error": None})
+
+    def fail(err):
+        done({"result": None, "error": str(err)})
+
+    if not cids:
+        done({"result": {"moved": 0}, "error": None})
+        return
+    CollectionOp(parent=mw, op=op).success(ok).failure(fail).run_in_background()
+
+
+_ACTIONS = {"repositionNewCards": _reposition, "setNewOrder": _set_order}
+
+
 class _Handler(BaseHTTPRequestHandler):
     def log_message(self, *args):
         pass
@@ -80,7 +109,7 @@ class _Handler(BaseHTTPRequestHandler):
         if action == "version":
             self._reply({"result": VERSION, "error": None})
             return
-        if action != "repositionNewCards":
+        if action not in _ACTIONS:
             self._reply({"result": None, "error": f"unknown action {action!r}"}, 400)
             return
         box, event = {}, threading.Event()
@@ -89,7 +118,7 @@ class _Handler(BaseHTTPRequestHandler):
             box.update(payload)
             event.set()
 
-        mw.taskman.run_on_main(lambda: _reposition(req.get("params") or {}, done))
+        mw.taskman.run_on_main(lambda: _ACTIONS[action](req.get("params") or {}, done))
         if not event.wait(TIMEOUT):
             self._reply({"result": None, "error": "timed out waiting for Anki"}, 504)
             return

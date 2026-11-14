@@ -159,7 +159,7 @@ python main.py --seed-numbers           # add the number/time expressions in num
 python main.py --seed-numbers --dry-run # preview the numbers seed
 python main.py --seed-lookalikes        # add look-alike kanji pairs (both kanji studied; lookalikes.tsv)
 python main.py --seed-lookalikes --dry-run  # preview (needs Anki open)
-python main.py --order                  # kanji met in studied words first, then words whose kanji you've studied
+python main.py --order                  # kanji met in studied words first, then words whose kanji you've studied; verbs the same way, group 1 and group 2 alternating; with tools/cache/examples.utf.gz present, the words that unlock the most Tatoeba sentences (and their kanji) go first
 ```
 
 `--order` moves cards through a small helper add-on in `anki_addon/notes_to_anki_helper/` (AnkiConnect can't reposition cards). Install it once by linking it into Anki's add-ons folder, then restart Anki:
@@ -171,7 +171,7 @@ ln -s "$PWD/anki_addon/notes_to_anki_helper" ~/Library/Application\ Support/Anki
 New-Item -ItemType SymbolicLink -Path "$env:APPDATA\Anki2\addons21\notes_to_anki_helper" -Target "$PWD\anki_addon\notes_to_anki_helper"
 ```
 
-Without it, `--order` opens the cards in Anki's browser for a manual Cards > Reposition.
+Without it, `--order` opens the cards in Anki's browser for a manual Cards > Reposition. Reordering verbs needs version 2 of the add-on (restart Anki after updating the repo); without it, the verbs are left in place.
 
 By default, cards already in Anki are brought in line with their source: the text is rewritten when it changed (for example after you fix a meaning in Notion), the card moves deck when you change its `Type`, and old `lesson<N>` / type tags are swapped for the current ones. Pass `--no-update` to only add new cards.
 

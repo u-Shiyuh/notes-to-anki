@@ -77,7 +77,9 @@ USAGE
 
    python3 main.py --order                    # kanji met in studied words first, then
                                               # the kanji the next words need; words
-                                              # whose kanji are studied first
+                                              # whose kanji are studied first;
+                                              # verbs too, godan and ichidan
+                                              # alternating
    python3 main.py --order --dry-run          # just report what would move
 
 Safe to re-run any time. Each mode only looks at its own notes: the kana
@@ -434,8 +436,10 @@ def radicals():
 
 
 def radical_line(row):
-    """The faded "Radical:" line, or "" when the kanji is its own radical
-    (日, 水) or has none. Exits on a radical missing from RADICAL_FILE."""
+    """The faded "Radical:" line, or "" when the kanji has none. A kanji
+    that is its own radical (日, 白) says so (since 2026-11-14, user's
+    request; before, the line was hidden). Exits on a radical missing from
+    RADICAL_FILE."""
     if not row["radical"]:
         return ""
     rad = radicals().get(row["radical"])
@@ -444,9 +448,8 @@ def radical_line(row):
               f"{os.path.basename(RADICAL_FILE)} (run tools/add_radicals.py --write)",
               file=sys.stderr)
         sys.exit(1)
-    if rad["form"] == row["kanji"]:
-        return ""
-    return _NOTE.format(html.escape(f"Radical: {radical_text(rad)}"))
+    own = " (this kanji is a radical itself)" if rad["form"] == row["kanji"] else ""
+    return _NOTE.format(html.escape(f"Radical: {radical_text(rad)}{own}"))
 
 
 def radical_text(rad):
@@ -1063,6 +1066,111 @@ def _new_cards(deck):
     return sorted(cards, key=lambda c: c["due"])
 
 
+# Sentences: Tatoeba (CC BY 2.0 FR) via EDRDG's examples.utf.gz, downloaded by
+# tools/readable_sentences.py into tools/cache/ (gitignored). Optional: --order
+# skips the sentence step when the file isn't there.
+EXAMPLES_FILE = os.path.join(os.path.dirname(WORD_FILE), "tools", "cache", "examples.utf.gz")
+UNLOCK_TAG = "unlocks"          # new Words card that makes the most sentences readable
+UNLOCK_WORDS = 20               # how many
+SENTENCE_GRAMMAR = set("は が を に で と も の へ や か よ ね な".split()) | {
+    "から", "まで", "より", "だ", "です", "ですか", "でしょう", "けど", "けれど"}
+_KANA_ONLY = re.compile(r"^[\u3041-\u309f\u30a0-\u30ffー]+$")
+_B_TOKEN = re.compile(r"^([^(\[{~|]+)(?:\(([^)#][^)]*)\))?")
+_B_SURFACE = re.compile(r"\{([^}]+)\}")
+
+
+def example_sentences(path=EXAMPLES_FILE):
+    """Yield (japanese, english, ids, [(headword, reading, surface)]) for each
+    indexed Tatoeba sentence (an A line followed by its B line)."""
+    import gzip
+    with gzip.open(path, "rt", encoding="utf-8") as f:
+        a = None
+        for line in f:
+            if line.startswith("A: "):
+                a = line[3:].rstrip("\n")
+            elif line.startswith("B: ") and a:
+                jpn, _, rest = a.partition("\t")
+                eng, _, ids = rest.partition("#ID=")
+                words = []
+                for tok in line[3:].split():
+                    m = _B_TOKEN.match(tok)
+                    if m:
+                        sm = _B_SURFACE.search(tok)
+                        words.append((m.group(1), m.group(2) or "", sm.group(1) if sm else ""))
+                yield jpn, eng.strip(), ids, words
+                a = None
+
+
+class WordSet:
+    """Words (Fronts and their kana) that a sentence word can match: by
+    Front; by kana when the sentence writes it in kana (何処{どこ}); or by
+    reading for a kana-only Front (事(こと) matches こと)."""
+
+    def __init__(self, items):
+        self.by_front, self.by_kana = {}, {}
+        for front, kana in items:
+            self.by_front.setdefault(front, front)
+            if kana:
+                self.by_kana.setdefault(kana, front)
+            if _KANA_ONLY.match(front):
+                self.by_kana.setdefault(front, front)
+
+    def find(self, word):
+        head, reading, surface = word
+        if head in self.by_front:
+            return head
+        for x in (head, surface):
+            if x and _KANA_ONLY.match(x) and x in self.by_kana:
+                return self.by_kana[x]
+        if reading and reading in self.by_front:   # kana-only Front
+            return reading
+        return None
+
+
+def studied_words():
+    """WordSet of the studied Words and Verbs cards (勉強する also gives 勉強),
+    plus the one-kanji words a studied Core Kanji card teaches (私, 彼)."""
+    fronts = set()
+    for deck in (WORD_DECK, VERB_DECK):
+        for n in anki_request("notesInfo", notes=anki_request(
+                "findNotes", query=f'"deck:{deck}" -is:new') or []) or []:
+            fronts.add(_field(n, "Front"))
+    fronts |= {f[:-2] for f in fronts if f.endswith("する") and len(f) > 2}
+    kanji = studied_kanji()
+    fronts |= {r["word"] for r in load_words() if r["word"] in kanji and kanji_card_covers(r)}
+    kana_of = {r["word"]: r["kana"] for r in load_words() + load_verbs()}
+    return WordSet((f, kana_of.get(f, "")) for f in fronts)
+
+
+def sentence_unlocks(known, candidates):
+    """For each candidate Front, how many sentences it alone stands between
+    you and (every other word known or SENTENCE_GRAMMAR)."""
+    counts = {}
+    for _, _, _, words in example_sentences():
+        unknown = {w for w in words if w[0] not in SENTENCE_GRAMMAR and not known.find(w)}
+        heads = {w[0] for w in unknown}
+        if len(heads) == 1:
+            front = candidates.find(next(iter(unknown)))
+            if front:
+                counts[front] = counts.get(front, 0) + 1
+    return counts
+
+
+def _tag_calls(deck, tag, group):
+    """The addTags/removeTags calls that leave exactly `group`'s notes in
+    `deck` tagged `tag`."""
+    want = {c["note"] for c in group}
+    tagged = set(anki_request("findNotes", query=f'"deck:{deck}" tag:{tag}') or [])
+    add, remove = sorted(want - tagged), sorted(tagged - want)
+    print(f"Tag {tag}: add {len(add)}, remove {len(remove)}.")
+    calls = []
+    if add:
+        calls.append(("addTags", {"notes": add, "tags": tag}))
+    if remove:
+        calls.append(("removeTags", {"notes": remove, "tags": tag}))
+    return calls
+
+
 def _front_load(deck, groups, cards, dry_run):
     """Move groups of new cards to the front of `deck`'s new queue, in the
     order given; `groups` is [(tag, cards)], highest priority first. Each
@@ -1072,16 +1180,7 @@ def _front_load(deck, groups, cards, dry_run):
     it, the browser opens for a manual one."""
     order = [c["cardId"] for _, group in groups for c in group]
     in_front = [c["cardId"] for c in cards[:len(order)]] == order
-    calls = []
-    for tag, group in groups:
-        want = {c["note"] for c in group}
-        tagged = set(anki_request("findNotes", query=f'"deck:{deck}" tag:{tag}') or [])
-        add, remove = sorted(want - tagged), sorted(tagged - want)
-        print(f"Tag {tag}: add {len(add)}, remove {len(remove)}.")
-        if add:
-            calls.append(("addTags", {"notes": add, "tags": tag}))
-        if remove:
-            calls.append(("removeTags", {"notes": remove, "tags": tag}))
+    calls = [c for tag, group in groups for c in _tag_calls(deck, tag, group)]
     print("Already at the front." if in_front else "Not at the front yet.")
     if dry_run:
         return
@@ -1124,10 +1223,43 @@ def order_words(dry_run=False):
     cards = _new_cards(WORD_DECK)
     ready = [c for c in cards
              if all(k in known for k in _KANJI_CHAR.findall(_field(c, "Front")))]
-    print(f"Words: {len(known)} kanji studied; {len(ready)} new words ready "
-          f"(kanji all studied, or kana only), {len(cards) - len(ready)} waiting.")
-    print("  Next:", " ".join(_field(c, "Front") for c in ready[:12]))
-    _front_load(WORD_DECK, [(READY_TAG, ready)], cards, dry_run)
+    unlock = set(unlock_words(cards))
+    first = [c for c in ready if _field(c, "Front") in unlock]
+    ready = [c for c in ready if _field(c, "Front") not in unlock]
+    print(f"Words: {len(known)} kanji studied; {len(first) + len(ready)} new words "
+          f"ready (kanji all studied, or kana only), "
+          f"{len(cards) - len(first) - len(ready)} waiting.")
+    if unlock:
+        print(f"  {len(first)} of the {len(unlock)} words that unlock the most "
+              f"sentences are ready and go first (the rest wait for a kanji).")
+    print("  Next:", " ".join(_field(c, "Front") for c in (first + ready)[:12]))
+    _front_load(WORD_DECK, [(UNLOCK_TAG, first), (READY_TAG, ready)], cards, dry_run)
+
+
+@functools.lru_cache(maxsize=None)
+def _unlock_words(fronts):
+    if not os.path.exists(EXAMPLES_FILE):
+        print("  (No Tatoeba sentences in tools/cache/; run "
+              "tools/readable_sentences.py once to order by them.)")
+        return ()
+    kana_of = {r["word"]: r["kana"] for r in load_words()}
+    # New Words cards, and one-kanji words taught by a new Core Kanji card.
+    kanji = studied_kanji()
+    fronts = set(fronts) | {r["word"] for r in load_words()
+                            if r["word"] not in kanji and kanji_card_covers(r)}
+    counts = sentence_unlocks(studied_words(), WordSet((f, kana_of.get(f, "")) for f in fronts))
+    top = sorted(counts, key=lambda f: -counts[f])[:UNLOCK_WORDS]
+    print("  Unlock the most sentences:",
+          " ".join(f"{f} ({counts[f]})" for f in top))
+    return tuple(top)
+
+
+def unlock_words(word_cards):
+    """The UNLOCK_WORDS words (Fronts) that would each make the most Tatoeba
+    sentences readable: new Words cards, and one-kanji words a new Core Kanji
+    card teaches (私, 彼). Added 2026-11-14 (user's request). Empty without
+    the sentence file."""
+    return _unlock_words(tuple(sorted(_field(c, "Front") for c in word_cards)))
 
 
 def order_kanji(dry_run=False):
@@ -1136,7 +1268,10 @@ def order_kanji(dry_run=False):
     a kanji met in a word is learned next; then the NEXT_KANJI kanji the
     next new Words cards still need, in the order those words come up (tag
     word_next; added 2026-11-12, so kanji outside the frequency top 1,000,
-    such as 猫 and 雪, don't wait behind it and hold their words back)."""
+    such as 猫 and 雪, don't wait behind it and hold their words back).
+    Before all of them (2026-11-14, tag unlocks): the kanji that the words
+    unlocking the most sentences (unlock_words) still need, so those words
+    become ready within days."""
     _require_anki()
     seen = set()
     for deck in STUDIED_WORD_DECKS:
@@ -1145,20 +1280,99 @@ def order_kanji(dry_run=False):
             seen.update(_KANJI_CHAR.findall(_field(n, "Front")))
     cards = _new_cards(KANJI_DECK)
     by_kanji = {kanji_key(_field(c, "Front")): c for c in cards}
-    ready = [c for c in cards if kanji_key(_field(c, "Front")) in seen]
+    new_words = _new_cards(WORD_DECK)
+    unlock = set(unlock_words(new_words))
+    first = {k for f in unlock for k in _KANJI_CHAR.findall(f) if k in by_kanji}
+    unlocking = [c for c in cards if kanji_key(_field(c, "Front")) in first]
+    ready = [c for c in cards if kanji_key(_field(c, "Front")) in seen - first]
     needed = []
-    for w in _new_cards(WORD_DECK):
+    for w in new_words:
         for k in _KANJI_CHAR.findall(_field(w, "Front")):
-            if k in by_kanji and k not in seen and k not in needed:
+            if k in by_kanji and k not in seen and k not in first and k not in needed:
                 needed.append(k)
         if len(needed) >= NEXT_KANJI:
             break
     needed = set(needed[:NEXT_KANJI])
     nxt = [c for c in cards if kanji_key(_field(c, "Front")) in needed]
-    print(f"Core Kanji: {len(ready)} new kanji already met in studied words, "
-          f"then {len(nxt)} the next new words need.")
-    print("  Next:", " ".join(kanji_key(_field(c, "Front")) for c in (ready + nxt)[:20]))
-    _front_load(KANJI_DECK, [(SEEN_TAG, ready), (NEXT_TAG, nxt)], cards, dry_run)
+    print(f"Core Kanji: {len(unlocking)} new kanji the sentence-unlocking words "
+          f"need, then {len(ready)} already met in studied words, then "
+          f"{len(nxt)} the next new words need.")
+    print("  Next:", " ".join(kanji_key(_field(c, "Front"))
+                             for c in (unlocking + ready + nxt)[:20]))
+    _front_load(KANJI_DECK, [(UNLOCK_TAG, unlocking), (SEEN_TAG, ready),
+                             (NEXT_TAG, nxt)], cards, dry_run)
+
+
+def _alternate(a, b):
+    """a[0], b[0], a[1], b[1], ...; the longer list's rest at the end."""
+    out = []
+    for i in range(max(len(a), len(b))):
+        out += a[i:i + 1] + b[i:i + 1]
+    return out
+
+
+ICHIDAN_LEAD = 5                # ichidan verbs first, until this many are studied
+
+
+def order_verbs(dry_run=False):
+    """Reorder the new Verbs cards (added 2026-11-14, user's request): verbs
+    whose kanji all have a studied Core Kanji card (or kana-only) first, tag
+    kanji_ready; then the rest. Within each part godan and ichidan verbs
+    alternate, so a godan verb ending in る (帰る, 走る) is learned next to
+    real ichidan ones; irregular verbs (する-verbs) keep their place at the
+    end. Each group keeps its book order. Until ICHIDAN_LEAD ichidan verbs
+    are studied, the missing ones go first (user's request, 2026-11-14,
+    after 60 godan verbs and no ichidan). Needs the helper add-on, version
+    2 (setNewOrder)."""
+    _require_anki()
+    known = studied_kanji()
+    cards = _new_cards(VERB_DECK)
+    group = {}
+    for g in VERB_GROUPS:
+        for cid in anki_request("findCards", query=f'"deck:{VERB_DECK}" is:new tag:{g}') or []:
+            group[cid] = g
+
+    def ready(c):
+        return all(k in known for k in _KANJI_CHAR.findall(_field(c, "Front")))
+
+    def part(cs, g):
+        return [c for c in cs if group.get(c["cardId"]) == g]
+
+    first = [c for c in cards if group.get(c["cardId"]) != "irregular" and ready(c)]
+    rest = [c for c in cards if group.get(c["cardId"]) != "irregular" and not ready(c)]
+    studied = len(anki_request("findCards", query=f'"deck:{VERB_DECK}" -is:new tag:ichidan') or [])
+    ichidan = part(first, "ichidan") + part(rest, "ichidan")
+    lead = ichidan[:max(0, ICHIDAN_LEAD - studied)]
+    led = {c["cardId"] for c in lead}
+    first = [c for c in first if c["cardId"] not in led]
+    rest = [c for c in rest if c["cardId"] not in led]
+    order = (lead + _alternate(part(first, "godan"), part(first, "ichidan"))
+             + _alternate(part(rest, "godan"), part(rest, "ichidan")))
+    first = [c for c in order[:len(lead) + len(first)] if ready(c)]
+    picked = {c["cardId"] for c in order}
+    order += [c for c in cards if c["cardId"] not in picked]  # irregular, untagged
+    if lead:
+        print(f"Verbs: {studied} ichidan verb(s) studied, so {len(lead)} go first.")
+    print(f"Verbs: {len(first)} new verbs ready (kanji all studied, or kana only), "
+          f"{len(rest)} waiting, {len(cards) - len(first) - len(rest)} irregular last; "
+          f"godan and ichidan alternate.")
+    print("  Next:", " ".join(_field(c, "Front") for c in order[:16]))
+    calls = _tag_calls(VERB_DECK, READY_TAG, first)
+    in_order = [c["cardId"] for c in order] == [c["cardId"] for c in cards]
+    print("Already in this order." if in_order else "Not in this order yet.")
+    if dry_run:
+        return
+    if anki_multi(calls):
+        sys.exit(1)
+    if in_order:
+        return
+    if (helper_request("version") or 0) < 2:
+        print("Verbs not reordered: this needs the helper add-on, version 2. It's\n"
+              "installed as a link to anki_addon/, so restarting Anki loads it (on\n"
+              "a computer without it, see README).", file=sys.stderr)
+        return
+    if helper_request("setNewOrder", cards=[c["cardId"] for c in order]) is not None:
+        print(f"Reordered {len(order)} new verb(s).")
 
 
 # ---------------------------------------------------------------------------
@@ -1758,7 +1972,8 @@ def main():
     parser.add_argument(
         "--order", action="store_true",
         help="Move new Core Kanji cards met in studied words, then new Words "
-             "whose kanji are all studied, to the front of their queues",
+             "whose kanji are all studied, to the front of their queues; "
+             "order new Verbs the same way, alternating godan and ichidan",
     )
     parser.add_argument(
         "--no-update", dest="update", action="store_false",
@@ -1811,6 +2026,7 @@ def main():
     if args.order:
         order_kanji(dry_run=args.dry_run)
         order_words(dry_run=args.dry_run)
+        order_verbs(dry_run=args.dry_run)
         return
 
     sync_ledger(dry_run=args.dry_run, update=args.update, prune=args.prune)
