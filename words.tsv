@@ -67,7 +67,7 @@ n5	新聞	しんぶん	newspaper	noun
 n5	少し	すこし	little, few	adverb	
 n5	千	せん	thousand	number	
 n5	大学	だいがく	university	noun		school
-n5	父	ちち	(my) father	noun		family
+n5	父	ちち	(my) father	noun	your own father, said to others: 父は医者です. Someone else's, or calling your dad: お父さん	family
 n5	手	て	hand	noun		body
 n5	電話	でんわ	telephone	noun (+する)	
 n5	夏	なつ	summer	noun		weather
@@ -75,7 +75,7 @@ n5	二	に	two	number
 n5	八	はち	eight	number	
 n5	花	はな	flower	noun		nature
 n5	話	はなし	talk, story	noun	
-n5	母	はは	(my) mother	noun		family
+n5	母	はは	(my) mother	noun	your own mother, said to others. Someone else's, or calling your mom: お母さん	family
 n5	春	はる	spring	noun		weather
 n5	東	ひがし	east	noun	
 n5	左	ひだり	left hand side	noun	
@@ -91,7 +91,7 @@ n5	南	みなみ	South	noun
 n5	問題	もんだい	a problem	noun	
 n5	来年	らいねん	next year	noun	
 n5	六	ろく	six	number	
-n5	私	わたし	I, myself	pronoun	
+n5	私	わたし	I, myself	pronoun	polite, for everyone. Usually left out when it is clear who you mean
 n5	雨	あめ	rain	noun		weather
 n5	一緒	いっしょ	together	noun	
 n5	色	いろ	color	noun		color
@@ -162,10 +162,10 @@ n5	両親	りょうしん	parents	noun		family
 n5	大きな	おおきな	big	pre-noun word	
 n5	大勢	おおぜい	great number of people	noun		people
 n5	お金	おかね	money	noun		shopping
-n5	弟	おとうと	younger brother	noun		family
+n5	弟	おとうと	(my) younger brother	noun	your own, said to others. Someone else's: 弟さん	family
 n5	薬	くすり	medicine	noun		health
 n5	自転車	じてんしゃ	bicycle	noun		transport
-n5	そこ	そこ	there, that place (near you)	pronoun	not 底 (そこ, bottom), a different word with the same sound
+n5	そこ	そこ	there, that place (near you)	pronoun	near the person you talk to; far from both of you is あそこ. Not 底 (そこ, bottom), a different word with the same sound
 n5	電車	でんしゃ	electric train	noun		transport
 n5	隣	となり	next to, next door to	noun	
 n5	鳥	とり	bird, chicken	noun	chicken meat is 鶏肉 (とりにく), often just とり	animals
@@ -174,11 +174,11 @@ n5	広い	ひろい	spacious, wide	い-adjective
 n5	服	ふく	clothes	noun		clothes
 n5	窓	まど	window	noun		house
 n5	明日	あした	tomorrow	noun	
-n5	兄	あに	(my) older brother	noun		family
+n5	兄	あに	(my) older brother	noun	your own, said to others. Someone else's, or calling yours: お兄さん	family
 n5	池	いけ	pond	noun		nature
 n5	駅	えき	station	noun		places
-n5	お母さん	おかあさん	mother (polite)	noun		family
-n5	兄弟	きょうだい	siblings, brothers	noun		family
+n5	お母さん	おかあさん	mother (polite)	noun	someone else's mother, or calling your own mom. Your own, to others: 母	family
+n5	兄弟	きょうだい	(my) siblings, brothers	noun	your own. Someone else's: ご兄弟	family
 n5	警官	けいかん	police officer	noun		work
 n5	玄関	げんかん	entrance, front door	noun		house
 n5	今週	こんしゅう	this week	noun	
@@ -189,7 +189,7 @@ n5	地下鉄	ちかてつ	underground train, subway	noun		transport
 n5	地図	ちず	a map	noun	
 n5	どう	どう	how, in what way	adverb
 n5	図書館	としょかん	library	noun		places
-n5	どの	どの	which	pre-noun word	
+n5	どの	どの	which (+ noun)	pre-noun word	always followed by a noun: どの本 (which book). Alone, "which one" is どれ
 n5	友達	ともだち	friend	noun		people
 n5	夏休み	なつやすみ	summer vacation	noun	
 n5	肉	にく	meat	noun		food
@@ -201,7 +201,7 @@ n5	毎週	まいしゅう	every week	noun
 n5	休み	やすみ	holiday, day off, break	noun	
 n5	留学生	りゅうがくせい	international student	noun		school
 n5	医者	いしゃ	doctor	noun		work
-n5	妹	いもうと	(my) younger sister	noun		family
+n5	妹	いもうと	(my) younger sister	noun	your own, said to others. Someone else's: 妹さん	family
 n5	後ろ	うしろ	back, behind, rear	noun	
 n5	お茶	おちゃ	tea, green tea	noun		drink
 n5	女の子	おんなのこ	girl	expression	
@@ -218,15 +218,15 @@ n5	皆さん	みなさん	all of you, everyone	noun		people
 n5	四つ	よっつ	four things	number	
 n5	来週	らいしゅう	next week	noun	
 n5	りっぱ	りっぱ	splendid, fine	な-adjective	
-n5	姉	あね	(my) older sister	noun		family
+n5	姉	あね	(my) older sister	noun	your own, said to others. Someone else's, or calling yours: お姉さん	family
 n5	今	いま	now	noun	
 n5	嫌	いや	disagreeable, detestable, unpleasant	な-adjective	
 n5	大きい	おおきい	big, large	い-adjective	
-n5	お父さん	おとうさん	father (polite)	noun		family
+n5	お父さん	おとうさん	father (polite)	noun	someone else's father, or calling your own dad. Your own, to others: 父	family
 n5	男の子	おとこのこ	boy	expression	
 n5	階段	かいだん	stairs	noun		house
 n5	漢字	かんじ	kanji, Chinese characters	noun		school
-n5	ここ	ここ	here, this place	pronoun
+n5	ここ	ここ	here, this place (near me)	pronoun	ここ here · そこ there (by you) · あそこ over there · どこ where
 n5	台所	だいどころ	kitchen	noun		house
 n5	机	つくえ	desk	noun		house
 n5	戸	と	door (Japanese style)	noun		house
@@ -264,7 +264,7 @@ n5	背	せい	height	noun		body
 n5	洗濯	せんたく	washing, laundry	noun (+する)		house
 n5	そう	そう	so, that way, yes	adverb	そうです = that's right
 n5	掃除	そうじ	cleaning, sweeping	noun (+する)		house
-n5	その	その	that	pre-noun word
+n5	その	その	that (+ noun, near you)	pre-noun word	always followed by a noun: その本 (that book, by you). Alone, "that one" is それ
 n5	荷物	にもつ	luggage, baggage	noun		transport
 n5	箱	はこ	box	noun	
 n5	帽子	ぼうし	hat, cap	noun		clothes
@@ -338,7 +338,7 @@ n5	近い	ちかい	near, close by, short	い-adjective
 n5	飲み物	のみもの	drink, beverage	noun		drink
 n5	太い	ふとい	fat, thick	い-adjective	
 n5	万年筆	まんねんひつ	fountain pen	noun		school
-n5	あれ	あれ	that one (over there)	noun	
+n5	あれ	あれ	that one (over there)	noun	far from both of you. Stands alone: あれは何ですか. Before a noun use あの: あの本
 n5	九つ	ここのつ	nine things	number	
 n5	灰皿	はいざら	ashtray	noun		tableware
 n5	椅子	いす	chair	noun		house
@@ -352,7 +352,7 @@ n5	短い	みじかい	short (length)	い-adjective
 n5	八百屋	やおや	greengrocer	noun		places
 n5	花瓶	かびん	vase	noun		house
 n5	本棚	ほんだな	bookshelf	noun		house
-n5	あちら	あちら	over there, that way (polite)	pronoun	
+n5	あちら	あちら	over there, that way (polite)	pronoun	polite あそこ/あれ. Casual: あっち
 n5	誰か	だれか	someone	pronoun	
 n5	冷たい	つめたい	cold (to the touch), cold-hearted	い-adjective	
 n5	厚い	あつい	thick	い-adjective	
@@ -361,13 +361,13 @@ n5	今晩	こんばん	tonight, this evening	noun
 n5	ああ	ああ	Ah!, Oh!	interjection	
 n5	赤	あか	red	noun		color
 n5	明後日	あさって	day after tomorrow	noun	
-n5	あそこ	あそこ	there, over there, that place	pronoun	
+n5	あそこ	あそこ	over there, that place	pronoun	far from both of you; near the listener is そこ
 n5	暖かい	あたたかい	warm	い-adjective		weather
 n5	頭	あたま	head	noun		body
-n5	あっち	あっち	over there	pronoun	
-n5	あなた	あなた	you	pronoun	
+n5	あっち	あっち	over there, that way (casual)	pronoun	casual あちら
+n5	あなた	あなた	you	pronoun	often sounds rude or cold; use the person's name + さん instead. Usually just left out
 n5	アパート	アパート	apartment	noun	ー = long vowel: hold the sound before it twice as long	house
-n5	あの	あの	that (over there), um...	pre-noun word	
+n5	あの	あの	that (+ noun, over there), um...	pre-noun word	followed by a noun: あの人 (that person over there); alone it is あれ. On its own, a filler: あの… (um…)
 n5	いい	いい	good	い-adjective	also よい; past/negative use よ-: よかった, よくない
 n5	家	いえ	house, home	noun		house
 n5	いかが	いかが	how, in what way	adverb	
@@ -381,14 +381,14 @@ n5	ええ	ええ	yes	interjection
 n5	エレベーター	エレベーター	elevator	noun	
 n5	美味しい	おいしい	delicious, tasty	い-adjective		food
 n5	お菓子	おかし	confections, sweets, snack	noun		food
-n5	奥さん	おくさん	(someone's) wife	noun		family
-n5	おじいさん	おじいさん	grandfather, male senior citizen	noun		family
+n5	奥さん	おくさん	(someone's) wife	noun	someone else's. Your own: 妻 or 家内	family
+n5	おじいさん	おじいさん	grandfather, old man	noun	someone else's, or calling yours; your own, to others: 祖父. vs おじさん (uncle), short い	family
 n5	お手洗い	おてあらい	restroom, toilet (polite)	noun	literally "hand-washing place"	house
 n5	おととし	おととし	year before last	noun	
 n5	お腹	おなか	stomach	noun		body
-n5	お兄さん	おにいさん	older brother (polite)	noun		family
-n5	お姉さん	おねえさん	older sister (polite)	noun		family
-n5	おばあさん	おばあさん	grandmother, female senior-citizen	noun		family
+n5	お兄さん	おにいさん	older brother (polite)	noun	someone else's, or calling your own. Your own, to others: 兄	family
+n5	お姉さん	おねえさん	older sister (polite)	noun	someone else's, or calling your own. Your own, to others: 姉	family
+n5	おばあさん	おばあさん	grandmother, old woman	noun	someone else's, or calling yours; your own, to others: 祖母. vs おばさん (aunt), short あ	family
 n5	お風呂	おふろ	a bath	noun		house
 n5	お弁当	おべんとう	a boxed lunch	noun		food
 n5	風	かぜ	wind, breeze	noun		weather
@@ -408,11 +408,11 @@ n5	月曜日	げつようび	Monday	noun
 n5	コート	コート	coat, (tennis) court	noun		clothes
 n5	コーヒー	コーヒー	coffee	noun		drink
 n5	九日	ここのか	9th (of the month), nine days	noun	
-n5	こちら	こちら	this way, this person (polite)	pronoun	
-n5	こっち	こっち	this way, this side (casual)	pronoun	
+n5	こちら	こちら	this way, this person (polite)	pronoun	polite ここ/これ: こちらは田中さんです (this is Mr Tanaka). Casual: こっち
+n5	こっち	こっち	this way, this side (casual)	pronoun	casual こちら
 n5	コップ	コップ	glass, cup	noun		tableware
-n5	この	この	this	pre-noun word	
-n5	これ	これ	this one	pronoun	
+n5	この	この	this (+ noun)	pre-noun word	always followed by a noun: この本 (this book). Alone, "this one" is これ; このは is wrong
+n5	これ	これ	this one (near me)	pronoun	stands alone: これは本です (this is a book). Before a noun use この: この本
 n5	こんな	こんな	such, like this	pre-noun word	
 n5	さあ	さあ	come now, well	interjection	
 n5	先	さき	ahead, tip, before	noun	
@@ -434,10 +434,10 @@ n5	ズボン	ズボン	trousers	noun		clothes
 n5	セーター	セーター	sweater	noun		clothes
 n5	ゼロ	ゼロ	zero	noun	
 n5	そして	そして	and, like that	conjunction	also そうして
-n5	そちら	そちら	over there	pronoun	
-n5	そっち	そっち	over there	pronoun	
+n5	そちら	そちら	that way, your side (polite)	pronoun	polite そこ/それ, near the listener. Casual: そっち
+n5	そっち	そっち	that way, your side (casual)	pronoun	casual そちら
 n5	空	そら	sky	noun		nature
-n5	それ	それ	that one	pronoun	
+n5	それ	それ	that one (near you)	pronoun	stands alone: それは何ですか (what is that?). Before a noun use その: その本
 n5	それから	それから	and then, after that	expression	
 n5	それでは	それでは	in that situation, well then...	conjunction	
 n5	タクシー	タクシー	taxi	noun		transport
@@ -463,12 +463,12 @@ n5	どうぞ	どうぞ	please, kindly, by all means	adverb
 n5	どうも	どうも	thanks, very much, somehow	interjection	
 n5	十日	とおか	10th (of the month), ten days	noun	
 n5	所	ところ	place	noun	
-n5	どちら	どちら	which, where (polite)	pronoun	
-n5	どっち	どっち	which one, which way	pronoun	
+n5	どちら	どちら	which (of two), where (polite)	pronoun	polite どこ/どれ; "which of the two": コーヒーと紅茶、どちらがいいですか. Casual: どっち
+n5	どっち	どっち	which (of two), which way (casual)	pronoun	casual どちら
 n5	とても	とても	very	adverb	
 n5	どなた	どなた	who	pronoun	
 n5	土曜日	どようび	Saturday	noun	
-n5	どれ	どれ	which one	pronoun	
+n5	どれ	どれ	which one	pronoun	out of three or more; stands alone: どれですか. Before a noun use どの; out of two: どちら/どっち
 n5	どんな	どんな	what, what kind of	pre-noun word	
 n5	ない	ない	there isn't, don't have	い-adjective	the negative of ある
 n5	ナイフ	ナイフ	knife	noun		tableware
@@ -564,7 +564,7 @@ n5	多い	おおい	many, a lot	い-adjective
 n5	テープレコーダー	テープレコーダー	tape recorder	noun	
 n5	御飯	ごはん	cooked rice, meal	noun		food
 n5	狭い	せまい	narrow, cramped	い-adjective	
-n5	どこ	どこ	where, what place	pronoun	
+n5	どこ	どこ	where, what place	pronoun	トイレはどこですか (where is the toilet?). Polite: どちら
 n5	安い	やすい	cheap	い-adjective		shopping
 n5	悪い	わるい	bad	い-adjective	
 n5	朝御飯	あさごはん	breakfast	noun		food
@@ -590,7 +590,7 @@ n5	～ごろ	～ごろ	around (a time)	suffix	also ～ころ
 n5	～歳	～さい	~ years old	counter	
 n5	～冊	～さつ	counter for books	counter	
 n5	さ来年	さらいねん	year after next	noun	
-n5	～さん	～さん	Mr. ~, Ms. ~	suffix	
+n5	～さん	～さん	Mr. ~, Ms. ~	suffix	after someone else's name, never your own: 田中さん
 n5	～時	～じ	~ o'clock	counter	
 n5	～時間	～じかん	~ hours	counter	
 n5	～中	～じゅう	during, while	suffix	
@@ -600,7 +600,7 @@ n5	～すぎ	～すぎ	past, too much	suffix	3時すぎ = past three; 食べす�
 n5	～ずつ	～ずつ	at a time	suffix	
 n5	～台	～だい	counter for machines, vehicles	counter	
 n5	～だけ	～だけ	only ~, just ~, as ~	suffix	
-n5	～たち	～たち	plural suffix	suffix	
+n5	～たち	～たち	plural suffix	suffix	makes people plural: 私たち (we), 子供たち (children). Plainer: ～ら
 n5	～度	～ど	~ times, ~ degrees	counter	
 n5	～など	～など	et cetera	suffix	
 n5	何	なん; なに	what	expression	
@@ -629,7 +629,7 @@ n4	時代	じだい	age, period, epoch, era	noun
 n4	社長	しゃちょう	president of a company	noun		work
 n4	世界	せかい	world	noun	
 n4	戦争	せんそう	war	noun (+する)	
-n4	夫	おっと	husband	noun		family
+n4	夫	おっと	(my) husband	noun	your own; also 主人. Someone else's: ご主人	family
 n4	事務所	じむしょ	office	noun		places
 n4	客	きゃく	guest, customer	noun		people
 n4	試合	しあい	match, game, competition	noun (+する)		hobbies
@@ -658,7 +658,7 @@ n4	計画	けいかく	plan, project, schedule	noun (+する)
 n4	経済	けいざい	economics, finance, economy	noun	
 n4	輸入	ゆにゅう	import	noun (+する)	
 n4	産業	さんぎょう	industry	noun	
-n4	妻	つま	(my) wife	noun		family
+n4	妻	つま	(my) wife	noun	your own; also 家内. Someone else's: 奥さん	family
 n4	放送	ほうそう	broadcasting	noun (+する)	
 n4	政治	せいじ	politics	noun	
 n4	市民	しみん	citizen	noun	
@@ -710,7 +710,7 @@ n4	音	おと	sound, note	noun
 n4	説明	せつめい	explanation	noun (+する)	
 n4	島	しま	island	noun		nature
 n4	危険	きけん	danger, risk, hazard	な-adjective	
-n4	彼女	かのじょ	she, girlfriend	pronoun	
+n4	彼女	かのじょ	she, girlfriend	pronoun	in conversation it usually means "girlfriend"; for "she", people use the name or leave it out
 n4	専門	せんもん	specialty, major	noun	
 n4	寺	てら	Buddhist temple	noun		places
 n4	普通	ふつう	normal, usual	な-adjective	
@@ -825,7 +825,7 @@ n4	草	くさ	grass	noun		nature
 n4	翻訳	ほんやく	translation	noun (+する)	
 n4	湯	ゆ	hot water	noun		drink
 n4	指	ゆび	finger	noun		body
-n4	僕	ぼく	I (male, casual)	pronoun	
+n4	僕	ぼく	I (male, casual)	pronoun	boys and men, relaxed; 私 is the safe choice
 n4	動物園	どうぶつえん	zoo	noun		animals
 n4	案内	あんない	information / guide	noun (+する)	
 n4	店員	てんいん	shop clerk	noun		work
@@ -860,7 +860,7 @@ n4	坂	さか	slope, hill	noun
 n4	食料品	しょくりょうひん	foodstuff, groceries	noun		food
 n4	細かい	こまかい	small, fine, detailed	い-adjective	
 n4	旅館	りょかん	a Japanese inn	noun		places
-n4	祖父	そふ	grandfather	noun		family
+n4	祖父	そふ	(my) grandfather	noun	your own, said to others. Someone else's, or calling yours: おじいさん	family
 n4	着物	きもの	kimono	noun		clothes
 n4	隅	すみ	corner	noun	
 n4	為	ため	good, advantage, in order to	noun	
@@ -871,7 +871,7 @@ n4	屋上	おくじょう	rooftop	noun		house
 n4	布団	ふとん	futon	noun		house
 n4	地理	ちり	geography	noun		school
 n4	辞典	じてん	encyclopedia, reference book	noun		school
-n4	祖母	そぼ	grandmother	noun		family
+n4	祖母	そぼ	(my) grandmother	noun	your own, said to others. Someone else's, or calling yours: おばあさん	family
 n4	火事	かじ	fire	noun	
 n4	講堂	こうどう	auditorium	noun		school
 n4	こう	こう	like this, this way	adverb
@@ -925,7 +925,7 @@ n4	遠慮	えんりょ	restraint, reserve, hesitate	noun (+する)
 n4	汽車	きしゃ	steam train	noun		transport
 n4	柔らかい	やわらかい	soft, tender	い-adjective	
 n4	急行	きゅうこう	express train or bus	noun (+する)		transport
-n4	家内	かない	(my) wife	noun		family
+n4	家内	かない	(my) wife	noun	your own, a bit old-fashioned; also 妻. Someone else's: 奥さん	family
 n4	お嬢さん	おじょうさん	(someone's) daughter, young lady	noun		family
 n4	とうとう	とうとう	finally, at last	adverb	
 n4	嘘	うそ	lie	noun	
@@ -961,7 +961,7 @@ n4	非常に	ひじょうに	extremely, very	adverb
 n4	お宅	おたく	(someone's) home (polite)	noun		house
 n4	ほとんど	ほとんど	mostly, almost	adverb	
 n4	アフリカ	アフリカ	Africa	noun	
-n4	彼	かれ	he, boyfriend	pronoun	
+n4	彼	かれ	he, boyfriend	pronoun	in conversation it usually means "boyfriend"; for "he", people use the name or leave it out
 n4	レポート	レポート	report	noun (+する)	also リポート
 n4	すると	すると	and, then	conjunction	
 n4	ガラス	ガラス	glass, pane	noun	
@@ -995,7 +995,7 @@ n4	サラダ	サラダ	salad	noun		food
 n4	ステーキ	ステーキ	steak	noun		food
 n4	オーバー	オーバー	overcoat, over, exaggerated	noun		clothes
 n4	石	いし	stone	noun		nature
-n4	ご主人	ごしゅじん	(someone's) husband	noun		family
+n4	ご主人	ごしゅじん	(someone's) husband	noun	someone else's. Your own: 夫 or 主人	family
 n4	用	よう	errand, business	noun	
 n4	すっかり	すっかり	all, completely	adverb	
 n4	アナウンサー	アナウンサー	announcer	noun		work
@@ -1099,7 +1099,7 @@ n4	けがする	けがする	to get hurt	する-verb		health
 n4	～ばかり	～ばかり	just did ~, only	suffix	
 n4	～だす	～だす	to start doing ~	suffix	
 n4	チェックする	チェックする	check	する-verb	チェ = チ + small ェ → "che"
-n4	～ちゃん	～ちゃん	suffix for children and close friends	suffix	
+n4	～ちゃん	～ちゃん	suffix for children and close friends	suffix	after a child's or close friend's name: ゆきちゃん. Never your own
 n4	～続ける	～つづける	to continue doing ~	suffix	
 n4	～やすい	～やすい	easy to do ~	suffix	
 n4	びっくりする	びっくりする	to be surprised	する-verb	
@@ -1110,7 +1110,7 @@ n4	～(に) よると	～(に) よると	according to ~	suffix
 n4	～おわる	～おわる	to finish doing ~	suffix	
 n4	お子さん	おこさん	(someone's) child	noun		family
 n4	お見舞い	おみまい	calling on someone who is ill, visit	noun		health
-n4	～様	～さま	Mr., Mrs., Ms.	suffix	
+n4	～様	～さま	Mr., Mrs., Ms.	suffix	very polite ～さん: customers, letters (田中様). Never your own
 n4	あ	あ	Ah	interjection
 n4	～代	～だい	~s (age), ~ fee	suffix	20代 = in one's twenties; 電気代 = electricity bill
 n4	～おき	～おき	after every ~	suffix	
