@@ -51,8 +51,8 @@ Run it also before step 1 when something looks off.
 ## 5. Progress (always)
 
 ```bash
-python3 tools/progress.py
+python3 tools/progress.py --record
 ```
 
-Read-only. Give the user the few lines that matter in plain words (N5 coverage, common words
+Reads Anki only; saves today's metrics to `study/progress.tsv` (commit it). Give the user the few lines that matter in plain words (N5 coverage, common words
 seen, retention, finish estimate), not the whole printout.

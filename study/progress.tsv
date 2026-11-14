@@ -1,0 +1,79 @@
+# Progress metrics, one row per metric per day, written by tools/progress.py --record
+# (run by the sync skill). Columns: date, metric, value. Rerunning on a day replaces
+# that day's rows. Metric names are stable; new ones may appear from a later date.
+date	metric	value
+2026-11-14	deck.Core Kanji.cards	1068
+2026-11-14	deck.Core Kanji.seen	183
+2026-11-14	deck.Core Kanji.known	17
+2026-11-14	deck.Kana::Hiragana.cards	104
+2026-11-14	deck.Kana::Hiragana.seen	81
+2026-11-14	deck.Kana::Hiragana.known	7
+2026-11-14	deck.Kana::Katakana.cards	104
+2026-11-14	deck.Kana::Katakana.seen	104
+2026-11-14	deck.Kana::Katakana.known	13
+2026-11-14	deck.Kanji Look-alikes.cards	78
+2026-11-14	deck.Kanji Look-alikes.seen	25
+2026-11-14	deck.Kanji Look-alikes.known	0
+2026-11-14	deck.Kanji N5-N4.cards	82
+2026-11-14	deck.Kanji N5-N4.seen	5
+2026-11-14	deck.Kanji N5-N4.known	0
+2026-11-14	deck.Lessons.cards	139
+2026-11-14	deck.Lessons.seen	5
+2026-11-14	deck.Lessons.known	0
+2026-11-14	deck.Numbers & Time.cards	162
+2026-11-14	deck.Numbers & Time.seen	50
+2026-11-14	deck.Numbers & Time.known	0
+2026-11-14	deck.Sentences.cards	100
+2026-11-14	deck.Sentences.seen	5
+2026-11-14	deck.Sentences.known	0
+2026-11-14	deck.Verbs.cards	215
+2026-11-14	deck.Verbs.seen	65
+2026-11-14	deck.Verbs.known	1
+2026-11-14	deck.Words.cards	880
+2026-11-14	deck.Words.seen	140
+2026-11-14	deck.Words.known	8
+2026-11-14	jlpt.n5.words.total	699
+2026-11-14	jlpt.n5.words.seen	229
+2026-11-14	jlpt.n5.words.known	16
+2026-11-14	jlpt.n4.words.total	562
+2026-11-14	jlpt.n4.words.seen	32
+2026-11-14	jlpt.n4.words.known	2
+2026-11-14	jlpt.n5.kanji.total	79
+2026-11-14	jlpt.n5.kanji.seen	74
+2026-11-14	jlpt.n5.kanji.known	10
+2026-11-14	jlpt.n4.kanji.total	166
+2026-11-14	jlpt.n4.kanji.seen	85
+2026-11-14	jlpt.n4.kanji.known	5
+2026-11-14	common.top100.seen	58
+2026-11-14	common.top100.known	2
+2026-11-14	common.top300.seen	129
+2026-11-14	common.top300.known	7
+2026-11-14	common.top1000.seen	262
+2026-11-14	common.top1000.known	18
+2026-11-14	ref.cg::l01.cards	63
+2026-11-14	ref.cg::l01.seen	20
+2026-11-14	ref.cg::l01.known	1
+2026-11-14	ref.cg::l02.cards	87
+2026-11-14	ref.cg::l02.seen	23
+2026-11-14	ref.cg::l02.known	7
+2026-11-14	ref.tatoeba.cards	100
+2026-11-14	ref.tatoeba.seen	5
+2026-11-14	ref.tatoeba.known	0
+2026-11-14	ref.verb_book::s1.cards	87
+2026-11-14	ref.verb_book::s1.seen	60
+2026-11-14	ref.verb_book::s1.known	0
+2026-11-14	ref.verb_book::s2.cards	64
+2026-11-14	ref.verb_book::s2.seen	3
+2026-11-14	ref.verb_book::s2.known	0
+2026-11-14	ref.verb_book::s3.cards	41
+2026-11-14	ref.verb_book::s3.seen	2
+2026-11-14	ref.verb_book::s3.known	1
+2026-11-14	retention7.young.reviews	443
+2026-11-14	retention7.young.passed	307
+2026-11-14	retention7.mature.reviews	0
+2026-11-14	retention7.mature.passed	0
+2026-11-14	pace14.new_per_day	39.7
+2026-11-14	pace14.n5_per_day	17.7
+2026-11-14	pace.n5_left	475
+2026-11-14	pace.n5_done_estimate	2026-12-11
+2026-11-14	today.reviews	301

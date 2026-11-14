@@ -1,25 +1,14 @@
 # Learner profile
 
 The one place that says what the user knows, from every source. Update it after each lesson, book or study session.
-Anki and the `.tsv` files are the record of vocabulary and kanji (the snapshot below is copied from Anki); this file holds what they can't:
+Anki and the `.tsv` files are the record of vocabulary and kanji, and `study/progress.tsv` the record of progress; this file holds what they can't:
 grammar and concepts learned, which source taught them, and a log of what each lesson added.
 
-## Snapshot (2026-11-14, from Anki)
+## Progress
 
-| Deck | Cards | Studied |
-|---|---|---|
-| Kana::Hiragana | 104 | 81 |
-| Kana::Katakana | 104 | 104 |
-| Core Kanji | 1,197 | 175 |
-| Words | 939 | 148 |
-| Verbs | 217 | 65 (almost all godan; ichidan just starting) |
-| Numbers & Time | 162 | 50 |
-| Kanji Look-alikes | 69 | 25 |
-| Sentences | 100 | 5 |
-| Lessons (fast lane, from 2026-11-14) | 139 | 0 |
-| Kanji N5-N4 (fast lane, from 2026-11-14) | 82 | 0 |
-
-(After the lanes filled: Core Kanji 1,068 cards, Words 888, Verbs 215; studied counts unchanged.)
+Numbers (cards per deck, JLPT coverage, common words, sources, retention, pace) are data, not prose:
+`study/progress.tsv`, one row per metric per day, saved by `python3 tools/progress.py --record` at every sync.
+Run `python3 tools/progress.py` for the current report.
 
 Level: early N5. Kana reading is solid; vocabulary and kanji are being built through the Anki decks.
 

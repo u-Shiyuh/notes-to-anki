@@ -31,7 +31,7 @@ updates notes, the code map and known issues: `docs/internals.md`.
 
 ## Learning workflow
 
-- `study/profile.md` is the one place that says what the user knows: Anki snapshot, sources (with
+- `study/profile.md` is the one place that says what the user knows: sources (with
   their tag codes), grammar learned by topic, and a dated log. Don't make per-book or per-lesson files.
 - `references.tsv` lists, per lesson, every card Front it mentioned. The seeds turn it into
   `ref::<source>::<lesson>` tags; they also add `ref::jlpt::nN`, `ref::verb_book::sN`, `ref::tatoeba`.
