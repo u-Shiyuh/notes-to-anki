@@ -164,6 +164,8 @@ python main.py --seed-sentences --dry-run   # preview the sentence seed
 python main.py --order                  # kanji met in studied words first, then words whose kanji you've studied; verbs the same way, group 1 and group 2 alternating; with tools/cache/examples.utf.gz present, the words that unlock the most Tatoeba sentences (and their kanji) go first
 ```
 
+`--order` first fills two fast-lane decks, which have their own daily limits so the main decks' limits stay fixed: `Nihongo::Lessons` gets the new Words and Verbs cards a lesson in `references.tsv` mentioned, and `Nihongo::Kanji N5-N4` the new N5/N4 kanji. A card goes back to its home deck once you've studied it, keeping its history.
+
 `--order` moves cards through a small helper add-on in `anki_addon/notes_to_anki_helper/` (AnkiConnect can't reposition cards). Install it once by linking it into Anki's add-ons folder, then restart Anki:
 
 ```bash

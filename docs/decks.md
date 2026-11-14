@@ -24,6 +24,22 @@ Read the part for the deck or file you're about to change. Add new history here,
 
 - **Sentence seed** (`--seed-sentences`, added 2026-11-14, user's request): writes `sentences.tsv` to `Nihongo::Sentences`, in file order, skipping rows whose note is `skip`. Front = the Japanese sentence; Back (`sentence_back`) = the English as headline, one line per word (`行こう → 行く いく · to go`, glosses from `words.tsv`/`verbs.tsv` via `_word_glosses`), the note, a faded `Grammar:` line (particles/copula) and `Tatoeba #<jpn id> · CC BY 2.0 FR`. Tag `sentence`. Columns: `id` (Tatoeba `jpn_eng`), `japanese`, `english`, `words` (`front` or `front{form used}`), `grammar`, `note`. Rows come from `tools/add_sentences.py` (dry run by default, `--write` appends, `--max` default 40, shortest first): sentences whose every word is studied (`studied_words`) and every kanji studied, 5-30 characters, not already listed, and not a one-word variant of a listed or picked one (`skeletons`, so 私は医者です/私は学生です don't both go in). No content filter: the user chose to keep Tatoeba's crude or violent lines. Rerun it after study progress, then `--seed-sentences`. Started with 100 rows on 2026-11-14 (398 qualified); the deck uses the `Nihongo Vocab` preset (5 new/day), set via `setDeckConfigId`.
 
+## Fast lanes (added 2026-11-14)
+
+User's request: new material from books, and the N5/N4 kanji stuck behind ~150 harder ones in Core
+Kanji's queue, should come up soon without raising the home decks' limits (the user studies deck by
+deck and wants Core Kanji's limit static). Two sibling decks, each a lane for its home decks (`LANES`):
+`Nihongo::Lessons` (new Words/Verbs cards whose Front is in `references.tsv`) and `Nihongo::Kanji N5-N4`
+(new Core Kanji cards whose kanji is JLPT N5/N4). `fill_lanes`, the first step of `--order`, moves them
+in, and moves cards there that are no longer new back home (rule chosen over "when mature" so a lane
+only ever holds new cards and its limit means "extra new cards per day"). Same note, history kept.
+The seeds' scopes include a home deck's cards in its lane (`deck_query`, matched by the `word`/`verb`/
+`core_kanji` tag) and don't plan a move for them. Lesson kanji stay in Core Kanji: once their word is
+studied, `order_kanji` puts them first as `word_seen`. Rejected: moving N5/N4 forward inside Core
+Kanji (many are too easy; the user prefers a separate deck and its own limit). Easy cards: press Easy.
+First run 2026-11-14: 89 cards to Lessons (85 words, 4 verbs), 91 kanji to Kanji N5-N4. Lane decks use
+the `Default` preset; the user said to leave limits alone for now.
+
 ## Learner profile and source tags
 
 **Learner profile** (`study/profile.md`, added 2026-11-14, user's request: one place, not scattered notes). It holds everything known about the user as a learner across sources: an Anki snapshot, the sources, grammar/concepts learned (one list by topic, each tagged with its source, e.g. `(CG L1)` = *Complete Grammar* lesson 1, `(self)` = standalone), and a dated log. Vocabulary from a lesson doesn't stay in the profile: words go in `words.tsv` (blank level, appended), verbs in `verbs.tsv` (section `cg` = *Complete Grammar*, numbered in lesson order), and new kanji get a Core Kanji row via `tools/add_kanji_extra.py --write` (then add_radicals, mark_readings, dedupe_readings, `check_data --refresh`; bold a blank-level word's kun reading by hand, since mark_readings only marks N5/N4 words). The user's request, 2026-11-14. When the user reports a lesson, book or standalone study, update this file; don't create per-book or per-lesson files. Refresh the snapshot from Anki when it's stale. A practice deck may be built from it later. **Source tags** (user's request, 2026-11-14: tag every card with where it's referenced, for every source): the kanji, word, verb, numbers and sentence seeds add script-owned `ref::` tags (`REF_TAG_PREFIX`; a hierarchical tag tree in Anki): `ref::jlpt::n5`…`n1` from the kanji `jlpt` column and the words `level` column, `ref::verb_book::s1`-`s3` from the reviewer book's sections (`verb_source`; `extra` → `ref::jlpt::n5`), `ref::tatoeba` on sentences, and lesson references from `references.tsv` (columns `ref`, `fronts`: space-separated card Fronts, e.g. `cg::l01` → `ref::cg::l01`; a one-kanji word its kanji card teaches is listed by the kanji). After a lesson, append a row there with every Front the lesson mentioned, including words already in the decks. The old `jlpt_nN`/`sectionN` tags stay alongside.

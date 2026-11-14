@@ -165,17 +165,38 @@ NUMBER_DECK = f"{DECK_ROOT}::Numbers & Time"
 LOOKALIKE_DECK = f"{DECK_ROOT}::Kanji Look-alikes"
 SENTENCE_DECK = f"{DECK_ROOT}::Sentences"
 VOCAB_DECK = f"{DECK_ROOT}::Vocab"
+# Fast lanes (2026-11-14, user's request): new cards wait here, with their own
+# daily limit, instead of deep in their home deck's queue; --order moves them
+# in and, once studied, back home (same note, history kept). LESSON_DECK: new
+# Words/Verbs cards references.tsv mentions; BASICS_DECK: new N5/N4 kanji.
+LESSON_DECK = f"{DECK_ROOT}::Lessons"
+BASICS_DECK = f"{DECK_ROOT}::Kanji N5-N4"
+BASICS_LEVELS = ("5", "4")
+# Home deck -> its lane: a seed treats a card there as in place.
+LANES = {KANJI_DECK: BASICS_DECK, WORD_DECK: LESSON_DECK, VERB_DECK: LESSON_DECK}
+LANE_HOME_TAGS = {WORD_DECK: "word", VERB_DECK: "verb", KANJI_DECK: "core_kanji"}
+
+
+def deck_query(deck):
+    """Anki search for a home deck's cards, including those in its lane."""
+    lane = LANES.get(deck)
+    if not lane:
+        return f'"deck:{deck}"'
+    return f'("deck:{deck}" OR ("deck:{lane}" tag:{LANE_HOME_TAGS[deck]}))'
+
+
 _LINKED = "tag:" + LINK_TAG_PREFIX.replace("_", "\\_") + "*"
 KANA_SCOPE = f'"deck:{DECK_ROOT}::Kana"'
-KANJI_SCOPE = f'"deck:{KANJI_DECK}" -{_LINKED}'
-VERB_SCOPE = f'"deck:{VERB_DECK}"'
-WORD_SCOPE = f'"deck:{WORD_DECK}"'
+KANJI_SCOPE = f'{deck_query(KANJI_DECK)} -{_LINKED}'
+VERB_SCOPE = deck_query(VERB_DECK)
+WORD_SCOPE = deck_query(WORD_DECK)
 NUMBER_SCOPE = f'"deck:{NUMBER_DECK}"'
 LOOKALIKE_SCOPE = f'"deck:{LOOKALIKE_DECK}"'
 SENTENCE_SCOPE = f'"deck:{SENTENCE_DECK}"'
 VOCAB_SCOPE = f'"deck:{VOCAB_DECK}"'
 LEDGER_SCOPE = (f'"deck:{DECK_ROOT}" -"deck:{DECK_ROOT}::Kana" -{VERB_SCOPE} '
-                f'-{WORD_SCOPE} -{NUMBER_SCOPE} -{LOOKALIKE_SCOPE} -{SENTENCE_SCOPE} (-"deck:{KANJI_DECK}" OR {_LINKED})')
+                f'-{WORD_SCOPE} -{NUMBER_SCOPE} -{LOOKALIKE_SCOPE} -{SENTENCE_SCOPE} -"deck:{LESSON_DECK}" -"deck:{BASICS_DECK}" '
+                f'(-"deck:{KANJI_DECK}" OR {_LINKED})')
 
 # Ledger rows go to Nihongo::<Type>, except these. The kanji seed skips
 # kanji that already have a ledger card, and a new ledger Kanji row takes
@@ -1080,7 +1101,7 @@ def load_lookalikes(path=LOOKALIKE_FILE):
 def studied_kanji():
     """Kanji whose Core Kanji card has been studied (isn't new)."""
     _require_anki()
-    cards = anki_request("findCards", query=f'"deck:{KANJI_DECK}" -is:new') or []
+    cards = anki_request("findCards", query=f'{deck_query(KANJI_DECK)} -is:new') or []
     infos = anki_request("cardsInfo", cards=cards) or []
     return {kanji_key(_field(c, "Front")) for c in infos}
 
@@ -1279,7 +1300,7 @@ def studied_words():
     fronts = set()
     for deck in (WORD_DECK, VERB_DECK):
         for n in anki_request("notesInfo", notes=anki_request(
-                "findNotes", query=f'"deck:{deck}" -is:new') or []) or []:
+                "findNotes", query=f'{deck_query(deck)} -is:new') or []) or []:
             fronts.add(_field(n, "Front"))
     fronts |= {f[:-2] for f in fronts if f.endswith("する") and len(f) > 2}
     kanji = studied_kanji()
@@ -1365,7 +1386,7 @@ def order_words(dry_run=False):
     _require_anki()
     known = {kanji_key(_field(n, "Front")) for n in anki_request(
         "notesInfo", notes=anki_request(
-            "findNotes", query=f'"deck:{KANJI_DECK}" -is:new') or [])}
+            "findNotes", query=f'{deck_query(KANJI_DECK)} -is:new') or [])}
     cards = _new_cards(WORD_DECK)
     ready = [c for c in cards
              if all(k in known for k in _KANJI_CHAR.findall(_field(c, "Front")))]
@@ -1408,6 +1429,40 @@ def unlock_words(word_cards):
     return _unlock_words(tuple(sorted(_field(c, "Front") for c in word_cards)))
 
 
+def fill_lanes(dry_run=False):
+    """Move cards between home decks and their fast lanes (LANES): new Words and
+    Verbs cards that references.tsv mentions go to LESSON_DECK, new N5/N4 Core
+    Kanji cards to BASICS_DECK; studied cards in a lane go back home. Runs first
+    in --order. Moving keeps the note and its review history."""
+    _require_anki()
+    mentioned = set(references())
+    jlpt = {k: r["jlpt"] for k, r in core_kanji().items()}
+    rules = [  # (home deck, lane, belongs in the lane?)
+        (WORD_DECK, LESSON_DECK, lambda f: f in mentioned),
+        (VERB_DECK, LESSON_DECK, lambda f: f in mentioned),
+        (KANJI_DECK, BASICS_DECK, lambda f: jlpt.get(kanji_key(f)) in BASICS_LEVELS),
+    ]
+    calls = [("createDeck", {"deck": d}) for d in sorted({lane for _, lane, _ in rules})]
+    moved = False
+    for home, lane, belongs in rules:
+        tag = LANE_HOME_TAGS[home]
+        new = _new_cards(home)
+        go = [c["cardId"] for c in new if belongs(_field(c, "Front"))]
+        back = anki_request("findCards", query=f'"deck:{lane}" tag:{tag} -is:new') or []
+        print(f"{lane}: {len(go)} new card(s) in from {home}, {len(back)} studied back home.")
+        if go:
+            print("  In:", " ".join(_field(c, "Front") for c in new
+                                    if c["cardId"] in set(go))[:200])
+            calls.append(("changeDeck", {"cards": go, "deck": lane}))
+        if back:
+            calls.append(("changeDeck", {"cards": back, "deck": home}))
+        moved = moved or bool(go or back)
+    if dry_run or not moved:
+        return
+    if anki_multi(calls):
+        sys.exit(1)
+
+
 def order_kanji(dry_run=False):
     """Put first the new Core Kanji cards whose kanji appear in a studied
     Words, Verbs or Numbers & Time card (tag word_seen; added 2026-11-11), so
@@ -1422,7 +1477,7 @@ def order_kanji(dry_run=False):
     seen = set()
     for deck in STUDIED_WORD_DECKS:
         for n in anki_request("notesInfo", notes=anki_request(
-                "findNotes", query=f'"deck:{deck}" -is:new') or []) or []:
+                "findNotes", query=f'{deck_query(deck)} -is:new') or []) or []:
             seen.update(_KANJI_CHAR.findall(_field(n, "Front")))
     cards = _new_cards(KANJI_DECK)
     by_kanji = {kanji_key(_field(c, "Front")): c for c in cards}
@@ -1486,7 +1541,7 @@ def order_verbs(dry_run=False):
 
     first = [c for c in cards if group.get(c["cardId"]) != "irregular" and ready(c)]
     rest = [c for c in cards if group.get(c["cardId"]) != "irregular" and not ready(c)]
-    studied = len(anki_request("findCards", query=f'"deck:{VERB_DECK}" -is:new tag:ichidan') or [])
+    studied = len(anki_request("findCards", query=f'{deck_query(VERB_DECK)} -is:new tag:ichidan') or [])
     ichidan = part(first, "ichidan") + part(rest, "ichidan")
     lead = ichidan[:max(0, ICHIDAN_LEAD - studied)]
     led = {c["cardId"] for c in lead}
@@ -1880,8 +1935,9 @@ def plan_changes(notes, scope, update=True, prune=False, adopt=None, keep=()):
             plan["update"].append((n, info))
             changed = True
 
+        home = (n["deckName"], LANES.get(n["deckName"]))
         stray = [c for c in info.get("cards", [])
-                 if deck_of.get(c, n["deckName"]) != n["deckName"]]
+                 if deck_of.get(c, n["deckName"]) not in home]
         if stray:
             plan["move"].append((n, info, stray, deck_of[stray[0]]))
             changed = True
@@ -2123,9 +2179,11 @@ def main():
     )
     parser.add_argument(
         "--order", action="store_true",
-        help="Move new Core Kanji cards met in studied words, then new Words "
-             "whose kanji are all studied, to the front of their queues; "
-             "order new Verbs the same way, alternating godan and ichidan",
+        help="Move new lesson words/verbs to Nihongo::Lessons and new N5/N4 kanji "
+             "to Nihongo::Kanji N5-N4 (studied ones back home); then move new "
+             "Core Kanji cards met in studied words, then new Words whose kanji "
+             "are all studied, to the front of their queues; order new Verbs the "
+             "same way, alternating godan and ichidan",
     )
     parser.add_argument(
         "--no-update", dest="update", action="store_false",
@@ -2181,6 +2239,7 @@ def main():
         seed_sentences(dry_run=args.dry_run, update=args.update)
         return
     if args.order:
+        fill_lanes(dry_run=args.dry_run)
         order_kanji(dry_run=args.dry_run)
         order_words(dry_run=args.dry_run)
         order_verbs(dry_run=args.dry_run)
