@@ -526,6 +526,15 @@ def kanji_topics():
             if r["topic"] and kanji_card_covers(r)}
 
 
+@functools.cache
+def kanji_word_notes():
+    """Note of each one-kanji word whose Core Kanji card teaches it (父 →
+    "your own father..."): the word seed skips those words, so their kanji
+    card shows the words.tsv note instead (since 2026-11-14, user's request)."""
+    return {r["word"]: r["note"] for r in load_words()
+            if r["note"] and kanji_card_covers(r)}
+
+
 @functools.lru_cache(maxsize=None)
 def references():
     """REFERENCE_FILE as {front: [ref tag, ...]}, tags in file order."""
@@ -572,7 +581,8 @@ def kanji_note(row):
     return {
         "deckName": KANJI_DECK,
         "modelName": NOTE_TYPE,
-        "fields": {"Front": row["kanji"], "Back": kanji_back(row)},
+        "fields": {"Front": row["kanji"],
+                   "Back": kanji_back(row, notes=[n for n in [kanji_word_notes().get(row["kanji"])] if n])},
         "tags": tags,
         "options": NOTE_OPTIONS,
     }

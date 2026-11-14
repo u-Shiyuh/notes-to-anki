@@ -230,5 +230,5 @@ extra	23	締める	しめる	to tie; to fasten	ichidan		same sound as 閉める 
 extra	24	勤める	つとめる	to work for (a company)	ichidan		会社に勤める	勤:19|力
 extra	25	鳴く	なく	to make a sound (animal); to sing (bird)	godan		same sound as 泣く (to cry)	鳴:196|鳥
 # Section cg: verbs from the user's Complete Grammar book (added 2026-11-14), numbered by lesson-order.
-cg	1	生きる	いきる	to live	ichidan		vs 生まれる (to be born): same kanji, different reading	生:100|生
-cg	2	申す	もうす	to say, to be called (humble)	godan		〜と申します: my name is ~ (humble form of 言う)	申:102|田
+cg	1	生きる	いきる	to live	ichidan		vs 生まれる (to be born): same kanji, different reading (CG L1)	生:100|生
+cg	2	申す	もうす	to say, to be called (humble)	godan		〜と申します: my name is ~ (humble form of 言う) (CG L2)	申:102|田

@@ -36,6 +36,9 @@ A new book gets a new short code there first. Standalone study uses `self::<YYYY
    - Cards that already exist get the lesson's point too, when it changes how the word is used
      (それ vs その, own vs someone else's family, polite vs casual): put it in their `note`, with a
      tiny example. A bare "that one" isn't enough (user, 2026-11-14).
+   - End every note you add with its source: `(CG L2)` if the lesson taught it, `(Claude)` if
+     it's your own addition, `(CG L2 + Claude)` if both (user, 2026-11-14). A one-kanji word's
+     note also shows on its kanji card.
    - Verbs: append to `verbs.tsv` under section `<code>` (e.g. `cg`), numbered in lesson order.
    - Skip names used only as reading practice (山田, ボストン). Prefer kana or katakana Fronts over
      rare kanji (カキ), so obscure kanji don't become cards.
