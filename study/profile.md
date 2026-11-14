@@ -16,6 +16,10 @@ grammar and concepts learned, which source taught them, and a log of what each l
 | Numbers & Time | 162 | 50 |
 | Kanji Look-alikes | 69 | 25 |
 | Sentences | 100 | 5 |
+| Lessons (fast lane, from 2026-11-14) | 139 | 0 |
+| Kanji N5-N4 (fast lane, from 2026-11-14) | 82 | 0 |
+
+(After the lanes filled: Core Kanji 1,068 cards, Words 888, Verbs 215; studied counts unchanged.)
 
 Level: early N5. Kana reading is solid; vocabulary and kanji are being built through the Anki decks.
 
@@ -26,7 +30,7 @@ Every card carries a `ref::` tag per source that mentions it (Anki tag tree `ref
 | Source | What it covers | Where it lives | Card tag |
 |---|---|---|---|
 | Verb reviewer book | verbs by group, with glosses | `verbs.tsv` sections 1-3 | `ref::verb_book::s1`-`s3` |
-| *Complete Grammar* (book) | grammar, lesson by lesson | the log below (CG); words in `references.tsv` | `ref::cg::l01`… |
+| *Complete Grammar* (book; chapters: 1 intro/writing, 2 nouns, 3 numbers, …) | grammar, lesson by lesson | the log below (CG); words in `references.tsv` | `ref::cg::l01`… |
 | JLPT N5/N4 lists | vocabulary, kanji levels | `words.tsv`, kanji files, `verbs.tsv` `extra` | `ref::jlpt::n5`… |
 | Kanji frequency (KANJIDIC2) | the 1,000 most common kanji | `kanji_top1000.tsv` | (only its JLPT tag) |
 | Tatoeba | example sentences | `sentences.tsv` | `ref::tatoeba` |
