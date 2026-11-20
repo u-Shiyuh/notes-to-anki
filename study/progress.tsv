@@ -152,3 +152,153 @@ date	metric	value
 2026-11-16	pace.n5_left	458
 2026-11-16	pace.n5_done_estimate	2026-12-10
 2026-11-16	today.reviews	261
+2026-11-18	deck.Core Kanji.cards	1068
+2026-11-18	deck.Core Kanji.seen	207
+2026-11-18	deck.Core Kanji.known	32
+2026-11-18	deck.Kana::Hiragana.cards	104
+2026-11-18	deck.Kana::Hiragana.seen	101
+2026-11-18	deck.Kana::Hiragana.known	17
+2026-11-18	deck.Kana::Katakana.cards	104
+2026-11-18	deck.Kana::Katakana.seen	104
+2026-11-18	deck.Kana::Katakana.known	24
+2026-11-18	deck.Kanji Look-alikes.cards	95
+2026-11-18	deck.Kanji Look-alikes.seen	30
+2026-11-18	deck.Kanji Look-alikes.known	0
+2026-11-18	deck.Kanji N5-N4.cards	82
+2026-11-18	deck.Kanji N5-N4.seen	15
+2026-11-18	deck.Kanji N5-N4.known	0
+2026-11-18	deck.Lessons.cards	139
+2026-11-18	deck.Lessons.seen	10
+2026-11-18	deck.Lessons.known	0
+2026-11-18	deck.Numbers & Time.cards	162
+2026-11-18	deck.Numbers & Time.seen	60
+2026-11-18	deck.Numbers & Time.known	2
+2026-11-18	deck.Sentences.cards	100
+2026-11-18	deck.Sentences.seen	10
+2026-11-18	deck.Sentences.known	0
+2026-11-18	deck.Verbs.cards	215
+2026-11-18	deck.Verbs.seen	76
+2026-11-18	deck.Verbs.known	1
+2026-11-18	deck.Words.cards	880
+2026-11-18	deck.Words.seen	152
+2026-11-18	deck.Words.known	21
+2026-11-18	jlpt.n5.words.total	699
+2026-11-18	jlpt.n5.words.seen	254
+2026-11-18	jlpt.n5.words.known	32
+2026-11-18	jlpt.n4.words.total	562
+2026-11-18	jlpt.n4.words.seen	40
+2026-11-18	jlpt.n4.words.known	3
+2026-11-18	jlpt.n5.kanji.total	79
+2026-11-18	jlpt.n5.kanji.seen	74
+2026-11-18	jlpt.n5.kanji.known	20
+2026-11-18	jlpt.n4.kanji.total	166
+2026-11-18	jlpt.n4.kanji.seen	95
+2026-11-18	jlpt.n4.kanji.known	6
+2026-11-18	common.top100.seen	76
+2026-11-18	common.top100.known	6
+2026-11-18	common.top300.seen	157
+2026-11-18	common.top300.known	16
+2026-11-18	common.top1000.seen	297
+2026-11-18	common.top1000.known	37
+2026-11-18	ref.cg::l01.cards	63
+2026-11-18	ref.cg::l01.seen	20
+2026-11-18	ref.cg::l01.known	3
+2026-11-18	ref.cg::l02.cards	87
+2026-11-18	ref.cg::l02.seen	28
+2026-11-18	ref.cg::l02.known	7
+2026-11-18	ref.tatoeba.cards	100
+2026-11-18	ref.tatoeba.seen	10
+2026-11-18	ref.tatoeba.known	0
+2026-11-18	ref.verb_book::s1.cards	87
+2026-11-18	ref.verb_book::s1.seen	65
+2026-11-18	ref.verb_book::s1.known	0
+2026-11-18	ref.verb_book::s2.cards	64
+2026-11-18	ref.verb_book::s2.seen	9
+2026-11-18	ref.verb_book::s2.known	0
+2026-11-18	ref.verb_book::s3.cards	41
+2026-11-18	ref.verb_book::s3.seen	2
+2026-11-18	ref.verb_book::s3.known	1
+2026-11-18	retention7.young.reviews	553
+2026-11-18	retention7.young.passed	420
+2026-11-18	retention7.mature.reviews	0
+2026-11-18	retention7.mature.passed	0
+2026-11-18	pace14.new_per_day	42.4
+2026-11-18	pace14.n5_per_day	17.1
+2026-11-18	pace.n5_left	450
+2026-11-18	pace.n5_done_estimate	2026-12-14
+2026-11-18	today.reviews	199
+2026-11-20	deck.Core Kanji.cards	1068
+2026-11-20	deck.Core Kanji.seen	217
+2026-11-20	deck.Core Kanji.known	41
+2026-11-20	deck.Kana::Hiragana.cards	104
+2026-11-20	deck.Kana::Hiragana.seen	104
+2026-11-20	deck.Kana::Hiragana.known	19
+2026-11-20	deck.Kana::Katakana.cards	104
+2026-11-20	deck.Kana::Katakana.seen	104
+2026-11-20	deck.Kana::Katakana.known	32
+2026-11-20	deck.Kanji Look-alikes.cards	95
+2026-11-20	deck.Kanji Look-alikes.seen	45
+2026-11-20	deck.Kanji Look-alikes.known	0
+2026-11-20	deck.Kanji N5-N4.cards	82
+2026-11-20	deck.Kanji N5-N4.seen	25
+2026-11-20	deck.Kanji N5-N4.known	0
+2026-11-20	deck.Lessons.cards	139
+2026-11-20	deck.Lessons.seen	20
+2026-11-20	deck.Lessons.known	0
+2026-11-20	deck.Numbers & Time.cards	162
+2026-11-20	deck.Numbers & Time.seen	70
+2026-11-20	deck.Numbers & Time.known	5
+2026-11-20	deck.Sentences.cards	100
+2026-11-20	deck.Sentences.seen	17
+2026-11-20	deck.Sentences.known	0
+2026-11-20	deck.Verbs.cards	215
+2026-11-20	deck.Verbs.seen	85
+2026-11-20	deck.Verbs.known	8
+2026-11-20	deck.Words.cards	880
+2026-11-20	deck.Words.seen	158
+2026-11-20	deck.Words.known	28
+2026-11-20	jlpt.n5.words.total	699
+2026-11-20	jlpt.n5.words.seen	278
+2026-11-20	jlpt.n5.words.known	53
+2026-11-20	jlpt.n4.words.total	562
+2026-11-20	jlpt.n4.words.seen	43
+2026-11-20	jlpt.n4.words.known	3
+2026-11-20	jlpt.n5.kanji.total	79
+2026-11-20	jlpt.n5.kanji.seen	76
+2026-11-20	jlpt.n5.kanji.known	25
+2026-11-20	jlpt.n4.kanji.total	166
+2026-11-20	jlpt.n4.kanji.seen	103
+2026-11-20	jlpt.n4.kanji.known	8
+2026-11-20	common.top100.seen	80
+2026-11-20	common.top100.known	14
+2026-11-20	common.top300.seen	171
+2026-11-20	common.top300.known	28
+2026-11-20	common.top1000.seen	326
+2026-11-20	common.top1000.known	58
+2026-11-20	ref.cg::l01.cards	63
+2026-11-20	ref.cg::l01.seen	24
+2026-11-20	ref.cg::l01.known	5
+2026-11-20	ref.cg::l02.cards	87
+2026-11-20	ref.cg::l02.seen	36
+2026-11-20	ref.cg::l02.known	8
+2026-11-20	ref.tatoeba.cards	100
+2026-11-20	ref.tatoeba.seen	17
+2026-11-20	ref.tatoeba.known	0
+2026-11-20	ref.verb_book::s1.cards	87
+2026-11-20	ref.verb_book::s1.seen	66
+2026-11-20	ref.verb_book::s1.known	7
+2026-11-20	ref.verb_book::s2.cards	64
+2026-11-20	ref.verb_book::s2.seen	14
+2026-11-20	ref.verb_book::s2.known	0
+2026-11-20	ref.verb_book::s3.cards	41
+2026-11-20	ref.verb_book::s3.seen	2
+2026-11-20	ref.verb_book::s3.known	1
+2026-11-20	retention7.young.reviews	645
+2026-11-20	retention7.young.passed	483
+2026-11-20	retention7.mature.reviews	0
+2026-11-20	retention7.mature.passed	0
+2026-11-20	pace14.new_per_day	40.7
+2026-11-20	pace14.n5_per_day	14.5
+2026-11-20	pace.n5_left	424
+2026-11-20	pace.n5_done_estimate	2026-12-19
+2026-11-20	today.reviews	143
