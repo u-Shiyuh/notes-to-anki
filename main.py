@@ -237,6 +237,48 @@ LOOKALIKE_FILE = os.path.join(os.path.dirname(KANJI_FILE), "lookalikes.tsv")
 # Study-source references (study/profile.md): Fronts per lesson, tagged ref::<ref>.
 REFERENCE_FILE = os.path.join(os.path.dirname(KANJI_FILE), "references.tsv")
 REF_TAG_PREFIX = "ref::"
+
+# Per-profile settings (added 2026-11-21, for the friend's profile): an Anki
+# profile can have users/<profile>/user.json; anki_profile() loads it for the
+# run. Without one (the user's own profile) the defaults apply, so nothing
+# changes for them. Keys:
+#   ref_sources  which ref:: sources a card may carry, by first part ("jlpt",
+#                "tatoeba", "verb_book", "cg"...); null = all. Leaving out a
+#                book also drops its references.tsv lessons, so no Lessons lane.
+#   order        "adaptive": --order runs the fast lanes and the review-based
+#                steps; "default": it follows default_order.tsv instead.
+USERS_DIR = os.path.join(os.path.dirname(KANJI_FILE), "users")
+USER_DEFAULTS = {"ref_sources": None, "order": "adaptive"}
+USER_ORDERS = ("adaptive", "default")
+USER = dict(USER_DEFAULTS)
+
+
+def load_user(profile):
+    """users/<profile>/user.json over USER_DEFAULTS ("about" is a free note)."""
+    settings = dict(USER_DEFAULTS)
+    path = os.path.join(USERS_DIR, profile, "user.json")
+    if os.path.exists(path):
+        with open(path, encoding="utf-8") as f:
+            settings.update(json.load(f))
+    unknown = set(settings) - set(USER_DEFAULTS) - {"about"}
+    if unknown or settings["order"] not in USER_ORDERS:
+        print(f"{path}: unknown key(s) {sorted(unknown)} or order "
+              f"{settings['order']!r} (use {', '.join(USER_ORDERS)}).", file=sys.stderr)
+        sys.exit(1)
+    return settings
+
+
+def use_user(profile):
+    """Make `profile`'s settings the ones this run uses."""
+    USER.clear()
+    USER.update(load_user(profile))
+    references.cache_clear()
+
+
+def ref_allowed(tag):
+    """True if this profile's ref_sources lets a card carry ref:: tag `tag`."""
+    sources = USER["ref_sources"]
+    return sources is None or tag[len(REF_TAG_PREFIX):].split("::")[0] in sources
 # Tatoeba example sentences readable with studied cards (tools/add_sentences.py).
 SENTENCE_FILE = os.path.join(os.path.dirname(KANJI_FILE), "sentences.tsv")
 
@@ -556,6 +598,8 @@ def references():
                 continue
             for front in fronts.split():
                 tag = REF_TAG_PREFIX + ref.strip()
+                if not ref_allowed(tag):
+                    continue
                 if tag not in refs.setdefault(front, []):
                     refs[front].append(tag)
     return refs
@@ -564,7 +608,7 @@ def references():
 def ref_tags(front, *sources):
     """The ref:: tags of a card: the given sources (e.g. "jlpt::n5", skipping
     blanks), then REFERENCE_FILE's lessons that mention its Front."""
-    tags = [REF_TAG_PREFIX + s for s in sources if s]
+    tags = [REF_TAG_PREFIX + s for s in sources if s and ref_allowed(REF_TAG_PREFIX + s)]
     return tags + [t for t in references().get(front, []) if t not in tags]
 
 
@@ -1615,6 +1659,56 @@ def order_verbs(dry_run=False):
         print(f"Reordered {len(order)} new verb(s).")
 
 
+DEFAULT_ORDER_FILE = os.path.join(os.path.dirname(KANJI_FILE), "default_order.tsv")
+
+
+def default_order():
+    """DEFAULT_ORDER_FILE (tools/default_order.py) as {(deck, front): pos}."""
+    pos = {}
+    with open(DEFAULT_ORDER_FILE, encoding="utf-8") as f:
+        for line in f:
+            if line.startswith("#") or line.startswith("pos\t") or not line.strip():
+                continue
+            p, _, deck, front = line.rstrip("\n").split("\t")[:4]
+            pos[(f"{DECK_ROOT}::{deck}", front)] = int(p)
+    return pos
+
+
+def order_default(dry_run=False):
+    """--order for a profile whose user.json says "order": "default" (added
+    2026-11-21, the friend's profile): every deck's new cards follow
+    default_order.tsv, with no fast lanes and no review-based steps. Cards
+    the file doesn't list keep their order, after the listed ones. Needs the
+    helper add-on, version 2 (setNewOrder)."""
+    _require_anki()
+    if not os.path.exists(DEFAULT_ORDER_FILE):
+        print("default_order.tsv is missing; run tools/default_order.py --write.",
+              file=sys.stderr)
+        sys.exit(1)
+    pos = default_order()
+    helper = helper_request("version") or 0
+    for deck in sorted({d for d, _ in pos}):
+        cards = _new_cards(deck)
+        if not cards:
+            continue
+        key = kanji_key if deck == KANJI_DECK else (lambda f: f)
+        order = sorted(cards, key=lambda c: pos.get((deck, key(_field(c, "Front"))),
+                                                    float("inf")))
+        listed = sum((deck, key(_field(c, "Front"))) in pos for c in cards)
+        same = [c["cardId"] for c in order] == [c["cardId"] for c in cards]
+        print(f"{deck}: {len(cards)} new ({len(cards) - listed} not in the file), "
+              + ("already in order." if same else "to reorder."))
+        print("  Next:", " ".join(_field(c, "Front") for c in order[:16]))
+        if dry_run or same:
+            continue
+        if helper < 2:
+            print("  Not reordered: this needs the helper add-on, version 2 (restart "
+                  "Anki, or see README).", file=sys.stderr)
+            continue
+        if helper_request("setNewOrder", cards=[c["cardId"] for c in order]) is not None:
+            print(f"  Reordered {len(order)} new card(s).")
+
+
 # ---------------------------------------------------------------------------
 # Notion ledger sync
 # ---------------------------------------------------------------------------
@@ -1846,7 +1940,8 @@ def anki_available():
 # whichever profile is open, so every run that reaches Anki first opens the
 # right one (--profile, else DEFAULT_PROFILE) and switches back at the end.
 DEFAULT_PROFILE = os.getenv("NOTES_TO_ANKI_PROFILE", "User 1")
-PROFILE_SWITCH_TIMEOUT = 30  # seconds; loadProfile returns before the profile is open
+PROFILE_SWITCH_TIMEOUT = 90  # seconds; loadProfile returns before the profile is open
+PROFILE_RETRY = 5            # seconds; Anki ignores loadProfile while it's busy (syncing)
 
 
 def _anki_try(action, **params):
@@ -1874,11 +1969,14 @@ def switch_profile(name):
         print(f"Anki has no profile named {name!r} (profiles: "
               f"{', '.join(profiles) or 'none found'}).", file=sys.stderr)
         sys.exit(1)
-    _anki_try("loadProfile", name=name)
     deadline = time.monotonic() + PROFILE_SWITCH_TIMEOUT
+    asked = 0.0
     while time.monotonic() < deadline:
         if _anki_try("getActiveProfile") == name and _anki_try("deckNames") is not None:
             return before
+        if time.monotonic() - asked >= PROFILE_RETRY:
+            _anki_try("loadProfile", name=name)   # again if Anki was busy and ignored it
+            asked = time.monotonic()
         time.sleep(0.5)
     print(f"Anki didn't open profile {name!r} within {PROFILE_SWITCH_TIMEOUT}s; "
           "close any open Anki dialogs and run again.", file=sys.stderr)
@@ -1909,10 +2007,14 @@ def anki_profile(requested=None):
     that was open before. Does nothing when Anki isn't running (dry runs)."""
     if not anki_available():
         if requested:
-            print(f"Anki isn't open, so profile {requested!r} isn't used.", file=sys.stderr)
+            print(f"Anki isn't open; using profile {requested!r}'s settings only.",
+                  file=sys.stderr)
+        use_user(requested or DEFAULT_PROFILE)
         yield None
         return
     target = choose_profile(requested)
+    if target:                       # None: AnkiConnect can't tell (keep settings)
+        use_user(target)
     before = switch_profile(target) if target else None
     if target and before and before != target:
         print(f"Anki profile: {target} (was {before}; switching back at the end)")
@@ -2381,6 +2483,9 @@ def _run(args):
         return
     if args.seed_sentences:
         seed_sentences(dry_run=args.dry_run, update=args.update)
+        return
+    if args.order and USER["order"] == "default":
+        order_default(dry_run=args.dry_run)
         return
     if args.order:
         fill_lanes(dry_run=args.dry_run)

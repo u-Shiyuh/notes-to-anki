@@ -167,6 +167,8 @@ python main.py --seed-words --profile verge  # any mode, on another Anki profile
 
 **Anki profiles.** AnkiConnect works on whichever Anki profile is open, so every run first opens the profile `User 1` (or the `NOTES_TO_ANKI_PROFILE` environment variable) and, at the end, reopens the profile that was open before. Pass `--profile <name>` to work on another profile, for example a friend's profile logged into their own AnkiWeb account. If `User 1` doesn't exist and Anki has only one profile, that one is used. `tools/progress.py`, `tools/check_drift.py`, `tools/add_sentences.py` and `tools/readable_sentences.py` take `--profile` too.
 
+A profile can have its own settings in `users/<profile>/user.json`: `ref_sources` (which `ref::` sources its cards carry, for example `["jlpt", "tatoeba"]`; leaving out a book also leaves out its lessons and the Lessons deck) and `order` (`adaptive`, the default, or `default` to have `--order` follow `default_order.tsv`). `tools/progress.py --record` saves another profile's numbers to `users/<profile>/progress.tsv`.
+
 `--order` first fills two fast-lane decks, which have their own daily limits so the main decks' limits stay fixed: `Nihongo::Lessons` gets the new Words, Verbs and Core Kanji cards a lesson in `references.tsv` mentioned (and the kanji in those words), and `Nihongo::Kanji N5-N4` the other new N5/N4 kanji. Cards you've already studied never move in. A card goes back to its home deck once it's mature (21-day interval), keeping its history and format.
 
 `--order` moves cards through a small helper add-on in `anki_addon/notes_to_anki_helper/` (AnkiConnect can't reposition cards). Install it once by linking it into Anki's add-ons folder, then restart Anki:

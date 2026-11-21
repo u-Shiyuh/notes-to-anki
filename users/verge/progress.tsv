@@ -1,0 +1,54 @@
+# Progress metrics, one row per metric per day, written by tools/progress.py --record
+# (run by the sync skill). Columns: date, metric, value. Rerunning on a day replaces
+# that day's rows. Metric names are stable; new ones may appear from a later date.
+date	metric	value
+2026-11-21	deck.Core Kanji.cards	1200
+2026-11-21	deck.Core Kanji.seen	0
+2026-11-21	deck.Core Kanji.known	0
+2026-11-21	deck.Kana::Hiragana.cards	104
+2026-11-21	deck.Kana::Hiragana.seen	0
+2026-11-21	deck.Kana::Hiragana.known	0
+2026-11-21	deck.Kana::Katakana.cards	104
+2026-11-21	deck.Kana::Katakana.seen	0
+2026-11-21	deck.Kana::Katakana.known	0
+2026-11-21	deck.Numbers & Time.cards	162
+2026-11-21	deck.Numbers & Time.seen	0
+2026-11-21	deck.Numbers & Time.known	0
+2026-11-21	deck.Sentences.cards	100
+2026-11-21	deck.Sentences.seen	0
+2026-11-21	deck.Sentences.known	0
+2026-11-21	deck.Verbs.cards	219
+2026-11-21	deck.Verbs.seen	0
+2026-11-21	deck.Verbs.known	0
+2026-11-21	deck.Words.cards	965
+2026-11-21	deck.Words.seen	0
+2026-11-21	deck.Words.known	0
+2026-11-21	jlpt.n5.words.total	699
+2026-11-21	jlpt.n5.words.seen	0
+2026-11-21	jlpt.n5.words.known	0
+2026-11-21	jlpt.n4.words.total	562
+2026-11-21	jlpt.n4.words.seen	0
+2026-11-21	jlpt.n4.words.known	0
+2026-11-21	jlpt.n5.kanji.total	79
+2026-11-21	jlpt.n5.kanji.seen	0
+2026-11-21	jlpt.n5.kanji.known	0
+2026-11-21	jlpt.n4.kanji.total	166
+2026-11-21	jlpt.n4.kanji.seen	0
+2026-11-21	jlpt.n4.kanji.known	0
+2026-11-21	common.top100.seen	0
+2026-11-21	common.top100.known	0
+2026-11-21	common.top300.seen	0
+2026-11-21	common.top300.known	0
+2026-11-21	common.top1000.seen	0
+2026-11-21	common.top1000.known	0
+2026-11-21	ref.tatoeba.cards	100
+2026-11-21	ref.tatoeba.seen	0
+2026-11-21	ref.tatoeba.known	0
+2026-11-21	retention7.young.reviews	0
+2026-11-21	retention7.young.passed	0
+2026-11-21	retention7.mature.reviews	0
+2026-11-21	retention7.mature.passed	0
+2026-11-21	pace14.new_per_day	0.0
+2026-11-21	pace14.n5_per_day	0.0
+2026-11-21	pace.n5_left	778
+2026-11-21	today.reviews	0

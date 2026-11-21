@@ -20,8 +20,12 @@ Done 2026-11-21: his profile exists (`verge`, logged into his AnkiWeb; the user'
 `--profile <name>` works on any mode (`anki_profile` in `main.py`: AnkiConnect `loadProfile`, which
 returns before the switch finishes, so it polls `getActiveProfile` until the collection answers; the
 previous profile is reopened at the end). Without `--profile`, runs use `User 1` (`DEFAULT_PROFILE`).
-To build later: per-profile settings (his lane order by JLPT level, no `ref::<book>::<lesson>` tags), and
-`users/<name>/` for his own `references.tsv` / `profile.md` if he ever logs lessons.
+Also done 2026-11-21: per-profile settings in `users/<profile>/user.json` (`load_user`, `USER`): his
+`ref_sources` is `["jlpt", "tatoeba"]` (no book/lesson tags, so no Lessons lane) and `order` is `default`
+(`order_default` sorts each deck's new cards by `default_order.tsv` through the helper's `setNewOrder`).
+Seeded the same day: 2,854 cards, all new, synced to his AnkiWeb. `loadProfile` is ignored while Anki is
+busy (syncing), so `switch_profile` re-sends it every 5 s. Still open: his daily limits (all decks on
+`Default`, 20 new/day each), and `users/<name>/` lessons if he ever logs any.
 
 ## Multi-user design (scales past one friend)
 

@@ -30,7 +30,8 @@ day's rows; other days are never touched.
 Usage (Anki open with AnkiConnect):
     python3 tools/progress.py            # print the report
     python3 tools/progress.py --record   # print it and save today's metrics
-    python3 tools/progress.py --profile verge   # another Anki profile (default: main.DEFAULT_PROFILE)
+    python3 tools/progress.py --profile verge   # another Anki profile (default: main.DEFAULT_PROFILE);
+                                                # --record then writes users/<profile>/progress.tsv
 """
 import csv
 import datetime
@@ -288,5 +289,7 @@ def run():
 
 
 if __name__ == "__main__":
-    with main.anki_profile(main.profile_from_argv(sys.argv[1:])):
+    with main.anki_profile(main.profile_from_argv(sys.argv[1:])) as profile:
+        if profile and profile != main.DEFAULT_PROFILE:   # another person's numbers
+            RECORD_FILE = os.path.join(main.USERS_DIR, profile, "progress.tsv")
         run()

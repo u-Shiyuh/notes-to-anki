@@ -29,7 +29,9 @@ updates notes, the code map and known issues: `docs/internals.md`.
 
 **Two Anki profiles** (2026-11-21): `User 1` is the user's, `verge` is a friend's (his own AnkiWeb
 account; plan in `docs/n3-plan.md`). Every run opens `User 1` unless `--profile` says otherwise, and
-reopens the previous profile at the end. Per-profile data and settings aren't built yet.
+reopens the previous profile at the end. A profile's settings live in `users/<profile>/user.json`
+(verge: only `jlpt`/`tatoeba` ref tags, no Lessons lane, `--order` follows `default_order.tsv`);
+no file = the user's behaviour. His progress record goes to `users/verge/progress.tsv`. Seeded 2026-11-21.
 
 **The Notion ledger sync is disabled** (2026-11-06; `NOTION_SYNC_ENABLED = False`). A run without a
 `--seed-*` option or `--order` exits 1. Don't re-enable it unless the user asks.

@@ -1,0 +1,5 @@
+{
+  "about": "Friend's Anki profile (own AnkiWeb account), added 2026-11-21. No book or lesson tags (only JLPT and Tatoeba), so no Lessons lane; --order follows default_order.tsv. Plan: docs/n3-plan.md.",
+  "ref_sources": ["jlpt", "tatoeba"],
+  "order": "default"
+}
