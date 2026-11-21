@@ -30,6 +30,7 @@ day's rows; other days are never touched.
 Usage (Anki open with AnkiConnect):
     python3 tools/progress.py            # print the report
     python3 tools/progress.py --record   # print it and save today's metrics
+    python3 tools/progress.py --profile verge   # another Anki profile (default: main.DEFAULT_PROFILE)
 """
 import csv
 import datetime
@@ -287,4 +288,5 @@ def run():
 
 
 if __name__ == "__main__":
-    run()
+    with main.anki_profile(main.profile_from_argv(sys.argv[1:])):
+        run()

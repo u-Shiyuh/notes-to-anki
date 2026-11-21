@@ -118,9 +118,11 @@ def cli():
     p = argparse.ArgumentParser(description=__doc__.splitlines()[0])
     p.add_argument("--show", type=int, default=0, help="print N sentences of each kind")
     p.add_argument("--refresh", action="store_true", help="re-download the Tatoeba export")
+    p.add_argument("--profile", metavar="NAME", help="Anki profile to read (default: main.DEFAULT_PROFILE)")
     args = p.parse_args()
     fetch(args.refresh)
-    run(args.show)
+    with main.anki_profile(args.profile):
+        run(args.show)
 
 
 if __name__ == "__main__":

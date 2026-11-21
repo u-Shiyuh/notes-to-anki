@@ -162,7 +162,10 @@ python main.py --seed-lookalikes --dry-run  # preview (needs Anki open)
 python main.py --seed-sentences         # add the example sentences in sentences.tsv
 python main.py --seed-sentences --dry-run   # preview the sentence seed
 python main.py --order                  # kanji met in studied words first, then words whose kanji you've studied; verbs the same way, group 1 and group 2 alternating; with tools/cache/examples.utf.gz present, the words that unlock the most Tatoeba sentences (and their kanji) go first
+python main.py --seed-words --profile verge  # any mode, on another Anki profile
 ```
+
+**Anki profiles.** AnkiConnect works on whichever Anki profile is open, so every run first opens the profile `User 1` (or the `NOTES_TO_ANKI_PROFILE` environment variable) and, at the end, reopens the profile that was open before. Pass `--profile <name>` to work on another profile, for example a friend's profile logged into their own AnkiWeb account. If `User 1` doesn't exist and Anki has only one profile, that one is used. `tools/progress.py`, `tools/check_drift.py`, `tools/add_sentences.py` and `tools/readable_sentences.py` take `--profile` too.
 
 `--order` first fills two fast-lane decks, which have their own daily limits so the main decks' limits stay fixed: `Nihongo::Lessons` gets the new Words, Verbs and Core Kanji cards a lesson in `references.tsv` mentioned (and the kanji in those words), and `Nihongo::Kanji N5-N4` the other new N5/N4 kanji. Cards you've already studied never move in. A card goes back to its home deck once it's mature (21-day interval), keeping its history and format.
 

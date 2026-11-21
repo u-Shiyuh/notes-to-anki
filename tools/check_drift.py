@@ -19,6 +19,7 @@ Not drift (expected):
 
 Usage (Anki open with AnkiConnect):
     python3 tools/check_drift.py
+    python3 tools/check_drift.py --profile verge   # another Anki profile
 Exit status 1 if any drift is found.
 """
 import contextlib
@@ -176,4 +177,5 @@ if __name__ == "__main__":
     if hasattr(sys.stdout, "reconfigure"):
         sys.stdout.reconfigure(encoding="utf-8")
         sys.stderr.reconfigure(encoding="utf-8")
-    main_()
+    with main.anki_profile(main.profile_from_argv(sys.argv[1:])):
+        main_()

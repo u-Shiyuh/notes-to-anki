@@ -113,8 +113,10 @@ def cli():
     p = argparse.ArgumentParser(description=__doc__.splitlines()[0])
     p.add_argument("--write", action="store_true", help="append to sentences.tsv")
     p.add_argument("--max", type=int, default=40, help="most rows to propose (default 40)")
+    p.add_argument("--profile", metavar="NAME", help="Anki profile to read (default: main.DEFAULT_PROFILE)")
     args = p.parse_args()
-    rows, have = proposals(args.max)
+    with main.anki_profile(args.profile):
+        rows, have = proposals(args.max)
     print(f"sentences.tsv has {have} rows; {len(rows)} new readable sentence(s):")
     for r in rows:
         cols = r.split("\t")

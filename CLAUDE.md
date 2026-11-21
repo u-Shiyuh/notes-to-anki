@@ -22,9 +22,14 @@ progress. The user studies early N5, mostly through these decks plus textbooks.
 | Lessons | `--order` | `references.tsv` | fast lane: new cards a lesson mentioned, and their kanji |
 | Kanji N5-N4 | `--order` | kanji `jlpt` column | fast lane: new N5/N4 kanji |
 | (all new cards) | `--order` | — | lanes first, then study order; needs the helper add-on |
+| (any mode) | `--profile NAME` | — | Anki profile to use; default `User 1` (the user's) |
 
 Every deck's details and history: `docs/decks.md`. Tools: `docs/tools.md`. How `main.py` matches and
 updates notes, the code map and known issues: `docs/internals.md`.
+
+**Two Anki profiles** (2026-11-21): `User 1` is the user's, `verge` is a friend's (his own AnkiWeb
+account; plan in `docs/n3-plan.md`). Every run opens `User 1` unless `--profile` says otherwise, and
+reopens the previous profile at the end. Per-profile data and settings aren't built yet.
 
 **The Notion ledger sync is disabled** (2026-11-06; `NOTION_SYNC_ENABLED = False`). A run without a
 `--seed-*` option or `--order` exits 1. Don't re-enable it unless the user asks.

@@ -16,8 +16,11 @@ A friend (already around N4) uses these decks to review N5/N4 and reach **N3 by 
 - He starts with the full N5 content as review (his choice), then N4, then N3.
 - No shared AnkiWeb account: that would be one collection with mixed reviews and sync conflicts.
 
-To build later: a `--profile <name>` flag (switch profile via AnkiConnect, check the switch took, switch
-back), per-profile settings (his lane order by JLPT level, no `ref::<book>::<lesson>` tags), and
+Done 2026-11-21: his profile exists (`verge`, logged into his AnkiWeb; the user's is `User 1`), and
+`--profile <name>` works on any mode (`anki_profile` in `main.py`: AnkiConnect `loadProfile`, which
+returns before the switch finishes, so it polls `getActiveProfile` until the collection answers; the
+previous profile is reopened at the end). Without `--profile`, runs use `User 1` (`DEFAULT_PROFILE`).
+To build later: per-profile settings (his lane order by JLPT level, no `ref::<book>::<lesson>` tags), and
 `users/<name>/` for his own `references.tsv` / `profile.md` if he ever logs lessons.
 
 ## Multi-user design (scales past one friend)

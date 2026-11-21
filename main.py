@@ -85,6 +85,11 @@ USAGE
                                               # alternating
    python3 main.py --order --dry-run          # just report what would move
 
+   python3 main.py --seed-words --profile verge   # work on another Anki profile
+       Every run uses the profile "User 1" (DEFAULT_PROFILE, or the
+       NOTES_TO_ANKI_PROFILE env var) unless --profile names another; it
+       opens that profile first and reopens the previous one at the end.
+
 Safe to re-run any time. Each mode only looks at its own notes: the kana
 seed at Nihongo::Kana::*, the kanji seed at its own (unlinked) notes in
 Nihongo::Core Kanji, the verb seed at Nihongo::Verbs, the word seed at
@@ -113,6 +118,7 @@ import html
 import json
 import time
 import argparse
+import contextlib
 import functools
 import urllib.request
 import urllib.error
@@ -1835,6 +1841,100 @@ def anki_available():
         return False
 
 
+# Anki profiles (added 2026-11-21): this Anki holds the user's profile and a
+# friend's ("verge", logged into his own AnkiWeb account). AnkiConnect works on
+# whichever profile is open, so every run that reaches Anki first opens the
+# right one (--profile, else DEFAULT_PROFILE) and switches back at the end.
+DEFAULT_PROFILE = os.getenv("NOTES_TO_ANKI_PROFILE", "User 1")
+PROFILE_SWITCH_TIMEOUT = 30  # seconds; loadProfile returns before the profile is open
+
+
+def _anki_try(action, **params):
+    """One AnkiConnect call that returns None instead of exiting when Anki
+    doesn't answer or reports an error (it can pause while a profile loads)."""
+    body = json.dumps({"action": action, "version": 6, "params": params}).encode("utf-8")
+    req = urllib.request.Request(ANKICONNECT_URL, data=body, method="POST")
+    try:
+        with urllib.request.urlopen(req, timeout=5) as resp:
+            result = json.loads(resp.read().decode("utf-8"))
+    except (urllib.error.URLError, OSError, ValueError):
+        return None
+    return None if result.get("error") else result.get("result")
+
+
+def switch_profile(name):
+    """Open Anki profile `name` and wait until its collection answers.
+    Returns the profile that was open before. Exits if the profile doesn't
+    exist or doesn't open in time."""
+    before = _anki_try("getActiveProfile")
+    if before == name:
+        return before
+    profiles = _anki_try("getProfiles") or []
+    if name not in profiles:
+        print(f"Anki has no profile named {name!r} (profiles: "
+              f"{', '.join(profiles) or 'none found'}).", file=sys.stderr)
+        sys.exit(1)
+    _anki_try("loadProfile", name=name)
+    deadline = time.monotonic() + PROFILE_SWITCH_TIMEOUT
+    while time.monotonic() < deadline:
+        if _anki_try("getActiveProfile") == name and _anki_try("deckNames") is not None:
+            return before
+        time.sleep(0.5)
+    print(f"Anki didn't open profile {name!r} within {PROFILE_SWITCH_TIMEOUT}s; "
+          "close any open Anki dialogs and run again.", file=sys.stderr)
+    sys.exit(1)
+
+
+def choose_profile(requested=None):
+    """The profile a run uses: `requested`, else DEFAULT_PROFILE when this Anki
+    has it, else its only profile. None when AnkiConnect can't list profiles."""
+    if requested:
+        return requested
+    profiles = _anki_try("getProfiles")
+    if not profiles:
+        return None
+    if DEFAULT_PROFILE in profiles:
+        return DEFAULT_PROFILE
+    if len(profiles) == 1:
+        return profiles[0]
+    print(f"This Anki has several profiles ({', '.join(profiles)}) and none is "
+          f"named {DEFAULT_PROFILE!r}; pass --profile <name> or set "
+          "NOTES_TO_ANKI_PROFILE.", file=sys.stderr)
+    sys.exit(1)
+
+
+@contextlib.contextmanager
+def anki_profile(requested=None):
+    """Run the body with the chosen Anki profile open, then reopen the one
+    that was open before. Does nothing when Anki isn't running (dry runs)."""
+    if not anki_available():
+        if requested:
+            print(f"Anki isn't open, so profile {requested!r} isn't used.", file=sys.stderr)
+        yield None
+        return
+    target = choose_profile(requested)
+    before = switch_profile(target) if target else None
+    if target and before and before != target:
+        print(f"Anki profile: {target} (was {before}; switching back at the end)")
+    elif target:
+        print(f"Anki profile: {target}")
+    try:
+        yield target
+    finally:
+        if target and before and before != target:
+            switch_profile(before)
+
+
+def profile_from_argv(argv):
+    """The NAME of a `--profile NAME` in argv (for the tools without argparse)."""
+    for i, a in enumerate(argv):
+        if a == "--profile" and i + 1 < len(argv):
+            return argv[i + 1]
+        if a.startswith("--profile="):
+            return a.split("=", 1)[1]
+    return None
+
+
 def anki_multi(calls):
     """Run [(action, params), ...] in order, batched through AnkiConnect's
     "multi" action. Errors are printed; returns how many calls failed."""
@@ -2228,6 +2328,12 @@ def main():
         help="Also delete ledger notes whose Notion row was deleted or is now "
              "skipped (deletes their review history too; try --dry-run first)",
     )
+    parser.add_argument(
+        "--profile", metavar="NAME",
+        help=f"Anki profile to work on (default: {DEFAULT_PROFILE!r}, or "
+             "NOTES_TO_ANKI_PROFILE); it's opened for the run and the previous "
+             "profile reopened afterwards",
+    )
     parser.set_defaults(update=True)
     args = parser.parse_args()
 
@@ -2250,6 +2356,11 @@ def main():
     if args.prune and not args.update:
         parser.error("--prune can't be combined with --no-update")
 
+    with anki_profile(args.profile):
+        _run(args)
+
+
+def _run(args):
     if args.seed_kana:
         seed_kana(dry_run=args.dry_run, update=args.update)
         return
