@@ -66,7 +66,7 @@ no file = the user's behaviour. His progress record goes to `users/verge/progres
 - **Keep the attribution** headers in the data files, `README.md` and `sources/README.md` (JMdict,
   KANJIDIC2 and JmdictFurigana are CC BY-SA; Tatoeba CC BY).
 - **One meaning style on every deck** (short comma list, common sense first; detail in `note`), and a
-  word on two decks must agree. Every word-type deck shows the faded radical line. See `docs/tools.md`.
+  word on two decks must agree. Every word-type deck shows the faded radical and parts lines. See `docs/tools.md`.
 - **One card per word.** A word lives on one deck; seeds adopt cards by Front and keep their history.
 - Confirm the user wants a fix before changing behaviour listed under known issues (`docs/internals.md`).
 

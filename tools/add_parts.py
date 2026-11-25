@@ -1,6 +1,7 @@
 """Set the parts column (10th) of kanji_top1000.tsv and kanji_extra.tsv:
 the components a kanji is visibly built from, space-separated, e.g.
-読 -> `言 売`, 海 -> `氵 毎`, 休 -> `亻 木`.
+読 -> `言 ~売`, 海 -> `氵 ~毎`, 休 -> `亻 木`. A leading `~` marks the
+part KanjiVG says gives the sound (kvg:phon); the card shows its on'yomi.
 
 The parts are KanjiVG's top-level elements: the first named groups under
 the kanji (a group without a name, like 読's bottom half inside 売, is
@@ -13,8 +14,10 @@ is replaced by its own named parts, or left out if it has none. A kanji with few
 The card shows each part with a short meaning, looked up in main.py:
 radicals.tsv first, then the part's own Core Kanji row, then parts.tsv.
 parts.tsv holds the other parts (宛, 吾, 袁...): this tool appends any
-missing one with KANJIDIC2's first meaning (blank if it has none, e.g. マ),
-and never changes existing rows, which may carry hand edits.
+missing one with KANJIDIC2's first meaning (blank if it has none, e.g. マ)
+and its main on and kun readings in hiragana (kun: the first one that is a
+word on its own, not う.る or -ごと). It only fills blank cells of existing
+rows, which may carry hand edits.
 
 Sources (pinned, downloaded into tools/cache/): KanjiVG, (c) Ulrich Apel,
 CC BY-SA 3.0, https://github.com/KanjiVG/kanjivg (release KANJIVG_TAG);
@@ -43,7 +46,8 @@ PARTS_FILE = ROOT / "parts.tsv"
 PARTS_HEADER = """\
 # Meanings of kanji parts that are neither a radical (radicals.tsv) nor a
 #   Core Kanji, for the "Parts:" line on Core Kanji cards.
-# Columns: part, meaning (short; edit by hand).
+# Columns: part, meaning (short; edit by hand), on, kun (main readings, in
+#   hiragana; kun only if one is a word on its own).
 # Rows are appended by tools/add_parts.py with KANJIDIC2's first meaning,
 #   (c) EDRDG, CC BY-SA 4.0, https://www.edrdg.org/wiki/index.php/KANJIDIC_Project
 """
@@ -55,9 +59,10 @@ SOURCES["kanjivg.xml.gz"] = ("https://github.com/KanjiVG/kanjivg/releases/downlo
 KVG = "{http://kanjivg.tagaini.net}"
 
 # KanjiVG writes some parts with CJK radical-supplement characters, which
-# many fonts lack; show the ordinary form instead.
+# many fonts lack; show the ordinary form instead. 飠 becomes 食, as on the
+# radical line (radicals.tsv has no 飠 row).
 FORMS = {"⻌": "辶", "⻖": "阝", "⻏": "阝", "⺨": "犭", "⺤": "爫", "⺕": "彐",
-         "⺦": "丬", "⻞": "飠", "⺷": "羊"}
+         "⺦": "丬", "⻞": "食", "飠": "食", "⺷": "羊"}
 
 
 def radical_forms():
@@ -86,6 +91,7 @@ def named_parts(group, extra):
         name = child.get(KVG + "element")
         name = FORMS.get(name, name)
         if name and shown(name, extra):
+            name = ("~" if child.get(KVG + "phon") else "") + name
             # A part split around another (kvg:part 1, 2) is listed once.
             if not (child.get(KVG + "part") and name in out):
                 out.append(name)
@@ -103,7 +109,7 @@ def load_parts(extra):
         top = kanji.find("g")
         name = top.get(KVG + "element") if top is not None else None
         if name and "-" not in kanji.get("id", ""):  # skip variant drawings
-            parts = [p for p in named_parts(top, extra) if p != name]
+            parts = [p for p in named_parts(top, extra) if p.lstrip("~") != name]
             out[name] = parts if len(parts) >= 2 else []
     return out
 
@@ -115,6 +121,25 @@ def first_meaning(char):
             if m.get("lang") == "en":  # "short thread radical (no. 52)" -> "short thread"
                 return re.sub(r"\s*radical \(no\.? ?\d+\)$", "", m["value"])
     return ""
+
+
+def _readings(char, kind):
+    return [r["value"] for g in ((char or {}).get("readingMeaning") or {}).get("groups", [])
+            for r in g.get("readings", []) if r["type"] == kind]
+
+
+def hiragana(text):
+    return "".join(chr(ord(c) - 0x60) if "ァ" <= c <= "ヶ" else c for c in text)
+
+
+def main_on(char):
+    """KANJIDIC2's first on reading, in hiragana, or ""."""
+    return next((hiragana(r) for r in _readings(char, "ja_on")), "")
+
+
+def main_kun(char):
+    """KANJIDIC2's first kun reading that is a word on its own, or ""."""
+    return next((r for r in _readings(char, "ja_kun") if "." not in r and "-" not in r), "")
 
 
 def main(argv):
@@ -148,28 +173,35 @@ def main(argv):
 
     # Parts the card can't name from radicals.tsv or a Core Kanji row.
     known = radical_forms() | kanji
-    have = set()
+    rows = {}  # part -> [part, meaning, on, kun]
+    header = PARTS_HEADER
     if PARTS_FILE.exists():
-        have = {line.split("\t")[0] for line in PARTS_FILE.read_text(encoding="utf-8").splitlines()
-                if line and not line.startswith("#")}
-    need = []
+        text = PARTS_FILE.read_text(encoding="utf-8")
+        header = "".join(line + "\n" for line in text.splitlines() if line.startswith("#"))
+        for line in text.splitlines():
+            if line and not line.startswith("#"):
+                cols = line.split("\t") + [""] * 3
+                rows[cols[0]] = cols[:4]
     for path in KANJI_FILES:
         for line in path.read_text(encoding="utf-8").splitlines():
             if line and not line.startswith("#"):
                 for part in parts.get(line.split("\t")[1], []):
-                    if part not in known and part not in have and part not in need:
-                        need.append(part)
-    if need:
-        kd = {c["literal"]: c for c in load_json_zip("kanjidic2-en.zip")["characters"]}
-        rows = []
-        for part in need:
-            meaning = first_meaning(kd.get(part))
-            rows.append(f"{part}\t{meaning}")
-            print(f"parts.tsv: add {part} {meaning or '(no meaning)'}")
-        print(f"parts.tsv: {len(rows)} row(s) to add")
-        if write:
-            text = PARTS_FILE.read_text(encoding="utf-8") if PARTS_FILE.exists() else PARTS_HEADER
-            PARTS_FILE.write_text(text + "\n".join(rows) + "\n", encoding="utf-8")
+                    part = part.lstrip("~")
+                    if part not in known and part not in rows:
+                        rows[part] = [part, None, "", ""]
+    kd = {c["literal"]: c for c in load_json_zip("kanjidic2-en.zip")["characters"]}
+    changed = 0
+    for part, cols in rows.items():
+        new = [part, first_meaning(kd.get(part)) if cols[1] is None else cols[1],
+               cols[2] or main_on(kd.get(part)), cols[3] or main_kun(kd.get(part))]
+        if new != cols:
+            print(f"parts.tsv: {part} {' / '.join(c or '-' for c in new[1:])}")
+            rows[part] = new
+            changed += 1
+    print(f"parts.tsv: {changed} row(s) to add or fill")
+    if write and changed:
+        PARTS_FILE.write_text(header + "".join("\t".join(r) + "\n" for r in rows.values()),
+                              encoding="utf-8")
     if not write:
         print("Dry run; pass --write to apply.")
 

@@ -563,49 +563,98 @@ def radical_line(row):
 
 
 @functools.cache
-def part_meanings():
-    """PARTS_FILE: meanings of the parts that are neither a radical nor a
-    Core Kanji (宛 -> "address"), for parts_line."""
+def part_info():
+    """PARTS_FILE rows for the parts that are neither a radical nor a Core
+    Kanji: part -> (meaning, on, kun), readings in hiragana (宛 -> address,
+    えん, あて)."""
     out = {}
     try:
         with open(PARTS_FILE, encoding="utf-8") as f:
             for line in f:
                 if line.startswith("#") or not line.strip():
                     continue
-                cols = line.rstrip("\n").split("\t") + [""]
-                out[cols[0]] = cols[1]
+                cols = line.rstrip("\n").split("\t") + [""] * 3
+                out[cols[0]] = tuple(cols[1:4])
     except OSError as e:
         print(f"Could not read the parts list: {e}", file=sys.stderr)
         sys.exit(1)
     return out
 
 
-def parts_line(row):
-    """The faded "Parts:" line (2026-11-25, user's request): the components
-    the kanji is built from (KanjiVG, via tools/add_parts.py), each with a
-    short meaning from radicals.tsv, the part's own Core Kanji row or
-    PARTS_FILE.
-    "" when the row has no parts (a kanji that is one simple shape)."""
-    if not row["parts"]:
-        return ""
+def _kanji_readings(row):
+    """A Core Kanji row's main on'yomi (in hiragana) and its first kun'yomi
+    that is a word on its own (てら, not う(る) or -ごと); starred first."""
+    def first(text):
+        items = [r for r in text.split("、") if r]
+        items.sort(key=lambda r: not r.startswith("*"))
+        return [r.lstrip("*") for r in items]
+    on = next(iter(first(row["on"])), "")
+    kun = next((r for r in first(row["kun"]) if "(" not in r and "-" not in r), "")
+    return _hiragana(on), kun
+
+
+def parts_text(row):
+    """The text of a kanji's Parts line (2026-11-25, user's request): the components
+    the kanji is built from (KanjiVG, via tools/add_parts.py), each with its
+    reading in hiragana and a short meaning, e.g. "言 げん speech · 売 ばい
+    sell (sound)". The sound part (`~` in the parts column, KanjiVG's
+    kvg:phon) shows its on'yomi, a hint at the kanji's own; other parts show
+    their radical name (氵 さんずい) or, failing that, their kun'yomi word
+    (寺 てら), else their on'yomi. Meanings: radicals.tsv, then the part's
+    own Core Kanji row, then PARTS_FILE. "" when the row has no parts (a
+    kanji that is one simple shape)."""
     by_form = {}
     for key, rad in radicals().items():
-        by_form.setdefault(rad["form"], {})[key] = rad["meaning"]
+        by_form.setdefault(rad["form"], {})[key] = rad
     shown = []
     for i, part in enumerate(row["parts"]):
-        meanings = by_form.get(part, {})
-        if row["radical"] in meanings:  # 月 and 阝 are two radicals each
-            meaning = meanings[row["radical"]]
+        sound = part.startswith("~")
+        part = part.lstrip("~")
+        rads = by_form.get(part, {})
+        if row["radical"] in rads:  # 月 and 阝 are two radicals each
+            rad = rads[row["radical"]]
         elif part == "阝":  # on the left: 170 hill; on the right: 163 village
-            meaning = meanings.get("170|阝" if i == 0 else "163|阝", "")
-        elif meanings:
-            meaning = next(iter(meanings.values()))
-        elif part in core_kanji():
-            meaning = core_kanji()[part]["meanings"][0]
+            rad = rads.get("170|阝" if i == 0 else "163|阝")
         else:
-            meaning = part_meanings().get(part, "")
-        shown.append(f"{part} {meaning.split(';')[0]}".strip())
-    return _NOTE.format(html.escape("Parts: " + " · ".join(shown)))
+            rad = next(iter(rads.values()), None)
+        if part in core_kanji():
+            own = core_kanji()[part]
+            on, kun = _kanji_readings(own)
+            meaning = own["meanings"][0]
+        else:
+            meaning, on, kun = part_info().get(part, ("", "", ""))
+        if rad:
+            meaning = rad["meaning"]
+        if sound:
+            reading = on or kun or (rad or {}).get("name", "")
+        else:
+            reading = (rad or {}).get("name", "") or kun or on
+        text = " ".join(x for x in (part, reading, meaning.split(";")[0]) if x)
+        shown.append(text + (" (sound)" if sound else ""))
+    return " · ".join(shown)
+
+
+def parts_line(row):
+    """The faded "Parts:" line of a Core Kanji card (2026-11-25, user's
+    request); see parts_text. "" for a kanji that is one simple shape."""
+    if not row["parts"]:
+        return ""
+    return _NOTE.format(html.escape("Parts: " + parts_text(row)))
+
+
+def parts_lines(kanji):
+    """The Parts line for a word-type card (2026-11-25, user's request: same
+    as Core Kanji, on every deck): "Parts: …" for one kanji, or "Parts: 時:
+    … ／ 間: …" for several, each from its Core Kanji row. Kanji that are one
+    simple shape (日) or have no row are left out; "" when none are left."""
+    rows = [core_kanji().get(k) for k in dict.fromkeys(kanji)]
+    rows = [r for r in rows if r and r["parts"]]
+    if not rows:
+        return ""
+    if len(rows) == 1 and len(set(kanji)) == 1:
+        return _NOTE.format(html.escape("Parts: " + parts_text(rows[0])))
+    text = " ／ ".join(f"{r['kanji']}: {parts_text(r)}" for r in rows)
+    return _NOTE.format(html.escape("Parts: " + text))
 
 
 def radical_text(rad):
@@ -890,6 +939,7 @@ def verb_back(row):
     if row["note"]:
         parts.append(_NOTE.format(esc(row["note"])))
     parts.append(verb_radicals_line(row))
+    parts.append(parts_lines([k for k, _ in row["radicals"]]))
     facts = [VERB_GROUPS[row["group"]]]
     if row["group"] == "godan":
         facts.append(f"ends in {row['word'][-1]}")
@@ -995,6 +1045,7 @@ def word_back(row):
     if row["note"]:
         parts.append(_NOTE.format(esc(row["note"])))
     parts.append(text_radicals_line(row["word"], f"Word {row['word']}"))
+    parts.append(parts_lines(_KANJI_CHAR.findall(row["word"])))
     facts = [row["level"].upper()] if row["level"] else []
     parts.append(_NOTE.format(esc(" · ".join(facts + [row["type"]]))))
     return "".join(parts)
@@ -1080,6 +1131,7 @@ def number_back(row):
                     _LINE.format(esc(row["meaning"])),
                     _NOTE.format(esc(row["note"])) if row["note"] else "",
                     text_radicals_line(row["front"], f"Number {row['front']}"),
+                    parts_lines(_KANJI_CHAR.findall(row["front"])),
                     _NOTE.format(esc(row["group"]))])
 
 
@@ -1286,6 +1338,7 @@ def lookalike_back(row):
                                   f'　{esc(", ".join(kr["meanings"][:2]))}'))
         parts.append(main_readings(kr))
         parts.append(radicals_lines([(k, kr["radical"])], f"Look-alike {k}"))
+        parts.append(parts_line(kr))
     facts = []
     if row["same"]:
         facts.append("Same: " + " ".join(row["same"]))
