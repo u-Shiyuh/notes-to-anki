@@ -155,6 +155,29 @@ ANKICONNECT_URL = "http://127.0.0.1:8765"
 DECK_ROOT = "Nihongo"
 NOTE_TYPE = "Basic"
 
+# Card look, applied to NOTE_TYPE by ensure_card_style(). The Front field
+# stays raw text (it's a matching key), so the template wraps it: short
+# fronts (kana, kanji, words) are large; long ones (sentences) are tagged
+# `long` by the script and shown smaller so they don't wrap too much.
+CARD_FRONT = (
+    '<div class="front">{{Front}}</div>\n'
+    '<script>document.querySelectorAll(".front").forEach(function (e) {'
+    ' if (e.textContent.trim().length > 8) e.classList.add("long"); });</script>'
+)
+CARD_BACK = "{{FrontSide}}\n\n<hr id=answer>\n\n{{Back}}"
+CARD_CSS = """.card {
+    font-family: "Hiragino Sans", "Hiragino Kaku Gothic ProN", "Yu Gothic UI",
+        "Yu Gothic", "Meiryo", "Noto Sans JP", sans-serif;
+    font-size: 22px;
+    line-height: 1.5;
+    text-align: center;
+    color: black;
+    background-color: white;
+}
+.front { font-size: 2.6em; line-height: 1.3; margin: 0.3em 0; }
+.front.long { font-size: 1.5em; }
+"""
+
 # Ledger notes are tagged notion_<page id without dashes>. That tag, not
 # the Front text, is what links a card to its Notion row.
 LINK_TAG_PREFIX = "notion_"
@@ -2256,12 +2279,37 @@ def summarize(plan, dry_run, added=None):
     return text
 
 
+def ensure_card_style(dry_run=False):
+    """Give NOTE_TYPE the CARD_* templates and styling. Idempotent."""
+    templates = anki_request("modelTemplates", modelName=NOTE_TYPE)
+    styling = anki_request("modelStyling", modelName=NOTE_TYPE)
+    if templates is None or styling is None:
+        return
+    card = next(iter(templates), "Card 1")
+    calls = []
+    if templates.get(card) != {"Front": CARD_FRONT, "Back": CARD_BACK}:
+        calls.append(("updateModelTemplates", {"model": {
+            "name": NOTE_TYPE,
+            "templates": {card: {"Front": CARD_FRONT, "Back": CARD_BACK}}}}))
+    if styling.get("css") != CARD_CSS:
+        calls.append(("updateModelStyling",
+                      {"model": {"name": NOTE_TYPE, "css": CARD_CSS}}))
+    if not calls:
+        return
+    verb = "Would update" if dry_run else "Updating"
+    print(f"{verb} the '{NOTE_TYPE}' card look (bigger Front, Japanese font).")
+    if not dry_run and anki_multi(calls):
+        print("Updating the card look failed; see the errors above.",
+              file=sys.stderr)
+
+
 def preview_changes(notes, scope, update=True, prune=False, adopt=None, keep=()):
     """--dry-run: show what a real run would change, if Anki is open."""
     if not anki_available():
         print("\nAnki isn't open, so this preview can't show what would "
               "change in Anki.")
         return
+    ensure_card_style(dry_run=True)
     plan = plan_changes(notes, scope, update=update, prune=prune, adopt=adopt,
                         keep=keep)
     print()
@@ -2273,6 +2321,7 @@ def add_or_update_notes(notes, scope, update=True, prune=False, adopt=None, keep
     """Bring the Anki notes in `scope` in line with `notes` (dicts with
     deckName, modelName, fields, tags, options). See plan_changes for how
     notes are matched and what update/prune/adopt/keep do."""
+    ensure_card_style()
     plan = plan_changes(notes, scope, update=update, prune=prune, adopt=adopt,
                         keep=keep)
     print_plan(plan)
