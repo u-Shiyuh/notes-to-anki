@@ -13,7 +13,7 @@ progress. The user studies early N5, mostly through these decks plus textbooks.
 | Deck (`Nihongo::…`) | Flag | Data | Notes |
 |---|---|---|---|
 | Kana::Hiragana / Katakana | `--seed-kana` | built into `main.py` | done; never changes |
-| Core Kanji | `--seed-kanji` | `kanji_top1000.tsv`, `kanji_extra.tsv`, `radicals.tsv` | frequency order |
+| Core Kanji | `--seed-kanji` | `kanji_top1000.tsv`, `kanji_extra.tsv`, `radicals.tsv`, `parts.tsv` | frequency order |
 | Verbs | `--seed-verbs` | `verbs.tsv` | reviewer book sections + `extra` + `cg` |
 | Words | `--seed-words` | `words.tsv` | skips verbs and words a kanji card covers |
 | Numbers & Time | `--seed-numbers` | `numbers.tsv` | real-world formats (3本, 午後2時) |

@@ -248,6 +248,7 @@ KANJI_FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)),
 KANJI_EXTRA_FILE = os.path.join(os.path.dirname(KANJI_FILE), "kanji_extra.tsv")
 # Radicals (部首) the kanji files' 9th column points to, by number and form.
 RADICAL_FILE = os.path.join(os.path.dirname(KANJI_FILE), "radicals.tsv")
+PARTS_FILE = os.path.join(os.path.dirname(KANJI_FILE), "parts.tsv")
 # Verbs from the reviewer book, in book order (see its header).
 VERB_FILE = os.path.join(os.path.dirname(KANJI_FILE), "verbs.tsv")
 # JLPT N5/N4 words (no verbs), in study order (see its header).
@@ -472,13 +473,13 @@ def load_kanji(path=KANJI_FILE):
                 if line.startswith("#") or not line.strip():
                     continue
                 cols = line.rstrip("\n").split("\t")
-                cols += [""] * (9 - len(cols))
-                rank, kanji, strokes, jlpt, meanings, on, kun, example, radical = cols
+                cols += [""] * (10 - len(cols))
+                rank, kanji, strokes, jlpt, meanings, on, kun, example, radical, parts = cols[:10]
                 rows.append({"rank": rank, "kanji": kanji, "strokes": strokes,
                              "jlpt": jlpt, "meanings": meanings.split("; "),
                              "on": on, "kun": kun,
                              "example": example.split("|") if example else None,
-                             "radical": radical})
+                             "radical": radical, "parts": parts.split()})
     except OSError as e:
         print(f"Could not read the kanji list: {e}", file=sys.stderr)
         sys.exit(1)
@@ -561,6 +562,52 @@ def radical_line(row):
     return _NOTE.format(html.escape(f"Radical: {radical_text(rad)}{own}"))
 
 
+@functools.cache
+def part_meanings():
+    """PARTS_FILE: meanings of the parts that are neither a radical nor a
+    Core Kanji (宛 -> "address"), for parts_line."""
+    out = {}
+    try:
+        with open(PARTS_FILE, encoding="utf-8") as f:
+            for line in f:
+                if line.startswith("#") or not line.strip():
+                    continue
+                cols = line.rstrip("\n").split("\t") + [""]
+                out[cols[0]] = cols[1]
+    except OSError as e:
+        print(f"Could not read the parts list: {e}", file=sys.stderr)
+        sys.exit(1)
+    return out
+
+
+def parts_line(row):
+    """The faded "Parts:" line (2026-11-25, user's request): the components
+    the kanji is built from (KanjiVG, via tools/add_parts.py), each with a
+    short meaning from radicals.tsv, the part's own Core Kanji row or
+    PARTS_FILE.
+    "" when the row has no parts (a kanji that is one simple shape)."""
+    if not row["parts"]:
+        return ""
+    by_form = {}
+    for key, rad in radicals().items():
+        by_form.setdefault(rad["form"], {})[key] = rad["meaning"]
+    shown = []
+    for i, part in enumerate(row["parts"]):
+        meanings = by_form.get(part, {})
+        if row["radical"] in meanings:  # 月 and 阝 are two radicals each
+            meaning = meanings[row["radical"]]
+        elif part == "阝":  # on the left: 170 hill; on the right: 163 village
+            meaning = meanings.get("170|阝" if i == 0 else "163|阝", "")
+        elif meanings:
+            meaning = next(iter(meanings.values()))
+        elif part in core_kanji():
+            meaning = core_kanji()[part]["meanings"][0]
+        else:
+            meaning = part_meanings().get(part, "")
+        shown.append(f"{part} {meaning.split(';')[0]}".strip())
+    return _NOTE.format(html.escape("Parts: " + " · ".join(shown)))
+
+
 def radical_text(rad):
     """A radicals() row as "氵 さんずい · water"."""
     return " · ".join(x for x in (f"{rad['form']} {rad['name']}".strip(), rad["meaning"]) if x)
@@ -580,6 +627,7 @@ def kanji_back(row, headline=None, notes=()):
     for note in notes:
         parts.append(_NOTE.format(esc(note)))
     parts.append(radical_line(row))
+    parts.append(parts_line(row))
     facts = [f"{row['strokes']} stroke" + ("" if row["strokes"] == "1" else "s")]
     if row["jlpt"]:
         facts.append(f"JLPT N{row['jlpt']}")

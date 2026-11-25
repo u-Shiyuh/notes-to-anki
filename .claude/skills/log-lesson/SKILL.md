@@ -46,6 +46,7 @@ A new book gets a new short code there first. Standalone study uses `self::<YYYY
    ```bash
    python3 tools/add_kanji_extra.py --write
    python3 tools/add_radicals.py --write
+   python3 tools/add_parts.py --write
    python3 tools/mark_readings.py --write
    python3 tools/dedupe_readings.py --write
    ```
