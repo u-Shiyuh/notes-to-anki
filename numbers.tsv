@@ -168,3 +168,12 @@ phrase	毎朝7時に	まいあさ しちじに	at 7 every morning	に marks a cl
 phrase	毎日2時間	まいにち にじかん	two hours every day	no に after a duration
 phrase	1日3回	いちにち さんかい	three times a day	1日 here is いちにち (per day), not ついたち
 phrase	1時間に1本	いちじかんに いっぽん	one (train/bus) an hour	本 also counts train and bus departures
+counter	何回	なんかい	how many times?	何 + counter asks how many (CG L3)
+counter	1位	いちい	1st place	位 counts rank in a race or ranking: 2位 (にい) (CG L3)
+counter	5ページ	ごページ	page 5; five pages	ページ counts pages, no sound changes (CG L3)
+counter	何ページ	なんページ	which page? how many pages?	(CG L3)
+phrase	10ページから20ページまで	じゅうページから にじゅうページまで	from page 10 to page 20	から … まで = from … to (CG L3)
+duration	5分間	ごふんかん	(for) five minutes	間 marks a length of time; 5分 alone also works (CG L3)
+counter	1つ目	ひとつめ	the first one	目 turns a count into an order (CG L3)
+counter	2番目	にばんめ	the second (in order)	番 + 目 (CG L3)
+counter	3回目	さんかいめ	the third time	回 + 目 (CG L3)

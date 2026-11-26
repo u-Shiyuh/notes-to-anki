@@ -21,7 +21,7 @@
 	日本語	にほんご	Japanese language	noun	日本 (Japan) + 語 (language, ご) · same pattern as 中国語 (Chinese), 英語 (English)	school
 	中国	ちゅうごく	China	noun	
 	東京	とうきょう	Tokyo	noun	
-	何時	なんじ	what time	expression	
+	何時	なんじ	what time	expression	何 + counter asks which/how many: 何日 (なんにち), 何回 (なんかい), 何ページ (CG L3)	
 	携帯	けいたい	mobile phone	noun	short for 携帯電話 (けいたいでんわ)
 n5	秋	あき	autumn, fall	noun		weather
 n5	足	あし	foot, leg	noun	also written 脚 (leg)	body
@@ -47,7 +47,7 @@ n5	国	くに	country, home country	noun
 n5	車	くるま	car, vehicle	noun		transport
 n5	五	ご	five	number	
 n5	声	こえ	voice	noun		body
-n5	午後	ごご	afternoon, p.m.	noun	
+n5	午後	ごご	afternoon, p.m.	noun	comes before the time: 午後3時 (ごごさんじ) = 3 p.m. (CG L3)	
 n5	午前	ごぜん	morning, a.m.	noun	
 n5	今年	ことし	this year	noun	IRREGULAR reading
 n5	言葉	ことば	word, language	noun	
@@ -62,7 +62,7 @@ n5	質問	しつもん	question, inquiry	noun (+する)		school
 n5	自動車	じどうしゃ	automobile	noun		transport
 n5	自分	じぶん	myself, oneself	pronoun	
 n5	写真	しゃしん	photo	noun		hobbies
-n5	十	じゅう	ten	number	
+n5	十	じゅう	ten	number	counting things: 一つ … 九つ, then 十 (とお), with no つ (CG L3)	
 n5	新聞	しんぶん	newspaper	noun	
 n5	少し	すこし	little, few	adverb	
 n5	千	せん	thousand	number	
@@ -79,7 +79,7 @@ n5	母	はは	(my) mother	noun	your own mother, said to others. Someone else's, 
 n5	春	はる	spring	noun		weather
 n5	東	ひがし	east	noun	
 n5	左	ひだり	left hand side	noun	
-n5	一つ	ひとつ	one thing	number	
+n5	一つ	ひとつ	one thing	number	native count for things: ひとつ ふたつ みっつ よっつ いつつ むっつ ななつ やっつ ここのつ とお; from 11 on, じゅういち… (CG L3)	
 n5	百	ひゃく	hundred	number	
 n5	病院	びょういん	hospital	noun		places
 n5	二人	ふたり	two people	noun	
@@ -119,7 +119,7 @@ n5	名前	なまえ	name	noun	polite: お名前 (おなまえ)
 n5	西	にし	west	noun	
 n5	はく	はく	to wear, put on (shoes, trousers)	verb	godan verb; kanji 履く, usually written in kana	clothes
 n5	半分	はんぶん	half	noun	
-n5	一人	ひとり	one person	noun	
+n5	一人	ひとり	one person	noun	ひとり, ふたり, then さんにん … じゅうにん; 4人 is よにん (CG L3)	
 n5	病気	びょうき	illness	noun		health
 n5	二つ	ふたつ	two things	number	
 n5	部屋	へや	a room	noun		house
@@ -400,7 +400,7 @@ n5	カレー	カレー	curry, curry rice	noun		food
 n5	カレンダー	カレンダー	calendar	noun	
 n5	ギター	ギター	guitar	noun		hobbies
 n5	綺麗	きれい	pretty, clean, tidy	な-adjective	
-n5	キロ	キロ	kilogram, kilometre	expression	short for キログラム / キロメートル
+n5	キロ	キロ	kilogram, kilometre	expression	short for キログラム (kilogram) / キロメートル (kilometre) (CG L3)	
 n5	金曜日	きんようび	Friday	noun	
 n5	クラス	クラス	a class	noun		school
 n5	グラム	グラム	gram	noun	
@@ -592,7 +592,7 @@ n5	～冊	～さつ	counter for books	counter
 n5	さ来年	さらいねん	year after next	noun	
 n5	～さん	～さん	Mr. ~, Ms. ~	suffix	after someone else's name, never your own: 田中さん (CG L2)
 n5	～時	～じ	~ o'clock	counter	
-n5	～時間	～じかん	~ hours	counter	
+n5	～時間	～じかん	~ hours	counter	時間 = a length of time (2時間, two hours); 時 = clock time (2時, two o'clock); minutes can take 間 too: 5分間 (CG L3)	
 n5	～中	～じゅう	during, while	suffix	
 n5	～週間	～しゅうかん	~ weeks	counter	
 n5	～人	～じん	counter for people	counter	
@@ -1123,7 +1123,7 @@ n4	真中	まんなか	middle, center	expression
 n4	～町	～ちょう	the town of ~	suffix	
 n4	お陰	おかげ	thanks or owing to	noun	
 n4	～にくい	～にくい	difficult to do ~	suffix	
-n4	～目	～め	~th (ordinal)	suffix	
+n4	～目	～め	~th (ordinal)	suffix	makes an order: 一つ目 (ひとつめ) the first one, 二番目 (にばんめ) the second, 三回目 (さんかいめ) the third time (CG L3)	
 	乗り場	のりば	platform / boarding point	noun		transport
 	自由席 / 指定席	じゆうせき / していせき	unreserved seat / reserved seat (contrast pair, Shinkansen tickets)	noun		transport
 	精算	せいさん	fare adjustment (paying the difference at a ticket gate)	noun (+する)		transport
@@ -1178,3 +1178,9 @@ n4	～目	～め	~th (ordinal)	suffix
 	主人	しゅじん	(my) husband, head of household	noun	also 夫 おっと; someone else's: ご主人 (CG L2)	family
 	おじ	おじ	(my) uncle	noun	kanji 伯父 (parent's older brother), 叔父 (younger); someone else's: おじさん; vs おじいさん (grandfather), long い (CG L2)	family
 	おば	おば	(my) aunt	noun	kanji 伯母 (parent's older sister), 叔母 (younger); someone else's: おばさん; vs おばあさん (grandmother), long あ (CG L2)	family
+	リットル	リットル	litre	noun	1リットル; a cup or glass of it is counted with 杯 (はい) (CG L3)	
+	センチ	センチ	centimetre	noun	short for センチメートル (CG L3)	
+	ミリ	ミリ	millimetre	noun	short for ミリメートル; also ミリグラム (milligram) (CG L3)	
+	マイル	マイル	mile	noun	(CG L3)	
+	インチ	インチ	inch	noun	(CG L3)	
+	ドル	ドル	dollar	noun	5ドル (ごドル) = $5 (CG L3)	

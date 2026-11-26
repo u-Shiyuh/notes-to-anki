@@ -65,6 +65,16 @@ One list across all sources, grouped by topic. Each bullet ends with where it wa
 - Family words come in two sets: plain for your own family when talking to others, polite for someone else's (and for addressing your own elders): 父/お父さん, 母/お母さん, 兄弟/ご兄弟, 兄/お兄さん, 姉/お姉さん, 弟/弟さん, 妹/妹さん, 祖父/おじいさん, 祖母/おばあさん, おじ/おじさん, おば/おばさん, 主人・夫/ご主人, 家内・妻/奥さん. (CG L2)
 - Long vowels matter here too: おじいさん (grandfather) vs おじさん (uncle), おばあさん (grandmother) vs おばさん (aunt). (CG L2)
 
+### Numbers and counters
+- Sino-Japanese numbers いち…じゅう, then 百 ひゃく, 千 せん, 万 まん (10,000 is its own unit: 12万 = 120,000). (CG L3)
+- Native numbers for counting things: ひとつ … ここのつ, then とお (10, no つ); from 11 on, Sino-Japanese. (CG L3)
+- Counters follow the number and depend on the thing: 人 people (一人 ひとり, 二人 ふたり, then 〜にん; 4人 よにん), 匹 small animals, 本 long thin things, 冊 books, 枚 flat things, 杯 cups/glasses, 回 times, 番 number in order, 位 rank, ページ pages. (CG L3)
+- Sound changes with h/s/t/k counters: 1, 6, 8, 10 double the consonant (いっぽん, いっさつ) and h becomes p or b (ぴき/びき, ぽん/ぼん; 3 and 何 take b: さんぼん, なんぼん). 枚 never changes. (CG L3)
+- Time: 時 o'clock, 分 minutes, 年 years; 午前/午後 come before the time (午後3時). Duration adds 間: 時間, 分(間), 週間; months use か月. (CG L3)
+- 何 + counter asks how many/which: 何時, 何日, 何回, 何ページ; から … まで = from … to (何ページから何ページまで). (CG L3)
+- Units are katakana loanwords: リットル, グラム, キロ(グラム/メートル), メートル, センチ, ミリ, マイル, インチ, ドル; 円 yen. (CG L3)
+- 〜目 turns a count into an order: 一つ目 the first one, 二番目 the second, 三回目 the third time. (CG L3)
+
 ## Where lesson vocabulary goes
 
 Not here. New words and kanji go into the data files, so they get cards like everything else:
@@ -82,3 +92,5 @@ Short dated entries; the detail goes in the sections above.
   Added to the data files: 17 words (りんご 夫婦 記念 竹 城 神 銀 柿 カキ 下駄 天ぷら 折り紙 金魚 私立 ピザ ソファ アイロン; 竹 城 神 銀 柿 are taught by their kanji cards), verb 生きる (`cg` 1), kanji 柿 and 駄.
 - 2026-11-14 · CG Lesson 2 (Nouns: proper nouns, titles, compounds, demonstratives, pronouns, の, family words).
   Added: 22 words (富士山 人間 貿易会社 女言葉 ごみ箱 シャボン玉 焼き肉 飼い猫 読み書き 立ち読み 酒好き 人間嫌い 私たち 僕たち あなたたち 彼女ら ご兄弟 弟さん 妹さん 主人 おじ おば), verb 申す (`cg` 2), kanji 飼. Left out: 山田, ソウル, ソニー (names).
+- 2026-11-26 · CG Lesson 3 (Numbers: Sino-Japanese and native numbers, counters and sound changes, time, units, 何 + counter, 〜目). Mostly already in Numbers & Time; tagged 82 existing cards.
+  Added: 6 words (リットル センチ ミリ マイル インチ ドル), 9 Numbers & Time cards (何回 1位 5ページ 何ページ 10ページから20ページまで 5分間 1つ目 2番目 3回目), and lesson notes on 十 一つ 一人 何時 ～時間 午後 キロ ～目. No new kanji. Corrected: kiro(meteru) → キロメートル, inichi → インチ; "doru" was listed twice.
