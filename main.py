@@ -1097,7 +1097,7 @@ def seed_words(dry_run=False, update=True):
 # ---------------------------------------------------------------------------
 
 NUMBER_GROUPS = ("number", "price", "people", "age", "counter", "clock",
-                 "duration", "date", "month", "year", "phrase")
+                 "duration", "date", "month", "year", "phrase", "unit")
 
 
 def load_numbers(path=NUMBER_FILE):

@@ -4,7 +4,7 @@
 #   いっぷん, ついたち) and reading mixed formats. Single words (一人, 二日, 去年, 毎日,
 #   the weekdays) are in words.tsv; the phrase cards at the end combine them.
 # Hand-made on 2026-11-06 (user's request), N5/N4 level. Hand edits are fine.
-# Columns: group (number/price/people/age/counter/clock/duration/date/month/year/phrase;
+# Columns: group (number/price/people/age/counter/clock/duration/date/month/year/phrase/unit;
 #   becomes a tag), front (as written), kana (the reading), meaning, note (faded on the card).
 number	0	ゼロ	zero	also れい (零), e.g. in phone numbers or 0℃
 number	4	よん	four	し is avoided (it sounds like 死, death), except in 四月 しがつ
@@ -177,3 +177,22 @@ duration	5分間	ごふんかん	(for) five minutes	間 marks a length of time; 
 counter	1つ目	ひとつめ	the first one	目 turns a count into an order (CG L3)
 counter	2番目	にばんめ	the second (in order)	番 + 目 (CG L3)
 counter	3回目	さんかいめ	the third time	回 + 目 (CG L3)
+counter	3冊	さんさつ	three (books)	冊 starts with s: no b or p sound, only 1, 8, 10 double (CG L3)
+counter	6冊	ろくさつ	six (books)	6 stays ろく before s (CG L3)
+counter	何冊	なんさつ	how many (books)?	(CG L3)
+counter	1枚	いちまい	one (flat thing)	枚 counts paper, tickets, shirts, plates (CG L3)
+counter	何枚	なんまい	how many (flat things)?	(CG L3)
+counter	3回	さんかい	three times	回 never voices: さんかい, unlike 3階 (さんがい) (CG L3 + Claude)
+counter	2番	にばん	number two	(CG L3)
+duration	何時間	なんじかん	how many hours?	(CG L3)
+duration	何週間	なんしゅうかん	how many weeks?	(CG L3)
+unit	2L	にリットル	2 litres	L = リットル (CG L3)
+unit	500g	ごひゃくグラム	500 grams	g = グラム (CG L3)
+unit	3kg	さんキロ	3 kilograms	kg is read キロ or キログラム (CG L3)
+unit	100m	ひゃくメートル	100 metres	m = メートル (CG L3)
+unit	5km	ごキロ	5 kilometres	km is read キロ or キロメートル (CG L3)
+unit	30cm	さんじゅっセンチ	30 centimetres	cm is read センチ or センチメートル; 30 becomes さんじゅっ (or さんじっ) before s (CG L3)
+unit	5mm	ごミリ	5 millimetres	mm is read ミリ or ミリメートル (CG L3)
+unit	10マイル	じゅうマイル	10 miles	(CG L3)
+unit	12インチ	じゅうにインチ	12 inches	(CG L3)
+price	$5	ごドル	5 dollars	written $5, said number first: ごドル (CG L3)
