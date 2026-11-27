@@ -1748,6 +1748,9 @@ def _alternate(a, b):
 
 
 ICHIDAN_LEAD = 5                # ichidan verbs first, until this many are studied
+VERBS_FIRST = ("する", "来る")    # before everything (user's request, 2026-11-27:
+                                # the two commonest verbs were waiting behind
+                                # every regular one as "irregular last")
 
 
 def order_verbs(dry_run=False):
@@ -1758,7 +1761,8 @@ def order_verbs(dry_run=False):
     real ichidan ones; irregular verbs (する-verbs) keep their place at the
     end. Each group keeps its book order. Until ICHIDAN_LEAD ichidan verbs
     are studied, the missing ones go first (user's request, 2026-11-14,
-    after 60 godan verbs and no ichidan). Needs the helper add-on, version
+    after 60 godan verbs and no ichidan). VERBS_FIRST (する, 来る) come
+    before all of it (2026-11-27). Needs the helper add-on, version
     2 (setNewOrder)."""
     _require_anki()
     known = studied_kanji()
@@ -1787,6 +1791,8 @@ def order_verbs(dry_run=False):
     first = [c for c in order[:len(lead) + len(first)] if ready(c)]
     picked = {c["cardId"] for c in order}
     order += [c for c in cards if c["cardId"] not in picked]  # irregular, untagged
+    top = [c for w in VERBS_FIRST for c in order if _field(c, "Front") == w]
+    order = top + [c for c in order if c not in top]
     if lead:
         print(f"Verbs: {studied} ichidan verb(s) studied, so {len(lead)} go first.")
     print(f"Verbs: {len(first)} new verbs ready (kanji all studied, or kana only), "
@@ -1809,6 +1815,23 @@ def order_verbs(dry_run=False):
         return
     if helper_request("setNewOrder", cards=[c["cardId"] for c in order]) is not None:
         print(f"Reordered {len(order)} new verb(s).")
+
+
+def order_lane_verbs(dry_run=False):
+    """VERBS_FIRST in a fast lane (来る sits in Lessons, as lesson 1 mentions
+    it) go to the front of that lane's new cards (2026-11-27, user's request)."""
+    _require_anki()
+    for lane in sorted({lane for ls in LANES.values() for lane in ls}):
+        cards = _new_cards(lane)
+        top = [c for w in VERBS_FIRST for c in cards if _field(c, "Front") == w]
+        order = top + [c for c in cards if c not in top]
+        if not top or order == cards:
+            continue
+        print(f"{lane}: {' '.join(_field(c, 'Front') for c in top)} to the front.")
+        if dry_run or (helper_request("version") or 0) < 2:
+            continue
+        if helper_request("setNewOrder", cards=[c["cardId"] for c in order]) is not None:
+            print(f"  Reordered {len(order)} new card(s).")
 
 
 DEFAULT_ORDER_FILE = os.path.join(os.path.dirname(KANJI_FILE), "default_order.tsv")
@@ -2670,6 +2693,7 @@ def _run(args):
         order_kanji(dry_run=args.dry_run)
         order_words(dry_run=args.dry_run)
         order_verbs(dry_run=args.dry_run)
+        order_lane_verbs(dry_run=args.dry_run)
         return
 
     sync_ledger(dry_run=args.dry_run, update=args.update, prune=args.prune)
