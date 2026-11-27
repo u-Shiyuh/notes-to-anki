@@ -42,7 +42,7 @@
 11	中	4	5	in; inside; middle; mean	*チュウ	*なか、うち、あた(る)	途中|とちゅう|on the way|N4	2|丨	口 丨
 12	長	8	5	long; leader; superior; senior	*チョウ	*なが(い)、おさ	社長|しゃちょう|president of a company|N4	168|長
 13	出	5	5	exit; leave; go out; come out	*シュツ、スイ	*で(る)、*だ(す)、い(でる)、い(だす)、-で	出場|しゅつじょう|participation|N3	17|凵	山 凵
-14	三	3	5	three	*サン、ゾウ	*み、*みっ(つ)、み(つ)	再三|さいさん|again and again|N2	1|一
+14	三	3	5	three	*サン、ゾウ	*み、*みっ(つ)、み(つ)	再三|さいさん|again and again|N2	1|一	一 一 一
 15	同	6	4	same; agree; equal	*ドウ	*おな(じ)	同時|どうじ|simultaneous(ly)|N3	30|口	冂 一 口
 16	時	10	5	time; hour	*ジ	*とき、-どき	時間|じかん|time|N5	72|日	日 ~寺
 17	政	9	3	politics; government	*セイ、ショウ	まつりごと、まん	政治|せいじ|politics|N4	66|攵	~正 攵
@@ -144,7 +144,7 @@
 113	気	6	5	spirit; mind; air; atmosphere	*キ、ケ	*いき、*き	電気|でんき|electricity|N5	84|气	~气 乂
 114	小	3	5	little; small	*ショウ	*ちい(さい)、こ-、お-、さ-	小学校|しょうがっこう|elementary school|N4	42|小
 115	七	2	5	seven	*シチ	*なな、*なな(つ)、なの	七月|しちがつ|July|	1|一	一 乙
-116	成	6	3	turn into; become; get; grow	*セイ、ジョウ	*な(る)、な(す)	成長|せいちょう|growth|N3	62|戈	丿 戈
+116	成	6	3	turn into; become; get; grow	*セイ、ジョウ	*な(る)、な(す)	成長|せいちょう|growth|N3	62|戈	ク 戈
 117	期	12	3	period; time; date; term	*キ、ゴ		期間|きかん|period|N3	74|月	~其 月
 118	公	4	4	public; prince; official; governmental	*コウ、ク	おおやけ	公園|こうえん|a park|N5	12|八	八 厶
 119	持	9	4	hold; have	*ジ	*も(つ)、も(てる)、-も(ち)	維持|いじ|maintenance|N3	64|扌	扌 ~寺
@@ -253,7 +253,7 @@
 222	次	6	3	next; order; sequence	*ジ、シ	*つぎ、つ(ぐ)	次第|しだい|order|N3	76|欠	冫 欠
 223	水	4	5	water	*スイ	*みず	水曜日|すいようび|Wednesday|N5	85|水
 224	半	5	5	half; middle; odd number; semi-	*ハン	*なか(ば)	半分|はんぶん|half|N5	24|十	丶 二 十
-225	品	9	4	goods; refinement; dignity; article	*ヒン、ホン	*しな	食料品|しょくりょうひん|foodstuff|N4	30|口
+225	品	9	4	goods; refinement; dignity; article	*ヒン、ホン	*しな	食料品|しょくりょうひん|foodstuff|N4	30|口	口 口 口
 226	昨	9	3	yesterday; previous	*サク		一昨年|いっさくねん|year before last|N2	72|日	日 ~乍
 227	論	15	3	argument; discourse	*ロン	あげつら(う)	議論|ぎろん|argument|N3	149|言	言 ~侖
 228	計	9	4	plot; plan; scheme; measure	*ケイ	*はか(る)、はか(らう)	合計|ごうけい|sum total|N3	149|言	言 十
@@ -299,7 +299,7 @@
 268	電	13	5	electricity	*デン		電話|でんわ|a telephone|N5	173|雨	雨 日
 269	歳	13	3	year-end; age; occasion; opportunity	*サイ、セイ	とし、とせ、よわい	歳月|さいげつ|time|	77|止	止 戌 小
 270	住	7	4	dwell; reside; live; inhabit	*ジュウ、ヂュウ、チュウ	*す(む)、す(まう)、-ず(まい)	住所|じゅうしょ|address|N4	9|亻	亻 ~主
-271	争	6	3	contend; dispute; argue	*ソウ	*あらそ(う)、いか(でか)	戦争|せんそう|war|N4	6|亅	丿 彐 亅
+271	争	6	3	contend; dispute; argue	*ソウ	*あらそ(う)、いか(でか)	戦争|せんそう|war|N4	6|亅	ク 彐 亅
 272	談	15	3	discuss; talk	*ダン		冗談|じょうだん|a joke|N3	149|言	言 ~炎
 273	能	10	3	ability; talent; skill; capacity	*ノウ	よ(く)、あた(う)	機能|きのう|function|N3	130|月	厶 月 匕 匕
 274	無	12		nothingness; none; ain't; nothing	*ム、ブ	*な(い)	無理|むり|unreasonable|N4	86|灬	丿 一 灬
@@ -337,7 +337,7 @@
 306	証	12	1	evidence; proof; certificate	*ショウ	*あかし	保証|ほしょう|guarantee|N3	149|言	言 ~正
 307	土	3	5	soil; earth; ground; Turkey	*ド、ト	*つち	土曜日|どようび|Saturday|N5	32|土
 308	与	3	3	bestow; participate in; give; award	*ヨ	*あた(える)、あずか(る)、くみ(する)、ともに	給与|きゅうよ|salary|N2	1|一
-309	急	9	4	hurry; emergency; sudden; steep	*キュウ	*いそ(ぐ)、いそ(ぎ)、せ(く)	特急|とっきゅう|limited express (train faster than an express)|N4	61|心	彐 心
+309	急	9	4	hurry; emergency; sudden; steep	*キュウ	*いそ(ぐ)、いそ(ぎ)、せ(く)	特急|とっきゅう|limited express (train faster than an express)|N4	61|心	ク 彐 心
 310	止	4	4	stop; halt	*シ	*と(まる)、と(める)、とど(める)、とど(め)、とど(まる)、や(める)、や(む)、よ(す)、-ど(まり)、-ど(め)、-さ(す)、-さ(し)	禁止|きんし|prohibition|N3	77|止
 311	送	9	4	escort; send	*ソウ	*おく(る)	輸送|ゆそう|transport|N2	162|辶	天 辶
 312	援	12	1	abet; help; save	*エン		援助|えんじょ|assistance|N3	64|扌	扌 ~爰
@@ -371,7 +371,7 @@
 340	何	7	5	what	カ	*なに、*なん		9|亻	亻 ~可
 341	南	9	5	south	*ナン、ナ	*みなみ	南北|なんぼく|south and north|N2	24|十	十 冂 干
 342	石	5	3	stone	*セキ、シャク、コク	*いし	石油|せきゆ|oil|N3	112|石
-343	足	7	4	leg; foot; be sufficient; counter for pairs of footwear	*ソク	*あし、*た(りる)、た(る)、た(す)	不足|ふそく|insufficiency|N3	157|足
+343	足	7	4	leg; foot; be sufficient; counter for pairs of footwear	*ソク	*あし、*た(りる)、た(る)、た(す)	不足|ふそく|insufficiency|N3	157|足	口 止
 344	違	13	3	difference; differ	*イ	*ちが(う)、ちが(い)、ちが(える)、たが(う)、たが(える)	違反|いはん|violation (of law)|N3	162|辶	~韋 辶
 345	消	10	3	extinguish; blow out; turn off; neutralize	*ショウ	*き(える)、*け(す)	消費|しょうひ|consumption|N3	85|氵	氵 ~肖
 346	境	14	2	boundary; border; region	*キョウ、ケイ	*さかい	環境|かんきょう|environment|N3	32|土	土 ~竟
@@ -422,7 +422,7 @@
 391	待	9	4	wait; depend on	*タイ	*ま(つ)、-ま(ち)	期待|きたい|expectation|N3	60|彳	彳 ~寺
 392	試	13	4	test; try; attempt; experiment	*シ	*こころ(みる)、ため(す)	試合|しあい|match|N4	149|言	言 ~式
 393	族	11	4	tribe; family	*ゾク		家族|かぞく|family|N5	70|方	方 矢
-394	象	12	2	elephant; pattern after; imitate; image	*ショウ、ゾウ	かたど(る)	対象|たいしょう|target|N3	152|豕
+394	象	12	2	elephant; pattern after; imitate; image	*ショウ、ゾウ	かたど(る)	対象|たいしょう|target|N3	152|豕	ク 豕
 395	銀	14	4	silver	*ギン	しろがね	銀行|ぎんこう|bank|N5	167|金	金 ~艮
 396	域	11	2	range; region; limits; stage	*イキ		地域|ちいき|area|N3	32|土	土 ~或
 397	助	7	3	help; rescue; assist	*ジョ	*たす(ける)、*たす(かる)、す(ける)、すけ	援助|えんじょ|assistance|N3	19|力	~且 力
@@ -471,7 +471,7 @@
 440	去	5	4	gone; past; quit; leave	*キョ、コ	*さ(る)	去年|きょねん|last year|N5	28|厶	土 厶
 441	姿	9	1	figure; form; shape	*シ	*すがた	姿勢|しせい|attitude|N2	38|女	~次 女
 442	味	8	4	flavor; taste	*ミ	*あじ、あじ(わう)	意味|いみ|meaning|N5	30|口	口 ~未
-443	負	9	3	defeat; negative; -; minus	*フ	*ま(ける)、ま(かす)、お(う)	負担|ふたん|burden|N1	154|貝
+443	負	9	3	defeat; negative; -; minus	*フ	*ま(ける)、ま(かす)、お(う)	負担|ふたん|burden|N1	154|貝	ク 貝
 444	閣	14	1	tower; tall building; palace	*カク		内閣|ないかく|cabinet|N1	169|門	門 ~各
 445	韓	18		Korea	*カン	から、いげた	日韓|にっかん|Japan and South Korea|	178|韋	十 早 韋
 446	渡	12	3	transit; ford; ferry; cross	*ト	*わた(る)、*わた(す)	過渡期|かとき|transition period|	85|氵	氵 ~度
@@ -634,7 +634,7 @@
 603	修	10	1	discipline; conduct oneself well; study; master	*シュウ、シュ	*おさ(める)、おさ(まる)	修正|しゅうせい|amendment|N3	9|亻	~攸 彡
 604	捕	10	3	catch; capture	*ホ	*つか(まえる)、と(らえる)、と(らわれる)、と(る)、つか(まる)	逮捕|たいほ|arrest|N3	64|扌	扌 ~甫
 605	隊	12	1	regiment; party; company; squad	*タイ		軍隊|ぐんたい|army|N3	170|阝	阝 豕
-606	危	6	3	dangerous; fear; uneasy	*キ	*あぶ(ない)、あや(うい)、あや(ぶむ)	危険|きけん|danger|N4	26|卩	丿 厄
+606	危	6	3	dangerous; fear; uneasy	*キ	*あぶ(ない)、あや(うい)、あや(ぶむ)	危険|きけん|danger|N4	26|卩	ク 厄
 607	採	11	2	pick; take; fetch; take up	*サイ	*と(る)	採集|さいしゅう|collecting|N3	64|扌	扌 ~采
 608	織	18	1	weave; fabric	*シキ、ショク	*お(る)、お(り)	組織|そしき|organization|N3	120|糸	糸 音 戈
 609	森	12	2	forest; woods	*シン	*もり	森林|しんりん|forest|N2	75|木	木 林
@@ -649,12 +649,12 @@
 618	読	14	5	read	*ドク、トウ、トク	*よ(む)、-よ(み)	読書|どくしょ|reading|N3	149|言	言 ~売
 619	弁	5	1	valve; petal; braid; speech	*ベン、ヘン	かんむり、わきま(える)、わ(ける)、はなびら、あらそ(う)	弁当|べんとう|box lunch|N3	55|廾	厶 廾
 620	根	10	2	root; radical; head (pimple)	*コン	*ね	根拠|こんきょ|basis|N1	75|木	木 ~艮
-621	色	6	4	color	*ショク、シキ	*いろ	特色|とくしょく|characteristic|N2	139|色
-622	友	4	5	friend	*ユウ	*とも	友人|ゆうじん|friend (formal)|N3	29|又
+621	色	6	4	color	*ショク、シキ	*いろ	特色|とくしょく|characteristic|N2	139|色	ク 巴
+622	友	4	5	friend	*ユウ	*とも	友人|ゆうじん|friend (formal)|N3	29|又	ナ 又
 623	苦	8	3	suffering; trial; worry; hardship	*ク	*くる(しい)、*にが(い)、くる(しむ)、くる(しめる)、にが(る)、-ぐる(しい)	苦労|くろう|hardship|N3	140|艹	艹 ~古
 624	就	12	1	concerning; settle; take position; depart	*シュウ、ジュ	*つ(く)、つ(ける)	就職|しゅうしょく|finding employment|N3	43|尢	京 尤
 625	迎	7	3	welcome; meet; greet	*ゲイ	*むか(える)	歓迎|かんげい|welcome|N3	162|辶	卩 辶
-626	走	7	4	run	*ソウ	*はし(る)	逃走|とうそう|flight|N1	156|走
+626	走	7	4	run	*ソウ	*はし(る)	逃走|とうそう|flight|N1	156|走	土 止
 627	販	11	2	marketing; sell; trade	*ハン		販売|はんばい|sale|N3	154|貝	貝 ~反
 628	園	13	3	park; garden; yard; farm	*エン	その	公園|こうえん|a park|N5	31|囗	囗 ~袁
 629	具	8	3	tool; utensil; means; possess	*グ	そな(える)、つぶさ(に)	道具|どうぐ|tool|N4	12|八	目 八

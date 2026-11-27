@@ -120,6 +120,7 @@ import time
 import argparse
 import contextlib
 import functools
+import unicodedata
 import urllib.request
 import urllib.error
 
@@ -593,12 +594,23 @@ def _kanji_readings(row):
     return _hiragana(on), kun
 
 
+def _plain(kana):
+    """Kana without voicing marks, so はん matches ばん."""
+    return unicodedata.normalize("NFD", kana).replace("\u3099", "").replace("\u309a", "")
+
+
+def _plain_match(part_ons, kanji_ons):
+    """The part's on reading that matches the kanji's, its main one first."""
+    return next((r for k in kanji_ons for r in sorted(part_ons) if _plain(r) == k), "")
+
+
 def parts_text(row):
     """The text of a kanji's Parts line (2026-11-25, user's request): the components
     the kanji is built from (KanjiVG, via tools/add_parts.py), each with its
-    reading in hiragana and a short meaning, e.g. "言 げん speech · 売 ばい
-    sell (sound)". The sound part (`~` in the parts column, KanjiVG's
-    kvg:phon) shows its on'yomi, a hint at the kanji's own; other parts show
+    reading in hiragana and a short meaning, e.g. "日 (ひ) sun + 寺 (じ)
+    temple · sounds like 寺 (じ)". The sound part (`~` in the parts column, KanjiVG's kvg:phon)
+    shows its on'yomi and the "sounds like" hint only when that still matches the kanji's
+    on'yomi (voicing aside); otherwise it is shown like the others, which show
     their radical name (氵 さんずい) or, failing that, their kun'yomi word
     (寺 てら), else their on'yomi. Meanings: radicals.tsv, then the part's
     own Core Kanji row, then PARTS_FILE. "" when the row has no parts (a
@@ -606,7 +618,9 @@ def parts_text(row):
     by_form = {}
     for key, rad in radicals().items():
         by_form.setdefault(rad["form"], {})[key] = rad
-    shown = []
+    ons = sorted((r for r in row["on"].split("、") if r), key=lambda r: not r.startswith("*"))
+    kanji_ons = list(dict.fromkeys(_plain(_hiragana(r.lstrip("*"))) for r in ons))
+    shown, hint = [], ""
     for i, part in enumerate(row["parts"]):
         sound = part.startswith("~")
         part = part.lstrip("~")
@@ -625,13 +639,27 @@ def parts_text(row):
             meaning, on, kun = part_info().get(part, ("", "", ""))
         if rad:
             meaning = rad["meaning"]
+        part_ons = ({_hiragana(r.lstrip("*")) for r in own["on"].split("、") if r}
+                    if part in core_kanji() else {on} - {""})
+        # The sound hint only when it still sounds like the kanji (寺 じ in 時
+        # じ, 反 はん in 板 ばん); 戸 こ in 所 ショ is old Chinese and no help, so
+        # it shows like any other part (2026-11-27, user's request).
+        sound = sound and bool({_plain(r) for r in part_ons} & set(kanji_ons))
         if sound:
-            reading = on or kun or (rad or {}).get("name", "")
+            reading = _plain_match(part_ons, kanji_ons) or on
         else:
             reading = (rad or {}).get("name", "") or kun or on
-        text = " ".join(x for x in (part, reading, meaning.split(";")[0]) if x)
-        shown.append(text + (" (sound)" if sound else ""))
-    return " · ".join(shown)
+        # "日 (ひ) sun": the part, its reading, its meaning (2026-11-27).
+        shown.append(" ".join(x for x in (part, f"({reading})" if reading else "",
+                                          meaning.split(";")[0]) if x))
+        if sound:
+            hint = f"sounds like {part} ({reading})"
+    # A repeated part once, with a count: 品 "口 (くち) mouth ×3".
+    counts = {}
+    for text in shown:
+        counts[text] = counts.get(text, 0) + 1
+    shown = [t + (f" ×{n}" if n > 1 else "") for t, n in counts.items()]
+    return " + ".join(shown) + (f" · {hint}" if hint else "")
 
 
 def parts_line(row):

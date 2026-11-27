@@ -60,9 +60,12 @@ KVG = "{http://kanjivg.tagaini.net}"
 
 # KanjiVG writes some parts with CJK radical-supplement characters, which
 # many fonts lack; show the ordinary form instead. 飠 becomes 食, as on the
-# radical line (radicals.tsv has no 飠 row).
+# radical line (radicals.tsv has no 飠 row). 2026-11-27: also lookalikes.
 FORMS = {"⻌": "辶", "⻖": "阝", "⻏": "阝", "⺨": "犭", "⺤": "爫", "⺕": "彐",
-         "⺦": "丬", "⻞": "食", "飠": "食", "⺷": "羊"}
+         "⺦": "丬", "⻞": "食", "飠": "食", "⺷": "羊",
+         # Shapes no common font has, shown as the katakana they look like
+         # (as KRADFILE does): 友's 𠂇 as ナ, 色's 𠂊 as ク; 足's 龰 as 止.
+         "𠂇": "ナ", "𠂊": "ク", "龰": "止"}
 
 
 def radical_forms():
@@ -85,7 +88,14 @@ def shown(part, extra):
 
 def named_parts(group, extra):
     """The named groups directly under `group`, looking through unnamed ones
-    and ones a card can't show (their own named parts are used instead)."""
+    and ones a card can't show (their own named parts are used instead).
+    A part found that way is listed once (検: 木 人 一 口), unless that leaves
+    one part: 品 is 口 口 口, 三 is 一 一 一 (2026-11-27)."""
+    once = _named(group, extra, True)
+    return once if len(once) >= 2 else _named(group, extra, False)
+
+
+def _named(group, extra, once):
     out = []
     for child in group.findall("g"):
         name = child.get(KVG + "element")
@@ -93,10 +103,13 @@ def named_parts(group, extra):
         if name and shown(name, extra):
             name = ("~" if child.get(KVG + "phon") else "") + name
             # A part split around another (kvg:part 1, 2) is listed once.
-            if not (child.get(KVG + "part") and name in out):
+            if not (child.get(KVG + "part")
+                    and name.lstrip("~") in {o.lstrip("~") for o in out}):
                 out.append(name)
         else:
-            out += [p for p in named_parts(child, extra) if p not in out]
+            bare = {o.lstrip("~") for o in out}
+            out += [p for p in _named(child, extra, once)
+                    if not once or p.lstrip("~") not in bare]
     return out
 
 
