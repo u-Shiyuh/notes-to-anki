@@ -66,6 +66,8 @@ One list across all sources, grouped by topic. Each bullet ends with where it wa
 - Long vowels matter here too: おじいさん (grandfather) vs おじさん (uncle), おばあさん (grandmother) vs おばさん (aunt). (CG L2)
 
 ### Numbers and counters
+- Months are number + がつ (1月 いちがつ … 12月 じゅうにがつ); 4月 しがつ, 7月 しちがつ, 9月 くがつ (CG L3)
+- Dates: 1日 ついたち, 2日–10日 and 20日 have special readings (ふつか … とおか, はつか); otherwise number + にち (31日 さんじゅういちにち), with 14日/24日 よっか and 19日 じゅうくにち. 1日 as a date is ついたち, as a length of time (one day) いちにち (CG L3)
 - Sino-Japanese numbers いち…じゅう, then 百 ひゃく, 千 せん, 万 まん (10,000 is its own unit: 12万 = 120,000). (CG L3)
 - Native numbers for counting things: ひとつ … ここのつ, then とお (10, no つ); from 11 on, Sino-Japanese. (CG L3)
 - Counters follow the number and depend on the thing: 人 people (一人 ひとり, 二人 ふたり, then 〜にん; 4人 よにん), 匹 small animals, 本 long thin things, 冊 books, 枚 flat things, 杯 cups/glasses, 回 times, 番 number in order, 位 rank, ページ pages. (CG L3)
@@ -94,3 +96,4 @@ Short dated entries; the detail goes in the sections above.
   Added: 22 words (富士山 人間 貿易会社 女言葉 ごみ箱 シャボン玉 焼き肉 飼い猫 読み書き 立ち読み 酒好き 人間嫌い 私たち 僕たち あなたたち 彼女ら ご兄弟 弟さん 妹さん 主人 おじ おば), verb 申す (`cg` 2), kanji 飼. Left out: 山田, ソウル, ソニー (names).
 - 2026-11-26 · CG Lesson 3 (Numbers: Sino-Japanese and native numbers, counters and sound changes, time, units, 何 + counter, 〜目). Mostly already in Numbers & Time; tagged 82 existing cards.
   Added: 6 words (リットル センチ ミリ マイル インチ ドル), 9 Numbers & Time cards (何回 1位 5ページ 何ページ 10ページから20ページまで 5分間 1つ目 2番目 3回目), and lesson notes on 十 一つ 一人 何時 ～時間 午後 キロ ～目. No new kanji. Corrected: kiro(meteru) → キロメートル, inichi → インチ; "doru" was listed twice.
+- 2026-11-27: CG L3 addendum (months, dates): 7 month cards (2, 3, 5, 6, 8, 10, 11月) and 3 dates (19日, 30日, 31日) added; ついたち vs いちにち notes on 1日 and 一日.

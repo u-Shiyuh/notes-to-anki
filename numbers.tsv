@@ -129,7 +129,7 @@ duration	何か月	なんかげつ	how many months?
 duration	1年	いちねん	one year	also 1年間 (いちねんかん), for one year
 duration	4年	よねん	four years	not よんねん
 duration	何年	なんねん	how many years? / what year?
-date	1日	ついたち	the 1st (of the month)	special reading; "one day" (duration) is いちにち
+date	1日	ついたち	the 1st (of the month)	the date (when?): 5月1日 ごがつついたち. A length of time (how long?) is いちにち: 1日3回 three times a day (CG L3 + Claude)
 date	2日	ふつか	the 2nd; two days	1–10 and 20 have special readings, and each also counts days
 date	3日	みっか	the 3rd; three days
 date	4日	よっか	the 4th; four days
@@ -141,14 +141,24 @@ date	9日	ここのか	the 9th; nine days
 date	10日	とおか	the 10th; ten days
 date	11日	じゅういちにち	the 11th	from 11 on: number + にち
 date	14日	じゅうよっか	the 14th	ends in 4 → よっか
+date	19日	じゅうくにち	the 19th	ends in 9 → く, like 9時 (CG L3 + Claude)
 date	20日	はつか	the 20th; twenty days	special reading
 date	24日	にじゅうよっか	the 24th	ends in 4 → よっか
+date	30日	さんじゅうにち	the 30th	from 11 on: number + にち (CG L3)
+date	31日	さんじゅういちにち	the 31st	(CG L3)
 date	何日	なんにち	what day (of the month)? / how many days?
 date	何曜日	なんようび	what day of the week?	何曜日ですか: what day is it? Dates show it in brackets: (水) = 水曜日
 month	1月	いちがつ	January	months are number + がつ
+month	2月	にがつ	February	(CG L3)
+month	3月	さんがつ	March	(CG L3)
 month	4月	しがつ	April	not よんがつ
+month	5月	ごがつ	May	(CG L3)
+month	6月	ろくがつ	June	(CG L3)
 month	7月	しちがつ	July	not なながつ
+month	8月	はちがつ	August	(CG L3)
 month	9月	くがつ	September	not きゅうがつ
+month	10月	じゅうがつ	October	(CG L3)
+month	11月	じゅういちがつ	November	(CG L3)
 month	12月	じゅうにがつ	December
 month	何月	なんがつ	which month?
 date	1月1日	いちがつついたち	January 1st (New Year's Day)	お正月 (おしょうがつ) = New Year
