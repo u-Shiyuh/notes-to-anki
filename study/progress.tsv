@@ -455,3 +455,81 @@ date	metric	value
 2026-11-26	pace.n5_left	380
 2026-11-26	pace.n5_done_estimate	2027-01-08
 2026-11-26	today.reviews	185
+2026-11-27	deck.Core Kanji.cards	1063
+2026-11-27	deck.Core Kanji.seen	238
+2026-11-27	deck.Core Kanji.known	88
+2026-11-27	deck.Kana::Hiragana.cards	104
+2026-11-27	deck.Kana::Hiragana.seen	104
+2026-11-27	deck.Kana::Hiragana.known	38
+2026-11-27	deck.Kana::Katakana.cards	104
+2026-11-27	deck.Kana::Katakana.seen	104
+2026-11-27	deck.Kana::Katakana.known	36
+2026-11-27	deck.Kanji Look-alikes.cards	152
+2026-11-27	deck.Kanji Look-alikes.seen	56
+2026-11-27	deck.Kanji Look-alikes.known	2
+2026-11-27	deck.Kanji N5-N4.cards	81
+2026-11-27	deck.Kanji N5-N4.seen	36
+2026-11-27	deck.Kanji N5-N4.known	0
+2026-11-27	deck.Lessons.cards	189
+2026-11-27	deck.Lessons.seen	30
+2026-11-27	deck.Lessons.known	0
+2026-11-27	deck.Numbers & Time.cards	155
+2026-11-27	deck.Numbers & Time.seen	80
+2026-11-27	deck.Numbers & Time.known	23
+2026-11-27	deck.Sentences.cards	100
+2026-11-27	deck.Sentences.seen	22
+2026-11-27	deck.Sentences.known	0
+2026-11-27	deck.Verbs.cards	215
+2026-11-27	deck.Verbs.seen	97
+2026-11-27	deck.Verbs.known	20
+2026-11-27	deck.Words.cards	877
+2026-11-27	deck.Words.seen	189
+2026-11-27	deck.Words.known	76
+2026-11-27	jlpt.n5.words.total	699
+2026-11-27	jlpt.n5.words.seen	321
+2026-11-27	jlpt.n5.words.known	118
+2026-11-27	jlpt.n4.words.total	562
+2026-11-27	jlpt.n4.words.seen	57
+2026-11-27	jlpt.n4.words.known	10
+2026-11-27	jlpt.n5.kanji.total	79
+2026-11-27	jlpt.n5.kanji.seen	77
+2026-11-27	jlpt.n5.kanji.known	48
+2026-11-27	jlpt.n4.kanji.total	166
+2026-11-27	jlpt.n4.kanji.seen	114
+2026-11-27	jlpt.n4.kanji.known	24
+2026-11-27	common.top100.seen	84
+2026-11-27	common.top100.known	32
+2026-11-27	common.top300.seen	194
+2026-11-27	common.top300.known	66
+2026-11-27	common.top1000.seen	374
+2026-11-27	common.top1000.known	131
+2026-11-27	ref.cg::l01.cards	63
+2026-11-27	ref.cg::l01.seen	27
+2026-11-27	ref.cg::l01.known	9
+2026-11-27	ref.cg::l02.cards	87
+2026-11-27	ref.cg::l02.seen	48
+2026-11-27	ref.cg::l02.known	14
+2026-11-27	ref.cg::l03.cards	102
+2026-11-27	ref.cg::l03.seen	47
+2026-11-27	ref.cg::l03.known	23
+2026-11-27	ref.tatoeba.cards	100
+2026-11-27	ref.tatoeba.seen	22
+2026-11-27	ref.tatoeba.known	0
+2026-11-27	ref.verb_book::s1.cards	87
+2026-11-27	ref.verb_book::s1.seen	67
+2026-11-27	ref.verb_book::s1.known	18
+2026-11-27	ref.verb_book::s2.cards	64
+2026-11-27	ref.verb_book::s2.seen	24
+2026-11-27	ref.verb_book::s2.known	1
+2026-11-27	ref.verb_book::s3.cards	41
+2026-11-27	ref.verb_book::s3.seen	2
+2026-11-27	ref.verb_book::s3.known	1
+2026-11-27	retention7.young.reviews	450
+2026-11-27	retention7.young.passed	320
+2026-11-27	retention7.mature.reviews	1
+2026-11-27	retention7.mature.passed	1
+2026-11-27	pace14.new_per_day	27.5
+2026-11-27	pace14.n5_per_day	8.2
+2026-11-27	pace.n5_left	380
+2026-11-27	pace.n5_done_estimate	2027-01-12
+2026-11-27	today.reviews	3
